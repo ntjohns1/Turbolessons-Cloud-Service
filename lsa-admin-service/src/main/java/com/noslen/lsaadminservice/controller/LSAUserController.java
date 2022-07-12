@@ -31,6 +31,15 @@ public class LSAUserController {
         Optional<LSAUser> returnVal = userRepository.findById(id);
         return returnVal.orElse(null);
     }
+
+    //GET USER BY Username
+    @GetMapping("/api/users/uname/{username}")
+    @ResponseStatus(HttpStatus.OK)
+    public LSAUser getUserByUsername(@PathVariable String username) {
+        Optional<LSAUser> returnVal = Optional.ofNullable(userRepository.findByUsername(username));
+        return returnVal.orElse(null);
+    }
+
     @PostMapping("/api/users")
     @ResponseStatus(HttpStatus.CREATED)
     public LSAUser createUser(@RequestBody LSAUser user) {
