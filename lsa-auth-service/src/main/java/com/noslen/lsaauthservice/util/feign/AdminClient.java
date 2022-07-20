@@ -18,7 +18,7 @@ public interface AdminClient {
 //
 //    //GET USER BY Username
     @GetMapping("/api/users/uname/{username}")
-    public Object getUserByUsername(@PathVariable String username);
+    public CustomUser getUserByUsername(@PathVariable String username);
 
 //    @PostMapping("/api/users")
 //    public Object createUser(@RequestBody Object user);

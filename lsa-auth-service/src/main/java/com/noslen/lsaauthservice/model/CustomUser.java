@@ -10,7 +10,7 @@ public class CustomUser {
     private final String email;
     private final String username;
 
-    @JsonIgnore
+//    @JsonIgnore
     private final String password;
 
     @JsonCreator
