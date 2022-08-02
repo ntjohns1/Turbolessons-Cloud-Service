@@ -1,0 +1,1 @@
+package com.noslen.lsaadminservice.configuration;
