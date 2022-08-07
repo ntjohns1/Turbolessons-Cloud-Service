@@ -2,14 +2,62 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f94a8a07-5ee2-46fa-a058-faabe4d06845" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/controller/LSAUserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/util/auth/BCryptPasswordDeserializer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/util/auth/PasswordUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-admin-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/controller/AdminServiceController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/model/Address.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/model/LSAUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/model/LSAUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/repository/LSAUserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/repository/LSAUserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/noslen/authservice/AuthServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/noslen/authservice/AuthServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/noslen/authservice/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/noslen/authservice/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/noslen/authservice/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/noslen/authservice/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logging-setup/logs/archived/log.2019-07-23.0.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logging-setup/logs/archived/root.2019-07-23.0.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logging-setup/logs/error.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logging-setup/logs/info.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logging-setup/logs/log.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logging-setup/logs/root.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/logging-setup/logs/error.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/logging-setup/logs/info.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/logging-setup/logs/log.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/logging-setup/logs/root.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/LsaAdminServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/configuration/ApplicationConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/configuration/ApplicationStartUp.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/configuration/DataSourceConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/configuration/StartupProperties.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/configuration/SwaggerConfiguration.java~HEAD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/configuration/SwaggerConfiguration.java~sub-department-setup" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/constants/ErrorMessageConstants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/constants/WebResourceKeyConstants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/controller/AdminController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/dto/request/AdminRequestDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/dto/response/AdminResponseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/dto/response/ResponseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/entities/Admin.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/entities/BaseEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/exceptionHandler/GlobalExceptionHandler.java~HEAD" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/exceptionHandler/GlobalExceptionHandler.java~sub-department-setup" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/exceptions/DataDuplicationException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/exceptions/ErrorResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/exceptions/NoContentFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/exceptions/UnauthorisedException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/query/AdminQuery.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/repository/AdminRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/repository/AdminRepositoryCustom.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/repository/impl/AdminRepositoryCustomImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/service/AdminService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/service/impl/AdminServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/utility/AdminUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/utility/DateUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/utility/MapperUtility.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/utility/QueryCreator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/resources/startup.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/test/java/com/noslen/lsaadminservice/LsaAdminServiceApplicationTests.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lsa-auth-service/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lsa-auth-service/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lsa-auth-service/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
@@ -17,7 +65,65 @@
       <change beforePath="$PROJECT_DIR$/lsa-auth-service/mvnw.cmd" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lsa-auth-service/pom.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/LsaAuthServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/configuration/ApplicationConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/configuration/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/configuration/ZuulConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/constants/ErrorMessage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/constants/MicroServiceConstants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/constants/SecurityConstants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/exceptionHandler/ErrorResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/exceptionHandler/UnauthorisedException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/feignInterface/AdminInterface.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/model/CustomUser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/responseDTO/AdminResponseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/security/CustomUserDetailsService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/security/jwt/JwtAuthenticationEntryPoint.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/security/jwt/JwtConfigurer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/security/jwt/JwtProperties.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/security/jwt/JwtTokenFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/security/jwt/JwtTokenProvider.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/resources/security.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/test/java/com/noslen/lsaauthservice/LsaAuthServiceApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-config-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-config-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/.mvn/wrapper/MavenWrapperDownloader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/LoginServiceApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/configuration/ApplicationConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/configuration/SwaggerConfiguration.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/constants/ErrorMessageConstants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/constants/JWTConstants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/constants/MicroServiceConstants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/constants/PatternConstants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/constants/WebResourceKeyConstants.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/controller/LoginController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/exceptionHandler/GlobalExceptionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/exceptions/ErrorResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/exceptions/NoContentFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/exceptions/UnauthorisedException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/feignInterface/AdminInterface.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/jwt/JwtProperties.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/jwt/JwtTokenProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/requestDTO/AdminRequestDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/requestDTO/LoginRequestDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/responseDTO/AdminResponseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/responseDTO/LoginResponseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/responseDTO/NetworkResponseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/service/LoginService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/service/serviceImpl/LoginServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/service/serviceImpl/LoginServiceImpl_login_flow.puml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/service/serviceImpl/LoginServiceImpl_structure.puml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/utils/DateUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/utils/NetworkUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/resources/security.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/test/java/com/cogent/loginservice/LoginServiceApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/service-registry/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/service-registry/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,13 +141,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/nelsonjohns/Documents/LSA-Cloud-Service&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "/Users/nelsonjohns/Documents/LSA-Cloud-Service",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

@@ -93,9 +93,9 @@ public class AuthController {
         return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
     }
 
-    @GetMapping("/hello")
-    public String hello() {
-        return "Hello world!!!";
-    }
+//    @GetMapping("/hello")
+//    public String hello() {
+//        return "Hello world!!!";
+//    }
 }
 

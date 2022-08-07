@@ -108,7 +108,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers(HttpMethod.GET, "/api/polls/**", "/api/users/**")
                 .permitAll()
-                .antMatchers("/api/auth/hello")
+//                .antMatchers("/api/auth/hello")
+//                .hasRole("USER")
+                .antMatchers("/api/event/hello")
                 .hasRole("USER")
                 .anyRequest()
                 .authenticated();
