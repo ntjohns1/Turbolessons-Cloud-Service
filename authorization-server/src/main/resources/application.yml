@@ -12,6 +12,6 @@ keycloak:
   server:
     contextPath: /auth
     adminUser:
-      username: baeldung
+      username: noslen
       password: pass
-    realmImportFile: baeldung-realm.json
+    realmImportFile: lsa-realm.json

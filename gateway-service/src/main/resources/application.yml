@@ -6,12 +6,20 @@ spring:
       client:
         provider:
           keycloak:
-            issuer-uri: http://localhost:8083/auth/realms/baeldung
+            issuer-uri: http://localhost:8083/auth/realms/lsa
         registration:
           quotes-client:
             provider: keycloak
             client-id: quotes-client
             client-secret: 0e082231-a70d-48e8-b8a5-fbfb743041b6
+            scope:
+              - email
+              - profile
+              - roles
+          event-service:
+            provider: keycloak
+            client-id: event-service
+            client-secret: F2F0DRChFDvI6BVUBBUMRR2xZN88139B
             scope:
               - email
               - profile
@@ -25,5 +33,11 @@ spring:
           uri: http://localhost:8085
           predicates:
             - Path=/quotes/**
+          filters:
+            - TokenRelay=
+        - id: quotes
+          uri: http://localhost:5001
+          predicates:
+            - Path=/api/event/**
           filters:
             - TokenRelay=
