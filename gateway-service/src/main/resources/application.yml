@@ -1,29 +1,6 @@
 server:
   port: 8086
 spring:
-  security:
-    oauth2:
-      client:
-        provider:
-          keycloak:
-            issuer-uri: http://localhost:8083/auth/realms/lsa
-        registration:
-          quotes-client:
-            provider: keycloak
-            client-id: quotes-client
-            client-secret: 0e082231-a70d-48e8-b8a5-fbfb743041b6
-            scope:
-              - email
-              - profile
-              - roles
-          event-service:
-            provider: keycloak
-            client-id: event-service
-            client-secret: F2F0DRChFDvI6BVUBBUMRR2xZN88139B
-            scope:
-              - email
-              - profile
-              - roles
   cloud:
     gateway:
       redis:
@@ -41,3 +18,34 @@ spring:
             - Path=/api/event/**
           filters:
             - TokenRelay=
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8083/auth/realms/lsa
+        registration:
+          quotes-client:
+            provider: keycloak
+            client-id: quotes-client
+            client-secret: 0e082231-a70d-48e8-b8a5-fbfb743041b6
+            scope:
+              - email
+              - profile
+              - roles
+---
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8083/auth/realms/lsa
+        registration:
+          event-service:
+            provider: keycloak
+            client-id: event-service
+            client-secret: 3F2275wzaP7AkhEIeiOjePffT8eYruFs
+            scope:
+              - email
+              - profile
+              - roles
