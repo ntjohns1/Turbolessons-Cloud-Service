@@ -13,6 +13,10 @@ import reactor.core.publisher.Mono;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Custom ReactiveTokenIntrospector to map realm roles into Spring GrantedAuthorities
+ *
+ */
 public class KeycloakReactiveTokenInstrospector implements ReactiveOpaqueTokenIntrospector {
     
     private final ReactiveOpaqueTokenIntrospector delegate;
