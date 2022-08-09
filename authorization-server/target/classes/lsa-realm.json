@@ -532,7 +532,7 @@
       "id" : "024b62f1-3af0-49fc-a15f-e843b72e00df",
       "type" : "password",
       "createdDate" : 1574174719522,
-      "secretData" : "{\"value\":\"3ddad2060950e6a004f43b9b68a38bb222abf68af30bf672d5be25009cd4016c==\",\"salt\":\"goh99WgI7T1ZuGdrKzNAeQ==\"}",
+      "secretData" : "{\"value\":\"SNIcDgplQyKEjR2uadnIVVWajDZ/J7RqVoqkmZc/5hk=\",\"salt\":\"V1tk5zSSdqzE3qGtEPJWLg==\"}",
       "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
     } ],
     "disableableCredentialTypes" : [ ],
@@ -557,7 +557,7 @@
       "id" : "73c8d1ca-d548-4e1a-a82d-2c1d0d3ee017",
       "type" : "password",
       "createdDate" : 1580237291489,
-      "secretData" : "{\"value\":\"d9c544bfcdc782ea785d37dc8037beeafd9e314ecba006c1c3c0e9b37da2ac44==\",\"salt\":\"nu5yJh98jz8cGLnLx36uvg==\"}",
+      "secretData" : "{\"value\":\"Fq8/o6KMuJCtfJ2DVD2uFQn93aWpiuwC8gFjNPvSCoI=\",\"salt\":\"7B82BfkMLds4yG4QoAxTzg==\"}",
       "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
     } ],
     "disableableCredentialTypes" : [ ],

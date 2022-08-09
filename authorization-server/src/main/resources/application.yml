@@ -2,11 +2,18 @@ server:
   port: 8083
 
 spring:
-  jpa:
-    defer-datasource-initialization: true
   datasource:
-    username: sa
-    url: jdbc:h2:mem:customdb;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    url: jdbc:mysql://127.0.0.1/keycloak?autoReconnect=true&useSSL=false
+    hikari:
+      connection-test-query: SELECT 1
+    password: ''
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+    show-sql: 'true'
 
 keycloak:
   server:
@@ -15,3 +22,4 @@ keycloak:
       username: noslen
       password: pass
     realmImportFile: lsa-realm.json
+
