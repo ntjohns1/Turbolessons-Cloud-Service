@@ -92,7 +92,32 @@
         "name": "user",
         "composite": false,
         "clientRole": false,
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
         "containerId": "baeldung",
+=======
+        "containerId": "lsa",
+        "attributes": {}
+      },
+      {
+        "id": "47330d31-0031-454b-b336-928a165fc3a0",
+        "name": "default-roles-lsa",
+        "description": "${role_default-roles}",
+        "composite": true,
+        "composites": {
+          "realm": [
+            "offline_access",
+            "uma_authorization"
+          ],
+          "client": {
+            "account": [
+              "manage-account",
+              "view-profile"
+            ]
+          }
+        },
+        "clientRole": false,
+        "containerId": "lsa",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
         "attributes": {}
       }
     ],
@@ -386,6 +411,18 @@
           "attributes": {}
         },
         {
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
+=======
+          "id": "65a3f9c4-7801-401c-8eda-5b00e16a9604",
+          "name": "delete-account",
+          "description": "${role_delete-account}",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "12eebf0b-a3eb-49f8-9ecf-173cf8a00145",
+          "attributes": {}
+        },
+        {
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
           "id": "aed18201-2433-4998-8fa3-0979b0b31c10",
           "name": "view-profile",
           "description": "${role_view-profile}",
@@ -421,10 +458,21 @@
       "subGroups": []
     }
   ],
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
   "defaultRoles": [
     "uma_authorization",
     "offline_access"
   ],
+=======
+  "defaultRole": {
+    "id": "47330d31-0031-454b-b336-928a165fc3a0",
+    "name": "default-roles-lsa",
+    "description": "${role_default-roles}",
+    "composite": true,
+    "clientRole": false,
+    "containerId": "lsa"
+  },
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
   "requiredCredentials": [
     "password"
   ],
@@ -480,6 +528,61 @@
       }
     ]
   },
+  "users" : [ {
+    "id" : "a5461470-33eb-4b2d-82d4-b0484e96ad7f",
+    "createdTimestamp" : 1574174706812,
+    "username" : "john.snow",
+    "email" : "john@test.com",
+    "firstName" : "John",
+    "lastName" : "Snow",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "credentials" : [ {
+      "id" : "024b62f1-3af0-49fc-a15f-e843b72e00df",
+      "type" : "password",
+      "createdDate" : 1574174719522,
+      "secretData" : "{\"value\":\"SNIcDgplQyKEjR2uadnIVVWajDZ/J7RqVoqkmZc/5hk=\",\"salt\":\"V1tk5zSSdqzE3qGtEPJWLg==\"}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "offline_access", "uma_authorization" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  }, {
+    "id" : "22a4d9fe-194c-4c6e-841a-8a55b402459f",
+    "createdTimestamp" : 1580237252522,
+    "username" : "tim.smith",
+    "email" : "tim@test.com",
+    "firstName" : "Tim",
+    "lastName" : "Smith",
+    "enabled" : true,
+    "totp" : false,
+    "emailVerified" : false,
+    "credentials" : [ {
+      "id" : "73c8d1ca-d548-4e1a-a82d-2c1d0d3ee017",
+      "type" : "password",
+      "createdDate" : 1580237291489,
+      "secretData" : "{\"value\":\"Fq8/o6KMuJCtfJ2DVD2uFQn93aWpiuwC8gFjNPvSCoI=\",\"salt\":\"7B82BfkMLds4yG4QoAxTzg==\"}",
+      "credentialData" : "{\"hashIterations\":27500,\"algorithm\":\"pbkdf2-sha256\"}"
+    } ],
+    "disableableCredentialTypes" : [ ],
+    "requiredActions" : [ ],
+    "realmRoles" : [ "offline_access", "uma_authorization" ],
+    "clientRoles" : {
+      "account" : [ "manage-account", "view-profile" ]
+    },
+    "notBefore" : 0,
+    "groups" : [ ]
+  } ],
+  "scopeMappings" : [ {
+    "clientScope" : "offline_access",
+    "roles" : [ "offline_access" ]
+  } ],
   "clients": [
     {
       "id": "12eebf0b-a3eb-49f8-9ecf-173cf8a00145",
@@ -662,14 +765,17 @@
       ]
     },
     {
-      "id": "bb7e7f76-7ce4-409a-aba2-85e3ea0d2c48",
+      "id": "63989eca-90b0-4d3a-b51b-d82bbcda5365",
       "clientId": "event-service",
-      "name": "Event Service",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
       "secret": "x7cLVF4WiGCrSXclHjNk0VZDMR9OlxMh",
+=======
+      "secret": "3F2275wzaP7AkhEIeiOjePffT8eYruFs",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
       "redirectUris": [
         "http://localhost:8086/*"
       ],
@@ -692,7 +798,6 @@
         "backchannel.logout.revoke.offline.tokens": "false",
         "saml.server.signature.keyinfo.ext": "false",
         "use.refresh.tokens": "true",
-        "jwt.credential.certificate": "MIICqTCCAZECBgGCgB2bTTANBgkqhkiG9w0BAQsFADAYMRYwFAYDVQQDDA1ldmVudC1zZXJ2aWNlMB4XDTIyMDgwOTAwNTgyMFoXDTMyMDgwOTAxMDAwMFowGDEWMBQGA1UEAwwNZXZlbnQtc2VydmljZTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAOx3J79TfNQLRk6q8x9vQ+8Hrxig2IAlNpNRFAFyrOQYV2NZt2uafK0c6m/v5F7/tzkhNrbDlwaeRnDL4S9hUdDK+nBTaTU53E8xAhlo/ulxQL0KjHOOgL2nGLQ3y8prVIv2Oq9ijKkW1ZfKF5/XcZQ0wAAbzMp12fwn8fnXbOcvSQ5DcaSo6OvubvruF3w5u8NQnCJVT+G3ilV4BTjkbyitXLk6NpHMz7jWF+0r1XE7+xx8Z/GIBm4CIX1J39fNLbQazIzjUVATCqdNriHLMGSG8DvW0e3d1zWEoghGk9LRa73mNUMWws2AA9EyzCIAgywIoKZ6BTNr0dKQtaBBwXUCAwEAATANBgkqhkiG9w0BAQsFAAOCAQEA2gruu9QsTSMFQnDpFwTDiLdwIAX+5pbV5pwF8Qg9C0wvqxe04snP0C0kZI5sLrAZP9l+VDdrIeJGzKp3SaEAArrxRcLLBjwvnDDhE5SWbP2Pj707JdvwRpkSsQhJVSZOgcVtumdd6bejvzD70xwneIKh0dzeW+9oz8rm4vqyOXeMSMBNgpO9lI3BoJIfgGHS8EKDXBAxVbkIEv0qGI7kVprbMAK3c5t5vcJtkCkZGuW/x4drvGMNSMksG9eOn5/6GUFLHO+jIgBVPbwsUk02s8R/6YM5G344i5P53+xs44Jk5VcKkJ8944y8XL21ELPctSwnQhMBiqCLbwB+OuRf9g==",
         "oidc.ciba.grant.enabled": "false",
         "backchannel.logout.session.required": "true",
         "client_credentials.use_refresh_token": "false",
@@ -701,7 +806,11 @@
         "saml.allow.ecp.flow": "false",
         "saml.assertion.signature": "false",
         "id.token.as.detached.signature": "false",
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
         "client.secret.creation.time": "1660016651",
+=======
+        "client.secret.creation.time": "1660023159",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
         "saml.encrypt": "false",
         "saml.server.signature": "false",
         "exclude.session.state.from.auth.response": "false",
@@ -1425,11 +1534,38 @@
           "protocol": "openid-connect",
           "protocolMapper": "oidc-audience-resolve-mapper",
           "consentRequired": false,
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
           "config": {}
         },
         {
           "id": "804d4798-d9a3-4fd3-8b28-d12142e8cb3d",
           "name": "client roles",
+=======
+          "config": {
+            "userinfo.token.claim": "true",
+            "user.attribute": "email",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "email",
+            "jsonType.label": "String"
+          }
+        }
+      ]
+    },
+    {
+      "id": "29b5693f-de63-4830-94b4-3447715ef128",
+      "name": "acr",
+      "description": "OpenID Connect scope for add acr (authentication context class reference) to the token",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "false",
+        "display.on.consent.screen": "false"
+      },
+      "protocolMappers": [
+        {
+          "id": "9c4aeca1-e2ca-4e5c-8f79-52907823f067",
+          "name": "acr loa level",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
           "protocol": "openid-connect",
           "protocolMapper": "oidc-usermodel-client-role-mapper",
           "consentRequired": false,
@@ -1579,6 +1715,7 @@
         "subComponents": {},
         "config": {
           "allowed-protocol-mapper-types": [
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
 <<<<<<< HEAD:gateway-service/src/main/resources/lsa-realm.json
             "oidc-full-name-mapper",
             "oidc-usermodel-attribute-mapper",
@@ -1590,14 +1727,24 @@
             "oidc-address-mapper"
 =======
             "saml-user-property-mapper",
+=======
+            "oidc-usermodel-property-mapper",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
             "oidc-address-mapper",
             "oidc-usermodel-property-mapper",
             "oidc-full-name-mapper",
             "oidc-sha256-pairwise-sub-mapper",
             "saml-role-list-mapper",
             "oidc-usermodel-attribute-mapper",
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
             "saml-user-attribute-mapper"
 >>>>>>> parent of 721716a... configuring keycloak auth with event service:quotes-client/baeldung-realm.json
+=======
+            "oidc-sha256-pairwise-sub-mapper",
+            "oidc-full-name-mapper",
+            "saml-user-attribute-mapper",
+            "saml-user-property-mapper"
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
           ]
         }
       },
@@ -1617,6 +1764,7 @@
         "subComponents": {},
         "config": {
           "allowed-protocol-mapper-types": [
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
             "oidc-usermodel-attribute-mapper",
             "saml-user-property-mapper",
 <<<<<<< HEAD:gateway-service/src/main/resources/lsa-realm.json
@@ -1635,6 +1783,16 @@
             "saml-role-list-mapper",
             "oidc-sha256-pairwise-sub-mapper"
 >>>>>>> parent of 721716a... configuring keycloak auth with event service:quotes-client/baeldung-realm.json
+=======
+            "oidc-full-name-mapper",
+            "oidc-usermodel-attribute-mapper",
+            "saml-role-list-mapper",
+            "oidc-usermodel-property-mapper",
+            "oidc-address-mapper",
+            "saml-user-property-mapper",
+            "saml-user-attribute-mapper",
+            "oidc-sha256-pairwise-sub-mapper"
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
           ]
         }
       }
@@ -1682,11 +1840,15 @@
   "supportedLocales": [],
   "authenticationFlows": [
     {
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
 <<<<<<< HEAD:gateway-service/src/main/resources/lsa-realm.json
       "id": "71f3b3cc-3489-4ebb-810b-3f0d6cef1881",
 =======
       "id": "b35b726e-c1cc-4a31-8670-8c858c088498",
 >>>>>>> parent of 721716a... configuring keycloak auth with event service:quotes-client/baeldung-realm.json
+=======
+      "id": "cacd3a4c-22ef-49d0-9b15-1e2a48342127",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
       "alias": "Handle Existing Account",
       "description": "Handle what to do if there is existing account with same email/username like authenticated identity provider",
       "providerId": "basic-flow",
@@ -1710,11 +1872,15 @@
       ]
     },
     {
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
 <<<<<<< HEAD:gateway-service/src/main/resources/lsa-realm.json
       "id": "cc6863d1-8194-4898-b8f3-24015f5a5b3f",
 =======
       "id": "b7cb4b8c-0064-4c6b-95ee-d7f50011bae7",
 >>>>>>> parent of 721716a... configuring keycloak auth with event service:quotes-client/baeldung-realm.json
+=======
+      "id": "1b8508bc-f229-411d-bfea-4328d86bd81c",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
       "alias": "Handle Existing Account - Alternatives - 0",
       "description": "Subflow of Handle Existing Account with alternative executions",
       "providerId": "basic-flow",
@@ -1738,11 +1904,15 @@
       ]
     },
     {
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
 <<<<<<< HEAD:gateway-service/src/main/resources/lsa-realm.json
       "id": "3d07d31f-ff9a-492e-b3d0-8121f69f5473",
 =======
       "id": "2576bf21-a516-4e22-8ed8-8a1a3d35c06a",
 >>>>>>> parent of 721716a... configuring keycloak auth with event service:quotes-client/baeldung-realm.json
+=======
+      "id": "41721a20-096e-4d39-a93e-522330edc032",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
       "alias": "Verify Existing Account by Re-authentication",
       "description": "Reauthentication of existing account",
       "providerId": "basic-flow",
@@ -1766,11 +1936,15 @@
       ]
     },
     {
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
 <<<<<<< HEAD:gateway-service/src/main/resources/lsa-realm.json
       "id": "fbdaa89e-734e-4f3f-9355-2f2edc806865",
 =======
       "id": "867b0355-c2b0-4f4e-b535-09406e2bc086",
 >>>>>>> parent of 721716a... configuring keycloak auth with event service:quotes-client/baeldung-realm.json
+=======
+      "id": "e0df18b1-0087-4d38-814c-588354479642",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
       "alias": "Verify Existing Account by Re-authentication - auth-otp-form - Conditional",
       "description": "Flow to determine if the auth-otp-form authenticator should be used or not.",
       "providerId": "basic-flow",
@@ -1794,11 +1968,15 @@
       ]
     },
     {
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
 <<<<<<< HEAD:gateway-service/src/main/resources/lsa-realm.json
       "id": "38d0af24-375a-4ff3-ae6f-244088629fae",
 =======
       "id": "52e45a6a-292f-4a34-9c02-7f97d9997a9c",
 >>>>>>> parent of 721716a... configuring keycloak auth with event service:quotes-client/baeldung-realm.json
+=======
+      "id": "99a8a7c0-eb96-411d-8f44-f69473d60f77",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
       "alias": "browser",
       "description": "browser based authentication",
       "providerId": "basic-flow",
@@ -1836,11 +2014,15 @@
       ]
     },
     {
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
 <<<<<<< HEAD:gateway-service/src/main/resources/lsa-realm.json
       "id": "ebbf3ccc-7bdf-4f70-9422-aa17054b0782",
 =======
       "id": "ef818d24-fb06-418a-a093-16239068cb58",
 >>>>>>> parent of 721716a... configuring keycloak auth with event service:quotes-client/baeldung-realm.json
+=======
+      "id": "c2793260-1e56-46a3-86c6-2c5449f551cd",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
       "alias": "clients",
       "description": "Base authentication for clients",
       "providerId": "client-flow",
@@ -1878,11 +2060,15 @@
       ]
     },
     {
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
 <<<<<<< HEAD:gateway-service/src/main/resources/lsa-realm.json
       "id": "6a29a2f3-3009-4228-b803-de3f5965659d",
 =======
       "id": "f7864004-be4b-40f2-8534-454981f09f98",
 >>>>>>> parent of 721716a... configuring keycloak auth with event service:quotes-client/baeldung-realm.json
+=======
+      "id": "f665871a-290c-474b-8bb9-8365d33c5f9b",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
       "alias": "direct grant",
       "description": "OpenID Connect Resource Owner Grant",
       "providerId": "basic-flow",
@@ -1913,11 +2099,15 @@
       ]
     },
     {
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
 <<<<<<< HEAD:gateway-service/src/main/resources/lsa-realm.json
       "id": "2ee95a83-e767-436a-94c7-a8a06f255572",
 =======
       "id": "233225f2-78b0-4756-9568-a775ea7cc975",
 >>>>>>> parent of 721716a... configuring keycloak auth with event service:quotes-client/baeldung-realm.json
+=======
+      "id": "493963d4-dc48-4461-b4cb-72f398ccfa24",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
       "alias": "direct grant - direct-grant-validate-otp - Conditional",
       "description": "Flow to determine if the direct-grant-validate-otp authenticator should be used or not.",
       "providerId": "basic-flow",
@@ -1941,11 +2131,15 @@
       ]
     },
     {
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
 <<<<<<< HEAD:gateway-service/src/main/resources/lsa-realm.json
       "id": "fb3814b0-00ce-4020-8a34-84dd05993d72",
 =======
       "id": "2787939c-3312-4d56-9d61-22a71947e154",
 >>>>>>> parent of 721716a... configuring keycloak auth with event service:quotes-client/baeldung-realm.json
+=======
+      "id": "47ba1fa6-b25f-4795-8636-4fcd832fdfa4",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
       "alias": "docker auth",
       "description": "Used by Docker clients to authenticate against the IDP",
       "providerId": "basic-flow",
@@ -1962,11 +2156,15 @@
       ]
     },
     {
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
 <<<<<<< HEAD:gateway-service/src/main/resources/lsa-realm.json
       "id": "c3e89280-55ca-405c-80bb-feb06d3a3729",
 =======
       "id": "c80ca473-6e65-4140-a9d1-035414546bfb",
 >>>>>>> parent of 721716a... configuring keycloak auth with event service:quotes-client/baeldung-realm.json
+=======
+      "id": "f9a70859-47ab-4131-be83-1922dfea7fe0",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
       "alias": "first broker login",
       "description": "Actions taken after first broker login with identity provider account, which is not yet linked to any Keycloak account",
       "providerId": "basic-flow",
@@ -1991,11 +2189,15 @@
       ]
     },
     {
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
 <<<<<<< HEAD:gateway-service/src/main/resources/lsa-realm.json
       "id": "03da4423-7abf-478d-80f5-ad07d234c7cf",
 =======
       "id": "700a71e1-f176-432e-9e70-ccb06d539730",
 >>>>>>> parent of 721716a... configuring keycloak auth with event service:quotes-client/baeldung-realm.json
+=======
+      "id": "8cbdb79c-e405-4095-a829-4c5769235dc6",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
       "alias": "first broker login - Alternatives - 0",
       "description": "Subflow of first broker login with alternative executions",
       "providerId": "basic-flow",
@@ -2020,11 +2222,15 @@
       ]
     },
     {
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
 <<<<<<< HEAD:gateway-service/src/main/resources/lsa-realm.json
       "id": "17582e3a-c2a0-48be-a86b-71c579faaaf7",
 =======
       "id": "13cd2ee9-8ebb-4651-8a9d-535d4020d889",
 >>>>>>> parent of 721716a... configuring keycloak auth with event service:quotes-client/baeldung-realm.json
+=======
+      "id": "b261c951-d029-473e-8ff4-4b527bf530e8",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
       "alias": "forms",
       "description": "Username, password, otp and other auth forms.",
       "providerId": "basic-flow",
@@ -2048,11 +2254,15 @@
       ]
     },
     {
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
 <<<<<<< HEAD:gateway-service/src/main/resources/lsa-realm.json
       "id": "a2d304d7-2e6f-4698-a410-276e990a4643",
 =======
       "id": "80067ebf-72b9-4ba5-abc3-161dfdd53938",
 >>>>>>> parent of 721716a... configuring keycloak auth with event service:quotes-client/baeldung-realm.json
+=======
+      "id": "3b86e6bc-52e7-44ea-a91a-afe979ad2472",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
       "alias": "forms - auth-otp-form - Conditional",
       "description": "Flow to determine if the auth-otp-form authenticator should be used or not.",
       "providerId": "basic-flow",
@@ -2076,11 +2286,15 @@
       ]
     },
     {
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
 <<<<<<< HEAD:gateway-service/src/main/resources/lsa-realm.json
       "id": "4ef528d3-f3fa-4982-ae08-fbf9c18e150e",
 =======
       "id": "269354b1-7dd7-46ff-8a69-084cd2c7be80",
 >>>>>>> parent of 721716a... configuring keycloak auth with event service:quotes-client/baeldung-realm.json
+=======
+      "id": "a9fc1d67-fa6f-4ac3-af9a-ffdd5896519e",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
       "alias": "http challenge",
       "description": "An authentication flow based on challenge-response HTTP Authentication Schemes",
       "providerId": "basic-flow",
@@ -2118,11 +2332,15 @@
       ]
     },
     {
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
 <<<<<<< HEAD:gateway-service/src/main/resources/lsa-realm.json
       "id": "79750521-ed8c-4ef5-b903-02e062761eda",
 =======
       "id": "c5fa64a0-e784-490f-8879-0e8a209e3636",
 >>>>>>> parent of 721716a... configuring keycloak auth with event service:quotes-client/baeldung-realm.json
+=======
+      "id": "f77b5bc2-3896-4451-b771-9d1b61ce18c2",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
       "alias": "registration",
       "description": "registration flow",
       "providerId": "basic-flow",
@@ -2140,11 +2358,15 @@
       ]
     },
     {
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
 <<<<<<< HEAD:gateway-service/src/main/resources/lsa-realm.json
       "id": "7daf9ed5-bc7f-4ef8-a6a8-4a41140627b4",
 =======
       "id": "bc48f897-4d16-49a8-be70-183c7867e20a",
 >>>>>>> parent of 721716a... configuring keycloak auth with event service:quotes-client/baeldung-realm.json
+=======
+      "id": "95513666-51de-4706-b9b8-475f47dbdcc4",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
       "alias": "registration form",
       "description": "registration form",
       "providerId": "form-flow",
@@ -2182,11 +2404,15 @@
       ]
     },
     {
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
 <<<<<<< HEAD:gateway-service/src/main/resources/lsa-realm.json
       "id": "b0e15398-8f83-400b-a867-3e72d3abe155",
 =======
       "id": "fddaba41-87b1-40d1-b147-f062c38e39ad",
 >>>>>>> parent of 721716a... configuring keycloak auth with event service:quotes-client/baeldung-realm.json
+=======
+      "id": "63de560c-9caf-4136-9443-db30bd5a751e",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
       "alias": "reset credentials",
       "description": "Reset credentials for a user if they forgot their password or something",
       "providerId": "basic-flow",
@@ -2224,11 +2450,15 @@
       ]
     },
     {
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
 <<<<<<< HEAD:gateway-service/src/main/resources/lsa-realm.json
       "id": "0db1dca2-567e-419f-a39e-b373a23c98f3",
 =======
       "id": "6b9fa295-1eb4-48b0-a286-b17ebd6be7e1",
 >>>>>>> parent of 721716a... configuring keycloak auth with event service:quotes-client/baeldung-realm.json
+=======
+      "id": "087b9226-badc-4ea0-8963-a520a666f02e",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
       "alias": "reset credentials - reset-otp - Conditional",
       "description": "Flow to determine if the reset-otp authenticator should be used or not.",
       "providerId": "basic-flow",
@@ -2252,11 +2482,15 @@
       ]
     },
     {
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
 <<<<<<< HEAD:gateway-service/src/main/resources/lsa-realm.json
       "id": "fdd9d6d4-a7bc-4a4a-b798-80a2d915b40f",
 =======
       "id": "c890d4c4-e4e2-4618-b69d-8d30f8278965",
 >>>>>>> parent of 721716a... configuring keycloak auth with event service:quotes-client/baeldung-realm.json
+=======
+      "id": "f1498268-e239-433a-9562-8b029ff2bcc6",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
       "alias": "saml ecp",
       "description": "SAML ECP Profile Authentication Flow",
       "providerId": "basic-flow",
@@ -2275,22 +2509,30 @@
   ],
   "authenticatorConfig": [
     {
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
 <<<<<<< HEAD:gateway-service/src/main/resources/lsa-realm.json
       "id": "ad45d38e-cb06-4448-af3a-48c5a248c5c3",
 =======
       "id": "2b02fbe4-e05e-4238-bb0e-04da7d4efd4e",
 >>>>>>> parent of 721716a... configuring keycloak auth with event service:quotes-client/baeldung-realm.json
+=======
+      "id": "4ab5ee5e-7de9-44fa-9954-c934a0baa585",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
       "alias": "create unique user config",
       "config": {
         "require.password.update.after.registration": "false"
       }
     },
     {
+<<<<<<< HEAD:quotes-client/baeldung-realm.json
 <<<<<<< HEAD:gateway-service/src/main/resources/lsa-realm.json
       "id": "5c1d452e-8d78-43ce-819b-c928815fadad",
 =======
       "id": "07dd933b-ce95-4a7c-bd81-3efa24f9558c",
 >>>>>>> parent of 721716a... configuring keycloak auth with event service:quotes-client/baeldung-realm.json
+=======
+      "id": "055b137e-d6cb-4b92-94fc-68ae777b2e28",
+>>>>>>> security5:gateway-service/src/main/resources/lsa-realm.json
       "alias": "review profile config",
       "config": {
         "update.profile.on.first.login": "missing"
