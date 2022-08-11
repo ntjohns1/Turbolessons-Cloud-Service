@@ -8,6 +8,7 @@ services:
     environment:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
+      KEYCLOAK_REALM: lsa
       DB_ADDR: mysql
       DB_USER: keycloak
       DB_PASSWORD: keycloak
@@ -36,12 +37,6 @@ services:
   config-service:
     image: com-noslen-lsa-config-service:latest
     container_name: config-server
-    environment:
-      GIT_URI: https://github.com/ntjohns1/lsaAuthConfig.git
-      GIT_DEFAULT-LABEL: main
-      APP_NAME: config-server
-      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/local-as-container-env-var
-      SERVER_BOOTSTRAP: 1
     ports:
       - "9999:9999"
   service-registry:
@@ -63,9 +58,8 @@ services:
   event-service:
     image: com-noslen-event-service:latest
     container_name: event-service
+    expose:
+      - "5001"
     ports:
       - "5001:5001"
-    depends_on:
-      - gateway
-      - config-service
 
