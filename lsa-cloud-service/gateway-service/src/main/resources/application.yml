@@ -1,0 +1,53 @@
+server:
+  port: 8086
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      redis:
+        enabled: false
+      routes:
+        - id: quotes
+          uri: http://localhost:8085
+          predicates:
+            - Path=/quotes/**
+          filters:
+            - TokenRelay=
+        - id: quotes
+          uri: http://localhost:5001
+          predicates:
+            - Path=/api/event/**
+          filters:
+            - TokenRelay=
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://172.31.0.3/16:8089/auth/realms/lsa
+        registration:
+          quotes-client:
+            provider: keycloak
+            client-id: quotes-client
+            client-secret: 0e082231-a70d-48e8-b8a5-fbfb743041b6
+            scope:
+              - email
+              - profile
+              - roles
+---
+  security:
+    oauth2:
+      client:
+        provider:
+          keycloak:
+            issuer-uri: http://172.31.0.3/16:8089/auth/realms/lsa
+        registration:
+          event-service:
+            provider: keycloak
+            client-id: event-service
+            client-secret: 3F2275wzaP7AkhEIeiOjePffT8eYruFs
+            scope:
+              - email
+              - profile
+              - roles
