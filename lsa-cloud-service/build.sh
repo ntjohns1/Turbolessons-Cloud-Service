@@ -25,5 +25,5 @@ cd ..
 
 echo "Building the event service"
 cd event-service
-docker build --tag com-noslen-event-service --no-cahce .
+docker build --tag com-noslen-event-service .
 cd ..
