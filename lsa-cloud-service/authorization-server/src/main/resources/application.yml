@@ -1,0 +1,27 @@
+server:
+  port: 8089
+
+spring:
+  application:
+    name: authorization-server
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    url: jdbc:mysql://localhost:3306/keycloak?useSSL=false&serverTimezone=US/Central&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
+    hikari:
+      connection-test-query: SELECT 1
+    password:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+    show-sql: 'true'
+
+keycloak:
+  server:
+    contextPath: /auth
+    adminUser:
+      username: noslen
+      password: pass
+    realmImportFile: lsa-realm.json
+

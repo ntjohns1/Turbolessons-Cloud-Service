@@ -1,0 +1,71 @@
+version: "2"
+networks:
+  backend:
+services:
+  keycloak:
+    image: jboss/keycloak:12.0.4
+    container_name: keycloak
+    environment:
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+      DB_ADDR: mysql
+      DB_USER: keycloak
+      DB_PASSWORD: keycloak
+      DB_PORT: "3306"
+      DB_DATABASE: keycloak
+    ports:
+      - 8089:8080
+    networks:
+      - backend
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:latest
+    container_name: authDB
+    environment:
+      MYSQL_ROOT_PASSWORD: keycloak
+      MYSQL_USER: keycloak
+      MYSQL_PASSWORD: keycloak
+      MYSQL_DATABASE: keycloak
+    ports:
+      - 3306:3306
+    networks:
+      - backend
+    depends_on:
+      - service-registry
+  config-service:
+    image: com-noslen-lsa-config-service:latest
+    container_name: config-server
+    environment:
+      GIT_URI: https://github.com/ntjohns1/lsaAuthConfig.git
+      GIT_DEFAULT-LABEL: main
+      APP_NAME: config-server
+      SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/local-as-container-env-var
+      SERVER_BOOTSTRAP: 1
+    ports:
+      - "9999:9999"
+  service-registry:
+    image: com-noslen-service-registry:latest
+    container_name: service-registry
+    ports:
+      - "8761:8761"
+    depends_on:
+      - config-service
+  gateway:
+    image: com-noslen-gateway-service:latest
+    container_name: gateway
+    expose:
+      - "8086"
+    ports:
+      - "8086:8086"
+    depends_on:
+      - keycloak
+  event-service:
+    image: com-noslen-event-service:latest
+    container_name: event-service
+    ports:
+      - "5001:5001"
+    depends_on:
+      - gateway
+      - config-service
+
