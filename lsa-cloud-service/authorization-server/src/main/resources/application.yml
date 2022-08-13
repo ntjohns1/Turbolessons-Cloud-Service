@@ -1,0 +1,25 @@
+server:
+  port: 8083
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    url: jdbc:mysql://127.0.0.1/keycloak?autoReconnect=true&useSSL=false
+    hikari:
+      connection-test-query: SELECT 1
+    password: password
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+    show-sql: 'true'
+
+keycloak:
+  server:
+    contextPath: /auth
+    adminUser:
+      username: noslen
+      password: pass
+    realmImportFile: lsa-realm.json
+
