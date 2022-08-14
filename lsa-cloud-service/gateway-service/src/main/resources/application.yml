@@ -14,7 +14,7 @@ spring:
             - Path=/quotes/**
           filters:
             - TokenRelay=
-        - id: quotes
+        - id: events
           uri: http://localhost:5001
           predicates:
             - Path=/api/event/**
@@ -25,7 +25,7 @@ spring:
       client:
         provider:
           keycloak:
-            issuer-uri: http://172.31.0.3/16:8089/auth/realms/lsa
+            issuer-uri: http://493c22c39f0e78b3e7fddbb49e5531feb2b4c25e68dc4f7e6f23da0350d08ea4:8083/auth/realms/lsa
         registration:
           quotes-client:
             provider: keycloak
@@ -41,7 +41,7 @@ spring:
       client:
         provider:
           keycloak:
-            issuer-uri: http://172.31.0.3/16:8089/auth/realms/lsa
+            issuer-uri: http://493c22c39f0e78b3e7fddbb49e5531feb2b4c25e68dc4f7e6f23da0350d08ea4:8083/auth/realms/lsa
         registration:
           event-service:
             provider: keycloak

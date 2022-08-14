@@ -1,7 +1,7 @@
 #
 # Build stage
 #
-FROM maven:3.6.3-jdk-13 AS build
+FROM maven AS build
 COPY src /home/app/src
 COPY pom.xml /home/app
 RUN mvn -f /home/app/pom.xml clean package
@@ -9,7 +9,7 @@ RUN mvn -f /home/app/pom.xml clean package
 #
 # Package stage
 #
-FROM adoptopenjdk:13
-COPY --from=build /home/app/target/event-service-0.0.1-SNAPSHOT.jar /usr/local/lib/event-service.jar
-EXPOSE 5001
-ENTRYPOINT ["java","-jar","/usr/local/lib/event-service.jar"]
+FROM adoptopenjdk
+COPY --from=build /home/app/target/authorization-server-0.1.0-SNAPSHOT.jar /usr/local/lib/authorization-server.jar
+EXPOSE 8083
+ENTRYPOINT ["java","-jar","/usr/local/lib/authorization-server.jar"]

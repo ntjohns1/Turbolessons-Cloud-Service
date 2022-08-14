@@ -2,17 +2,19 @@ server:
   port: 8083
 
 spring:
+  application:
+    name: authorization-server
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    url: jdbc:mysql://127.0.0.1/keycloak?autoReconnect=true&useSSL=false
+    url: jdbc:mysql://localhost:3306/keycloak?autoReconnect=true&useSSL=false
     hikari:
       connection-test-query: SELECT 1
     password: password
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL5Dialect
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: 'true'
 
 keycloak:
