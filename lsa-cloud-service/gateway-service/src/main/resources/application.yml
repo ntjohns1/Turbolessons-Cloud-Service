@@ -1,5 +1,13 @@
 server:
   port: 8086
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.web.HttpLogging: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
+    org.springframework.cloud.gateway: DEBUG
 spring:
   application:
     name: gateway-service
@@ -25,7 +33,7 @@ spring:
       client:
         provider:
           keycloak:
-            issuer-uri: http://493c22c39f0e78b3e7fddbb49e5531feb2b4c25e68dc4f7e6f23da0350d08ea4:8083/auth/realms/lsa
+            issuer-uri: http://localhost:8083/auth/realms/lsa
         registration:
           quotes-client:
             provider: keycloak
@@ -35,19 +43,21 @@ spring:
               - email
               - profile
               - roles
+              - openid
 ---
-  security:
-    oauth2:
-      client:
-        provider:
-          keycloak:
-            issuer-uri: http://493c22c39f0e78b3e7fddbb49e5531feb2b4c25e68dc4f7e6f23da0350d08ea4:8083/auth/realms/lsa
-        registration:
-          event-service:
-            provider: keycloak
-            client-id: event-service
-            client-secret: 3F2275wzaP7AkhEIeiOjePffT8eYruFs
-            scope:
-              - email
-              - profile
-              - roles
+security:
+  oauth2:
+    client:
+      provider:
+        keycloak:
+          issuer-uri: http://localhost:8083/auth/realms/lsa
+      registration:
+        event-service:
+          provider: keycloak
+          client-id: event-service
+          client-secret: 3F2275wzaP7AkhEIeiOjePffT8eYruFs
+          scope:
+            - email
+            - profile
+            - roles
+            - openid

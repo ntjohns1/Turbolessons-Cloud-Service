@@ -1,63 +1,89 @@
-version: "2"
+version: "3.9"
 networks:
- keycloak-network:
+  lsa-cloud-service_lsa:
+  keycloak-network:
 services:
   keycloak:
     image: com-noslen-authorization-server:latest
-    container_name: keycloak
+    hostname: localhost
+    container_name: lsakc
     environment:
       KEYCLOAK_USER: noslen
       KEYCLOAK_PASSWORD: pass
-      KEYCLOAK_REALM: lsa
-      DB_ADDR: mysql
-      DB_USER: keycloak
-      DB_PASSWORD: keycloak
-      DB_PORT: "3306"
-      DB_DATABASE: keycloak
+      DB_VENDOR: MYSQL
+      DB_PORT: 3306
+      DB_DATABASE: keycloakDB
+      DB_USER: keycloakUser
+      DB_PASSWORD: kcPword
+      spring.datasource.password: kcPword
+      spring.datasource.username: keycloakUser
+      spring.datasource.url: jdbc:mysql://auth_db:3306/keycloakDB
+      spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
+      spring.jpa.hibernate.ddl-auto: update
+      spring.jpa.show-sql: 1
+      spring.keycloak.realm: lsa
+      spring.keycloak.auth-server-url: http://localhost:8083/auth
+      spring.keycloak.ssl-required: external
+      spring.keycloak.use-resource-role-mappings: 1
+      management.endpoints.routesEnabled: 1
+      eureka.client.registerWithEureka: 1
+      eureka.client.fetchRegistry: 1
+      eureka.client.enabled: 1
+      eureka.client.serviceUrl.defaultZone: http://service-registry:8761/eureka
+    expose:
+      - "8083"
     ports:
       - "8083:8083"
     networks:
       - keycloak-network
+      - lsa-cloud-service_lsa
     depends_on:
       - mysql
+
   mysql:
     image: mysql:latest
     container_name: mysql
+    hostname: auth_db
     environment:
-      MYSQL_ROOT_PASSWORD: keycloak
-      MYSQL_USER: keycloak
-      MYSQL_PASSWORD: keycloak
-      MYSQL_DATABASE: keycloak
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: keycloakDB
+      MYSQL_USER: keycloakUser
+      MYSQL_PASSWORD: kcPword
+    expose:
+      - "3036"
     ports:
       - "3306:3306"
     networks:
       - keycloak-network
+    depends_on:
+      - service-registry
+
   config-service:
-    image: com-noslen-lsa-config-service:latest
+    image: com-noslen-config-service:latest
     container_name: config-server
+    expose:
+      - "9999"
     ports:
       - "9999:9999"
+    networks:
+      - lsa-cloud-service_lsa
+
   service-registry:
     image: com-noslen-service-registry:latest
     container_name: service-registry
+    hostname: service-registry
+    environment:
+      eureka.instance.preferIpAddress: 1
+      eureka.instance.ip-address: 172.19.0.4
+      eureka.client.serviceUrl.defaultZone: http://service-registry:8761/eureka
+    expose:
+      - "8761"
     ports:
       - "8761:8761"
+    networks:
+      - lsa-cloud-service_lsa
     depends_on:
       - config-service
-  gateway:
-    image: com-noslen-gateway-service:latest
-    container_name: gateway
-    expose:
-      - "8086"
-    ports:
-      - "8086:8086"
-    depends_on:
-      - keycloak
-  event-service:
-    image: com-noslen-event-service:latest
-    container_name: event-service
-    expose:
-      - "5001"
-    ports:
-      - "5001:5001"
+
+
 

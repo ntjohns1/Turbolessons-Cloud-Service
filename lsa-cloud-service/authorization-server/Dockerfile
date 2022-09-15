@@ -11,5 +11,5 @@ RUN mvn -f /home/app/pom.xml clean package
 #
 FROM adoptopenjdk
 COPY --from=build /home/app/target/authorization-server-0.1.0-SNAPSHOT.jar /usr/local/lib/authorization-server.jar
-EXPOSE 8083
+ENV KC_HOSTNAME=lsakc
 ENTRYPOINT ["java","-jar","/usr/local/lib/authorization-server.jar"]
