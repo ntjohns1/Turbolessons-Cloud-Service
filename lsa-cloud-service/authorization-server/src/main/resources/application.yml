@@ -1,6 +1,14 @@
 server:
   port: 8083
 
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.web.HttpLogging: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
+
 spring:
   application:
     name: authorization-server
@@ -16,7 +24,12 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     show-sql: 'true'
-
+  keycloak:
+    realm: lsa
+    auth-server-url: http://localhost:8083
+    ssl-required: external
+    resource: event-service
+    keycloak.credentials.secret: 3F2275wzaP7AkhEIeiOjePffT8eYruFs
 keycloak:
   server:
     contextPath: /auth

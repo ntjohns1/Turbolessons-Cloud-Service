@@ -336,7 +336,7 @@
       ],
       "event-service": [],
       "security-admin-console": [],
-      "quotes-client": [],
+      "quotes-service": [],
       "admin-cli": [],
       "account-console": [],
       "broker": [
@@ -824,8 +824,8 @@
       "secret": "**********",
       "redirectUris": [
         "http://localhost:8082/new-client/login/oauth2/code/custom",
-        "http://localhost:8089/",
-        "http://localhost:8089/auth/redirect/"
+        "http://localhost:8083/",
+        "http://localhost:8083/auth/redirect/"
       ],
       "webOrigins": [
         "+"
@@ -875,7 +875,7 @@
     },
     {
       "id": "5898f71f-b91e-4c3f-9c86-48de0e8665c4",
-      "clientId": "quotes-client",
+      "clientId": "quotes-service",
       "name": "Quotes Client",
       "surrogateAuthRequired": false,
       "enabled": true,

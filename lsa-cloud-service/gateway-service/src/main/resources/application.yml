@@ -1,5 +1,13 @@
 server:
   port: 8086
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.web.HttpLogging: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
+    org.springframework.cloud.gateway: DEBUG
 spring:
   application:
     name: gateway-service
@@ -35,6 +43,7 @@ spring:
               - email
               - profile
               - roles
+              - openid
 ---
 security:
   oauth2:
@@ -51,3 +60,4 @@ security:
             - email
             - profile
             - roles
+            - openid

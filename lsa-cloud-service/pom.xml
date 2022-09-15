@@ -14,7 +14,7 @@
 		<module>authorization-server</module>
 		<module>gateway-service</module>
 		<module>event-service</module>
-		<module>quotes-client</module>
+		<module>quotes-service</module>
 <!--		<module>admin-service</module>-->
 	</modules>
 
