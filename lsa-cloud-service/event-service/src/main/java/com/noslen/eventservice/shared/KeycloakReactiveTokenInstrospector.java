@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.noslen.eventservice.shared;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -24,7 +21,6 @@ public class KeycloakReactiveTokenInstrospector implements ReactiveOpaqueTokenIn
 
     @Override
     public Mono<OAuth2AuthenticatedPrincipal> introspect(String token) {
-
         return delegate.introspect(token)
          .map( this::mapPrincipal);
     }
