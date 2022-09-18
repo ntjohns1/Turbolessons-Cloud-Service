@@ -18,7 +18,7 @@ public class MailObject implements Serializable {
     @Email
     @NotNull
     @Size(min = 1, message = "Please, set an email address to send the message to it")
-    private String to;
+    private String email;
     private String recipientName;
     private String subject;
     private String text;
@@ -26,20 +26,24 @@ public class MailObject implements Serializable {
     public MailObject() {
     }
 
-    public MailObject(String to, String recipientName, String subject, String text, String senderName) {
-        this.to = to;
+    public MailObject(String email,
+                      String recipientName,
+                      String subject,
+                      String text,
+                      String senderName) {
+        this.email = email;
         this.recipientName = recipientName;
         this.subject = subject;
         this.text = text;
         this.senderName = senderName;
     }
 
-    public String getTo() {
-        return to;
+    public String getEmail() {
+        return email;
     }
 
-    public void setTo(String to) {
-        this.to = to;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getSubject() {

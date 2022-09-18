@@ -4,7 +4,6 @@ import com.noslen.emailservice.dto.MailObject;
 import com.noslen.emailservice.mail.EmailService;
 import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.HashMap;
@@ -31,10 +31,14 @@ public class MailController {
 
     @RequestMapping(value = {"/sendHtml"}, method = RequestMethod.GET)
     public String getHtmlMailView(Model model,
-                                  ServerHttpRequest request) {
+                                  HttpServletRequest request) {
 
         Map<String, String> templateEngines = new HashMap<>();
-        model.addAttribute("mailObject", new MailObject());
+        model.addAttribute("mailObject", new MailObject("nelsontjohns@gmail.com",
+                "Nelson",
+                "LSA Test",
+                "This is a test message from LSA",
+                "LSA"));
         return "mail/sendHtml";
     }
 
@@ -42,10 +46,10 @@ public class MailController {
     public String createHtmlMail(Model model,
                                  @ModelAttribute("mailObject") @Valid MailObject mailObject,
                                  Errors errors) throws IOException, MessagingException, TemplateException {
-        if (errors.hasErrors()) {
-            return "mail/send";
-        }
-        mailObject.setTo("nelsontjohns@gmail.com");
+//        if (errors.hasErrors()) {
+//            return "mail/send";
+//        }
+        mailObject.setEmail("nelsontjohns@gmail.com");
         mailObject.setRecipientName("Nelson");
         mailObject.setSubject("LSA Test");
         mailObject.setText("This is a test message from LSA");
@@ -56,7 +60,7 @@ public class MailController {
         templateModel.put("text", mailObject.getText());
         templateModel.put("senderName", mailObject.getSenderName());
         emailService.sendHTMLMessage(
-                mailObject.getTo(),
+                mailObject.getEmail(),
                 mailObject.getSubject(),
                 templateModel);
 
