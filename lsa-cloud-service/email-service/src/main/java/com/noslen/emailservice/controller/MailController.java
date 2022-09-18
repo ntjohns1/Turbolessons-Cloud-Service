@@ -34,10 +34,7 @@ public class MailController {
                                   ServerHttpRequest request) {
 
         Map<String, String> templateEngines = new HashMap<>();
-        templateEngines.put("Thymeleaf", "Thymeleaf");
-        templateEngines.put("Freemarker", "Freemarker");
         model.addAttribute("mailObject", new MailObject());
-        model.addAttribute("templateEngines", templateEngines);
         return "mail/sendHtml";
     }
 
@@ -48,12 +45,17 @@ public class MailController {
         if (errors.hasErrors()) {
             return "mail/send";
         }
+        mailObject.setTo("nelsontjohns@gmail.com");
+        mailObject.setRecipientName("Nelson");
+        mailObject.setSubject("LSA Test");
+        mailObject.setText("This is a test message from LSA");
+        mailObject.setSenderName("LSA");
 
         Map<String, Object> templateModel = new HashMap<>();
         templateModel.put("recipientName", mailObject.getRecipientName());
         templateModel.put("text", mailObject.getText());
         templateModel.put("senderName", mailObject.getSenderName());
-        emailService.sendMessageUsingThymeleafTemplate(
+        emailService.sendHTMLMessage(
                 mailObject.getTo(),
                 mailObject.getSubject(),
                 templateModel);

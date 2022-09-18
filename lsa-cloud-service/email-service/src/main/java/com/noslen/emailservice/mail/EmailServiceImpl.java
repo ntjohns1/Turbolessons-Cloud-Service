@@ -28,16 +28,13 @@ public class EmailServiceImpl implements EmailService {
     private Resource resourceFile;
 
     @Override
-    public void sendMessageUsingThymeleafTemplate(
+    public void sendHTMLMessage(
         String to, String subject, Map<String, Object> templateModel)
             throws MessagingException {
 
         Context thymeleafContext = new Context();
         thymeleafContext.setVariables(templateModel);
         String htmlBody = thymeleafTemplateEngine.process("template-thymeleaf.html", thymeleafContext);
-        sendHtmlMessage(to, subject, htmlBody);
-    }
-    private void sendHtmlMessage(String to, String subject, String htmlBody) throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
         helper.setFrom(NOREPLY_ADDRESS);

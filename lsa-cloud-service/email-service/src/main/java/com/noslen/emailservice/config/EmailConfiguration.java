@@ -2,6 +2,7 @@ package com.noslen.emailservice.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -63,6 +64,7 @@ public class EmailConfiguration {
     }
 
     @Bean
+    @Primary
     public ITemplateResolver thymeleafFilesystemTemplateResolver() {
         FileTemplateResolver templateResolver = new FileTemplateResolver();
         templateResolver.setPrefix(mailTemplatesPath + "/");

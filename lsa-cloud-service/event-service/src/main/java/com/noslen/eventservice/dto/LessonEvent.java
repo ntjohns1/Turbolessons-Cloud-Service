@@ -4,13 +4,14 @@ package com.noslen.eventservice.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Table(name = "lesson_event")
-public class LessonEvent {
+public class LessonEvent implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

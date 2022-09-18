@@ -8,7 +8,6 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.server.resource.authentication.BearerTokenAuthentication;
 import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Map;
@@ -39,13 +38,12 @@ public class EventController {
     }
 
     //GET LESSON BY ID
-    @GetMapping("/api/lesson/{id}")
+    @GetMapping("/api/event/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Mono<LessonEvent> getLessonById(@PathVariable Integer id) {
-        Optional<LessonEvent> lesson = lessonEventRepo.findById(id);
-        return Mono.justOrEmpty(lesson);
+    public LessonEvent getLessonById(@PathVariable Integer id) {
+        Optional<LessonEvent> returnVal = lessonEventRepo.findById(id);
+        return returnVal.orElse(null);
     }
-
 
 
     //GET LESSONS BY STUDENT ID
@@ -58,9 +56,9 @@ public class EventController {
     //CREATE NEW LESSON
     @PostMapping("/api/lesson/")
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<LessonEvent> createLesson(@RequestBody  LessonEvent lesson, BearerTokenAuthentication auth ) {
+    public LessonEvent createLesson(@RequestBody  LessonEvent lesson, BearerTokenAuthentication auth ) {
         lessonEventRepo.save(lesson);
-        return Mono.just(lesson);
+        return lesson;
     }
 
     //UPDATE LESSON BY ID

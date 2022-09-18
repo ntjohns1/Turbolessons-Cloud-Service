@@ -6,14 +6,15 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 @Entity
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler"})
 @Table(name = "emails")
-public class MailObject {
+public class MailObject implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     @Email
     @NotNull
     @Size(min = 1, message = "Please, set an email address to send the message to it")
@@ -22,7 +23,16 @@ public class MailObject {
     private String subject;
     private String text;
     private String senderName;
-    private String templateEngine;
+    public MailObject() {
+    }
+
+    public MailObject(String to, String recipientName, String subject, String text, String senderName) {
+        this.to = to;
+        this.recipientName = recipientName;
+        this.subject = subject;
+        this.text = text;
+        this.senderName = senderName;
+    }
 
     public String getTo() {
         return to;
@@ -62,14 +72,6 @@ public class MailObject {
 
     public void setSenderName(String senderName) {
         this.senderName = senderName;
-    }
-
-    public String getTemplateEngine() {
-        return templateEngine;
-    }
-
-    public void setTemplateEngine(String templateEngine) {
-        this.templateEngine = templateEngine;
     }
 
 }
