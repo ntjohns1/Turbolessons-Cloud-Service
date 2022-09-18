@@ -1,5 +1,6 @@
 package com.noslen.eventservice.controller;
 
+
 import com.noslen.eventservice.dta.LessonEventRepo;
 import com.noslen.eventservice.dto.LessonEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,25 +19,27 @@ import java.util.Optional;
 public class EventController {
 
 
-    @GetMapping("/api/event/token")
+    @GetMapping("/api/lesson/token")
     public String getToken(BearerTokenAuthentication auth ) {
+        String path = System.getenv("PATH");
+        System.out.println(path);
         Map<String, Object> m = auth.getTokenAttributes();
-        m.forEach((key, value) -> System.out.println(key + ": " + value.toString()));
-        return auth.getToken().getTokenValue();
+        boolean s = m.get("realm_access").toString().contains("admin");
+        return s ? "yes" : "no";
     }
 
     @Autowired
     private LessonEventRepo lessonEventRepo;
 
     //    GET ALL LESSONS
-    @GetMapping("/api/event/")
+    @GetMapping("/api/lesson/")
     @ResponseStatus(HttpStatus.OK)
     public List<LessonEvent> getAllLessons() {
         return lessonEventRepo.findAll();
     }
 
     //GET LESSON BY ID
-    @GetMapping("/api/event/{id}")
+    @GetMapping("/api/lesson/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Mono<LessonEvent> getLessonById(@PathVariable Integer id) {
         Optional<LessonEvent> lesson = lessonEventRepo.findById(id);
@@ -46,22 +49,22 @@ public class EventController {
 
 
     //GET LESSONS BY STUDENT ID
-    @GetMapping("/api/event/student/{id}")
+    @GetMapping("/api/lesson/student/{id}")
     @ResponseStatus(HttpStatus.OK)
     public List<LessonEvent> getLessonsByStudent(@PathVariable String studentId) {
         return lessonEventRepo.findLessonsByStudentId(studentId);
     }
 
     //CREATE NEW LESSON
-    @PostMapping("/api/event/")
+    @PostMapping("/api/lesson/")
     @ResponseStatus(HttpStatus.CREATED)
-    public LessonEvent createLesson(@RequestBody  LessonEvent lesson) {
+    public Mono<LessonEvent> createLesson(@RequestBody  LessonEvent lesson, BearerTokenAuthentication auth ) {
         lessonEventRepo.save(lesson);
-        return lesson;
+        return Mono.just(lesson);
     }
 
     //UPDATE LESSON BY ID
-    @PutMapping("/api/event/{id}")
+    @PutMapping("/api/lesson/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void updateLesson(@RequestBody LessonEvent lesson, @PathVariable Integer id) {
         if(lesson.getId() != id) {
@@ -71,7 +74,7 @@ public class EventController {
     }
 
     //DELETE LESSON BY ID
-    @DeleteMapping("/api/event/{id}")
+    @DeleteMapping("/api/lesson/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteLesson(@PathVariable Integer id) {
         lessonEventRepo.deleteById(id);

@@ -57,7 +57,19 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
         </dependency>
-	</dependencies>
+<!--        <dependency>-->
+<!--            <groupId>org.keycloak</groupId>-->
+<!--            <artifactId>keycloak-core</artifactId>-->
+<!--            <version>19.0.1</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
+		<!-- https://mvnrepository.com/artifact/org.keycloak/keycloak-admin-client -->
+<!--		<dependency>-->
+<!--			<groupId>org.keycloak</groupId>-->
+<!--			<artifactId>keycloak-admin-client</artifactId>-->
+<!--			<version>19.0.2</version>-->
+<!--		</dependency>-->
+    </dependencies>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

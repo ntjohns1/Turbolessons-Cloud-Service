@@ -61,11 +61,13 @@ services:
   config-service:
     image: com-noslen-config-service:latest
     container_name: config-server
+    hostname: config-server
     expose:
       - "9999"
     ports:
       - "9999:9999"
     networks:
+      - keycloak-network
       - lsa-cloud-service_lsa
 
   service-registry:

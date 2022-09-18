@@ -14,6 +14,7 @@
 		<module>authorization-server</module>
 		<module>gateway-service</module>
 		<module>event-service</module>
+		<module>email-service</module>
 	</modules>
 
 </project>
