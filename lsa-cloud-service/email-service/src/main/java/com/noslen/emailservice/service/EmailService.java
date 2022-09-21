@@ -1,4 +1,4 @@
-package com.noslen.emailservice.mail;
+package com.noslen.emailservice.service;
 
 import javax.mail.MessagingException;
 import java.io.IOException;

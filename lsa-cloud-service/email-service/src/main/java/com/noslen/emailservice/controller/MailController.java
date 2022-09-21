@@ -1,8 +1,7 @@
 package com.noslen.emailservice.controller;
 
 import com.noslen.emailservice.dto.MailObject;
-import com.noslen.emailservice.mail.EmailService;
-import freemarker.template.TemplateException;
+import com.noslen.emailservice.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -42,13 +41,44 @@ public class MailController {
         return "mail/sendHtml";
     }
 
+//    @RequestMapping(value = "/sendHtml", method = RequestMethod.POST)
+//    public String createHtmlMail(Model model,
+//                                 @ModelAttribute("mailObject") @Valid MailObject mailObject,
+//                                 Errors errors) throws IOException, MessagingException, TemplateException {
+////        if (errors.hasErrors()) {
+////            return "mail/send";
+////        }
+//        boolean err = errors.hasErrors();
+//        mailObject.setEmail("nelsontjohns@gmail.com");
+//        mailObject.setRecipientName("Nelson");
+//        mailObject.setSubject("LSA Test");
+//        mailObject.setText("This is a test message from LSA");
+//        mailObject.setSenderName("LSA");
+//
+//        Map<String, Object> templateModel = new HashMap<>();
+//        templateModel.put("recipientName", mailObject.getRecipientName());
+//        templateModel.put("text", mailObject.getText());
+//        templateModel.put("senderName", mailObject.getSenderName());
+//        emailService.sendHTMLMessage(
+//                mailObject.getEmail(),
+//                mailObject.getSubject(),
+//                templateModel);
+//
+//        return err ? "error" : "redirect:/mail";
+//    }
     @RequestMapping(value = "/sendHtml", method = RequestMethod.POST)
     public String createHtmlMail(Model model,
                                  @ModelAttribute("mailObject") @Valid MailObject mailObject,
-                                 Errors errors) throws IOException, MessagingException, TemplateException {
+                                 String to,
+                                 String recipientName,
+                                 String subject,
+                                 String text,
+                                 String senderName,
+                                 Errors errors) throws IOException, MessagingException {
 //        if (errors.hasErrors()) {
 //            return "mail/send";
 //        }
+        boolean err = errors.hasErrors();
         mailObject.setEmail("nelsontjohns@gmail.com");
         mailObject.setRecipientName("Nelson");
         mailObject.setSubject("LSA Test");
@@ -64,7 +94,6 @@ public class MailController {
                 mailObject.getSubject(),
                 templateModel);
 
-
-        return "redirect:/mail";
+        return err ? "error" : "redirect:/mail";
     }
 }

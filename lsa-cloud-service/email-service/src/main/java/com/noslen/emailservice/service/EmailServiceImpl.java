@@ -1,4 +1,4 @@
-package com.noslen.emailservice.mail;
+package com.noslen.emailservice.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +13,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.Map;
 
-@Service("EmailService")
+@Service("email-service")
 public class EmailServiceImpl implements EmailService {
 
     private static final String NOREPLY_ADDRESS = "nelsontjohns@gmail.com";

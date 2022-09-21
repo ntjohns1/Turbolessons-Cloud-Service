@@ -2,6 +2,7 @@ package com.noslen.emailservice.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -12,7 +13,7 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import java.util.Properties;
 
-@org.springframework.context.annotation.Configuration
+@Configuration
 public class EmailConfiguration {
 
     @Value("${spring.mail.host}")
@@ -49,10 +50,8 @@ public class EmailConfiguration {
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", mailServerAuth);
-//        props.put("mail.smtp.starttls.enable", mailServerStartTls);
         props.put("mail.debug", "true");
         props.put("mail.smtp.starttls.enable",mailServerStartTls);
-
 
         return mailSender;
     }
