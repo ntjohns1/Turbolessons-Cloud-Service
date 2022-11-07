@@ -13,7 +13,3 @@ cd service-registry
 docker build --tag com-noslen-service-registry .
 cd ..
 
-echo "Building the authorization server"
-cd authorization-server
-docker build --tag com-noslen-authorization-server .
-cd ..

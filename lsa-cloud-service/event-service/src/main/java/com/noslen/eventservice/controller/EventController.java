@@ -1,34 +1,38 @@
 package com.noslen.eventservice.controller;
 
 
-import com.noslen.eventservice.dta.LessonEventRepo;
+import com.noslen.eventservice.dao.LessonEventRepo;
 import com.noslen.eventservice.dto.LessonEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.server.resource.authentication.BearerTokenAuthentication;
-import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 @RefreshScope
 @RestController
-@CrossOrigin
+@CrossOrigin("http://localhost:3000")
 public class EventController {
 
 
-    @GetMapping("/api/lesson/token")
-    public String getToken(BearerTokenAuthentication auth, HttpServletRequest request) {
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+    @GetMapping(path = "/api/user")
+    Map<String, Object> currentUser(JwtAuthenticationToken token) {
+        return Map.of("token-claims", token.getToken().getClaims());
+    }
 
-        System.out.println(token.getToken());
-        Map<String, Object> m = auth.getTokenAttributes();
+    @GetMapping("/api/lesson/token")
+    public String getToken(JwtAuthenticationToken token ) {
+//        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
+//
+//        System.out.println(token.getToken());
+        Map<String, Object> m = token.getTokenAttributes();
 //        boolean s = m.get("realm_access").toString().contains("admin");
-        return auth.getToken().getTokenValue();
+        return token.getToken().getTokenValue();
     }
 
     @Autowired

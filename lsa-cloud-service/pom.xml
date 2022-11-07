@@ -11,10 +11,9 @@
 	<modules>
 		<module>lsa-config-service</module>
 		<module>service-registry</module>
-		<module>authorization-server</module>
-		<module>gateway-service</module>
 		<module>event-service</module>
 		<module>email-service</module>
+		<module>api-gateway</module>
 	</modules>
 
 </project>

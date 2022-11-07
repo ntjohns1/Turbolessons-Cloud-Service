@@ -1,63 +1,7 @@
 version: "3.9"
 networks:
   lsa-cloud-service_lsa:
-  keycloak-network:
 services:
-  keycloak:
-    image: com-noslen-authorization-server:latest
-    hostname: localhost
-    container_name: lsakc
-    environment:
-      KEYCLOAK_USER: noslen
-      KEYCLOAK_PASSWORD: pass
-      DB_VENDOR: MYSQL
-      DB_PORT: 3306
-      DB_DATABASE: keycloakDB
-      DB_USER: noslen
-      DB_PASSWORD: kcpwrd
-      spring.datasource.password: kcpwrd
-      spring.datasource.username: noslen
-      spring.datasource.url: jdbc:mysql://auth_db:3306/keycloakDB
-      spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
-      spring.jpa.hibernate.ddl-auto: update
-      spring.jpa.show-sql: 1
-      spring.keycloak.realm: lsa
-      spring.keycloak.auth-server-url: http://localhost:8083/auth
-      spring.keycloak.ssl-required: external
-      spring.keycloak.use-resource-role-mappings: 1
-      management.endpoints.routesEnabled: 1
-      eureka.client.registerWithEureka: 1
-      eureka.client.fetchRegistry: 1
-      eureka.client.enabled: 1
-      eureka.client.serviceUrl.defaultZone: http://service-registry:8761/eureka
-    expose:
-      - "8083"
-    ports:
-      - "8083:8083"
-    networks:
-      - keycloak-network
-      - lsa-cloud-service_lsa
-    depends_on:
-      - mysql
-
-  mysql:
-    image: mysql:latest
-    container_name: mysql
-    hostname: auth_db
-    environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: keycloakDB
-      MYSQL_USER: noslen
-      MYSQL_PASSWORD: kcpwrd
-    expose:
-      - "3036"
-    ports:
-      - "3306:3306"
-    networks:
-      - keycloak-network
-    depends_on:
-      - service-registry
-
   config-service:
     image: com-noslen-config-service:latest
     container_name: config-server
@@ -67,9 +11,7 @@ services:
     ports:
       - "9999:9999"
     networks:
-      - keycloak-network
       - lsa-cloud-service_lsa
-
   service-registry:
     image: com-noslen-service-registry:latest
     container_name: service-registry
