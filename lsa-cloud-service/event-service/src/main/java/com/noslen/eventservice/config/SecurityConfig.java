@@ -1,6 +1,7 @@
 package com.noslen.eventservice.config;
 
 
+import com.okta.spring.boot.oauth.Okta;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,13 +15,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        return http
+        http
                 .authorizeRequests()
-                .anyRequest().authenticated() // all request require auth
+                .anyRequest().authenticated()
                 .and()
-                .oauth2ResourceServer().jwt().and().and() // validate JWT bearer token from header
-                .sessionManagement().disable() // no Sessions
-                .build();
-    }
+                .oauth2ResourceServer()
+                .jwt();
+        // process CORS annotations
+        http.cors();
 
+        // force a non-empty response body for 401's to make the response more browser friendly
+
+        return http.build();
+
+    }
 }
