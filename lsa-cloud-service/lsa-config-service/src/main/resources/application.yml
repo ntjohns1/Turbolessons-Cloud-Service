@@ -1,0 +1,17 @@
+encrypt:
+    key: SoGk99F1INl7Shp2pYQQPNzFfL+vdHhP8x9VlLLlg8Ok
+server:
+    port: 9999
+spring:
+    application:
+        name: config-server
+    cloud:
+        config:
+            server:
+                bootstrap: true
+                git:
+                    default-label: main
+                    uri: https://github.com/ntjohns1/lsa-config.git
+    management:
+        security:
+            enabled: false
