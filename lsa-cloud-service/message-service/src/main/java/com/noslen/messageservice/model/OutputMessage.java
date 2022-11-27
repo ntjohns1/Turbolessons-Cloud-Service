@@ -13,15 +13,17 @@ public class OutputMessage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String sender;
+    private String senderId;
     private String text;
     private String time;
 
     public OutputMessage() {
     }
 
-    public OutputMessage(final String sender, final String text, final String time) {
+    public OutputMessage(final String sender, final String senderId, final String text, final String time) {
 
         this.sender = sender;
+        this.senderId = senderId;
         this.text = text;
         this.time = time;
     }
@@ -40,5 +42,9 @@ public class OutputMessage {
 
     public String getSender() {
         return sender;
+    }
+
+    public String getSenderId() {
+        return senderId;
     }
 }

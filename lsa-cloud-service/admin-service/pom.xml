@@ -40,6 +40,12 @@
 			<groupId>com.okta.sdk</groupId>
 			<artifactId>okta-sdk-api</artifactId>
 			<version>${okta.sdk.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-simple</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>com.okta.sdk</groupId>

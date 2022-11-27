@@ -1,22 +1,35 @@
 package com.noslen.adminservice.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.noslen.adminservice.dto.UserDTO;
 import com.noslen.adminservice.dto.UserProfileDTO;
 import com.okta.sdk.client.Clients;
 import com.okta.sdk.resource.user.UserBuilder;
 import org.openapitools.client.ApiClient;
 import org.openapitools.client.api.UserApi;
+import org.openapitools.client.model.UpdateUserRequest;
 import org.openapitools.client.model.User;
 import org.openapitools.client.model.UserProfile;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UserController {
 
     private final ApiClient client = Clients.builder().build();
     private final UserApi userApi = new UserApi(client);
+
+//    self
+    @GetMapping("/api/users/self")
+    public Map<String, Object> getUserDetails(JwtAuthenticationToken authentication) {
+        Map<String, Object> tokenAttributes = authentication.getTokenAttributes();
+        System.out.println(tokenAttributes.get("uid"));
+        return tokenAttributes;
+    }
 
     //    Get One User
     @GetMapping("/api/users/{id}")
@@ -68,20 +81,20 @@ public class UserController {
     //    TODO: Update Client Scope to okta.users.manage
 
 ////    TODO: Figure this one out; set up UserProfileDTO, ObjectMapper and use userProfile.setAdditionalProperties(map);
-//    @PutMapping("/api/users/{id}")
-//    public void updateUser(@PathVariable String id, @RequestBody UserProfileDTO dto) {
-//
-//        ObjectMapper mapper = new ObjectMapper();
-//        Map map = mapper.convertValue(dto, Map.class);
-//        System.out.println(map);
-//        UpdateUserRequest updateUserRequest = new UpdateUserRequest();
-//        UserProfile userProfile = userApi.getUser(id).getProfile();
-//        assert userProfile != null;
-//        userProfile.setAdditionalProperties(map);
-//        updateUserRequest.setProfile(userProfile);
-//
-//        userApi.updateUser(id, updateUserRequest, true);
-//    }
+    @PutMapping("/api/users/{id}")
+    public void updateUser(@PathVariable String id, @RequestBody UserProfileDTO dto) {
+
+        ObjectMapper mapper = new ObjectMapper();
+//        Convert UserProfileDTO to Map, TypeReference makes a checked assignment to correctly typed map instead of Map.
+        Map<String,Object> map = mapper.convertValue(dto, new TypeReference<>() {});
+        System.out.println(map);
+        UpdateUserRequest updateUserRequest = new UpdateUserRequest();
+        UserProfile userProfile = new UserProfile();
+        userProfile.setAdditionalProperties(map);
+        System.out.println(userProfile);
+        updateUserRequest.setProfile(userProfile);
+        userApi.updateUser(id, updateUserRequest, true);
+    }
 
 
     @DeleteMapping("/api/users/{id}")

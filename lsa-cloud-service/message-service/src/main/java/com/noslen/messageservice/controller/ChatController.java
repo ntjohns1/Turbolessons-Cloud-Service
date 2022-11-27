@@ -6,6 +6,7 @@ import com.noslen.messageservice.repo.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Controller;
 
 import java.text.SimpleDateFormat;
@@ -18,13 +19,15 @@ public class ChatController {
     MessageRepo messageRepo;
 
     @MessageMapping("/chat")
-    @SendTo("/ws/messages")
-    public OutputMessage send(final Message message) throws Exception {
-
+    @SendTo("/topic/messages")
+    public OutputMessage send(final Message message, JwtAuthenticationToken authentication) throws Exception {
+        final String id = authentication.getTokenAttributes().get("uid").toString();
         final String time = new SimpleDateFormat("HH:mm").format(new Date());
-        OutputMessage outputMessage = new OutputMessage(message.getSender(), message.getText(), time);
+        OutputMessage outputMessage = new OutputMessage(message.getSender(),id, message.getText(), time);
         messageRepo.save(outputMessage);
         return outputMessage;
     }
+
+
 
 }
