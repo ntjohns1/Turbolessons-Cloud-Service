@@ -1,7 +1,10 @@
 package com.noslen.adminservice.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Objects;
 
+@JsonIgnoreProperties
 public class UserProfileDTO {
 
     String login;

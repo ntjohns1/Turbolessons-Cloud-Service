@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 public class UserController {
@@ -26,15 +27,12 @@ public class UserController {
 //    self
     @GetMapping("/api/users/self")
     public Map<String, Object> getUserDetails(JwtAuthenticationToken authentication) {
-        Map<String, Object> tokenAttributes = authentication.getTokenAttributes();
-        System.out.println(tokenAttributes.get("uid"));
-        return tokenAttributes;
+        return authentication.getTokenAttributes();
     }
 
     //    Get One User
     @GetMapping("/api/users/{id}")
     public User getUser(@PathVariable String id) {
-        System.out.println(userApi.getUser(id).getProfile());
         return userApi.getUser(id);
     }
 
@@ -62,37 +60,44 @@ public class UserController {
     //    Get All Users
     @GetMapping("/api/users")
     public List<User> listAllUsers() {
-        System.out.println(userApi.listUsers(null, null, 150, null, null, null, null));
-        return userApi.listUsers(null, null, 150, null, null, null, null);
+
+        List<User> users = userApi.listUsers(null, null, 150, null, null, null, null);
+        users.removeIf(u -> !Objects.equals(Objects.requireNonNull(u.getProfile()).getUserType(), "student"));
+        return users;
     }
 
     //    Create User
     @PostMapping("/api/users")
     public User createUser(@RequestBody UserDTO userDTO) {
-
-        User user = UserBuilder.instance().setEmail(userDTO.getEmail()).setFirstName(userDTO.getFirstName()).setLastName(userDTO.getLastName()).setGroups(List.of("00g75cbo2dVoDm1wv5d7")).buildAndCreate(userApi);
+        User user = UserBuilder.instance().
+                setEmail(userDTO.getEmail())
+                .setFirstName(userDTO.getFirstName())
+                .setLastName(userDTO.getLastName())
+                .setGroups(List.of("00g75cbo2dVoDm1wv5d7"))
+                .buildAndCreate(userApi);
         UserProfile profile = user.getProfile();
         String lastInitial = userDTO.getLastName().charAt(0) + ".";
         assert profile != null;
         profile.setDisplayName(userDTO.getFirstName() + " " + lastInitial);
+        profile.setUserType("student");
         return user;
     }
 
-    //    TODO: Update Client Scope to okta.users.manage
-
-////    TODO: Figure this one out; set up UserProfileDTO, ObjectMapper and use userProfile.setAdditionalProperties(map);
     @PutMapping("/api/users/{id}")
     public void updateUser(@PathVariable String id, @RequestBody UserProfileDTO dto) {
 
+        // Convert UserProfileDTO to Map, TypeReference makes a checked assignment
+        // to correctly typed map instead of a raw Map.
         ObjectMapper mapper = new ObjectMapper();
-//        Convert UserProfileDTO to Map, TypeReference makes a checked assignment to correctly typed map instead of Map.
         Map<String,Object> map = mapper.convertValue(dto, new TypeReference<>() {});
-        System.out.println(map);
+        // Create request object and UserProfile object
         UpdateUserRequest updateUserRequest = new UpdateUserRequest();
         UserProfile userProfile = new UserProfile();
+        // Apply properties from mapped dto to new profile object
         userProfile.setAdditionalProperties(map);
-        System.out.println(userProfile);
+        // Apply new profile object to request object
         updateUserRequest.setProfile(userProfile);
+        // then update
         userApi.updateUser(id, updateUserRequest, true);
     }
 
