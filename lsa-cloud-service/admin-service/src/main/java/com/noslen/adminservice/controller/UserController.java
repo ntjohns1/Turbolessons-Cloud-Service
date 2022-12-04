@@ -27,6 +27,7 @@ public class UserController {
 //    self
     @GetMapping("/api/users/self")
     public Map<String, Object> getUserDetails(JwtAuthenticationToken authentication) {
+        System.out.println(authentication.getToken().getTokenValue());
         return authentication.getTokenAttributes();
     }
 
@@ -75,11 +76,15 @@ public class UserController {
                 .setLastName(userDTO.getLastName())
                 .setGroups(List.of("00g75cbo2dVoDm1wv5d7"))
                 .buildAndCreate(userApi);
-        UserProfile profile = user.getProfile();
         String lastInitial = userDTO.getLastName().charAt(0) + ".";
-        assert profile != null;
+        UpdateUserRequest updateUserRequest = new UpdateUserRequest();
+        UserProfile profile = new UserProfile();
+        // Apply new profile object to request object
         profile.setDisplayName(userDTO.getFirstName() + " " + lastInitial);
         profile.setUserType("student");
+        updateUserRequest.setProfile(profile);
+        // then update
+        userApi.updateUser(user.getId(), updateUserRequest, true);
         return user;
     }
 
