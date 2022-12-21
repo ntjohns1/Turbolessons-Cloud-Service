@@ -47,31 +47,21 @@ class WebSocketConfig {
     }
 
     @Bean
-    WebSocketHandler webSocketHandler(
-            ObjectMapper objectMapper,
-            MsgCreatedEventPublisher eventPublisher
-    ) {
+    WebSocketHandler webSocketHandler(ObjectMapper objectMapper, MsgCreatedEventPublisher eventPublisher) {
 
-        Flux<MsgCreatedEvent> publish = Flux
-                .create(eventPublisher)
-                .share();
-        System.out.println("ping");
+        Flux<MsgCreatedEvent> publish = Flux.create(eventPublisher).share();
         return session -> {
 
-            Flux<WebSocketMessage> messageFlux = publish
-                    .map(evt -> {
-                        try {
-
-                            return objectMapper.writeValueAsString(evt.getSource());
-                        }
-                        catch (JsonProcessingException e) {
-                            throw new RuntimeException(e);
-                        }
-                    })
-                    .map(str -> {
-                        log.info("sending " + str);
-                        return session.textMessage(str);
-                    });
+            Flux<WebSocketMessage> messageFlux = publish.map(evt -> {
+                try {
+                    return objectMapper.writeValueAsString(evt.getSource());
+                } catch (JsonProcessingException e) {
+                    throw new RuntimeException(e);
+                }
+            }).map(str -> {
+                log.info("sending " + str);
+                return session.textMessage(str);
+            });
 
             return session.send(messageFlux);
         };

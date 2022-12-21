@@ -12,12 +12,14 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import java.util.List;
 
 @EnableWebFluxSecurity
+//@EnableReactiveMethodSecurity
 @Configuration
 public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http
                 .authorizeExchange()
+                .pathMatchers("/ws/**").permitAll()
                 .anyExchange()
                 .authenticated()
                 .and()
