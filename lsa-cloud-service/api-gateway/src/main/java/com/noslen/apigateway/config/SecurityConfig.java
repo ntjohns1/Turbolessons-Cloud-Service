@@ -19,7 +19,7 @@ public class SecurityConfig {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http
                 .authorizeExchange()
-                .pathMatchers("/ws/**").permitAll()
+                .pathMatchers("/chat").permitAll()
                 .anyExchange()
                 .authenticated()
                 .and()
