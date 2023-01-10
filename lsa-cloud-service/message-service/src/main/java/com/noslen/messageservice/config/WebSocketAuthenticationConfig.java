@@ -39,7 +39,7 @@ public class WebSocketAuthenticationConfig implements WebSocketMessageBrokerConf
                         MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
                 if (StompCommand.CONNECT.equals(accessor.getCommand())) {
                     List<String> authorization = accessor.getNativeHeader("X-Authorization");
-                    System.out.println("X-Authorization: " + authorization);
+//                    System.out.println("X-Authorization: " + authorization);
 
                     String accessToken = authorization.get(0).split(" ")[1];
                     Jwt jwt = jwtDecoder.decode(accessToken);

@@ -116,5 +116,4 @@ public class UserController {
         userApi.deleteUser(id, false);
     }
 
-
 }
