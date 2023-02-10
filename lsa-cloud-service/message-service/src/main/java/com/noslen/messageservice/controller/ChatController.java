@@ -11,25 +11,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.messaging.SessionConnectEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
-import java.util.Map;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Controller
 public class ChatController {
 
-
-//    @Autowired
-//    SessionDisconnectEventListener disconnectEventListener;
-
     private final SimpMessagingTemplate simpMessagingTemplate;
-    private final Map<String, Long> lastHeartbeat;
-
-    private final Integer HEARTBEAT_TIMEOUT = 10000;
 
     public ChatController(SimpMessagingTemplate simpMessagingTemplate) {
         this.simpMessagingTemplate = simpMessagingTemplate;
-        lastHeartbeat = new ConcurrentHashMap<>();
     }
 
     @EventListener
@@ -42,43 +33,41 @@ public class ChatController {
             Connected.USERS.put(sessionId, username);
             System.out.println(">>>>>> Connected User Event <<<<<<");
             Connected.USERS.forEach((key, value) -> System.out.println("SessionId: " + key + " Username: " + value));
+            simpMessagingTemplate.convertAndSend("/topic/connectedUsers", new HashSet<>(Connected.USERS.values()));
         }
-
-
     }
 
     @EventListener
     public void handleWebSocketDisconnect(SessionDisconnectEvent event) {
-        // mark user as disconnected
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
         String sessionId = headerAccessor.getSessionId();
+//        String username = Connected.USERS.get(sessionId);
         Connected.USERS.remove(sessionId);
+        simpMessagingTemplate.convertAndSend("/topic/connectedUsers", new HashSet<>(Connected.USERS.values()));
         System.out.println(">>>>>> Disconnected User Event <<<<<<");
         Connected.USERS.forEach((key, value) -> System.out.println("SessionId: " + key + " Username: " + value));
-        // send a message to notify others that the user is disconnected
     }
 
-
-
-//    @MessageMapping("/register")
+//
+////    @MessageMapping("/register")
 //    @SendToUser("/queue/newMember")
 //    public Set<String> registerUser(@Payload String webChatUsername){
 //// get sessionId from StompHeaderAccessor
-//        String sessionId = connectEventListener.getSessionId();
-//        // add the user to the connected user list
-//        connectEventListener.getConnectedUsers().put(sessionId, webChatUsername);
-//        simpleMessagingTemplate.convertAndSend("/topic/newMember", webChatUsername);
-//        System.out.println("<<<< registerUser message: ");
-//        connectEventListener.getConnectedUsers().keySet().forEach(System.out::println);
-//        return connectEventListener.getConnectedUsers().keySet();
+////        String sessionId = connectEventListener.getSessionId();
+////        // add the user to the connected user list
+////        connectEventListener.getConnectedUsers().put(sessionId, webChatUsername);
+////        simpleMessagingTemplate.convertAndSend("/topic/newMember", webChatUsername);
+////        System.out.println("<<<< registerUser message: ");
+////        connectEventListener.getConnectedUsers().keySet().forEach(System.out::println);
+//        return new HashSet<>(Connected.USERS.values());
 //    }
 
     @MessageMapping("/connectedUsers")
     @SendToUser("/queue/connectedUsers")
-    public Set<String> getConnectedUsers(String username) {
+    public Set<String> getConnectedUsers() {
         System.out.println("<<<< getConnectedUsers message: ");
-        Connected.USERS.keySet().forEach(System.out::println);
-        return Connected.USERS.keySet();
+        Connected.USERS.values().forEach(System.out::println);
+        return new HashSet<>(Connected.USERS.values());
     }
 
 //    @MessageMapping("/unregister")
@@ -93,31 +82,6 @@ public class ChatController {
     @MessageMapping("/message")
     public void greeting(Message message) {
         System.out.println("greeting message");
-        simpMessagingTemplate.convertAndSendToUser(message.getSender(), "/msg", message);
+        simpMessagingTemplate.convertAndSendToUser(message.getTo(), "/msg", message);
     }
-
-//    @MessageMapping("/heartbeat")
-//    public void receiveHeartbeat(@Payload String sessionId) {
-//        lastHeartbeat.put(sessionId, System.currentTimeMillis());
-//        System.out.println("id:" + sessionId + ", " + "time: " + System.currentTimeMillis());
-//    }
-
-
-//    @Scheduled(fixedDelay = 10000) // check every 10 seconds
-//    public void checkForDisconnectedUsers() {
-//        long currentTime = System.currentTimeMillis();
-//        for (Map.Entry<String, Long> entry : lastHeartbeat.entrySet()) {
-//            String sessionId = entry.getKey();
-//            long lastHeartbeatTime = entry.getValue();
-//            if (currentTime - lastHeartbeatTime > HEARTBEAT_TIMEOUT) {
-//                String disconnectedUsername = Connected.USERS.get(sessionId);
-//                Connected.USERS.remove(sessionId);
-//                // mark user as disconnected
-//
-//                // send a message to notify others that the user is disconnected
-//            }
-//        }
-//    }
-
-
 }
