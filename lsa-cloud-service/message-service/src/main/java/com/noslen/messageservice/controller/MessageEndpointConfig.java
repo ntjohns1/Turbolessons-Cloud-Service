@@ -18,7 +18,8 @@ class MessageEndpointConfig {
         return route(i(GET("/api/messages")), handler::all)
                 .andRoute(i(GET("/api/messages/{id}")), handler::getById)
                 .andRoute(i(DELETE("/api/messages/{id}")), handler::deleteById)
-                .andRoute(i(POST("/api/messages")), handler::create);
+                .andRoute(i(POST("/api/messages")), handler::create)
+                .andRoute(i(POST("/api/messages/{id}")), handler::send);
     }
 
 

@@ -38,10 +38,17 @@ class MessageHandler {
     Mono<ServerResponse> create(ServerRequest request) {
         Flux<Msg> flux = request
                 .bodyToFlux(Msg.class)
-                .flatMap(toWrite -> this.messageService.create(toWrite.getSender(),toWrite.getSenderId(),toWrite.getMsg()));
+                .flatMap(toWrite -> this.messageService.create(toWrite.getSender(),toWrite.getRecipient(),toWrite.getMsg()));
         return defaultWriteResponse(flux);
     }
 
+    Mono<ServerResponse> send(ServerRequest request) {
+        String recipientId = id(request);
+        Mono<Msg> mono = request
+                .bodyToMono(Msg.class)
+                .flatMap(toWrite -> this.messageService.create(toWrite.getSender(),recipientId,toWrite.getMsg()));
+        return sendResponse(mono);
+    }
 
     private static Mono<ServerResponse> defaultWriteResponse(Publisher<Msg> messages) {
         return Mono
@@ -53,6 +60,15 @@ class MessageHandler {
                 );
     }
 
+    private static Mono<ServerResponse> sendResponse(Publisher<Msg> messages) {
+        return Mono
+                .from(messages)
+                .flatMap(p -> ServerResponse
+                        .created(URI.create("/api/messages/" + p.getRecipient()))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .build()
+                );
+    }
 
     private static Mono<ServerResponse> defaultReadResponse(Publisher<Msg> messages) {
         return ServerResponse

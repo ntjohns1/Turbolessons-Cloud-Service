@@ -17,7 +17,7 @@ public class Msg {
 
     private String sender;
 
-    private String senderId;
+    private String recipient;
 
     private String msg;
 
