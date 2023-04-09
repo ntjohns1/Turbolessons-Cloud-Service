@@ -5,14 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f94a8a07-5ee2-46fa-a058-faabe4d06845" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/resources/application1.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_okta_commons_okta_commons_lang_1_3_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_okta_commons_okta_config_check_1_3_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_okta_commons_okta_http_api_1_3_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_okta_sdk_okta_sdk_api_10_0_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_okta_sdk_okta_sdk_impl_10_0_0.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/java/com/noslen/adminservice/AdminServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/java/com/noslen/adminservice/AdminServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/java/com/noslen/adminservice/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/java/com/noslen/adminservice/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/java/com/noslen/adminservice/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/java/com/noslen/adminservice/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/java/com/noslen/apigateway/ApiGateway.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/java/com/noslen/apigateway/ApiGateway.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/java/com/noslen/apigateway/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/java/com/noslen/apigateway/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/main/java/com/noslen/messageservice/config/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/main/java/com/noslen/messageservice/config/WebSocketConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/main/java/com/noslen/messageservice/controller/MessageEndpointConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/main/java/com/noslen/messageservice/controller/MessageEndpointConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/main/java/com/noslen/messageservice/controller/MessageHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/main/java/com/noslen/messageservice/controller/MessageHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/main/java/com/noslen/messageservice/model/Msg.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/main/java/com/noslen/messageservice/model/Msg.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/main/java/com/noslen/messageservice/service/MsgCreatedEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/main/java/com/noslen/messageservice/service/MsgCreatedEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/test/java/com/noslen/messageservice/controller/AbstractBaseMessageEndpoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/test/java/com/noslen/messageservice/controller/AbstractBaseMessageEndpoints.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/test/java/com/noslen/messageservice/controller/FunctionalMessageEndpointsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/test/java/com/noslen/messageservice/controller/FunctionalMessageEndpointsTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,18 +74,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/noslen/DevProjects/LSA-Cloud-Service&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "/Users/noslen/DevProjects/LSA-Cloud-Service/lsa-cloud-service/admin-service/src/main/resources",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/resources" />
+    </key>
+  </component>
   <component name="RunManager" selected="Application.ApiGateway">
     <configuration name="AdminServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="API_TOKEN" value="00eYjIDuQyLf_fVb6fUZ0YMpz0pblRaurNA8dEUaXI" />
+        <env name="ORG_URL" value="https://dev-78958050.okta.com" />
+      </envs>
       <option name="MAIN_CLASS_NAME" value="com.noslen.adminservice.AdminServiceApplication" />
       <module name="admin-service" />
       <extension name="coverage">
