@@ -75,4 +75,3 @@ class WebSocketConfig {
         return queryParams.getFirst("userId");
     }
 }
-

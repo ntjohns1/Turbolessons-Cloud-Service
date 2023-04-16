@@ -16,16 +16,16 @@ public class SecurityConfig {
         // @formatter:off
         return http
                 .csrf()
-                    .csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse()) // <4>
-                    .and()
+                .csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse()) // <4>
+                .and()
                 .authorizeExchange()
-                    .pathMatchers("/ws/**").permitAll() // <5>
-                    .anyExchange().authenticated()
-                    .and()
+                .pathMatchers("/ws/**").permitAll() // <5>
+                .anyExchange().authenticated()
+                .and()
                 .oauth2Login()
-                    .and()
+                .and()
                 .oauth2ResourceServer()
-                    .jwt().and().and().build();
+                .jwt().and().and().build();
         // @formatter:on
     }
 

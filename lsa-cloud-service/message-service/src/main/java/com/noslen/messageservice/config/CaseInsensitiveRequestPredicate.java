@@ -48,4 +48,3 @@ class LowerCaseUriServerRequestWrapper extends ServerRequestWrapper {
         return PathContainer.parsePath(path());
     }
 }
-
