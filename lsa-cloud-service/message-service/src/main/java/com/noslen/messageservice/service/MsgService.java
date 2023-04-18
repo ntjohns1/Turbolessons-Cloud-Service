@@ -39,7 +39,6 @@ public class MsgService {
     }
 
     public Mono<Msg> create(String sender,String uid, String msg) {
-        System.out.println("created message");
         final String time = new SimpleDateFormat("dd-MM-yy HH:mm").format(new Date());
         return this.msgRepository
                 .save(new Msg(null, sender,uid,msg,time))

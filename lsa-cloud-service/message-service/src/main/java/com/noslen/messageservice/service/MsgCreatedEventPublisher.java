@@ -1,5 +1,6 @@
 package com.noslen.messageservice.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
@@ -9,7 +10,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.function.Consumer;
-
+@Slf4j
 @Component
 public class MsgCreatedEventPublisher implements
         ApplicationListener<MsgCreatedEvent>,
@@ -26,6 +27,7 @@ public class MsgCreatedEventPublisher implements
 
     @Override
     public void onApplicationEvent(MsgCreatedEvent event) {
+        log.info("Received event: " + event);
         this.queue.offer(event);
     }
 
@@ -35,6 +37,7 @@ public class MsgCreatedEventPublisher implements
             while (true)
                 try {
                     MsgCreatedEvent event = queue.take();
+                    log.info("Consuming event: " + event);
                     sink.next(event);
                 }
                 catch (InterruptedException e) {

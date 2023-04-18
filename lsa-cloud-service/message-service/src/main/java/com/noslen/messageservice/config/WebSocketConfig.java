@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.function.Supplier;
 
 @Log4j2
 @Configuration
@@ -52,9 +53,20 @@ class WebSocketConfig {
 
     @Bean
     WebSocketHandler webSocketHandler(ObjectMapper objectMapper, MsgCreatedEventPublisher eventPublisher) {
-        Flux<MsgCreatedEvent> publish = Flux.create(eventPublisher).share();
+//        Flux<MsgCreatedEvent> publish = Flux.create(eventPublisher).share();
+        Supplier<Flux<MsgCreatedEvent>> supplier = () -> Flux.create(eventPublisher).share();
+        Flux<MsgCreatedEvent> publish = Flux.defer(supplier).cache(1);
         return session -> {
             String userId = parseUserId(session.getHandshakeInfo().getUri().toString());
+            log.info("WebSocket session opened for user: " + userId);
+
+            session.receive().doOnNext(message -> {
+                log.info("Received message from user " + userId + ": " + message.getPayloadAsText());
+            }).doOnComplete(() -> {
+                log.info("WebSocket session closed for user: " + userId);
+            }).subscribe();
+
+
             Flux<WebSocketMessage> messageFlux = publish.filter(evt -> evt.getSource().getRecipient().equals(userId)).map(evt -> {
                 try {
                     return objectMapper.writeValueAsString(evt.getSource());
@@ -70,8 +82,7 @@ class WebSocketConfig {
     }
 
     private String parseUserId(String uri) {
-        MultiValueMap<String, String> queryParams = UriComponentsBuilder
-                .fromUriString(uri).build().getQueryParams();
+        MultiValueMap<String, String> queryParams = UriComponentsBuilder.fromUriString(uri).build().getQueryParams();
         return queryParams.getFirst("userId");
     }
 }
