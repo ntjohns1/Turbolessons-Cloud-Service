@@ -1,142 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="f94a8a07-5ee2-46fa-a058-faabe4d06845" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/resources/application1.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_okta_commons_okta_commons_lang_1_3_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_okta_commons_okta_config_check_1_3_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_okta_commons_okta_http_api_1_3_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_okta_sdk_okta_sdk_api_10_0_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_okta_sdk_okta_sdk_impl_10_0_0.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/noslen/authservice/AuthServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/noslen/authservice/AuthServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/noslen/authservice/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/noslen/authservice/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/noslen/authservice/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/noslen/authservice/controller/AuthController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/logging-setup/logs/archived/log.2019-07-23.0.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logging-setup/logs/archived/root.2019-07-23.0.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logging-setup/logs/error.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logging-setup/logs/info.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logging-setup/logs/log.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/logging-setup/logs/root.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/logging-setup/logs/error.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/logging-setup/logs/info.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/logging-setup/logs/log.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/logging-setup/logs/root.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/LsaAdminServiceApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/configuration/ApplicationConfiguration.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/configuration/ApplicationStartUp.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/configuration/DataSourceConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/configuration/StartupProperties.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/configuration/SwaggerConfiguration.java~HEAD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/configuration/SwaggerConfiguration.java~sub-department-setup" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/constants/ErrorMessageConstants.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/constants/WebResourceKeyConstants.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/controller/AdminController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/dto/request/AdminRequestDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/dto/response/AdminResponseDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/dto/response/ResponseDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/entities/Admin.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/entities/BaseEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/exceptionHandler/GlobalExceptionHandler.java~HEAD" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/exceptionHandler/GlobalExceptionHandler.java~sub-department-setup" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/exceptions/DataDuplicationException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/exceptions/ErrorResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/exceptions/NoContentFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/exceptions/UnauthorisedException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/query/AdminQuery.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/repository/AdminRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/repository/AdminRepositoryCustom.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/repository/impl/AdminRepositoryCustomImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/service/AdminService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/service/impl/AdminServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/utility/AdminUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/utility/DateUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/utility/MapperUtility.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/java/com/noslen/lsaadminservice/utility/QueryCreator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/main/resources/startup.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-admin-service/src/test/java/com/noslen/lsaadminservice/LsaAdminServiceApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/LsaAuthServiceApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/configuration/ApplicationConfiguration.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/configuration/SecurityConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/configuration/ZuulConfiguration.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/constants/ErrorMessage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/constants/MicroServiceConstants.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/constants/SecurityConstants.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/exceptionHandler/ErrorResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/exceptionHandler/UnauthorisedException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/feignInterface/AdminInterface.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/model/CustomUser.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/responseDTO/AdminResponseDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/security/CustomUserDetailsService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/security/jwt/JwtAuthenticationEntryPoint.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/security/jwt/JwtConfigurer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/security/jwt/JwtProperties.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/security/jwt/JwtTokenFilter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/java/com/noslen/lsaauthservice/security/jwt/JwtTokenProvider.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/main/resources/security.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-auth-service/src/test/java/com/noslen/lsaauthservice/LsaAuthServiceApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-config-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-config-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/.mvn/wrapper/MavenWrapperDownloader.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/LoginServiceApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/configuration/ApplicationConfiguration.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/configuration/SwaggerConfiguration.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/constants/ErrorMessageConstants.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/constants/JWTConstants.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/constants/MicroServiceConstants.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/constants/PatternConstants.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/constants/WebResourceKeyConstants.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/controller/LoginController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/exceptionHandler/GlobalExceptionHandler.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/exceptions/ErrorResponse.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/exceptions/NoContentFoundException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/exceptions/UnauthorisedException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/feignInterface/AdminInterface.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/jwt/JwtProperties.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/jwt/JwtTokenProvider.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/requestDTO/AdminRequestDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/requestDTO/LoginRequestDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/responseDTO/AdminResponseDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/responseDTO/LoginResponseDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/responseDTO/NetworkResponseDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/service/LoginService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/service/serviceImpl/LoginServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/service/serviceImpl/LoginServiceImpl_login_flow.puml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/service/serviceImpl/LoginServiceImpl_structure.puml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/utils/DateUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/java/com/noslen/lsaloginservice/utils/NetworkUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/main/resources/security.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-login-service/src/test/java/com/cogent/loginservice/LoginServiceApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service-registry/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/service-registry/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/java/com/noslen/adminservice/AdminServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/java/com/noslen/adminservice/AdminServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/java/com/noslen/adminservice/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/java/com/noslen/adminservice/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/java/com/noslen/adminservice/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/java/com/noslen/adminservice/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/java/com/noslen/apigateway/ApiGateway.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/java/com/noslen/apigateway/ApiGateway.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/java/com/noslen/apigateway/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/java/com/noslen/apigateway/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/test/java/com/noslen/messageservice/controller/AbstractBaseMessageEndpoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/test/java/com/noslen/messageservice/controller/AbstractBaseMessageEndpoints.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/test/java/com/noslen/messageservice/controller/FunctionalMessageEndpointsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/test/java/com/noslen/messageservice/controller/FunctionalMessageEndpointsTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="myId2FirstActivated">
+      <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="true" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="true" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="true" />
+      </map>
+    </option>
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.haulmont.jpb.jpaInspector" value="false" />
+        <entry key="com.haulmont.jpb.jpaPalette" value="false" />
+        <entry key="com.haulmont.jpb.jpaStructure" value="false" />
+      </map>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
   <component name="ProjectId" id="2Bk7pb6rZdTvZ4ayHCN4DnSZfgO" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -145,12 +78,107 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "/Users/nelsonjohns/Documents/LSA-Cloud-Service",
+    "last_opened_file_path": "/Users/noslen/DevProjects/LSA-Cloud-Service/lsa-cloud-service/admin-service/src/main/resources",
     "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/resources" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.ApiGateway">
+    <configuration name="AdminServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="API_TOKEN" value="00eYjIDuQyLf_fVb6fUZ0YMpz0pblRaurNA8dEUaXI" />
+        <env name="ORG_URL" value="https://dev-78958050.okta.com" />
+      </envs>
+      <option name="MAIN_CLASS_NAME" value="com.noslen.adminservice.AdminServiceApplication" />
+      <module name="admin-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.noslen.adminservice.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" />
+        </ENTRIES>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ApiGateway" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.noslen.apigateway.ApiGateway" />
+      <module name="api-gateway" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.noslen.apigateway.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="false" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" />
+        </ENTRIES>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MessageServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.noslen.messageservice.MessageServiceApplication" />
+      <module name="message-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.noslen.messageservice.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="LSA-Cloud-Service" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="LSA-Cloud-Service" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.AdminServiceApplication" />
+      <item itemvalue="Application.ApiGateway" />
+      <item itemvalue="Application.MessageServiceApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.ApiGateway" />
+        <item itemvalue="Application.MessageServiceApplication" />
+        <item itemvalue="Application.AdminServiceApplication" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -161,5 +189,16 @@
       <updated>1657438413022</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

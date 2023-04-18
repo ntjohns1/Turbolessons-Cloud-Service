@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.noslen.adminservice.dto.UserDTO;
 import com.noslen.adminservice.dto.UserProfileDTO;
+import com.okta.sdk.authc.credentials.TokenClientCredentials;
 import com.okta.sdk.client.Clients;
 import com.okta.sdk.resource.user.UserBuilder;
 import org.openapitools.client.ApiClient;
@@ -11,6 +12,7 @@ import org.openapitools.client.api.UserApi;
 import org.openapitools.client.model.UpdateUserRequest;
 import org.openapitools.client.model.User;
 import org.openapitools.client.model.UserProfile;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,12 +23,24 @@ import java.util.Objects;
 @RestController
 public class UserController {
 
-    private final ApiClient client = Clients.builder().build();
-    private final UserApi userApi = new UserApi(client);
+    @Value("${okta.client.token}")
+    private String oktaClientToken;
 
-//    self
+    private final ApiClient client = Clients.builder()
+            .setOrgUrl(System.getenv("ORG_URL"))
+            .setClientCredentials(new TokenClientCredentials(System.getenv("API_TOKEN")))
+            .build();
+
+    private final UserApi userApi = new UserApi(client);
+    @GetMapping("/api/users/hello")
+    public String hello() {
+        System.out.println("PING");
+        return "Hello World";
+    }
+    //    self
     @GetMapping("/api/users/self")
     public Map<String, Object> getUserDetails(JwtAuthenticationToken authentication) {
+        System.out.println(authentication.getToken().getTokenValue());
         return authentication.getTokenAttributes();
     }
 
@@ -60,7 +74,7 @@ public class UserController {
     //    Get All Users
     @GetMapping("/api/users")
     public List<User> listAllUsers() {
-
+        System.out.println(oktaClientToken);
         List<User> users = userApi.listUsers(null, null, 150, null, null, null, null);
         users.removeIf(u -> !Objects.equals(Objects.requireNonNull(u.getProfile()).getUserType(), "student"));
         return users;
@@ -75,11 +89,15 @@ public class UserController {
                 .setLastName(userDTO.getLastName())
                 .setGroups(List.of("00g75cbo2dVoDm1wv5d7"))
                 .buildAndCreate(userApi);
-        UserProfile profile = user.getProfile();
         String lastInitial = userDTO.getLastName().charAt(0) + ".";
-        assert profile != null;
+        UpdateUserRequest updateUserRequest = new UpdateUserRequest();
+        UserProfile profile = new UserProfile();
+        // Apply new profile object to request object
         profile.setDisplayName(userDTO.getFirstName() + " " + lastInitial);
         profile.setUserType("student");
+        updateUserRequest.setProfile(profile);
+        // then update
+        userApi.updateUser(user.getId(), updateUserRequest, true);
         return user;
     }
 
@@ -110,6 +128,5 @@ public class UserController {
         // then delete
         userApi.deleteUser(id, false);
     }
-
 
 }

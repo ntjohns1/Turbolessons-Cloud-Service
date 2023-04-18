@@ -8,16 +8,20 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+import org.springframework.web.reactive.config.CorsRegistry;
+import org.springframework.web.reactive.config.WebFluxConfigurer;
 
 import java.util.List;
 
 @EnableWebFluxSecurity
+//@EnableReactiveMethodSecurity
 @Configuration
 public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http
                 .authorizeExchange()
+                .pathMatchers("/ws/**").permitAll()
                 .anyExchange()
                 .authenticated()
                 .and()
@@ -35,6 +39,7 @@ public class SecurityConfig {
         corsConfig.setMaxAge(3600L);
         corsConfig.addAllowedMethod("*");
         corsConfig.addAllowedHeader("*");
+        corsConfig.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfig);
