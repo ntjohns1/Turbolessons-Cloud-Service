@@ -53,7 +53,6 @@ class WebSocketConfig {
 
     @Bean
     WebSocketHandler webSocketHandler(ObjectMapper objectMapper, MsgCreatedEventPublisher eventPublisher) {
-//        Flux<MsgCreatedEvent> publish = Flux.create(eventPublisher).share();
         Supplier<Flux<MsgCreatedEvent>> supplier = () -> Flux.create(eventPublisher).share();
         Flux<MsgCreatedEvent> publish = Flux.defer(supplier).cache(1);
         return session -> {
