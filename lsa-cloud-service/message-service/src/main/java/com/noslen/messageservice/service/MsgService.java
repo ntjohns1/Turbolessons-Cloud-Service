@@ -32,6 +32,14 @@ public class MsgService {
         return this.msgRepository.findById(id);
     }
 
+    public Flux<Msg> getBySender(String sender) {
+        return this.msgRepository.findBySender(sender);
+    }
+
+    public Flux<Msg> getByRecipient(String recipient) {
+        return this.msgRepository.findByRecipient(recipient);
+    }
+
     public Mono<Msg> delete(String id) {
         return this.msgRepository
                 .findById(id)

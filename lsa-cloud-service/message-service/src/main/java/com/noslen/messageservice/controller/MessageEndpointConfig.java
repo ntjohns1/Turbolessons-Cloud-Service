@@ -19,8 +19,9 @@ class MessageEndpointConfig {
                 .andRoute(i(GET("/api/messages/{id}")), handler::getById)
                 .andRoute(i(DELETE("/api/messages/{id}")), handler::deleteById)
                 .andRoute(i(POST("/api/messages")), handler::create)
-                .andRoute(i(POST("/api/messages/{id}")), handler::send);
-    }
+                .andRoute(i(POST("/api/messages/{id}")), handler::send)
+                .andRoute(i(GET("/api/messages/sender/{sender}")), handler::getBySender)
+                .andRoute(i(GET("/api/messages/recipient/{recipient}")), handler::getByRecipient);    }
 
 
     private static RequestPredicate i(RequestPredicate target) {
