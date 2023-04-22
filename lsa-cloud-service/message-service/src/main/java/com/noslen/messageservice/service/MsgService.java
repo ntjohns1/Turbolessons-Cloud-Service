@@ -40,6 +40,9 @@ public class MsgService {
         return this.msgRepository.findByRecipient(recipient);
     }
 
+    public Flux<Msg> getBySenderAndRecipient(String senderId, String recipientId) {
+        return this.msgRepository.findBySenderAndRecipient(senderId, recipientId);
+    }
     public Mono<Msg> delete(String id) {
         return this.msgRepository
                 .findById(id)

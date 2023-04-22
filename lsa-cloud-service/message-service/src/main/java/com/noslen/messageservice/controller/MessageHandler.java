@@ -39,6 +39,13 @@ class MessageHandler {
         return defaultReadResponse(messages);
     }
 
+    Mono<ServerResponse> getBySenderAndRecipient(ServerRequest r) {
+        String sender = r.pathVariable("sender");
+        String recipient = r.pathVariable("recipient");
+        Flux<Msg> messages = this.messageService.getBySenderAndRecipient(sender,recipient);
+        return defaultReadResponse(messages);
+    }
+
     Mono<ServerResponse> all(ServerRequest r) {
         return defaultReadResponse(this.messageService.all());
     }
