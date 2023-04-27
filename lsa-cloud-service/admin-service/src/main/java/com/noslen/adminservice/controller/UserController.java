@@ -75,9 +75,8 @@ public class UserController {
     @GetMapping("/api/users")
     public List<User> listAllUsers() {
         System.out.println(oktaClientToken);
-        List<User> users = userApi.listUsers(null, null, 150, null, null, null, null);
-        users.removeIf(u -> !Objects.equals(Objects.requireNonNull(u.getProfile()).getUserType(), "student"));
-        return users;
+        //        users.removeIf(u -> !Objects.equals(Objects.requireNonNull(u.getProfile()).getUserType(), "student"));
+        return userApi.listUsers(null, null, 150, null, null, null, null);
     }
 
     //    Create User

@@ -40,6 +40,9 @@ public class MsgService {
         return this.msgRepository.findByRecipient(recipient);
     }
 
+    public Flux<Msg> getBySenderAndRecipient(String senderId, String recipientId) {
+        return this.msgRepository.findBySenderAndRecipient(senderId, recipientId);
+    }
     public Mono<Msg> delete(String id) {
         return this.msgRepository
                 .findById(id)
@@ -47,7 +50,7 @@ public class MsgService {
     }
 
     public Mono<Msg> create(String sender,String uid, String msg) {
-        final String time = new SimpleDateFormat("dd-MM-yy HH:mm").format(new Date());
+        final String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date());
         return this.msgRepository
                 .save(new Msg(null, sender,uid,msg,time))
                 .doOnSuccess(message -> this.publisher.publishEvent(new MsgCreatedEvent(message)));
