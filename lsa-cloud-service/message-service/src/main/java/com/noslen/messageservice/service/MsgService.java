@@ -50,7 +50,7 @@ public class MsgService {
     }
 
     public Mono<Msg> create(String sender,String uid, String msg) {
-        final String time = new SimpleDateFormat("dd-MM-yy HH:mm").format(new Date());
+        final String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date());
         return this.msgRepository
                 .save(new Msg(null, sender,uid,msg,time))
                 .doOnSuccess(message -> this.publisher.publishEvent(new MsgCreatedEvent(message)));
