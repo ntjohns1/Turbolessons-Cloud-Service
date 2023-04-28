@@ -22,25 +22,18 @@ import java.util.Objects;
 
 @RestController
 public class UserController {
+private final UserApi userApi;
 
-    @Value("${okta.client.token}")
-    private String oktaClientToken;
-
-    private final ApiClient client = Clients.builder()
-            .setOrgUrl(System.getenv("ORG_URL"))
-            .setClientCredentials(new TokenClientCredentials(System.getenv("API_TOKEN")))
-            .build();
-
-    private final UserApi userApi = new UserApi(client);
+    public UserController(UserApi userApi) {
+        this.userApi = userApi;
+    }
     @GetMapping("/api/users/hello")
     public String hello() {
-        System.out.println("PING");
         return "Hello World";
     }
     //    self
     @GetMapping("/api/users/self")
     public Map<String, Object> getUserDetails(JwtAuthenticationToken authentication) {
-        System.out.println(authentication.getToken().getTokenValue());
         return authentication.getTokenAttributes();
     }
 
@@ -74,7 +67,6 @@ public class UserController {
     //    Get All Users
     @GetMapping("/api/users")
     public List<User> listAllUsers() {
-        System.out.println(oktaClientToken);
         //        users.removeIf(u -> !Objects.equals(Objects.requireNonNull(u.getProfile()).getUserType(), "student"));
         return userApi.listUsers(null, null, 150, null, null, null, null);
     }
