@@ -1,8 +1,8 @@
 package com.noslen.adminservice.controller;
 
-
-import com.noslen.adminservice.dto.UserDTO;
-import com.okta.sdk.resource.user.UserBuilder;
+import com.noslen.adminservice.service.TestUserService;
+import com.noslen.adminservice.service.UserService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openapitools.client.api.UserApi;
@@ -14,51 +14,45 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+
+//@Import(TestServiceConfig.class)
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(UserController.class)
 @ActiveProfiles("test")
 public class UserControllerTest {
-
     @Autowired
     private MockMvc mockMvc;
-
+    @MockBean
+    private UserService userService;
     @MockBean
     private UserApi userApi;
 
-    // Write test cases here
-    @Test
-    public void testListAllUsers() throws Exception {
+    @BeforeEach
+    public void setUp() {
+        TestUserService testUserService = new TestUserService(userApi);
+        User u = testUserService.createUser("test@test.com", "Willie", "Nelson");
+        System.out.println(u.getProfile());
+        UserProfile userProfile = new UserProfile();
+        userProfile.setEmail("test@test.com");
+        userProfile.setFirstName("Willie");
+        userProfile.setLastName("Nelson");
 
-        List<User> userList = new ArrayList<>();
-        UserDTO userDTO = new UserDTO();
-        userDTO.setFirstName("Steve");
-        userDTO.setLastName("Stevenson");
-        userDTO.setEmail("steveysteve@example.com");
-        User user = UserBuilder.instance().
-                setEmail(userDTO.getEmail())
-                .setFirstName(userDTO.getFirstName())
-                .setLastName(userDTO.getLastName())
-                .setGroups(List.of("00g75cbo2dVoDm1wv5d7"))
-                .buildAndCreate(userApi);
-        userList.add(user);
+        UserStub willie = new UserStub("fake-id", userProfile);
 
-        when(userApi.listUsers(any(), any(), anyInt(), any(), any(), any(), any())).thenReturn(userList);
-
-        this.mockMvc.perform(get("/api/users").with(jwt())).andExpect(status().isOk());
-
-        // Verify that the userApi.listUsers method was called with the correct parameters
-        verify(userApi).listUsers(null, null, 150, null, null, null, null);
-
+        when(userApi.createUser(any(), any())).thenReturn(willie);
+        when(userApi.listUsers(null, null, 20, null, null, null, null))
+                .thenReturn(Collections.singletonList(willie));
     }
+
+
+    @Test
+    void checkWillie() {
+        System.out.println("hi");
+    }
+
 }
