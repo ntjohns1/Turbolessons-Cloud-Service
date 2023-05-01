@@ -43,7 +43,7 @@ class WebSocketConfigTest {
 
         int count = 10;
         AtomicLong counter = new AtomicLong();
-        URI uri = URI.create("ws://localhost:5005/ws/messages");
+        URI uri = URI.create("ws://localhost:5005/ws/messages/testid");
 
 
         socketClient.execute(uri, (WebSocketSession session) -> {
@@ -81,8 +81,8 @@ class WebSocketConfigTest {
         return
                 this.webClient
                         .post()
-                        .uri("http://localhost:5005/api/messages")
-                        .body(BodyInserters.fromObject(p))
+                        .uri("http://localhost:5005/api/messages/testid")
+                        .body(BodyInserters.fromValue(p))
                         .retrieve()
                         .bodyToMono(String.class)
                         .thenReturn(p);
