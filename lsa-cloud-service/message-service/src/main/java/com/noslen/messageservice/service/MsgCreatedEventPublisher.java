@@ -20,7 +20,7 @@ public class MsgCreatedEventPublisher implements
     private final BlockingQueue<MsgCreatedEvent> queue =
             new LinkedBlockingQueue<>();
 
-    MsgCreatedEventPublisher(Executor executor) {
+    protected MsgCreatedEventPublisher(Executor executor) {
         this.executor = executor;
     }
 

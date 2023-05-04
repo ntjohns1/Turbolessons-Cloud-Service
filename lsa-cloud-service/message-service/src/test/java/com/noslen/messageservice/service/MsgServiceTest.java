@@ -59,20 +59,13 @@ public class MsgServiceTest {
     @Test
     public void getById() {
         final String time = new SimpleDateFormat("dd-MM-yy HH:mm").format(new Date());
-        repository.save(new Msg("1", "Jane", UUID.randomUUID().toString(),"Hello", time));
-        Mono<Msg> composite = (Mono<Msg>) this.service.get("1");
-        StepVerifier.create(composite).expectNextMatches(msg -> StringUtils.hasText(msg.getId()) && "1".equalsIgnoreCase(msg.getId())).verifyComplete();
-//        String test = "Jim";
-//        String test1 = "hello";
-//        Mono<Msg> deleted = this.service
-//                .create(test, test1)
-//                .flatMap(saved -> this.service.get(saved.getId()));
-//        StepVerifier
-//                .create(deleted)
-//                .expectNextMatches(msg -> StringUtils.hasText(msg.getId()) && test.equalsIgnoreCase(msg.getId()))
-//                .verifyComplete();
-//        final String time = new SimpleDateFormat("dd-MM-yy HH:mm").format(new Date());
-//        Mono<Msg> saved = this.service.create("Jim", "Hello");
+        Mono<Msg> savedMsg = repository.save(new Msg("testId", UUID.randomUUID().toString(), UUID.randomUUID().toString(), "Hello", time));
 
+        // Wait for the message to be saved
+        savedMsg.block();
+
+        Mono<Msg> composite = (Mono<Msg>) this.service.get("testId");
+        StepVerifier.create(composite).expectNextMatches(msg -> StringUtils.hasText(msg.getId()) && "testId".equalsIgnoreCase(msg.getId())).verifyComplete();
     }
+
 }
