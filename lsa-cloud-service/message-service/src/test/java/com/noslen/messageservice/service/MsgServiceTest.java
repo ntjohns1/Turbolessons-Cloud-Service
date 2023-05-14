@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.StringUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -24,6 +25,7 @@ import static org.mockito.Mockito.mock;
 @Log4j2
 @DataMongoTest
 @Import(MsgService.class)
+@ActiveProfiles("test")
 public class MsgServiceTest {
 
     private MsgService service;
@@ -45,9 +47,9 @@ public class MsgServiceTest {
 
     @Test
     public void testGetAll() {
-        String testSender = "Billie";
-        String testRecipient = "Tina";
-        String alternateUser = "Dave";
+        String testSender = "bholiday";
+        String testRecipient = "tmiller";
+        String alternateUser = "dhagel";
 
         Flux<Msg> composite = service.all();
 
@@ -69,8 +71,8 @@ public class MsgServiceTest {
 
         Mono<Msg> composite = (Mono<Msg>) this.service.get("testId");
         StepVerifier.create(composite)
-                .expectNextMatches(msg -> "Dave".equalsIgnoreCase(msg.getSender())
-                        && "Tina".equalsIgnoreCase(msg.getRecipient()))
+                .expectNextMatches(msg -> "dhagel".equalsIgnoreCase(msg.getSender())
+                        && "tmiller".equalsIgnoreCase(msg.getRecipient()))
                 .verifyComplete();
     }
 
@@ -78,9 +80,9 @@ public class MsgServiceTest {
     @Test
     public void testGetBySender() {
 
-        Flux<Msg> composite = service.getBySender("Billie");
+        Flux<Msg> composite = service.getBySender("bholiday");
 
-        Predicate<Msg> match = msg -> msg.getSender().equals("Billie");
+        Predicate<Msg> match = msg -> msg.getSender().equals("bholiday");
 
         StepVerifier.create(composite)
                 .expectNextMatches(match)
@@ -96,9 +98,9 @@ public class MsgServiceTest {
     public void testGetByRecipient() {
 
         // Retrieve messages by the test sender
-        Flux<Msg> composite = service.getByRecipient("Tina");
+        Flux<Msg> composite = service.getByRecipient("tmiller");
 
-        Predicate<Msg> match = msg -> msg.getRecipient().equals("Tina");
+        Predicate<Msg> match = msg -> msg.getRecipient().equals("tmiller");
 
         StepVerifier.create(composite)
                 .expectNextMatches(match)
@@ -112,10 +114,10 @@ public class MsgServiceTest {
     public void testGetBySenderAndRecipient() {
 
         // Retrieve messages by the test sender and recipient
-        Flux<Msg> composite = service.getBySenderAndRecipient("Billie", "Tina");
+        Flux<Msg> composite = service.getBySenderAndRecipient("bholiday", "tmiller");
 
-        Predicate<Msg> match = msg -> msg.getSender().equals("Billie") &&
-                msg.getRecipient().equals("Tina");
+        Predicate<Msg> match = msg -> msg.getSender().equals("bholiday") &&
+                msg.getRecipient().equals("tmiller");
 
         StepVerifier.create(composite)
                 .expectNextMatches(match)
@@ -126,7 +128,7 @@ public class MsgServiceTest {
 
     @Test
     public void save() {
-        Mono<Msg> msgMono = this.service.create("Buddy","Derek", "Hello");
+        Mono<Msg> msgMono = this.service.create("gharold","hthompson", "Hello");
         StepVerifier.create(msgMono)
                 .expectNextMatches(saved -> StringUtils.hasText(saved.getId()))
                 .verifyComplete();
@@ -134,13 +136,12 @@ public class MsgServiceTest {
 
     @Test
     public void delete() {
-        Mono<Msg> deleted = this.service
-                .create("Dave", "Tina", "test")
+        Mono<Msg> deleted = this.service.create("dhagel", "tmiller", "test")
                 .flatMap(saved -> this.service.delete(saved.getId()));
         StepVerifier
                 .create(deleted)
-                .expectNextMatches(msg -> msg.getSender().equalsIgnoreCase("Dave")
-                        && msg.getRecipient().equalsIgnoreCase("Tina"))
+                .expectNextMatches(msg -> msg.getSender().equalsIgnoreCase("dhagel")
+                        && msg.getRecipient().equalsIgnoreCase("tmiller"))
                 .verifyComplete();
     }
 
@@ -148,9 +149,9 @@ public class MsgServiceTest {
         repository = mock(MsgRepo.class);
         final String time = new SimpleDateFormat("dd-MM-yy HH:mm").format(new Date());
 
-        String testSender = "Billie";
-        String testRecipient = "Tina";
-        String alternateUser = "Dave";
+        String testSender = "bholiday";
+        String testRecipient = "tmiller";
+        String alternateUser = "dhagel";
         Msg msg1 = new Msg(UUID.randomUUID().toString(),testSender, testRecipient, "test", time);
         Msg msg2 = new Msg(UUID.randomUUID().toString(),testSender, testRecipient, "test", time);
         Msg msg3 = new Msg(UUID.randomUUID().toString(),testSender, testRecipient, "test", time);
@@ -162,12 +163,12 @@ public class MsgServiceTest {
         Flux<Msg> msgByReceiverFlux = Flux.just(msg1, msg2, msg3, msg5);  // messages sent by 'testSender'
         Flux<Msg> msgBySenderReceiverFlux = Flux.just(msg1, msg2, msg3);  // messages sent by 'testSender'
         Mockito.when(this.repository.findAll()).thenReturn(msgFlux);
+        Mockito.when(this.repository.findById(anyString())).thenReturn(Mono.just(msg5));
         Mockito.when(this.repository.findBySender(testSender)).thenReturn(msgBySenderFlux);
         Mockito.when(this.repository.findByRecipient(testRecipient)).thenReturn(msgByReceiverFlux);
         Mockito.when(this.repository.findBySenderAndRecipient(testSender,testRecipient)).thenReturn(msgBySenderReceiverFlux);
         Mockito.when(this.repository.save(any())).thenReturn(Mono.just(msg5));
         Mockito.when(this.repository.deleteById(anyString())).thenReturn(Mono.empty());
-        Mockito.when(this.repository.findById(anyString())).thenReturn(Mono.just(msg5));
     }
 
 }

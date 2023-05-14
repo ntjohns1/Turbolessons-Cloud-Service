@@ -9,7 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 @Log4j2
-@ActiveProfiles("default")
+@ActiveProfiles("test")
 @Import({MessageEndpointConfig.class,
         MessageHandler.class, MsgService.class})
 public class FunctionalMessageEndpointsTest extends AbstractBaseMessageEndpoints {
