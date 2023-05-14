@@ -3,69 +3,171 @@ package com.noslen.messageservice.service;
 import com.noslen.messageservice.model.Msg;
 import com.noslen.messageservice.repository.MsgRepo;
 import lombok.extern.log4j.Log4j2;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Import;
 import org.springframework.util.StringUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Predicate;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
 
 @Log4j2
 @DataMongoTest
 @Import(MsgService.class)
 public class MsgServiceTest {
 
-    private final MsgService service;
-    private final MsgRepo repository;
+    private MsgService service;
+    private MsgRepo repository;
 
-    public MsgServiceTest(@Autowired MsgService service, @Autowired MsgRepo repository) {
+    private final ApplicationEventPublisher publisher;
+
+    public MsgServiceTest(@Autowired MsgService service, @Autowired MsgRepo repository,@Autowired ApplicationEventPublisher publisher) {
         this.service = service;
         this.repository = repository;
+        this.publisher = publisher;
+    }
+
+    @BeforeEach
+    public void setUp() throws Exception {
+        setUpMsgRepositoryMock();
+        service = new MsgService(publisher,repository);
     }
 
     @Test
-    public void getAll() {
-        final String time = new SimpleDateFormat("dd-MM-yy HH:mm").format(new Date());
-        Flux<Msg> saved = repository.saveAll(Flux.just(new Msg(null, "Josh", UUID.randomUUID().toString(), "Hello", time), new Msg(null, "Matt",UUID.randomUUID().toString(), "Hello", time), new Msg(null, "Jane", UUID.randomUUID().toString(), "Hello", time)));
+    public void testGetAll() {
+        String testSender = "Billie";
+        String testRecipient = "Tina";
+        String alternateUser = "Dave";
 
-        Flux<Msg> composite = service.all().thenMany(saved);
+        Flux<Msg> composite = service.all();
 
-        Predicate<Msg> match = msg -> Boolean.TRUE.equals(saved.any(saveItem -> saveItem.equals(msg)).block());
+        StepVerifier.create(composite)
+                .expectNextMatches(msg -> testSender.equalsIgnoreCase(msg.getSender())
+                        && testRecipient.equalsIgnoreCase(msg.getRecipient()))
+                .expectNextMatches(msg -> testSender.equalsIgnoreCase(msg.getSender())
+                        && testRecipient.equalsIgnoreCase(msg.getRecipient()))
+                .expectNextMatches(msg -> testSender.equalsIgnoreCase(msg.getSender())
+                        && testRecipient.equalsIgnoreCase(msg.getRecipient()))
+                .expectNextMatches(msg -> testSender.equalsIgnoreCase(msg.getSender())
+                        && alternateUser.equalsIgnoreCase(msg.getRecipient()))
+                .expectNextMatches(msg -> alternateUser.equalsIgnoreCase(msg.getSender())
+                        && testRecipient.equalsIgnoreCase(msg.getRecipient()))
+                .verifyComplete();
+    }
+    @Test
+    public void testGetById() {
 
-        StepVerifier.create(composite).expectNextMatches(match).expectNextMatches(match).expectNextMatches(match).verifyComplete();
+        Mono<Msg> composite = (Mono<Msg>) this.service.get("testId");
+        StepVerifier.create(composite)
+                .expectNextMatches(msg -> "Dave".equalsIgnoreCase(msg.getSender())
+                        && "Tina".equalsIgnoreCase(msg.getRecipient()))
+                .verifyComplete();
+    }
+
+
+    @Test
+    public void testGetBySender() {
+
+        Flux<Msg> composite = service.getBySender("Billie");
+
+        Predicate<Msg> match = msg -> msg.getSender().equals("Billie");
+
+        StepVerifier.create(composite)
+                .expectNextMatches(match)
+                .expectNextMatches(match)
+                .expectNextMatches(match)
+                .expectNextMatches(match)
+                .verifyComplete();
+    }
+
+
+
+    @Test
+    public void testGetByRecipient() {
+
+        // Retrieve messages by the test sender
+        Flux<Msg> composite = service.getByRecipient("Tina");
+
+        Predicate<Msg> match = msg -> msg.getRecipient().equals("Tina");
+
+        StepVerifier.create(composite)
+                .expectNextMatches(match)
+                .expectNextMatches(match)
+                .expectNextMatches(match)
+                .expectNextMatches(match)
+                .verifyComplete();
+    }
+
+    @Test
+    public void testGetBySenderAndRecipient() {
+
+        // Retrieve messages by the test sender and recipient
+        Flux<Msg> composite = service.getBySenderAndRecipient("Billie", "Tina");
+
+        Predicate<Msg> match = msg -> msg.getSender().equals("Billie") &&
+                msg.getRecipient().equals("Tina");
+
+        StepVerifier.create(composite)
+                .expectNextMatches(match)
+                .expectNextMatches(match)
+                .expectNextMatches(match)
+                .verifyComplete();
     }
 
     @Test
     public void save() {
-        Mono<Msg> msgMono = this.service.create("Buddy",UUID.randomUUID().toString(), "Hello");
-        StepVerifier.create(msgMono).expectNextMatches(saved -> StringUtils.hasText(saved.getId())).verifyComplete();
+        Mono<Msg> msgMono = this.service.create("Buddy","Derek", "Hello");
+        StepVerifier.create(msgMono)
+                .expectNextMatches(saved -> StringUtils.hasText(saved.getId()))
+                .verifyComplete();
     }
 
     @Test
     public void delete() {
-        String test = "test";
-        Mono<Msg> deleted = this.service.create(test, test, test).flatMap(saved -> this.service.delete(saved.getId()));
-        StepVerifier.create(deleted).expectNextMatches(msg -> msg.getSender().equalsIgnoreCase(test)).verifyComplete();
+        Mono<Msg> deleted = this.service
+                .create("Dave", "Tina", "test")
+                .flatMap(saved -> this.service.delete(saved.getId()));
+        StepVerifier
+                .create(deleted)
+                .expectNextMatches(msg -> msg.getSender().equalsIgnoreCase("Dave")
+                        && msg.getRecipient().equalsIgnoreCase("Tina"))
+                .verifyComplete();
     }
 
-    // TODO: Fix this one - only works if id is "1"
-    @Test
-    public void getById() {
+    private void setUpMsgRepositoryMock() {
+        repository = mock(MsgRepo.class);
         final String time = new SimpleDateFormat("dd-MM-yy HH:mm").format(new Date());
-        Mono<Msg> savedMsg = repository.save(new Msg("testId", UUID.randomUUID().toString(), UUID.randomUUID().toString(), "Hello", time));
 
-        // Wait for the message to be saved
-        savedMsg.block();
+        String testSender = "Billie";
+        String testRecipient = "Tina";
+        String alternateUser = "Dave";
+        Msg msg1 = new Msg(UUID.randomUUID().toString(),testSender, testRecipient, "test", time);
+        Msg msg2 = new Msg(UUID.randomUUID().toString(),testSender, testRecipient, "test", time);
+        Msg msg3 = new Msg(UUID.randomUUID().toString(),testSender, testRecipient, "test", time);
+        Msg msg4 = new Msg(UUID.randomUUID().toString(),testSender, alternateUser, "test", time);
+        Msg msg5 = new Msg(UUID.randomUUID().toString(),alternateUser, testRecipient, "test", time);
 
-        Mono<Msg> composite = (Mono<Msg>) this.service.get("testId");
-        StepVerifier.create(composite).expectNextMatches(msg -> StringUtils.hasText(msg.getId()) && "testId".equalsIgnoreCase(msg.getId())).verifyComplete();
+        Flux<Msg> msgFlux = Flux.just(msg1,msg2,msg3,msg4,msg5);
+        Flux<Msg> msgBySenderFlux = Flux.just(msg1, msg2, msg3, msg4);  // messages sent by 'testSender'
+        Flux<Msg> msgByReceiverFlux = Flux.just(msg1, msg2, msg3, msg5);  // messages sent by 'testSender'
+        Flux<Msg> msgBySenderReceiverFlux = Flux.just(msg1, msg2, msg3);  // messages sent by 'testSender'
+        Mockito.when(this.repository.findAll()).thenReturn(msgFlux);
+        Mockito.when(this.repository.findBySender(testSender)).thenReturn(msgBySenderFlux);
+        Mockito.when(this.repository.findByRecipient(testRecipient)).thenReturn(msgByReceiverFlux);
+        Mockito.when(this.repository.findBySenderAndRecipient(testSender,testRecipient)).thenReturn(msgBySenderReceiverFlux);
+        Mockito.when(this.repository.save(any())).thenReturn(Mono.just(msg5));
+        Mockito.when(this.repository.deleteById(anyString())).thenReturn(Mono.empty());
+        Mockito.when(this.repository.findById(anyString())).thenReturn(Mono.just(msg5));
     }
 
 }

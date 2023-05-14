@@ -1,7 +1,5 @@
 server.port: 5005
 spring:
-    main:
-        allow-bean-definition-overriding: true
     application:
         name: message-service
     config:

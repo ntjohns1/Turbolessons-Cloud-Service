@@ -49,10 +49,10 @@ public class MsgService {
                 .flatMap(p -> this.msgRepository.deleteById(p.getId()).thenReturn(p));
     }
 
-    public Mono<Msg> create(String sender,String uid, String msg) {
+    public Mono<Msg> create(String senderId,String recipientId, String msg) {
         final String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date());
         return this.msgRepository
-                .save(new Msg(null, sender,uid,msg,time))
+                .save(new Msg(null, senderId,recipientId,msg,time))
                 .doOnSuccess(message -> this.publisher.publishEvent(new MsgCreatedEvent(message)));
     }
 }
