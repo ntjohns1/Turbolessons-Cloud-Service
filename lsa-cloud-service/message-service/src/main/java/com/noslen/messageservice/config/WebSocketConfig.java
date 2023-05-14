@@ -26,6 +26,7 @@ import java.util.function.Supplier;
 
 @Log4j2
 @Configuration
+public
 class WebSocketConfig {
 
     @Bean

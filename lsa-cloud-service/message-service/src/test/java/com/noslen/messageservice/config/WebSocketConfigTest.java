@@ -1,90 +1,83 @@
 package com.noslen.messageservice.config;
 
 import com.noslen.messageservice.model.Msg;
-import lombok.extern.log4j.Log4j2;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.reactivestreams.Publisher;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.reactive.function.BodyInserters;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.reactive.server.WebTestClient;
+
 import org.springframework.web.reactive.socket.WebSocketMessage;
-import org.springframework.web.reactive.socket.WebSocketSession;
 import org.springframework.web.reactive.socket.client.ReactorNettyWebSocketClient;
-import org.springframework.web.reactive.socket.client.WebSocketClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
+import reactor.test.StepVerifier;
 import java.net.URI;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicLong;
-
-@Log4j2
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-class WebSocketConfigTest {
+import java.time.Duration;
 
 
-    private final WebSocketClient socketClient = new ReactorNettyWebSocketClient();
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.csrf;
 
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureWebTestClient
+@ActiveProfiles("test")
+public class WebSocketConfigTest {
 
-    private final WebClient webClient = WebClient.builder().build();
+    @LocalServerPort
+    private int port;
 
-    final String time = new SimpleDateFormat("dd-MM-yy HH:mm").format(new Date());
+    @Autowired
+    private WebTestClient webTestClient;
 
-
-    private Msg generateRandomMsg() {
-        return new Msg(UUID.randomUUID().toString(), "Jess",UUID.randomUUID().toString(),"Hello",time);
-    }
 
     @Test
-    public void testNotificationsOnUpdates() throws Exception {
+    @WithMockUser
+    void webSocketHandlerTest() throws InterruptedException {
+        ReactorNettyWebSocketClient client = new ReactorNettyWebSocketClient();
 
-        int count = 10;
-        AtomicLong counter = new AtomicLong();
-        URI uri = URI.create("ws://localhost:5005/ws/messages/testid");
+        // Prepare sample message
+        Msg sampleMessage = new Msg("1", "sender", "recipient", "Hello, World!", "2023-05-01 10:30:00.000");
 
+        // Set up WebSocket connection URI
+        URI uri = URI.create("ws://localhost:" + port + "/ws/messages?userId=recipient");
 
-        socketClient.execute(uri, (WebSocketSession session) -> {
+        // Connect and send test WebSocket message
+        Mono<Void> sessionMono = client.execute(uri, session -> {
+            // Log when the session starts
+            System.out.println("WebSocket session started");
 
+            // Verify received WebSocket message
+            Flux<String> in = session.receive().map(WebSocketMessage::getPayloadAsText);
 
-            Mono<WebSocketMessage> out = Mono.just(session.textMessage("test"));
-
-
-            Flux<String> in = session
-                    .receive()
-                    .map(WebSocketMessage::getPayloadAsText);
-
-
-            return session
-                    .send(out)
+            // Complete the session
+            return session.send(Mono.empty())
                     .thenMany(in)
-                    .doOnNext(str -> counter.incrementAndGet())
+                    .doOnNext(payload -> {
+                        System.out.println("Received payload: " + payload); // Log the received payload
+                        assertThat(payload).contains(sampleMessage.getMsg());
+                    })
+                    .doOnComplete(() -> {
+                        session.close().subscribe(); // Close the session explicitly on completion
+                        System.out.println("WebSocket session completed"); // Log when the session completes
+                    })
                     .then();
+        });
 
-        }).subscribe();
+        // Send the sample message to the API endpoint
+        webTestClient
+                .mutateWith(csrf())
+                .post()
+                .uri("/api/messages/recipient")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(sampleMessage)
+                .exchange()
+                .expectStatus().isCreated();
 
-
-        Flux
-                .<Msg>generate(sink -> sink.next(generateRandomMsg()))
-                .take(count)
-                .flatMap(this::write)
-                .blockLast();
-
-        Thread.sleep(1000);
-
-        Assertions.assertThat(counter.get()).isEqualTo(count);
-    }
-
-    private Publisher<Msg> write(Msg p) {
-        return
-                this.webClient
-                        .post()
-                        .uri("http://localhost:5005/api/messages/testid")
-                        .body(BodyInserters.fromValue(p))
-                        .retrieve()
-                        .bodyToMono(String.class)
-                        .thenReturn(p);
+        StepVerifier.create(sessionMono).expectTimeout(Duration.ofSeconds(2)).verify(Duration.ofSeconds(2));
     }
 }

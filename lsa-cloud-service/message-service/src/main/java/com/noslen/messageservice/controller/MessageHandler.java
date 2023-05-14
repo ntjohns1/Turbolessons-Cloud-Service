@@ -54,7 +54,7 @@ class MessageHandler {
         return defaultReadResponse(this.messageService.delete(id(r)));
     }
 
-    Mono<ServerResponse> create(ServerRequest request) {
+    Mono<ServerResponse> sendAll(ServerRequest request) {
         Flux<Msg> flux = request
                 .bodyToFlux(Msg.class)
                 .flatMap(toWrite -> this.messageService.create(toWrite.getSender(),toWrite.getRecipient(),toWrite.getMsg()));
