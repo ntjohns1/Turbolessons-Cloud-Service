@@ -11,7 +11,7 @@ import org.springframework.security.web.server.csrf.CookieServerCsrfTokenReposit
 @EnableReactiveMethodSecurity // <2>
 public class SecurityConfig {
 
-    @Bean // <3>
+    @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         // @formatter:off
         return http
@@ -28,16 +28,4 @@ public class SecurityConfig {
                 .jwt().and().and().build();
         // @formatter:on
     }
-
-//    @Bean // <6>
-//    CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowCredentials(true);
-//        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
-//        configuration.setAllowedMethods(Collections.singletonList("GET"));
-//        configuration.setAllowedHeaders(Collections.singletonList("*"));
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
 }

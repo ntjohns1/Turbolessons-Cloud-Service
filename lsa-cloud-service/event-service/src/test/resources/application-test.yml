@@ -1,0 +1,9 @@
+spring:
+    application:
+        name: event-service
+    config:
+        import: configserver:http://localhost:9999
+    datasource:
+        password: password
+        url: jdbc:mysql://localhost:3306/event_service_unit_test?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&useLegacyDatetimeCode=false
+        username: root
