@@ -1,30 +1,37 @@
 package com.noslen.eventservice.dto;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Table(name = "lesson_event")
 public class LessonEvent implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer id;
-    private String studentId;
+    private String student;
+    private String teacher;
     private LocalDateTime date;
     private String comments;
 
     public LessonEvent() {
     }
 
-    public LessonEvent(String studentId, LocalDateTime date, String comments) {
-        this.studentId = studentId;
+    public LessonEvent(Integer id, String student, String teacher, LocalDateTime date, String comments) {
+        this.id = id;
+        this.student = student;
+        this.teacher = teacher;
+        this.date = date;
+        this.comments = comments;
+    }
+
+    public LessonEvent(String student, String teacher, LocalDateTime date, String comments) {
+        this.student = student;
+        this.teacher = teacher;
         this.date = date;
         this.comments = comments;
     }
@@ -37,12 +44,20 @@ public class LessonEvent implements Serializable {
         this.id = id;
     }
 
-    public String getStudentId() {
-        return studentId;
+    public String getStudent() {
+        return student;
     }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
+    public void setStudent(String student) {
+        this.student = student;
+    }
+
+    public String getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(String teacher) {
+        this.teacher = teacher;
     }
 
     public LocalDateTime getDate() {
@@ -69,7 +84,8 @@ public class LessonEvent implements Serializable {
         LessonEvent that = (LessonEvent) o;
 
         if (!Objects.equals(id, that.id)) return false;
-        if (!Objects.equals(studentId, that.studentId)) return false;
+        if (!Objects.equals(student, that.student)) return false;
+        if (!Objects.equals(teacher, that.teacher)) return false;
         if (!Objects.equals(date, that.date)) return false;
         return Objects.equals(comments, that.comments);
     }
@@ -77,7 +93,8 @@ public class LessonEvent implements Serializable {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (studentId != null ? studentId.hashCode() : 0);
+        result = 31 * result + (student != null ? student.hashCode() : 0);
+        result = 31 * result + (teacher != null ? teacher.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (comments != null ? comments.hashCode() : 0);
         return result;
@@ -87,7 +104,8 @@ public class LessonEvent implements Serializable {
     public String toString() {
         return "LessonEvent{" +
                 "id=" + id +
-                ", studentId='" + studentId + '\'' +
+                ",x student='" + student + '\'' +
+                ", teacher='" + teacher + '\'' +
                 ", date=" + date +
                 ", comments='" + comments + '\'' +
                 '}';
