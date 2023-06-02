@@ -1,0 +1,9 @@
+spring:
+    application:
+        name: email-service
+    config:
+        import: configserver:http://localhost:9999
+    data:
+        mongodb:
+            uri: mongodb://localhost:27017/lsa_email_plt
+
