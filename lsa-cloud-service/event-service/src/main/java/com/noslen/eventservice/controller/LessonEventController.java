@@ -42,7 +42,7 @@ public class LessonEventController {
 
         return service.findLessonEventsByStudent(student);
     }
-    //Get Lesson Events By Teacher and Date
+    //Get Lesson Events By Teacher and Date\
     @GetMapping("/api/lessons/{teacher}/{date}")
     public List<LessonEvent> getLessonsByTeacherAndDate(String teacher, LocalDate date) {
 
