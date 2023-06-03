@@ -37,11 +37,11 @@ public class LessonEventRepoTests {
     //Get All Lesson Events
     @Test
     public void testFindAllLessons() {
-        LessonEvent lesson = new LessonEvent("Test Teacher","Test Student",date,"Test");
+        LessonEvent lesson = new LessonEvent("testStudent","teststudent@email.com","testTeacher","testteacher@email.com",date,"Test");
         lesson = lessonRepo.save(lesson);
-        lesson = new LessonEvent("Test Teacher","Test Student",date,"Test");
+        lesson = new LessonEvent("testStudent","teststudent@email.com","testTeacher","testteacher@email.com",date,"Test");
         lesson = lessonRepo.save(lesson);
-        lesson = new LessonEvent("Test Teacher","Test Student",date,"Test");
+        lesson = new LessonEvent("testStudent","teststudent@email.com","testTeacher","testteacher@email.com",date,"Test");
         lesson = lessonRepo.save(lesson);
 
         List<LessonEvent> eventList = lessonRepo.findAll();
@@ -52,7 +52,7 @@ public class LessonEventRepoTests {
     //Get One Lesson Event
     @Test
     public void testAddGetDeleteLesson() {
-        LessonEvent lesson = new LessonEvent("Test Teacher","Test Student",date,"Test");
+        LessonEvent lesson = new LessonEvent("testStudent","teststudent@email.com","testTeacher","testteacher@email.com",date,"Test");
         lesson = lessonRepo.save(lesson);
 
         Optional<LessonEvent> lesson1 = lessonRepo.findById(lesson.getId());
@@ -69,11 +69,11 @@ public class LessonEventRepoTests {
     //Get Lesson Events By Teacher
     @Test
     public void testGetLessonEventsByTeacher() {
-        LessonEvent lesson = new LessonEvent("testStudent","testTeacher",date,"Test");
+        LessonEvent lesson = new LessonEvent("testStudent","teststudent@email.com","testTeacher","testteacher@email.com",date,"Test");
         lesson = lessonRepo.save(lesson);
-        lesson = new LessonEvent("testStudent","testTeacher",date,"Test");
+        lesson = new LessonEvent("testStudent","teststudent@email.com","testTeacher","testteacher@email.com",date,"Test");
         lesson = lessonRepo.save(lesson);
-        lesson = new LessonEvent("testStudent1","testTeacher1",date,"Test");
+        lesson = new LessonEvent("testStudent1","teststudent@email.com","testTeacher1","testteacher@email.com",date,"Test");
         lesson = lessonRepo.save(lesson);
 
         List<LessonEvent> lessonEventList = lessonRepo.findLessonEventByTeacher("testTeacher");
@@ -86,11 +86,11 @@ public class LessonEventRepoTests {
     //Get Lesson Events By Student
     @Test
     public void testGetLessonsByStudent() {
-        LessonEvent lesson = new LessonEvent("testStudent","testTeacher",date,"Test");
+        LessonEvent lesson = new LessonEvent("testStudent","teststudent@email.com","testTeacher","testteacher@email.com",date,"Test");
         lesson = lessonRepo.save(lesson);
-        lesson = new LessonEvent("testStudent","testTeacher",date,"Test");
+        lesson = new LessonEvent("testStudent","teststudent@email.com","testTeacher","testteacher@email.com",date,"Test");
         lesson = lessonRepo.save(lesson);
-        lesson = new LessonEvent("testStudent1","testTeacher1",date,"Test");
+        lesson = new LessonEvent("testStudent1","teststudent@email.com","testTeacher1","testteacher@email.com",date,"Test");
         lesson = lessonRepo.save(lesson);
 
         List<LessonEvent> lessonEventList = lessonRepo.findLessonEventByStudent("testStudent");
@@ -100,17 +100,38 @@ public class LessonEventRepoTests {
         Assertions.assertEquals("testStudent", lessonEventList.get(1).getStudent());
     }
 
-    //Get Lesson Events By Teacher and Date
+    //Get All Lesson Events by Date
+
+
     @Test
-    public void testGetLessonsByTeacherAndDate() {
-        LessonEvent lesson = new LessonEvent("testStudent","testTeacher",date,"Test");
+    void testGetLessonsByDate() {
+        LessonEvent lesson = new LessonEvent("testStudent1","teststudent1@email.com","testTeacher1","testteacher1@email.com",date,"Test");
         lesson = lessonRepo.save(lesson);
-        lesson = new LessonEvent("testStudent","testTeacher",date,"Test");
+        lesson = new LessonEvent("testStudent2","teststudent2@email.com","testTeacher2","testteacher2@email.com",date,"Test");
         lesson = lessonRepo.save(lesson);
-        lesson = new LessonEvent("testStudent1","testTeacher1",date,"Test");
+        lesson = new LessonEvent("testStudent3","teststudent3@email.com","testTeacher3","testteacher3@email.com",date,"Test");
         lesson = lessonRepo.save(lesson);
 
         List<LessonEvent> lessonEventList = lessonRepo.findLessonEventByTeacher("testTeacher");
+
+        Assertions.assertEquals(2,lessonEventList.size());
+        Assertions.assertEquals("testTeacher", lessonEventList.get(0).getTeacher());
+        Assertions.assertEquals(date,lessonEventList.get(0).getDate());
+        Assertions.assertEquals("testTeacher", lessonEventList.get(1).getTeacher());
+        Assertions.assertEquals(date,lessonEventList.get(1).getDate());
+    }
+
+    //Get Lesson Events By Teacher and Date
+    @Test
+    public void testGetLessonsByTeacherAndDate() {
+        LessonEvent lesson = new LessonEvent("testStudent","teststudent@email.com","testTeacher","testteacher@email.com",date,"Test");
+        lesson = lessonRepo.save(lesson);
+        lesson = new LessonEvent("testStudent","teststudent@email.com","testTeacher","testteacher@email.com",date,"Test");
+        lesson = lessonRepo.save(lesson);
+        lesson = new LessonEvent("testStudent1","teststudent@email.com","testTeacher1","testteacher@email.com",date,"Test");
+        lesson = lessonRepo.save(lesson);
+
+        List<LessonEvent> lessonEventList = lessonRepo.findLessonEventByTeacherAndDate("testTeacher", date.toLocalDate());
 
         Assertions.assertEquals(2,lessonEventList.size());
         Assertions.assertEquals("testTeacher", lessonEventList.get(0).getTeacher());
@@ -123,7 +144,7 @@ public class LessonEventRepoTests {
     @Test
     public void testUpdateLesson() {
         LocalDateTime date1 = LocalDateTime.of(2034, Month.SEPTEMBER, 18, 16, 30);
-        LessonEvent lesson = new LessonEvent("testStudent","testTeacher",date,"Test");
+        LessonEvent lesson = new LessonEvent("testStudent","teststudent@email.com","testTeacher","testteacher@email.com",date,"Test");
         lesson = lessonRepo.save(lesson);
 
         lesson.setStudent("testStudentNew");

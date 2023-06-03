@@ -11,27 +11,32 @@ public class LessonEvent implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Integer id;
     private String student;
+    private String studentEmail;
     private String teacher;
+    private String teacherEmail;
     private LocalDateTime date;
     private String comments;
 
     public LessonEvent() {
     }
 
-    public LessonEvent(Integer id, String student, String teacher, LocalDateTime date, String comments) {
+    public LessonEvent(Integer id, String student, String studentEmail, String teacher, String teacherEmail, LocalDateTime date, String comments) {
         this.id = id;
         this.student = student;
+        this.studentEmail = studentEmail;
         this.teacher = teacher;
+        this.teacherEmail = teacherEmail;
         this.date = date;
         this.comments = comments;
     }
 
-    public LessonEvent(String student, String teacher, LocalDateTime date, String comments) {
+    public LessonEvent(String student, String studentEmail, String teacher, String teacherEmail, LocalDateTime date, String comments) {
         this.student = student;
+        this.studentEmail = studentEmail;
         this.teacher = teacher;
+        this.teacherEmail = teacherEmail;
         this.date = date;
         this.comments = comments;
     }
@@ -52,12 +57,28 @@ public class LessonEvent implements Serializable {
         this.student = student;
     }
 
+    public String getStudentEmail() {
+        return studentEmail;
+    }
+
+    public void setStudentEmail(String studentEmail) {
+        this.studentEmail = studentEmail;
+    }
+
     public String getTeacher() {
         return teacher;
     }
 
     public void setTeacher(String teacher) {
         this.teacher = teacher;
+    }
+
+    public String getTeacherEmail() {
+        return teacherEmail;
+    }
+
+    public void setTeacherEmail(String teacherEmail) {
+        this.teacherEmail = teacherEmail;
     }
 
     public LocalDateTime getDate() {
@@ -85,7 +106,9 @@ public class LessonEvent implements Serializable {
 
         if (!Objects.equals(id, that.id)) return false;
         if (!Objects.equals(student, that.student)) return false;
+        if (!Objects.equals(studentEmail, that.studentEmail)) return false;
         if (!Objects.equals(teacher, that.teacher)) return false;
+        if (!Objects.equals(teacherEmail, that.teacherEmail)) return false;
         if (!Objects.equals(date, that.date)) return false;
         return Objects.equals(comments, that.comments);
     }
@@ -94,7 +117,9 @@ public class LessonEvent implements Serializable {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (student != null ? student.hashCode() : 0);
+        result = 31 * result + (studentEmail != null ? studentEmail.hashCode() : 0);
         result = 31 * result + (teacher != null ? teacher.hashCode() : 0);
+        result = 31 * result + (teacherEmail != null ? teacherEmail.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (comments != null ? comments.hashCode() : 0);
         return result;
@@ -104,8 +129,10 @@ public class LessonEvent implements Serializable {
     public String toString() {
         return "LessonEvent{" +
                 "id=" + id +
-                ",x student='" + student + '\'' +
+                ", student='" + student + '\'' +
+                ", studentEmail='" + studentEmail + '\'' +
                 ", teacher='" + teacher + '\'' +
+                ", teacherEmail='" + teacherEmail + '\'' +
                 ", date=" + date +
                 ", comments='" + comments + '\'' +
                 '}';

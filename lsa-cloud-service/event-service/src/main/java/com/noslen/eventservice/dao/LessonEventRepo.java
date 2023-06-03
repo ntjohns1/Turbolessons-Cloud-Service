@@ -11,5 +11,6 @@ import java.util.List;
 public interface LessonEventRepo extends JpaRepository<LessonEvent, Integer> {
     List<LessonEvent> findLessonEventByStudent(String student);
     List<LessonEvent> findLessonEventByTeacher(String teacher);
+    List<LessonEvent> findLessonEventByDate(LocalDate date);
     List<LessonEvent> findLessonEventByTeacherAndDate(String teacher, LocalDate date);
 }

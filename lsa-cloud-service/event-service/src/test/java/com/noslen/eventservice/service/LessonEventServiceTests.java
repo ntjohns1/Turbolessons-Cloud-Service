@@ -37,6 +37,7 @@ public class LessonEventServiceTests {
     Map<Integer, LessonEvent> lessonEventStore;
     Map<String, List<LessonEvent>> lessonEventByStudentStore;
     Map<String, List<LessonEvent>> lessonEventByTeacherStore;
+    Map<String, List<LessonEvent>> lessonEventByDateStore;
     Map<String, List<LessonEvent>> lessonEventByTeacherAndDateStore;
 
     @BeforeEach
@@ -44,6 +45,7 @@ public class LessonEventServiceTests {
         lessonEventStore = new HashMap<>();
         lessonEventByStudentStore = new HashMap<>();
         lessonEventByTeacherStore = new HashMap<>();
+        lessonEventByDateStore = new HashMap<>();
         lessonEventByTeacherAndDateStore = new HashMap<>();
         setUpLessonEventRepoMock();
         service = new LessonEventService(lessonEventRepo);
@@ -53,16 +55,16 @@ public class LessonEventServiceTests {
     @Test
     public void testFindAllLessonEvents() {
 
-        LessonEvent lesson1 = new LessonEvent("testStudent", "testTeacher", date1, "Test");
-        LessonEvent lesson2 = new LessonEvent("testStudent", "testTeacher", date2, "Test");
-        LessonEvent lesson3 = new LessonEvent("testStudent1", "testTeacher1", date3, "TestTest");
-        LessonEvent lesson4 = new LessonEvent("testStudent", "testTeacher", date4, "Test");
+        LessonEvent lesson1 = new LessonEvent("testStudent", "teststudent@email.com", "testTeacher", "testteacher@email.com", date1, "Test");
+        LessonEvent lesson2 = new LessonEvent("testStudent", "teststudent@email.com", "testTeacher", "testteacher@email.com", date2, "Test");
+        LessonEvent lesson3 = new LessonEvent("testStudent1", "teststudent@email.com", "testTeacher1", "testteacher@email.com", date3, "TestTest");
+        LessonEvent lesson4 = new LessonEvent("testStudent", "teststudent@email.com", "testTeacher", "testteacher@email.com", date4, "Test");
 
         service.saveLessonEvent(lesson1);
         service.saveLessonEvent(lesson2);
         service.saveLessonEvent(lesson3);
         service.saveLessonEvent(lesson4);
-        System.out.println("****** Map Values: \n"+ lessonEventStore.values());
+        System.out.println("****** Map Values: \n" + lessonEventStore.values());
 
         List<LessonEvent> allLessons = service.findAllLessonEvents();
         Assertions.assertEquals(4, allLessons.size());
@@ -80,7 +82,7 @@ public class LessonEventServiceTests {
     //Get One Lesson Event
     @Test
     public void shouldSaveFindDeleteLessonEvent() {
-        LessonEvent lesson = new LessonEvent("test", "test", date1, "test");
+        LessonEvent lesson = new LessonEvent("testStudent", "teststudent@email.com", "testTeacher", "testteacher@email.com", date1, "Test");
         lesson = service.saveLessonEvent(lesson);
         LessonEvent fromService = service.findLessonEvent(lesson.getId());
         Assertions.assertEquals(lesson, fromService);
@@ -89,13 +91,14 @@ public class LessonEventServiceTests {
         Assertions.assertNull(fromService);
         lessonEventStore.clear();
     }
+
     //Get Lesson Event Events By Teacher
     @Test
     public void shouldFindLessonEventByTeacher() {
         // Create and save 3 lessons with the same teacher and date
-        LessonEvent lesson1 = new LessonEvent("testStudent", "testTeacher", date1, "Test");
-        LessonEvent lesson2 = new LessonEvent("testStudent", "testTeacher", date2, "Test");
-        LessonEvent lesson3 = new LessonEvent("testStudent", "testTeacher", date3, "Test");
+        LessonEvent lesson1 = new LessonEvent("testStudent", "teststudent@email.com", "testTeacher", "testteacher@email.com", date1, "Test");
+        LessonEvent lesson2 = new LessonEvent("testStudent", "teststudent@email.com", "testTeacher", "testteacher@email.com", date2, "Test");
+        LessonEvent lesson3 = new LessonEvent("testStudent", "teststudent@email.com", "testTeacher", "testteacher@email.com", date3, "Test");
 
         service.saveLessonEvent(lesson1);
         service.saveLessonEvent(lesson2);
@@ -111,9 +114,9 @@ public class LessonEventServiceTests {
     @Test
     public void shouldFindLessonEventByStudent() {
         // Create and save 3 lessons with the same teacher and date
-        LessonEvent lesson1 = new LessonEvent("testStudent", "testTeacher", date1, "Test");
-        LessonEvent lesson2 = new LessonEvent("testStudent", "testTeacher", date2, "Test");
-        LessonEvent lesson3 = new LessonEvent("testStudent", "testTeacher", date3, "Test");
+        LessonEvent lesson1 = new LessonEvent("testStudent", "teststudent@email.com", "testTeacher", "testteacher@email.com", date1, "Test");
+        LessonEvent lesson2 = new LessonEvent("testStudent", "teststudent@email.com", "testTeacher", "testteacher@email.com", date2, "Test");
+        LessonEvent lesson3 = new LessonEvent("testStudent", "teststudent@email.com", "testTeacher", "testteacher@email.com", date3, "Test");
 
         service.saveLessonEvent(lesson1);
         service.saveLessonEvent(lesson2);
@@ -127,12 +130,32 @@ public class LessonEventServiceTests {
 
     //Get Lesson Event Events By Teacher and Date
     @Test
+    public void shouldFindLessonEventByDate() {
+        // Create and save 3 lessons with the same teacher and date
+        LessonEvent lesson1 = new LessonEvent("testStudent", "teststudent@email.com", "testTeacher", "testteacher@email.com", date1, "Test");
+        LessonEvent lesson2 = new LessonEvent("testStudent", "teststudent@email.com", "testTeacher", "testteacher@email.com", date2, "Test");
+        LessonEvent lesson3 = new LessonEvent("testStudent", "teststudent@email.com", "testTeacher", "testteacher@email.com", date3, "Test");
+        service.saveLessonEvent(lesson1);
+        service.saveLessonEvent(lesson2);
+        service.saveLessonEvent(lesson3);
+
+        // Call the method we want to test
+        List<LessonEvent> fromService = service.findLessonEventsByDate(date1.toLocalDate());
+
+        // Assert that the result is as expected
+        Assertions.assertEquals(3, fromService.size());
+        Assertions.assertEquals("testTeacher", fromService.get(0).getTeacher());
+        Assertions.assertEquals(date1, fromService.get(0).getDate());
+        lessonEventByDateStore.clear();
+    }
+
+
+    @Test
     public void shouldFindLessonEventByTeacherAndDate() {
         // Create and save 3 lessons with the same teacher and date
-        LessonEvent lesson1 = new LessonEvent("testStudent", "testTeacher", date1, "Test");
-        LessonEvent lesson2 = new LessonEvent("testStudent", "testTeacher", date2, "Test");
-        LessonEvent lesson3 = new LessonEvent("testStudent", "testTeacher", date3, "Test");
-
+        LessonEvent lesson1 = new LessonEvent("testStudent", "teststudent@email.com", "testTeacher", "testteacher@email.com", date1, "Test");
+        LessonEvent lesson2 = new LessonEvent("testStudent", "teststudent@email.com", "testTeacher", "testteacher@email.com", date2, "Test");
+        LessonEvent lesson3 = new LessonEvent("testStudent", "teststudent@email.com", "testTeacher", "testteacher@email.com", date3, "Test");
         service.saveLessonEvent(lesson1);
         service.saveLessonEvent(lesson2);
         service.saveLessonEvent(lesson3);
@@ -147,12 +170,11 @@ public class LessonEventServiceTests {
         lessonEventByTeacherAndDateStore.clear();
     }
 
-
     //Update Lesson Event
     @Test
     public void shouldUpdateLessonEvent() {
-        LessonEvent lesson = new LessonEvent("test", "test", date1, "test");
-        LessonEvent updatedLesson = new LessonEvent("update", "update", date2, "update");
+        LessonEvent lesson = new LessonEvent("testStudent", "teststudent@email.com", "testTeacher", "testteacher@email.com", date1, "Test");
+        LessonEvent updatedLesson = new LessonEvent("testStudent", "teststudent@email.com", "testTeacher", "testteacher@email.com", date2, "Test");
         lesson = service.saveLessonEvent(lesson);
         service.updateLessonEvent(lesson.getId(), updatedLesson);
         LessonEvent updatedFromService = service.findLessonEvent(lesson.getId());
@@ -164,6 +186,7 @@ public class LessonEventServiceTests {
     }
 
     private void setUpLessonEventRepoMock() {
+
         lessonEventRepo = mock(LessonEventRepo.class);
 
         Mockito.when(lessonEventRepo.findAll()).thenAnswer(invocation -> new ArrayList<>(lessonEventStore.values()));
@@ -177,6 +200,7 @@ public class LessonEventServiceTests {
             lessonEventByTeacherStore.computeIfAbsent(lesson.getTeacher(), k -> new ArrayList<>()).add(lesson);
             String teacherAndDateKey = lesson.getTeacher() + "_" + lesson.getDate().toLocalDate().toString();
             lessonEventByTeacherAndDateStore.computeIfAbsent(teacherAndDateKey, k -> new ArrayList<>()).add(lesson);
+            lessonEventByDateStore.computeIfAbsent(lesson.getDate().toLocalDate().toString(), k -> new ArrayList<>()).add(lesson);
             return lesson;
         });
 
@@ -195,12 +219,19 @@ public class LessonEventServiceTests {
             return Optional.ofNullable(lessonEventByTeacherStore.get(teacher)).orElse(new ArrayList<>());
         });
 
+        Mockito.when(lessonEventRepo.findLessonEventByDate(any(LocalDate.class))).then(invocation -> {
+            LocalDate date = invocation.getArgument(0);
+            String dateKey = date.toString();
+            return Optional.ofNullable(lessonEventByDateStore.get(dateKey)).orElse(new ArrayList<>());
+        });
+
         Mockito.when(lessonEventRepo.findLessonEventByTeacherAndDate(any(String.class), any(LocalDate.class))).then(invocation -> {
             String teacher = invocation.getArgument(0);
             LocalDate date = invocation.getArgument(1);
             String teacherAndDateKey = teacher + "_" + date.toString();
             return Optional.ofNullable(lessonEventByTeacherAndDateStore.get(teacherAndDateKey)).orElse(new ArrayList<>());
         });
+
         Mockito.doAnswer(invocation -> {
             Integer id = invocation.getArgument(0);
             LessonEvent lesson = lessonEventStore.remove(id);
@@ -209,6 +240,7 @@ public class LessonEventServiceTests {
                 lessonEventByTeacherStore.get(lesson.getTeacher()).remove(lesson);
                 String teacherAndDateKey = lesson.getTeacher() + "_" + lesson.getDate().toLocalDate().toString();
                 lessonEventByTeacherAndDateStore.get(teacherAndDateKey).remove(lesson);
+                lessonEventByDateStore.get(lesson.getDate().toLocalDate().toString()).remove(lesson);
             }
             return null;
         }).when(this.lessonEventRepo).deleteById(any());

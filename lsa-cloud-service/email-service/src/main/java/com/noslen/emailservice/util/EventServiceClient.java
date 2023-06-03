@@ -17,7 +17,7 @@ public class EventServiceClient {
 
     public Flux<Lesson> getEvents(LocalDate date) {
         return webClient.get()
-                .uri("lb://event-service/api/lessons/date/" + date)
+                .uri("http://localhost:8080/api/lessons")
                 .retrieve()
                 .bodyToFlux(Lesson.class);
     }
