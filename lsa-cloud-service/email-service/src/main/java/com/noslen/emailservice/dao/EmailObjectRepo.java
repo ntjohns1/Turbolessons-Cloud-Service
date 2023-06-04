@@ -1,9 +1,7 @@
 package com.noslen.emailservice.dao;
 
 import com.noslen.emailservice.dto.MailObject;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
 
-@Repository
-public interface EmailObjectRepo extends JpaRepository<MailObject, Long> {
+public interface EmailObjectRepo extends ReactiveMongoRepository<MailObject, String> {
 }

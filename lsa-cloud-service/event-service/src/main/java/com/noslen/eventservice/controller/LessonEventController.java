@@ -4,6 +4,7 @@ package com.noslen.eventservice.controller;
 import com.noslen.eventservice.dto.LessonEvent;
 import com.noslen.eventservice.service.LessonEventService;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -19,6 +20,7 @@ public class LessonEventController {
     }
 
     //Get All Lesson Events
+    @PreAuthorize("hasAuthority('SCOPE_email_client')")
     @GetMapping("/api/lessons")
     public List<LessonEvent> getAllLessons() {
 
@@ -42,6 +44,13 @@ public class LessonEventController {
 
         return service.findLessonEventsByStudent(student);
     }
+    //Get Lesson Events By Date
+    @PreAuthorize("hasAuthority('SCOPE_email_client')")
+    @GetMapping("/api/lessons/date/{date}")
+    public List<LessonEvent> getLessonsByDate(LocalDate date) {
+        return service.findLessonEventsByDate(date);
+    }
+
     //Get Lesson Events By Teacher and Date
     @GetMapping("/api/lessons/{teacher}/{date}")
     public List<LessonEvent> getLessonsByTeacherAndDate(String teacher, LocalDate date) {

@@ -1,16 +1,12 @@
-package com.noslen.eventservice.dto;
+package com.noslen.emailservice.dto;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Entity
-@Table(name = "lesson_event")
-public class LessonEvent implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Lesson implements Serializable {
+
     private Integer id;
     private String student;
     private String studentEmail;
@@ -19,10 +15,10 @@ public class LessonEvent implements Serializable {
     private LocalDateTime date;
     private String comments;
 
-    public LessonEvent() {
+    public Lesson() {
     }
 
-    public LessonEvent(Integer id, String student, String studentEmail, String teacher, String teacherEmail, LocalDateTime date, String comments) {
+    public Lesson(Integer id, String student, String studentEmail, String teacher, String teacherEmail, LocalDateTime date, String comments) {
         this.id = id;
         this.student = student;
         this.studentEmail = studentEmail;
@@ -32,7 +28,7 @@ public class LessonEvent implements Serializable {
         this.comments = comments;
     }
 
-    public LessonEvent(String student, String studentEmail, String teacher, String teacherEmail, LocalDateTime date, String comments) {
+    public Lesson(String student, String studentEmail, String teacher, String teacherEmail, LocalDateTime date, String comments) {
         this.student = student;
         this.studentEmail = studentEmail;
         this.teacher = teacher;
@@ -102,7 +98,7 @@ public class LessonEvent implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        LessonEvent that = (LessonEvent) o;
+        Lesson that = (Lesson) o;
 
         if (!Objects.equals(id, that.id)) return false;
         if (!Objects.equals(student, that.student)) return false;
@@ -127,7 +123,7 @@ public class LessonEvent implements Serializable {
 
     @Override
     public String toString() {
-        return "LessonEvent{" +
+        return "Lesson{" +
                 "id=" + id +
                 ", student='" + student + '\'' +
                 ", studentEmail='" + studentEmail + '\'' +
@@ -138,3 +134,4 @@ public class LessonEvent implements Serializable {
                 '}';
     }
 }
+

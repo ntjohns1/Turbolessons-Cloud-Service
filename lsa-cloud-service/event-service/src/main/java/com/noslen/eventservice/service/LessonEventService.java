@@ -39,6 +39,10 @@ public class LessonEventService {
         return repository.findLessonEventByStudent(student);
     }
 
+    public List<LessonEvent> findLessonEventsByDate(LocalDate date) {
+        return repository.findLessonEventByDate(date);
+    }
+
     //Get Lesson Event Events By Teacher and Date
     public List<LessonEvent> findLessonEventsByTeacherAndDate(String teacher, LocalDate date) {
         return repository.findLessonEventByTeacherAndDate(teacher,date);
@@ -54,7 +58,9 @@ public class LessonEventService {
         Optional<LessonEvent> fromRepo = repository.findById(id);
         fromRepo.ifPresent(existingLessonEvent -> {
             existingLessonEvent.setStudent(lesson.getStudent());
+            existingLessonEvent.setStudentEmail(lesson.getStudentEmail());
             existingLessonEvent.setTeacher(lesson.getTeacher());
+            existingLessonEvent.setTeacherEmail(lesson.getTeacherEmail());
             existingLessonEvent.setDate(lesson.getDate());
             existingLessonEvent.setComments(lesson.getComments());
             repository.save(existingLessonEvent);

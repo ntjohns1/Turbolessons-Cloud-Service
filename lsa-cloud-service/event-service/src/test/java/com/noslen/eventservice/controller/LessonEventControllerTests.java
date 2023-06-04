@@ -40,13 +40,16 @@ public class LessonEventControllerTests {
 
     LocalDateTime date1 = LocalDateTime.of(2033, Month.AUGUST, 17, 15, 0);
     LocalDateTime date2 = LocalDateTime.of(2033, Month.AUGUST, 17, 15, 30);
+    LocalDateTime date3 = LocalDateTime.of(2033, Month.AUGUST, 18, 15, 30);
     LessonEvent lesson1;
     LessonEvent lesson2;
+    LessonEvent lesson3;
 
     @BeforeEach
     void setUp() {
-        lesson1 = new LessonEvent("testStudent", "testTeacher", date1, "testComment");
-        lesson2 = new LessonEvent("testStudent", "testTeacher", date1, "testComment");
+        lesson1 = new LessonEvent("testStudent","teststudent@email.com","testTeacher","testteacher@email.com",date1,"Test");
+        lesson2 = new LessonEvent("testStudent","teststudent@email.com","testTeacher","testteacher@email.com",date2,"Test");
+        lesson3 = new LessonEvent("testStudent","teststudent@email.com","testTeacher","testteacher@email.com",date3,"Test");
     }
 
     @Test
@@ -103,6 +106,22 @@ public class LessonEventControllerTests {
                         .value(lesson1.getTeacher()))
                 .andExpect(jsonPath("$[1].teacher")
                         .value(lesson1.getTeacher()));
+    }
+
+    @Test
+    void shouldReturnLessonByDate() throws Exception {
+        Mockito.when(service.findLessonEventsByDate(any())).thenReturn(Arrays.asList(lesson1,lesson2));
+        mockMvc.perform(get("/api/lessons/date/2033-08-17").with(jwt()))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].teacher")
+                        .value(lesson1.getTeacher()))
+                .andExpect(jsonPath("$[0].student")
+                        .value(lesson1.getStudent()))
+                .andExpect(jsonPath("$[1].teacher")
+                        .value(lesson1.getTeacher()))
+                .andExpect(jsonPath("$[1].student")
+                .value(lesson1.getStudent()));
     }
 
     @Test
