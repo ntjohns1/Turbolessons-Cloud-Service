@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
-public class WebClientOAuthConfig {
+public class WebClientBuilderOAuthConfig {
 
     @Bean
     ReactiveClientRegistrationRepository clientRegistrations(

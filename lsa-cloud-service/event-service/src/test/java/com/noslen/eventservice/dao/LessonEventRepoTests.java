@@ -22,6 +22,7 @@ import java.util.Optional;
 public class LessonEventRepoTests {
 //        LocalDateTime date = LocalDateTime.of(2033, Month.AUGUST, 17, 15, 0);
         LocalDateTime date = LocalDateTime.of(2033, Month.AUGUST, 17, 15, 0);
+        LocalDateTime otherDate = LocalDateTime.of(2033, Month.AUGUST, 18, 15, 0);
 
     private final LessonEventRepo lessonRepo;
 
@@ -109,15 +110,17 @@ public class LessonEventRepoTests {
         lesson = lessonRepo.save(lesson);
         lesson = new LessonEvent("testStudent2","teststudent2@email.com","testTeacher2","testteacher2@email.com",date,"Test");
         lesson = lessonRepo.save(lesson);
-        lesson = new LessonEvent("testStudent3","teststudent3@email.com","testTeacher3","testteacher3@email.com",date,"Test");
+        lesson = new LessonEvent("testStudent3","teststudent3@email.com","testTeacher3","testteacher3@email.com",otherDate,"Test");
         lesson = lessonRepo.save(lesson);
 
-        List<LessonEvent> lessonEventList = lessonRepo.findLessonEventByTeacher("testTeacher");
+        List<LessonEvent> lessonEventList = lessonRepo.findLessonEventByDate(date.toLocalDate());
 
         Assertions.assertEquals(2,lessonEventList.size());
-        Assertions.assertEquals("testTeacher", lessonEventList.get(0).getTeacher());
+//        Assertions.assertEquals("testTeacher", lessonEventList.get(0).getTeacher());
+        System.out.println("expected: " + date);
+        System.out.println("actual: " + lessonEventList.get(0).getDate().toLocalDate());
         Assertions.assertEquals(date,lessonEventList.get(0).getDate());
-        Assertions.assertEquals("testTeacher", lessonEventList.get(1).getTeacher());
+//        Assertions.assertEquals("testTeacher", lessonEventList.get(1).getTeacher());
         Assertions.assertEquals(date,lessonEventList.get(1).getDate());
     }
 
