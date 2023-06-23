@@ -1,25 +1,29 @@
 package com.noslen.videoservice.service;
 
-import com.google.api.gax.paging.Page;
+import com.google.auth.Credentials;
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.*;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.channels.Channels;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
-@Component
+@Service
 public class VideoStorageClient {
 
-    Storage storage = StorageOptions.getDefaultInstance().getService();
-    Page<Bucket> buckets = storage.list();
-
+    Credentials credentials = GoogleCredentials
+            .fromStream(new FileInputStream("/Users/noslen/DevProjects/google-cloud/lesson-schedule-assistant-cfe4cf3aebad.json"));
+    Storage storage = StorageOptions.newBuilder().setCredentials(credentials)
+            .setProjectId("lesson-schedule-assistant").build().getService();
     Bucket bucket;
     String bucketName = "noslen-test-bucket";
+
+    public VideoStorageClient() throws IOException {
+    }
+
     public InputStream getVideo(String videoId) {
         bucketName = "noslen-test-bucket";
         Blob blob = storage.get(BlobId.of(bucketName, videoId));
@@ -35,12 +39,10 @@ public class VideoStorageClient {
         return bucket;
     }
 
-    public BlobId saveVideo(String blobName, String filePath) throws IOException {
-        Path path = Paths.get(filePath);
-        byte[] bytes = Files.readAllBytes(path);
+    public BlobId saveVideo(String blobName, MultipartFile file) throws IOException {
+        byte[] bytes = file.getBytes();
         bucket = getBucket(bucketName);
         Blob blob = bucket.create(blobName, bytes, "video/mp4");
-
         return blob.getBlobId();
     }
 }

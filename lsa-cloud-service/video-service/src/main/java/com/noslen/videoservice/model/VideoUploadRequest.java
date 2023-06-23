@@ -1,9 +1,11 @@
 package com.noslen.videoservice.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class VideoUploadRequest {
 
     private String blobName;
-    private String filePath;
+    private MultipartFile fileData;
 
     public String getBlobName() {
         return blobName;
@@ -13,11 +15,11 @@ public class VideoUploadRequest {
         this.blobName = blobName;
     }
 
-    public String getFilePath() {
-        return filePath;
+    public MultipartFile getFileData() {
+        return fileData;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setFileData(MultipartFile fileData) {
+        this.fileData = fileData;
     }
 }

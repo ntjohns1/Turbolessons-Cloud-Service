@@ -9,11 +9,16 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.buffer.DefaultDataBuffer;
 import org.springframework.core.io.buffer.DefaultDataBufferFactory;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -23,9 +28,13 @@ import reactor.test.StepVerifier;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 @Slf4j
@@ -75,19 +84,30 @@ public class VideoHandlerTest {
 
     @Test
     public void shouldSaveVideo() throws IOException {
+        String blobName = "testBlob";
+        BlobId blobId = BlobId.of("bucketName", blobName);
+        Path videoPath = Paths.get("/Users/noslen/Movies/Good_Boy.mp4");
+        byte[] videoBytes = Files.readAllBytes(videoPath);
 
-        VideoUploadRequest req = new VideoUploadRequest();
-        req.setBlobName("testBlob");
-        req.setFilePath("./Users/noslen/test.mp4");
-        BlobId blobId = BlobId.of("bucketName", "testBlob");
-        when(videoService.saveVideo(req.getBlobName(), req.getFilePath())).thenReturn(blobId);
+        // Mock the service
+        when(videoService.saveVideo(eq(blobName), any())).thenReturn(blobId);
 
+        // Build the multipart request body
+        MultipartBodyBuilder builder = new MultipartBodyBuilder();
+        builder.part("blobName", blobName);
+        builder.part("file", new ByteArrayResource(videoBytes), MediaType.APPLICATION_OCTET_STREAM)
+                .filename(blobName + ".mp4");  // Provide a filename, important for browsers and some APIs
+
+        MultiValueMap<String, HttpEntity<?>> body = builder.build();
+
+        // Perform the POST request
         WebTestClient.ResponseSpec responseSpec = webTestClient.post()
                 .uri("/api/video")
-                .contentType(MediaType.APPLICATION_JSON)
-                .bodyValue(req)
+                .contentType(MediaType.MULTIPART_FORM_DATA)
+                .body(BodyInserters.fromMultipartData(body))
                 .exchange();
 
+        // Assert the response
         responseSpec.expectStatus().isOk()
                 .expectBody(String.class).isEqualTo(blobId.toString());
 
@@ -98,5 +118,6 @@ public class VideoHandlerTest {
             log.error("Response: " + responseSpec.returnResult(Object.class).getResponseBody());
         }
     }
+
 
 }
