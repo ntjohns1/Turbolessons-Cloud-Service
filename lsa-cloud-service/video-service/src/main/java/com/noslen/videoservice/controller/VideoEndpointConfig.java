@@ -20,7 +20,7 @@ public class VideoEndpointConfig {
     @Bean
     RouterFunction<ServerResponse> routes() {
         return route((GET("/api/video/{videoId}")), handler::handleGetVideo)
-                .andRoute(GET("/api/video/bucket/{bucketId}"), handler::handleGetBucket)
+//                .andRoute(GET("/api/video/bucket/{bucketId}"), handler::handleGetBucket)
                 .andRoute(POST("/api/video"), handler::handleSaveVideo);
     }
 }

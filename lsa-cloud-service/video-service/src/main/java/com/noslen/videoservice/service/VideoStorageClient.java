@@ -3,21 +3,28 @@ package com.noslen.videoservice.service;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.*;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
+import java.nio.channels.WritableByteChannel;
+import java.util.concurrent.CountDownLatch;
 
+@Slf4j
 @Service
 public class VideoStorageClient {
 
-    Credentials credentials = GoogleCredentials
-            .fromStream(new FileInputStream("/Users/noslen/DevProjects/google-cloud/lesson-schedule-assistant-cfe4cf3aebad.json"));
-    Storage storage = StorageOptions.newBuilder().setCredentials(credentials)
-            .setProjectId("lesson-schedule-assistant").build().getService();
+    Credentials credentials = GoogleCredentials.fromStream(new FileInputStream("/Users/noslen/DevProjects/google-cloud/lesson-schedule-assistant-cfe4cf3aebad.json"));
+    Storage storage = StorageOptions.newBuilder().setCredentials(credentials).setProjectId("lesson-schedule-assistant").build().getService();
     Bucket bucket;
     String bucketName = "noslen-test-bucket";
 
@@ -39,10 +46,26 @@ public class VideoStorageClient {
         return bucket;
     }
 
-    public BlobId saveVideo(String blobName, MultipartFile file) throws IOException {
-        byte[] bytes = file.getBytes();
-        bucket = getBucket(bucketName);
-        Blob blob = bucket.create(blobName, bytes, "video/mp4");
-        return blob.getBlobId();
+    public Mono<Void> saveVideo(FilePart filePart) {
+        String blobName = filePart.filename();
+        BlobInfo blobInfo = BlobInfo.newBuilder(BlobId.of(bucketName, blobName)).build();
+        WritableByteChannel channel = storage.writer(blobInfo);
+        Flux<DataBuffer> content = filePart.content();
+        return content.collectList()
+                .flatMap(dataBufferList -> Mono.create(sink -> {
+                    try {
+                        for (DataBuffer dataBuffer : dataBufferList) {
+                            ByteBuffer byteBuffer = dataBuffer.asByteBuffer();
+                            while (byteBuffer.hasRemaining()) {
+                                channel.write(byteBuffer);
+                            }
+                        }
+                        channel.close();
+                        sink.success();
+                    } catch (IOException e) {
+                        sink.error(new RuntimeException("Failed to write to the Google Cloud Storage", e));
+                    }
+                }));
     }
+
 }

@@ -35,6 +35,7 @@ import java.util.Objects;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @Slf4j
@@ -84,19 +85,18 @@ public class VideoHandlerTest {
 
     @Test
     public void shouldSaveVideo() throws IOException {
-        String blobName = "testBlob";
-        BlobId blobId = BlobId.of("bucketName", blobName);
+        // You don't need a blobName anymore because you get it from the file.
         Path videoPath = Paths.get("/Users/noslen/Movies/Good_Boy.mp4");
         byte[] videoBytes = Files.readAllBytes(videoPath);
+        String filename = videoPath.getFileName().toString();
 
-        // Mock the service
-        when(videoService.saveVideo(eq(blobName), any())).thenReturn(blobId);
+        // Mock the videoStorageClient
+        when(videoService.saveVideo(any())).thenReturn(Mono.empty());
 
         // Build the multipart request body
         MultipartBodyBuilder builder = new MultipartBodyBuilder();
-        builder.part("blobName", blobName);
         builder.part("file", new ByteArrayResource(videoBytes), MediaType.APPLICATION_OCTET_STREAM)
-                .filename(blobName + ".mp4");  // Provide a filename, important for browsers and some APIs
+                .filename(filename);  // Provide a filename, important for browsers and some APIs
 
         MultiValueMap<String, HttpEntity<?>> body = builder.build();
 
@@ -108,16 +108,12 @@ public class VideoHandlerTest {
                 .exchange();
 
         // Assert the response
-        responseSpec.expectStatus().isOk()
-                .expectBody(String.class).isEqualTo(blobId.toString());
+        responseSpec.expectStatus().isOk();
 
-        // Print the whole response in case of unexpected status
-        HttpStatus status = responseSpec.returnResult(Object.class).getStatus();
-        if (status != HttpStatus.OK) {
-            log.error("Unexpected status: " + status);
-            log.error("Response: " + responseSpec.returnResult(Object.class).getResponseBody());
-        }
+        // Verify that the saveVideo method was called with a FilePart
+        verify(videoService).saveVideo(any());
     }
+
 
 
 }
