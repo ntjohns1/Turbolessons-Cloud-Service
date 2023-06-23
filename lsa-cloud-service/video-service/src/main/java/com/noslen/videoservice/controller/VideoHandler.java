@@ -1,7 +1,6 @@
 package com.noslen.videoservice.controller;
 
 import com.noslen.videoservice.model.FluxMultipartFile;
-import com.noslen.videoservice.model.VideoUploadRequest;
 import com.noslen.videoservice.service.VideoStorageClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.buffer.DataBuffer;
@@ -44,75 +43,24 @@ public class VideoHandler {
         }).onErrorContinue((throwable, o) -> log.error("Error: ", throwable)).onErrorResume(e -> ServerResponse.status(500).build());
     }
 
-//    Mono<ServerResponse> handleGetBucket(ServerRequest r) {
-//        String bucketName = r.pathVariable("bucketName");
-//        return Mono.fromCallable(() -> service.getBucket(bucketName))
-//                .flatMap(bucket -> ServerResponse.ok()
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .body(BodyInserters.fromValue(bucket)))
-//                .onErrorResume(e -> ServerResponse.status(500).build());
-//    }
+    Mono<ServerResponse> handleGetAllVideos(ServerRequest r) {
+        String bucketName = r.pathVariable("bucketName");
+        return Mono.fromCallable(() -> service.getBucket(bucketName))
+                .flatMap(bucket -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromValue(bucket)))
+                .onErrorResume(e -> ServerResponse.status(500).build());
+    }
 
     public Mono<ServerResponse> handleSaveVideo(ServerRequest request) {
         return request.multipartData().flatMap(parts -> {
-            Map<String, Part> partMap = parts.toSingleValueMap();
-            FilePart filePart = (FilePart) partMap.get("file");
-            return service.saveVideo(filePart);
-        }).then(ServerResponse.ok().build()).doOnError(Throwable::printStackTrace);
+                    Map<String, Part> partMap = parts.toSingleValueMap();
+                    FilePart filePart = (FilePart) partMap.get("file");
+                    return service.saveVideo(filePart);
+                })
+                .then(ServerResponse.ok().build())
+                .onErrorResume(e -> ServerResponse.status(500).body(BodyInserters.fromValue(e.getMessage())));
     }
-
-
-//    public Mono<ServerResponse> handleSaveVideo(ServerRequest request) {
-//        return request.multipartData()
-//                .map(parts -> {
-//                    Map<String, Part> partMap = parts.toSingleValueMap();
-//                    FilePart filePart = (FilePart) partMap.get("file");
-//                    return service.saveVideo(filePart);
-//                })
-//                .flatMap(v -> ServerResponse.ok().build());
-//    }
-
-
-//    Mono<ServerResponse> handleSaveVideo(ServerRequest r) {
-//        return r.multipartData()
-//                .flatMap(parts -> {
-//                    Map<String, Part> partMap = parts.toSingleValueMap();
-//                    FilePart filePart = (FilePart) partMap.get("file");  // get the file
-//                    log.debug("All parts: {}", partMap.keySet()); // <-- add this
-//                    Part blobNamePart = partMap.get("blobName");  // get the blobName
-//                    log.debug("Blob name part: {}", blobNamePart); // <-- and this
-//
-//                    Mono<String> blobNameMono = DataBufferUtils.join(blobNamePart.content())
-//                            .map(dataBuffer -> {
-//                                byte[] bytes = new byte[dataBuffer.readableByteCount()];
-//                                dataBuffer.read(bytes);
-//                                DataBufferUtils.release(dataBuffer);
-//                                return new String(bytes, StandardCharsets.UTF_8);
-//                            });
-//
-//                    log.debug("Received file part: {}", filePart); // <-- add this
-//                    log.debug("Received blob name: {}", blobNameMono.block()); // <-- and this
-//
-//                    return Mono.zip(filePart.content().collectList(), blobNameMono);
-//                })
-//                .flatMap(tuple -> {
-//                    List<DataBuffer> buffers = tuple.getT1();
-//                    String blobName = tuple.getT2();
-//                    // Concatenate all buffers into a single Flux<DataBuffer>
-//                    DataBufferFactory factory = new DefaultDataBufferFactory();
-//                    Flux<DataBuffer> fileDataBuffer = Flux.just(factory.join(buffers));
-//
-//                    // Convert Flux<DataBuffer> to MultipartFile
-//                    MultipartFile multipartFile = new FluxMultipartFile(fileDataBuffer, "file", blobName, -1, "video/mp4");
-//
-//                    return Mono.fromCallable(() -> service.saveVideo(blobName, multipartFile));
-//                })
-//                .flatMap(blobId -> ServerResponse.ok()
-//                        .contentType(MediaType.TEXT_PLAIN)
-//                        .body(BodyInserters.fromValue(blobId.toString())))
-//                .onErrorResume(e -> ServerResponse.status(500).build());
-//    }
-
 }
 
 

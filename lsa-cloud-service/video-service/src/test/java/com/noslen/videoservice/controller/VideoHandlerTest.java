@@ -1,7 +1,5 @@
 package com.noslen.videoservice.controller;
 
-import com.google.cloud.storage.BlobId;
-import com.noslen.videoservice.model.VideoUploadRequest;
 import com.noslen.videoservice.service.VideoStorageClient;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,7 +11,6 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.buffer.DefaultDataBuffer;
 import org.springframework.core.io.buffer.DefaultDataBufferFactory;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -34,7 +31,6 @@ import java.nio.file.Paths;
 import java.util.Objects;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -80,6 +76,11 @@ public class VideoHandlerTest {
         StepVerifier.create(response)
                 .expectNextMatches(serverResponse -> Objects.equals(serverResponse.headers().getContentType(), MediaType.parseMediaType("video/mp4")))
                 .verifyComplete();
+
+    }
+
+    @Test
+    public void shouldGetAllVideosInBucket() {
 
     }
 

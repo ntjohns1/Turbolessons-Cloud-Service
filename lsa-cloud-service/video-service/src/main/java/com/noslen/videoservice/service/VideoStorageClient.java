@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.codec.multipart.FilePart;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -17,22 +16,20 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.WritableByteChannel;
-import java.util.concurrent.CountDownLatch;
 
 @Slf4j
 @Service
 public class VideoStorageClient {
 
-    Credentials credentials = GoogleCredentials.fromStream(new FileInputStream("/Users/noslen/DevProjects/google-cloud/lesson-schedule-assistant-cfe4cf3aebad.json"));
-    Storage storage = StorageOptions.newBuilder().setCredentials(credentials).setProjectId("lesson-schedule-assistant").build().getService();
+    Credentials credentials = GoogleCredentials.fromStream(new FileInputStream(System.getenv("credentialsPath")));
+    Storage storage = StorageOptions.newBuilder().setCredentials(credentials).setProjectId(System.getenv("projectId")).build().getService();
     Bucket bucket;
-    String bucketName = "noslen-test-bucket";
+    String bucketName = System.getenv("bucketName");
 
     public VideoStorageClient() throws IOException {
     }
 
     public InputStream getVideo(String videoId) {
-        bucketName = "noslen-test-bucket";
         Blob blob = storage.get(BlobId.of(bucketName, videoId));
         return Channels.newInputStream(blob.reader());
     }
@@ -51,21 +48,20 @@ public class VideoStorageClient {
         BlobInfo blobInfo = BlobInfo.newBuilder(BlobId.of(bucketName, blobName)).build();
         WritableByteChannel channel = storage.writer(blobInfo);
         Flux<DataBuffer> content = filePart.content();
-        return content.collectList()
-                .flatMap(dataBufferList -> Mono.create(sink -> {
-                    try {
-                        for (DataBuffer dataBuffer : dataBufferList) {
-                            ByteBuffer byteBuffer = dataBuffer.asByteBuffer();
-                            while (byteBuffer.hasRemaining()) {
-                                channel.write(byteBuffer);
-                            }
-                        }
-                        channel.close();
-                        sink.success();
-                    } catch (IOException e) {
-                        sink.error(new RuntimeException("Failed to write to the Google Cloud Storage", e));
+        return content.collectList().flatMap(dataBufferList -> Mono.create(sink -> {
+            try {
+                for (DataBuffer dataBuffer : dataBufferList) {
+                    ByteBuffer byteBuffer = dataBuffer.asByteBuffer();
+                    while (byteBuffer.hasRemaining()) {
+                        channel.write(byteBuffer);
                     }
-                }));
+                }
+                channel.close();
+                sink.success();
+            } catch (IOException e) {
+                sink.error(new RuntimeException("Failed to write to the Google Cloud Storage", e));
+            }
+        }));
     }
 
 }
