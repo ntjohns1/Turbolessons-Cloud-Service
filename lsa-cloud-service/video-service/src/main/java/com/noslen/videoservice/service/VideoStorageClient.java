@@ -1,8 +1,10 @@
 package com.noslen.videoservice.service;
 
+import com.google.api.gax.paging.Page;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.*;
+import com.noslen.videoservice.model.SimpleBlobInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.codec.multipart.FilePart;
@@ -34,14 +36,14 @@ public class VideoStorageClient {
         return Channels.newInputStream(blob.reader());
     }
 
-    public Bucket getBucket(String bucketName) {
+    public Flux<SimpleBlobInfo> getAllVideos() {
         bucket = storage.get(bucketName);
-        if (bucket == null) {
-            System.out.println("Creating new bucket.");
-            bucket = storage.create(BucketInfo.of(bucketName));
-        }
-        return bucket;
+        Page<Blob> blobs = bucket.list();
+        return Flux.fromIterable(blobs.iterateAll())
+                .map(blob -> new SimpleBlobInfo(blob.getName(), blob.getBlobId().toString()));
     }
+
+
 
     public Mono<Void> saveVideo(FilePart filePart) {
         String blobName = filePart.filename();

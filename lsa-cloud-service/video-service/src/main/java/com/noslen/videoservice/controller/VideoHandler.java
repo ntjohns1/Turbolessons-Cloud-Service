@@ -44,13 +44,14 @@ public class VideoHandler {
     }
 
     Mono<ServerResponse> handleGetAllVideos(ServerRequest r) {
-        String bucketName = r.pathVariable("bucketName");
-        return Mono.fromCallable(() -> service.getBucket(bucketName))
-                .flatMap(bucket -> ServerResponse.ok()
+        return service.getAllVideos()
+                .collectList()
+                .flatMap(blobInfo -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
-                        .body(BodyInserters.fromValue(bucket)))
+                        .body(BodyInserters.fromValue(blobInfo)))
                 .onErrorResume(e -> ServerResponse.status(500).build());
     }
+
 
     public Mono<ServerResponse> handleSaveVideo(ServerRequest request) {
         return request.multipartData().flatMap(parts -> {
