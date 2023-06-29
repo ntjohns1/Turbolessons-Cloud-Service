@@ -20,16 +20,16 @@ import java.nio.channels.Channels;
 import java.nio.channels.WritableByteChannel;
 
 @Slf4j
-@Service
 public class VideoStorageClient {
-
-    Credentials credentials = GoogleCredentials.fromStream(new FileInputStream(System.getenv("credentialsPath")));
-    Storage storage = StorageOptions.newBuilder().setCredentials(credentials).setProjectId(System.getenv("projectId")).build().getService();
+    private final Storage storage;
+    private final String bucketName;
     Bucket bucket;
-    String bucketName = System.getenv("bucketName");
 
-    public VideoStorageClient() throws IOException {
-    }
+
+        public VideoStorageClient(Storage storage, String bucketName) throws IOException {
+            this.storage = storage;
+            this.bucketName = bucketName;
+        }
 
     public InputStream getVideo(String videoId) {
         Blob blob = storage.get(BlobId.of(bucketName, videoId));
@@ -42,8 +42,6 @@ public class VideoStorageClient {
         return Flux.fromIterable(blobs.iterateAll())
                 .map(blob -> new SimpleBlobInfo(blob.getName(), blob.getBlobId().toString()));
     }
-
-
 
     public Mono<Void> saveVideo(FilePart filePart) {
         String blobName = filePart.filename();
