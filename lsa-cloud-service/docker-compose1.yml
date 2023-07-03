@@ -1,0 +1,166 @@
+version: "3.9"
+networks:
+  lsa-cloud-service_lsa:
+  email-service_lsa:
+  event-service_lsa:
+  message-service_lsa:
+services:
+  config-service:
+    image: com-noslen-config-service:latest
+    container_name: config-server
+    hostname: config-server
+    expose:
+      - "9999"
+    ports:
+      - "9999:9999"
+    networks:
+      - lsa-cloud-service_lsa
+  service-registry:
+    image: com-noslen-service-registry:latest
+    container_name: service-registry
+    hostname: service-registry
+    environment:
+      eureka.instance.preferIpAddress: 1
+      eureka.instance.ip-address: 172.19.0.4
+      eureka.client.serviceUrl.defaultZone: http://service-registry:8761/eureka
+    expose:
+      - "8761"
+    ports:
+      - "8761:8761"
+    networks:
+      - lsa-cloud-service_lsa
+    depends_on:
+      - config-service
+  admin-service:
+    image: com-noslen-admin-service:latest
+    container_name: admin-service
+    hostname: admin-service
+    environment:
+      eureka.instance.preferIpAddress: 1
+      eureka.instance.ip-address: 172.19.0.4
+      eureka.client.serviceUrl.defaultZone: http://service-registry:8761/eureka
+    expose:
+      - "5002"
+    ports:
+      - "5002:5002"
+    networks:
+      - lsa-cloud-service_lsa
+    depends_on:
+      - service-registry
+  email-service:
+    image: com-noslen-email-service:latest
+    container_name: email-service
+    hostname: email-service
+    environment:
+      eureka.instance.preferIpAddress: 1
+      eureka.instance.ip-address: 172.19.0.4
+      eureka.client.serviceUrl.defaultZone: http://service-registry:8761/eureka
+    expose:
+      - "5003"
+    ports:
+      - "5003:5003"
+    networks:
+      - lsa-cloud-service_lsa
+      - email-service_lsa
+    depends_on:
+      - emaildb
+  emaildb:
+    image: mysql:latest
+    container_name: emaildb
+    hostname: emaildb
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: email_service
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    expose:
+      - "3036"
+    ports:
+      - "3306:3306"
+    networks:
+      - lsa-cloud-service_lsa
+      - email-service_lsa
+    depends_on:
+      - admin-service
+  event-service:
+    image: com-noslen-event-service:latest
+    container_name: event-service
+    hostname: event-service
+    environment:
+      eureka.instance.preferIpAddress: 1
+      eureka.instance.ip-address: 172.19.0.4
+      eureka.client.serviceUrl.defaultZone: http://service-registry:8761/eureka
+    expose:
+      - "5003"
+    ports:
+      - "5003:5003"
+    networks:
+      - lsa-cloud-service_lsa
+      - event-service_lsa
+    depends_on:
+      - lessondb
+  lessondb:
+    image: mysql:latest
+    container_name: lessondb
+    hostname: lessondb
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: event_service
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    expose:
+      - "3036"
+    ports:
+      - "3306:3306"
+    networks:
+      - event-service_lsa
+    depends_on:
+      - email-service
+  message-service:
+    image: com-noslen-message-service:latest
+    container_name: message-service
+    hostname: message-service
+    environment:
+      eureka.instance.preferIpAddress: 1
+      eureka.instance.ip-address: 172.19.0.4
+      eureka.client.serviceUrl.defaultZone: http://service-registry:8761/eureka
+    expose:
+      - "5005"
+    ports:
+      - "5005:5005"
+    networks:
+      - lsa-cloud-service_lsa
+      - message-service_lsa
+    depends_on:
+      - messagedb
+  messagedb:
+    image: mongo:latest
+    container_name: messagedb
+    hostname: messagedb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    expose:
+      - "5055"
+    ports:
+      - "5055:5055"
+    networks:
+      - lsa-cloud-service_lsa
+      - message-service_lsa
+    depends_on:
+      - event-service
+  video-service:
+    image: com-noslen-video-service
+    env_file:
+      - videoservice.env
+    container_name: video-service
+    hostname: video-service
+    expose:
+      - "5004"
+    ports:
+      - "5004:5004"
+    networks:
+      - lsa-cloud-service_lsa
+    depends_on:
+      - message-service
