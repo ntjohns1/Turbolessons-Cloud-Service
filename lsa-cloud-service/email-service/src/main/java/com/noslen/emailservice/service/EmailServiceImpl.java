@@ -55,7 +55,7 @@ public class EmailServiceImpl implements EmailService {
         emailSender.send(message);
     }
 
-    @Scheduled(cron = "* 10 20 * * *")
+    @Scheduled(cron = "0 10 20 * * *")
     public void sendLessonReminders() throws MessagingException {
         LocalDate tomorrow = LocalDate.now().plusDays(1);
         Flux<Lesson> lessons = eventServiceClient.getEvents(tomorrow);

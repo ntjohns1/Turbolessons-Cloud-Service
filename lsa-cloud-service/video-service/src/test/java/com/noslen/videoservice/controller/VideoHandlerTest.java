@@ -78,27 +78,16 @@ public class VideoHandlerTest {
 
     @Test
     public void shouldGetVideoById() throws IOException {
-//        String videoName = "video1";
-//        when(serverRequest.pathVariable("videoName")).thenReturn(videoId);
-//
-//        InputStream inputStream = new ByteArrayInputStream(new byte[0]);
-//        when(videoService.getVideo(videoId)).thenReturn(inputStream);
-//
-//        DefaultDataBuffer dataBuffer = new DefaultDataBufferFactory().wrap(new byte[0]);
-//        when(bufferFactory.wrap(any(byte[].class))).thenReturn(dataBuffer);
-//
-//        Mono<ServerResponse> response = videoHandler.handleGetVideo(serverRequest);
-//
-//        StepVerifier.create(response)
-//                .expectNextMatches(serverResponse -> Objects.equals(serverResponse.headers().getContentType(), MediaType.parseMediaType("video/mp4")))
-//                .verifyComplete();
 
-//        Path videoPath = Paths.get("/Users/noslen/Movies/Good_Boy.mp4");
-//        String filename = videoPath.getFileName().toString();
-//        InputStream inputStream = new FileInputStream(videoPath.toFile());
-//        when(this.videoService.getVideo("Good_Boy.mp4")).thenReturn(inputStream);
-
-        this.webTestClient.mutateWith(mockJwt()).get().uri("/api/video/Good_Boy.mp4").exchange().expectStatus().isOk().expectBody().consumeWith(result -> assertThat(result.getResponseBody()).isNotNull());
+        this.webTestClient
+                .mutateWith(mockJwt())
+                .get()
+                .uri("/api/video/Good_Boy.mp4")
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBody()
+                .consumeWith(result -> assertThat(result.getResponseBody()).isNotNull());
 
     }
 
@@ -110,7 +99,10 @@ public class VideoHandlerTest {
         when(videoService.getAllVideos()).thenReturn(Flux.just(blobInfo1, blobInfo2));
 
         Mono<ServerResponse> responseFlux = videoHandler.handleGetAllVideos(null);
-        StepVerifier.create(responseFlux).expectNextMatches(serverResponse -> serverResponse.statusCode().is2xxSuccessful()).verifyComplete();
+        StepVerifier.create(responseFlux)
+                .expectNextMatches(serverResponse -> serverResponse.statusCode()
+                        .is2xxSuccessful())
+                .verifyComplete();
 
         webTestClient.mutateWith(mockJwt())
                 .get()
@@ -134,12 +126,19 @@ public class VideoHandlerTest {
 
         // Build the multipart request body
         MultipartBodyBuilder builder = new MultipartBodyBuilder();
-        builder.part("file", new ByteArrayResource(videoBytes), MediaType.APPLICATION_OCTET_STREAM).filename(filename);
+        builder.part("file",
+                     new ByteArrayResource(videoBytes),
+                     MediaType.APPLICATION_OCTET_STREAM)
+                .filename(filename);
 
         MultiValueMap<String, HttpEntity<?>> body = builder.build();
 
         // Perform the POST request
-        WebTestClient.ResponseSpec responseSpec = webTestClient.post().uri("/api/video").contentType(MediaType.MULTIPART_FORM_DATA).body(BodyInserters.fromMultipartData(body)).exchange();
+        WebTestClient.ResponseSpec responseSpec = webTestClient.post()
+                .uri("/api/video")
+                .contentType(MediaType.MULTIPART_FORM_DATA)
+                .body(BodyInserters.fromMultipartData(body))
+                .exchange();
 
         // Assert the response
         responseSpec.expectStatus().isOk();
