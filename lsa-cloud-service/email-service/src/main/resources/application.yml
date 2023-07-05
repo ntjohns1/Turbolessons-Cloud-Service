@@ -2,11 +2,4 @@ spring:
     application:
         name: email-service
     config:
-        import: configserver:http://localhost:9999
-    data:
-        mongodb:
-            uri: mongodb://localhost:27017/lsa_email
-eureka:
-    client:
-        serviceUrl:
-            defaultZone: http://localhost:8761/eureka/
+        import: configserver:http://lsa-config-service:9999
