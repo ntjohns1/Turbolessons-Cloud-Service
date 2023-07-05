@@ -10,5 +10,9 @@
     <file url="file://$PROJECT_DIR$/lsa-cloud-service/lsa-config-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/lsa-cloud-service/message-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/lsa-cloud-service/service-registry/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lsa-cloud-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lsa-cloud-service/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lsa-cloud-service/video-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lsa-cloud-service/video-service/src/main/resources" charset="UTF-8" />
   </component>
 </project>

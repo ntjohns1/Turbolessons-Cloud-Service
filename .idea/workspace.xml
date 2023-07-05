@@ -5,24 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f94a8a07-5ee2-46fa-a058-faabe4d06845" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/resources/application1.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lsa-cloud-service/docker-compose2.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ant.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_okta_commons_okta_commons_lang_1_3_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_okta_commons_okta_config_check_1_3_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_okta_commons_okta_http_api_1_3_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_okta_sdk_okta_sdk_api_10_0_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_okta_sdk_okta_sdk_impl_10_0_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/java/com/noslen/adminservice/AdminServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/java/com/noslen/adminservice/AdminServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/java/com/noslen/adminservice/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/java/com/noslen/adminservice/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/java/com/noslen/adminservice/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/java/com/noslen/adminservice/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/java/com/noslen/apigateway/ApiGateway.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/java/com/noslen/apigateway/ApiGateway.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/java/com/noslen/apigateway/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/java/com/noslen/apigateway/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/test/java/com/noslen/messageservice/controller/AbstractBaseMessageEndpoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/test/java/com/noslen/messageservice/controller/AbstractBaseMessageEndpoints.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/test/java/com/noslen/messageservice/controller/FunctionalMessageEndpointsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/test/java/com/noslen/messageservice/controller/FunctionalMessageEndpointsTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/build.sh" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/build.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/docker-compose1.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/email-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/email-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/email-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/email-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/event-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/event-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/event-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/event-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/video-service/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/video-service/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/video-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/video-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/video-service/src/main/java/com/noslen/videoservice/VideoServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/video-service/src/main/java/com/noslen/videoservice/VideoServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/video-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/video-service/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,81 +79,110 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "/Users/noslen/DevProjects/LSA-Cloud-Service/lsa-cloud-service/admin-service/src/main/resources",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/noslen/DevProjects/LSA-Cloud-Service/lsa-cloud-service&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/resources" />
+      <recent name="$PROJECT_DIR$/lsa-cloud-service" />
+      <recent name="$PROJECT_DIR$/lsa-cloud-service/api-gateway" />
+      <recent name="$PROJECT_DIR$/lsa-cloud-service/video-service" />
+      <recent name="$PROJECT_DIR$/lsa-cloud-service/message-service" />
+      <recent name="$PROJECT_DIR$/lsa-cloud-service/email-service" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lsa-cloud-service" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ApiGateway">
-    <configuration name="AdminServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <envs>
-        <env name="API_TOKEN" value="00eYjIDuQyLf_fVb6fUZ0YMpz0pblRaurNA8dEUaXI" />
-        <env name="ORG_URL" value="https://dev-78958050.okta.com" />
-      </envs>
-      <option name="MAIN_CLASS_NAME" value="com.noslen.adminservice.AdminServiceApplication" />
-      <module name="admin-service" />
+  <component name="RunManager" selected="Docker.lsa-cloud-service: Compose Deployment">
+    <configuration name="LsaConfigServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.noslen.lsaconfigservice.LsaConfigServiceApplication" />
+      <module name="lsa-config-service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.noslen.adminservice.*" />
+          <option name="PATTERN" value="com.noslen.lsaconfigservice.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VideoServiceApplication" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.noslen.videoservice.VideoServiceApplication" />
+      <module name="video-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.noslen.videoservice.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <extension name="net.ashald.envfile">
-        <option name="IS_ENABLED" value="false" />
+        <option name="IS_ENABLED" value="true" />
         <option name="IS_SUBST" value="false" />
         <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
         <option name="IS_IGNORE_MISSING_FILES" value="false" />
         <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
         <ENTRIES>
           <ENTRY IS_ENABLED="true" PARSER="runconfig" />
+          <ENTRY IS_ENABLED="true" PARSER="env" PATH="lsa-cloud-service/videoservice.env" />
         </ENTRIES>
       </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ApiGateway" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.noslen.apigateway.ApiGateway" />
-      <module name="api-gateway" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.noslen.apigateway.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+    <configuration name="All in video-service" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
+      <module name="video-service" />
       <extension name="net.ashald.envfile">
-        <option name="IS_ENABLED" value="false" />
+        <option name="IS_ENABLED" value="true" />
         <option name="IS_SUBST" value="false" />
         <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
         <option name="IS_IGNORE_MISSING_FILES" value="false" />
         <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
         <ENTRIES>
           <ENTRY IS_ENABLED="true" PARSER="runconfig" />
+          <ENTRY IS_ENABLED="true" PARSER="env" PATH="lsa-cloud-service/video-service/videoservice.env" />
         </ENTRIES>
       </extension>
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MessageServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.noslen.messageservice.MessageServiceApplication" />
-      <module name="message-service" />
+    <configuration name="VideoServiceApplicationTests" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
+      <module name="video-service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.noslen.messageservice.*" />
+          <option name="PATTERN" value="com.noslen.videoservice.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <extension name="net.ashald.envfile">
+        <option name="IS_ENABLED" value="true" />
+        <option name="IS_SUBST" value="false" />
+        <option name="IS_PATH_MACRO_SUPPORTED" value="false" />
+        <option name="IS_IGNORE_MISSING_FILES" value="false" />
+        <option name="IS_ENABLE_EXPERIMENTAL_INTEGRATIONS" value="false" />
+        <ENTRIES>
+          <ENTRY IS_ENABLED="true" PARSER="runconfig" />
+          <ENTRY IS_ENABLED="true" PARSER="env" PATH="lsa-cloud-service/video-service/videoservice.env" />
+        </ENTRIES>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.noslen.videoservice" />
+      <option name="MAIN_CLASS_NAME" value="com.noslen.videoservice.VideoServiceApplicationTests" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -166,16 +200,72 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="build.sh" type="ShConfigurationType" temporary="true">
+      <option name="SCRIPT_TEXT" value="" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/lsa-cloud-service/build.sh" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/lsa-cloud-service" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="/bin/zsh" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="true" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="lsa-cloud-service: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="sourceFilePath" value="lsa-cloud-service/docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="lsa-cloud-service.lessondb: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="lessondb" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="lsa-cloud-service/docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
+    <configuration name="lsa-cloud-service.video-service: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
+      <deployment type="docker-compose.yml">
+        <settings>
+          <option name="services">
+            <list>
+              <option value="video-service" />
+            </list>
+          </option>
+          <option name="sourceFilePath" value="lsa-cloud-service/docker-compose.yml" />
+        </settings>
+      </deployment>
+      <method v="2" />
+    </configuration>
     <list>
-      <item itemvalue="Application.AdminServiceApplication" />
-      <item itemvalue="Application.ApiGateway" />
-      <item itemvalue="Application.MessageServiceApplication" />
+      <item itemvalue="Application.VideoServiceApplication" />
+      <item itemvalue="Application.LsaConfigServiceApplication" />
+      <item itemvalue="Docker.lsa-cloud-service.video-service: Compose Deployment" />
+      <item itemvalue="Docker.lsa-cloud-service.lessondb: Compose Deployment" />
+      <item itemvalue="Docker.lsa-cloud-service: Compose Deployment" />
+      <item itemvalue="JUnit.All in video-service" />
+      <item itemvalue="JUnit.VideoServiceApplicationTests" />
+      <item itemvalue="Shell Script.build.sh" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ApiGateway" />
-        <item itemvalue="Application.MessageServiceApplication" />
-        <item itemvalue="Application.AdminServiceApplication" />
+        <item itemvalue="Docker.lsa-cloud-service: Compose Deployment" />
+        <item itemvalue="Shell Script.build.sh" />
+        <item itemvalue="Docker.lsa-cloud-service.video-service: Compose Deployment" />
+        <item itemvalue="Application.LsaConfigServiceApplication" />
+        <item itemvalue="Docker.lsa-cloud-service.lessondb: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>

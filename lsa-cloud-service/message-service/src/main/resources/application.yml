@@ -1,9 +1,6 @@
-server.port: 5005
 spring:
     application:
         name: message-service
     config:
-        import: configserver:http://localhost:9999
-    data:
-        mongodb:
-            uri: mongodb://localhost:27017/lsa_message_plt
+        import: configserver:http://lsa-config-service:9999
+

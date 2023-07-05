@@ -5,7 +5,7 @@ echo "Performing a clean Maven build"
 
 echo "Building the config server"
 cd lsa-config-service
-docker build --tag com-noslen-config-service .
+docker build --tag com-noslen-lsa-config-service .
 cd ..
 
 echo "Building the service registry"
@@ -16,11 +16,6 @@ cd ..
 echo "Building admin-service"
 cd admin-service
 docker build --tag com-noslen-admin-service .
-cd ..
-
-echo "Building api-gateway"
-cd api-gateway
-docker build --tag com-noslen-api-gateway .
 cd ..
 
 echo "Building email-service"
@@ -41,4 +36,9 @@ cd ..
 echo "Building video-service"
 cd video-service
 docker build --tag com-noslen-video-service .
+cd ..
+
+echo "Building api-gateway"
+cd api-gateway
+docker build --tag com-noslen-api-gateway .
 cd ..

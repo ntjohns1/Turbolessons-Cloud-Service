@@ -1,11 +1,14 @@
 version: "3.9"
 networks:
   lsa-cloud-service_lsa:
+  email-service_lsa:
+  event-service_lsa:
+  message-service_lsa:
 services:
-  config-service:
-    image: com-noslen-config-service:latest
-    container_name: config-server
-    hostname: config-server
+  lsa-config-service:
+    image: com-noslen-lsa-config-service:latest
+    container_name: lsa-config-service
+    hostname: lsa-config-service
     expose:
       - "9999"
     ports:
@@ -16,10 +19,6 @@ services:
     image: com-noslen-service-registry:latest
     container_name: service-registry
     hostname: service-registry
-    environment:
-      eureka.instance.preferIpAddress: 1
-      eureka.instance.ip-address: 172.19.0.4
-      eureka.client.serviceUrl.defaultZone: http://service-registry:8761/eureka
     expose:
       - "8761"
     ports:
@@ -27,7 +26,145 @@ services:
     networks:
       - lsa-cloud-service_lsa
     depends_on:
-      - config-service
-
-
+      - lsa-config-service
+  admin-service:
+    image: com-noslen-admin-service:latest
+    container_name: admin-service
+    hostname: admin-service
+    expose:
+      - "5002"
+    ports:
+      - "5002:5002"
+    networks:
+      - lsa-cloud-service_lsa
+    depends_on:
+      - service-registry
+  email-service:
+    image: com-noslen-email-service:latest
+    container_name: email-service
+    hostname: email-service
+    volumes:
+      - emaildb_data:/data/db
+    expose:
+      - "5003"
+    ports:
+      - "5003:5003"
+    networks:
+      - lsa-cloud-service_lsa
+      - email-service_lsa
+    depends_on:
+      - emaildb
+  emaildb:
+    image: mongo:latest
+    container_name: emaildb
+    hostname: emaildb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    expose:
+      - "5053"
+    ports:
+      - "5053:27017"
+    networks:
+      - lsa-cloud-service_lsa
+      - email-service_lsa
+    depends_on:
+      - admin-service
+  event-service:
+    image: com-noslen-event-service:latest
+    container_name: event-service
+    hostname: event-service
+    volumes:
+      - lessondb_data:/var/lib/mysql
+    expose:
+      - "5001"
+    ports:
+      - "5001:5001"
+    networks:
+      - lsa-cloud-service_lsa
+      - event-service_lsa
+    depends_on:
+      - lessondb
+  lessondb:
+    image: mysql:latest
+    container_name: lessondb
+    hostname: lessondb
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: eventplt
+    expose:
+      - "5051"
+    ports:
+      - "5051:3306"
+    networks:
+      - lsa-cloud-service_lsa
+      - event-service_lsa
+    depends_on:
+      - email-service
+  message-service:
+    image: com-noslen-message-service:latest
+    container_name: message-service
+    hostname: message-service
+    expose:
+      - "5005"
+    ports:
+      - "5005:5005"
+    networks:
+      - lsa-cloud-service_lsa
+      - message-service_lsa
+    depends_on:
+      - messagedb
+  messagedb:
+    image: mongo:latest
+    container_name: messagedb
+    hostname: messagedb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - messagedb_data:/data/db
+    expose:
+      - "5055"
+    ports:
+      - "5055:27017"
+    networks:
+      - lsa-cloud-service_lsa
+      - message-service_lsa
+    depends_on:
+      - event-service
+  video-service:
+    image: com-noslen-video-service
+    environment:
+      projectId: lesson-schedule-assistant
+      credentialsPath: /usr/local/lib/google-cloud/lesson-schedule-assistant-cfe4cf3aebad.json
+      bucketName: noslen-test-bucket
+    volumes:
+      - /Users/noslen/DevProjects/LSA-Cloud-Service/lsa-cloud-service/:/usr/local/lib/lsa-cloud-service
+      - /Users/noslen/DevProjects/google-cloud/:/usr/local/lib/google-cloud
+    container_name: video-service
+    hostname: video-service
+    expose:
+      - "5004"
+    ports:
+      - "5004:5004"
+    networks:
+      - lsa-cloud-service_lsa
+    depends_on:
+      - message-service
+  api-gateway:
+    image: com-noslen-api-gateway
+    container_name: api-gateway
+    expose:
+      - "8080"
+    ports:
+      - "8080:8080"
+    networks:
+      - lsa-cloud-service_lsa
+    depends_on:
+      - video-service
+volumes:
+  emaildb_data:
+  lessondb_data:
+  messagedb_data:
 
