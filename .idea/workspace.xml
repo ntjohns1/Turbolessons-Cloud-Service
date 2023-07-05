@@ -5,29 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f94a8a07-5ee2-46fa-a058-faabe4d06845" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/lsa-cloud-service/docker-compose2.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ant.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/build.sh" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/build.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/docker-compose1.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/email-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/email-service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/email-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/email-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/event-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/event-service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/event-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/event-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/video-service/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/video-service/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/video-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/video-service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/video-service/src/main/java/com/noslen/videoservice/VideoServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/video-service/src/main/java/com/noslen/videoservice/VideoServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/video-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/video-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/docker-compose2.yml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
