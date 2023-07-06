@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="f94a8a07-5ee2-46fa-a058-faabe4d06845" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/docker-compose2.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/event-service/src/main/java/com/noslen/eventservice/controller/LessonEventController.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/event-service/src/main/java/com/noslen/eventservice/controller/LessonEventController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +62,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/noslen/DevProjects/LSA-Cloud-Service/lsa-cloud-service&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/noslen/DevProjects/LSA-Cloud-Service/lsa-cloud-service/admin-service/src/test&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
@@ -70,23 +70,23 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/test" />
       <recent name="$PROJECT_DIR$/lsa-cloud-service" />
       <recent name="$PROJECT_DIR$/lsa-cloud-service/api-gateway" />
       <recent name="$PROJECT_DIR$/lsa-cloud-service/video-service" />
       <recent name="$PROJECT_DIR$/lsa-cloud-service/message-service" />
-      <recent name="$PROJECT_DIR$/lsa-cloud-service/email-service" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lsa-cloud-service" />
     </key>
   </component>
   <component name="RunManager" selected="Docker.lsa-cloud-service: Compose Deployment">
-    <configuration name="LsaConfigServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.noslen.lsaconfigservice.LsaConfigServiceApplication" />
-      <module name="lsa-config-service" />
+    <configuration name="AdminServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.noslen.adminservice.AdminServiceApplication" />
+      <module name="admin-service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.noslen.lsaconfigservice.*" />
+          <option name="PATTERN" value="com.noslen.adminservice.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -118,6 +118,37 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="AdminServiceApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="admin-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.noslen.adminservice.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.noslen.adminservice" />
+      <option name="MAIN_CLASS_NAME" value="com.noslen.adminservice.AdminServiceApplicationTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AdminServiceApplicationTests.contextLoads" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="admin-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.noslen.adminservice.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.noslen.adminservice" />
+      <option name="MAIN_CLASS_NAME" value="com.noslen.adminservice.AdminServiceApplicationTests" />
+      <option name="METHOD_NAME" value="contextLoads" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="All in video-service" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
       <module name="video-service" />
       <extension name="net.ashald.envfile">
@@ -135,6 +166,21 @@
       <option name="MAIN_CLASS_NAME" value="" />
       <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LessonEventServiceTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="event-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.noslen.eventservice.service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.noslen.eventservice.service" />
+      <option name="MAIN_CLASS_NAME" value="com.noslen.eventservice.service.LessonEventServiceTests" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -179,21 +225,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="build.sh" type="ShConfigurationType" temporary="true">
-      <option name="SCRIPT_TEXT" value="" />
-      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
-      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/lsa-cloud-service/build.sh" />
-      <option name="SCRIPT_OPTIONS" value="" />
-      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
-      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/lsa-cloud-service" />
-      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
-      <option name="INTERPRETER_PATH" value="/bin/zsh" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="EXECUTE_IN_TERMINAL" value="true" />
-      <option name="EXECUTE_SCRIPT_FILE" value="true" />
-      <envs />
-      <method v="2" />
-    </configuration>
     <configuration name="lsa-cloud-service: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
@@ -202,49 +233,23 @@
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="lsa-cloud-service.lessondb: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="services">
-            <list>
-              <option value="lessondb" />
-            </list>
-          </option>
-          <option name="sourceFilePath" value="lsa-cloud-service/docker-compose.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
-    <configuration name="lsa-cloud-service.video-service: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
-      <deployment type="docker-compose.yml">
-        <settings>
-          <option name="services">
-            <list>
-              <option value="video-service" />
-            </list>
-          </option>
-          <option name="sourceFilePath" value="lsa-cloud-service/docker-compose.yml" />
-        </settings>
-      </deployment>
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Application.VideoServiceApplication" />
-      <item itemvalue="Application.LsaConfigServiceApplication" />
-      <item itemvalue="Docker.lsa-cloud-service.video-service: Compose Deployment" />
-      <item itemvalue="Docker.lsa-cloud-service.lessondb: Compose Deployment" />
+      <item itemvalue="Application.AdminServiceApplication" />
       <item itemvalue="Docker.lsa-cloud-service: Compose Deployment" />
       <item itemvalue="JUnit.All in video-service" />
       <item itemvalue="JUnit.VideoServiceApplicationTests" />
-      <item itemvalue="Shell Script.build.sh" />
+      <item itemvalue="JUnit.LessonEventServiceTests" />
+      <item itemvalue="JUnit.AdminServiceApplicationTests.contextLoads" />
+      <item itemvalue="JUnit.AdminServiceApplicationTests" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Docker.lsa-cloud-service: Compose Deployment" />
-        <item itemvalue="Shell Script.build.sh" />
-        <item itemvalue="Docker.lsa-cloud-service.video-service: Compose Deployment" />
-        <item itemvalue="Application.LsaConfigServiceApplication" />
-        <item itemvalue="Docker.lsa-cloud-service.lessondb: Compose Deployment" />
+        <item itemvalue="JUnit.LessonEventServiceTests" />
+        <item itemvalue="JUnit.AdminServiceApplicationTests" />
+        <item itemvalue="Application.AdminServiceApplication" />
+        <item itemvalue="JUnit.AdminServiceApplicationTests.contextLoads" />
       </list>
     </recent_temporary>
   </component>
