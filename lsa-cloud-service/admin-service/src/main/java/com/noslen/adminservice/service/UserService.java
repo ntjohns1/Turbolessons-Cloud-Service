@@ -8,30 +8,52 @@ import org.openapitools.client.api.UserApi;
 import org.openapitools.client.model.UpdateUserRequest;
 import org.openapitools.client.model.User;
 import org.openapitools.client.model.UserProfile;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class UserService {
 
     private final UserApi userApi;
 
+    @Autowired
+    private CacheManager cacheManager;
+
     public UserService(UserApi userApi) {
         this.userApi = userApi;
     }
 
     //    Get All Users
+    @Cacheable(value = "userCache", key = "'listAllUsers'")
     public List<User> listAllUsers() {
         //        users.removeIf(u -> !Objects.equals(Objects.requireNonNull(u.getProfile()).getUserType(), "student"));
-        return userApi.listUsers(null, null, 150, null, null, null, null);
+        return userApi.listUsers(
+                null,
+                null,
+                150,
+                null,
+                null,
+                null,
+                null);
     }
 
+    @Cacheable(value = "userCache", key = "#id", unless = "#result == null")
     public User getUser(String id) {
-        return userApi.getUser(id);
+        Optional<User> u = Optional.ofNullable(userApi.getUser(id));
+        return u.orElse(null);
     }
 
+    @Cacheable(value = "profileCache", key = "#id", unless = "#result == null")
     public UserProfileDTO getUserProfile(String id) {
         UserProfileDTO dto = new UserProfileDTO();
         UserProfile userProfile = userApi.getUser(id).getProfile();
@@ -52,13 +74,23 @@ public class UserService {
         return dto;
     }
 
+    @Caching(put = {
+            @CachePut(value = "userCache", key = "#result.id")
+    }, evict = {
+            @CacheEvict(value = "userCache", key = "'listAllUsers'")
+    })
     public User createUser(String email, String firstName, String lastName) {
-        User user = userBuilder().setEmail(email).setFirstName(firstName).setLastName(lastName).setGroups(List.of("00g75cbo2dVoDm1wv5d7")).buildAndCreate(userApi);
-        String lastInitial = lastName.charAt(0) + ".";
+        User user = userBuilder()
+                .setEmail(email)
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setGroups(List.of("00g75cbo2dVoDm1wv5d7"))
+                .buildAndCreate(userApi);
+        String firstInitial = String.valueOf(firstName.charAt(0));
         UpdateUserRequest updateUserRequest = new UpdateUserRequest();
         UserProfile profile = new UserProfile();
         // Apply new profile object to request object
-        profile.setDisplayName(firstName + " " + lastInitial);
+        profile.setDisplayName(firstInitial + lastName);
         profile.setUserType("student");
         updateUserRequest.setProfile(profile);
         // then update
@@ -66,6 +98,12 @@ public class UserService {
         return user;
     }
 
+    @Caching(put = {
+            @CachePut(value = "profileCache", key = "#userId")
+    }, evict = {
+            @CacheEvict(value = "userCache", key = "'listAllUsers'"),
+            @CacheEvict(value = "userCache", key = "#userId")
+    })
     public void updateUser(String userId, UserProfileDTO userProfileDTO) {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> map = mapper.convertValue(userProfileDTO, new TypeReference<>() {
@@ -77,6 +115,13 @@ public class UserService {
         userApi.updateUser(userId, updateUserRequest, true);
     }
 
+
+
+    @Caching(evict = {
+            @CacheEvict(value = "userCache", key = "#id"),
+            @CacheEvict(value = "userCache", key = "'listAllUsers'"),
+            @CacheEvict(value = "profileCache", key = "#id")
+    })
     public void deleteUser(String id) {
         // deactivate first
         userApi.deactivateUser(id, false);
