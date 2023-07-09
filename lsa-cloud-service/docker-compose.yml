@@ -158,13 +158,29 @@ services:
     image: com-noslen-api-gateway
     container_name: api-gateway
     expose:
-      - "8080"
+      - "443"
     ports:
-      - "8080:8080"
+      - "443:443"
     networks:
       - lsa-cloud-service_lsa
     depends_on:
       - video-service
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    command: renew
+    entrypoint: /bin/sh -c "trap exit TERM; while :; do certbot renew; sleep 720h & wait $${!}; done;"
+    networks:
+      - lsa-cloud-service_lsa
+  frontend:
+    image: lsa-frontend
+    container_name: lsa-frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - lsa-cloud-service_lsa
 volumes:
   emaildb_data:
   lessondb_data:
