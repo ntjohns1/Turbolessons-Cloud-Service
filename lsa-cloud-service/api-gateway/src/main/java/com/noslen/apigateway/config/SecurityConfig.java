@@ -35,7 +35,7 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(List.of("http://localhost:3000", "http://172.19.0.3:3000"));
+        corsConfig.setAllowedOrigins(List.of("http://localhost:3000", "https://www.turbolessons.com"));
         corsConfig.setMaxAge(3600L);
         corsConfig.addAllowedMethod("*");
         corsConfig.addAllowedHeader("*");
