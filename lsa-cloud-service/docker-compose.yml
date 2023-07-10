@@ -165,6 +165,15 @@ services:
       - lsa-cloud-service_lsa
     depends_on:
       - video-service
+  lsa-frontend:
+    image: lsa-frontend
+    container_name: lsa-frontend
+    ports:
+      - "3000:80"
+    volumes:
+      - /Users/noslen/DevProjects/LSA_Frontend/lsa-frontend/okta.env:/app/okta.env
+    networks:
+      - lsa-cloud-service_lsa
 volumes:
   emaildb_data:
   lessondb_data:
