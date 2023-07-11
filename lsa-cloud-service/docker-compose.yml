@@ -9,7 +9,7 @@ services:
     image: noslenj/lsa-config-service:com-noslen-lsa-config-service
     container_name: lsa-config-service
     volumes:
-      - /etc/letsencrypt/live:/etc/letsencrypt/live:ro
+      - /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem:/etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
     expose:
       - "9999"
     ports:
@@ -20,7 +20,7 @@ services:
     image: noslenj/service-registry:com-noslen-service-registry
     container_name: service-registry
     volumes:
-      - /etc/letsencrypt/live:/etc/letsencrypt/live:ro
+      - /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem:/etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
     expose:
       - "8761"
     ports:
@@ -33,7 +33,7 @@ services:
     image: noslenj/admin-service:com-noslen-admin-service
     container_name: admin-service
     volumes:
-      - /etc/letsencrypt/live:/etc/letsencrypt/live:ro
+      - /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem:/etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
     expose:
       - "5002"
     ports:
@@ -47,7 +47,7 @@ services:
     container_name: email-service
     volumes:
       - emaildb_data:/data/db
-      - /etc/letsencrypt/live:/etc/letsencrypt/live:ro
+      - /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem:/etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
     expose:
       - "5003"
     ports:
@@ -61,7 +61,7 @@ services:
     image: mongo:latest
     container_name: emaildb
     volumes:
-      - /etc/letsencrypt/live:/etc/letsencrypt/live:ro
+      - /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem:/etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
@@ -80,7 +80,7 @@ services:
     container_name: event-service
     volumes:
       - lessondb_data:/var/lib/mysql
-      - /etc/letsencrypt/live:/etc/letsencrypt/live:ro
+      - /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem:/etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
     expose:
       - "5001"
     ports:
@@ -94,7 +94,7 @@ services:
     image: mysql:latest
     container_name: lessondb
     volumes:
-      - /etc/letsencrypt/live:/etc/letsencrypt/live:ro
+      - /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem:/etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
     environment:
       MYSQL_ROOT_PASSWORD: root_password
       MYSQL_DATABASE: eventplt
@@ -111,7 +111,7 @@ services:
     image: noslenj/message-service:com-noslen-message-service
     container_name: message-service
     volumes:
-      - /etc/letsencrypt/live:/etc/letsencrypt/live:ro
+      - /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem:/etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
     expose:
       - "5005"
     ports:
@@ -131,7 +131,7 @@ services:
       MONGO_INITDB_AUTH_SOURCE: admin
     volumes:
       - messagedb_data:/data/db
-      - /etc/letsencrypt/live:/etc/letsencrypt/live:ro
+      - /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem:/etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
     expose:
       - "5055"
     ports:
@@ -151,7 +151,7 @@ services:
     volumes:
       - /Users/noslen/DevProjects/LSA-Cloud-Service/lsa-cloud-service/:/usr/local/lib/lsa-cloud-service
       - /Users/noslen/DevProjects/google-cloud/:/usr/local/lib/google-cloud
-      - /etc/letsencrypt/live:/etc/letsencrypt/live:ro
+      - /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem:/etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
     expose:
       - "5004"
     ports:
@@ -164,7 +164,7 @@ services:
     image: noslenj/api-gateway:com-noslen-api-gateway
     container_name: api-gateway
     volumes:
-      - /etc/letsencrypt/live:/etc/letsencrypt/live:ro
+      - /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem:/etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
     expose:
       - "443"
     ports:
@@ -180,7 +180,7 @@ services:
       - "3000:80"
     volumes:
       - /Users/noslen/DevProjects/LSA_Frontend/lsa-frontend/okta.env:/app/okta.env
-      - /etc/letsencrypt/live:/etc/letsencrypt/live:ro
+      - /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem:/etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
     networks:
       - lsa-cloud-service_lsa
     depends_on:
