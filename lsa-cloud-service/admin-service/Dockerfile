@@ -11,6 +11,5 @@ RUN mvn -f /home/app/pom.xml clean package -DskipTests
 #
 FROM openjdk:17
 COPY --from=build /home/app/target/admin-service-0.0.1-SNAPSHOT.jar /usr/local/lib/admin-service.jar
-COPY /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
 EXPOSE 5002
 ENTRYPOINT ["java","-jar","/usr/local/lib/admin-service.jar"]

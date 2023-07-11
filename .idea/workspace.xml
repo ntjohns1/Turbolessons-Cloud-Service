@@ -8,6 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lsa-cloud-service/email-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/email-service/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lsa-cloud-service/event-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/event-service/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lsa-cloud-service/lsa-config-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/lsa-config-service/Dockerfile" afterDir="false" />
