@@ -11,5 +11,6 @@ RUN mvn -f /home/app/pom.xml clean package -DskipTests
 #
 FROM openjdk:17
 COPY --from=build /home/app/target/message-service-0.0.1-SNAPSHOT.jar /usr/local/lib/message-service.jar
+COPY /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
 EXPOSE 5005
 ENTRYPOINT ["java","-jar","/usr/local/lib/message-service.jar"]
