@@ -6,9 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="f94a8a07-5ee2-46fa-a058-faabe4d06845" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/build.sh" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/build.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/email-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/email-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/event-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/event-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/lsa-config-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/lsa-config-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/message-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/message-service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/service-registry/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/service-registry/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/video-service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/video-service/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
