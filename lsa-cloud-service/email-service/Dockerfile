@@ -11,5 +11,6 @@ RUN mvn -f /home/app/pom.xml clean package -DskipTests
 #
 FROM openjdk:17
 COPY --from=build /home/app/target/email-service-0.0.1-SNAPSHOT.jar /usr/local/lib/email-service.jar
+COPY /etc/letsencrypt/live/www.turbolessons.com/fullchain.p12 /etc/letsencrypt/live/www.turbolessons.com/fullchain.p12
 EXPOSE 5003
 ENTRYPOINT ["java","-jar","/usr/local/lib/email-service.jar"]
