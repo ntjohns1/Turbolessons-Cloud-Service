@@ -6,9 +6,8 @@ networks:
   message-service_lsa:
 services:
   lsa-config-service:
-    image: com-noslen-lsa-config-service:latest
+    image: noslenj/lsa-config-service:com-noslen-lsa-config-service
     container_name: lsa-config-service
-    hostname: lsa-config-service
     expose:
       - "9999"
     ports:
@@ -16,9 +15,8 @@ services:
     networks:
       - lsa-cloud-service_lsa
   service-registry:
-    image: com-noslen-service-registry:latest
+    image: noslenj/service-registry:com-noslen-service-registry
     container_name: service-registry
-    hostname: service-registry
     expose:
       - "8761"
     ports:
@@ -28,9 +26,8 @@ services:
     depends_on:
       - lsa-config-service
   admin-service:
-    image: com-noslen-admin-service:latest
+    image: noslenj/admin-service:com-noslen-admin-service
     container_name: admin-service
-    hostname: admin-service
     expose:
       - "5002"
     ports:
@@ -40,9 +37,8 @@ services:
     depends_on:
       - service-registry
   email-service:
-    image: com-noslen-email-service:latest
+    image:  noslenj/email-service:com-noslen-email-service
     container_name: email-service
-    hostname: email-service
     volumes:
       - emaildb_data:/data/db
     expose:
@@ -57,7 +53,6 @@ services:
   emaildb:
     image: mongo:latest
     container_name: emaildb
-    hostname: emaildb
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
@@ -72,9 +67,8 @@ services:
     depends_on:
       - admin-service
   event-service:
-    image: com-noslen-event-service:latest
+    image: noslenj/event-service:com-noslen-event-service
     container_name: event-service
-    hostname: event-service
     volumes:
       - lessondb_data:/var/lib/mysql
     expose:
@@ -89,7 +83,6 @@ services:
   lessondb:
     image: mysql:latest
     container_name: lessondb
-    hostname: lessondb
     environment:
       MYSQL_ROOT_PASSWORD: root_password
       MYSQL_DATABASE: eventplt
@@ -103,9 +96,8 @@ services:
     depends_on:
       - email-service
   message-service:
-    image: com-noslen-message-service:latest
+    image: noslenj/message-service:com-noslen-message-service
     container_name: message-service
-    hostname: message-service
     expose:
       - "5005"
     ports:
@@ -118,7 +110,6 @@ services:
   messagedb:
     image: mongo:latest
     container_name: messagedb
-    hostname: messagedb
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
@@ -136,7 +127,8 @@ services:
     depends_on:
       - event-service
   video-service:
-    image: com-noslen-video-service
+    image: noslenj/video-service:com-noslen-video-service
+    container_name: video-service
     environment:
       projectId: lesson-schedule-assistant
       credentialsPath: /usr/local/lib/google-cloud/lesson-schedule-assistant-cfe4cf3aebad.json
@@ -144,8 +136,6 @@ services:
     volumes:
       - /Users/noslen/DevProjects/LSA-Cloud-Service/lsa-cloud-service/:/usr/local/lib/lsa-cloud-service
       - /Users/noslen/DevProjects/google-cloud/:/usr/local/lib/google-cloud
-    container_name: video-service
-    hostname: video-service
     expose:
       - "5004"
     ports:
@@ -155,7 +145,7 @@ services:
     depends_on:
       - message-service
   api-gateway:
-    image: com-noslen-api-gateway
+    image: noslenj/api-gateway:com-noslen-api-gateway
     container_name: api-gateway
     expose:
       - "443"
@@ -166,7 +156,7 @@ services:
     depends_on:
       - video-service
   lsa-frontend:
-    image: lsa-frontend
+    image: noslenj/lsa-frontend:lsa-frontend
     container_name: lsa-frontend
     ports:
       - "3000:80"
@@ -174,6 +164,8 @@ services:
       - /Users/noslen/DevProjects/LSA_Frontend/lsa-frontend/okta.env:/app/okta.env
     networks:
       - lsa-cloud-service_lsa
+    depends_on:
+      - api-gateway
 volumes:
   emaildb_data:
   lessondb_data:
