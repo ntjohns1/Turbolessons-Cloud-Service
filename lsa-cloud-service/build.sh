@@ -30,7 +30,7 @@ cd ..
 
 echo "Building lessondb"
 cd lessondb
-docker build -t noslenj/lessondb:com-noslen-event-lessondb .
+docker build -t noslenj/lessondb:com-noslen-lessondb .
 cd ..
 
 echo "Building message-service"
