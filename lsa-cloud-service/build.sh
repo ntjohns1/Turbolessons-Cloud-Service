@@ -28,6 +28,11 @@ cd event-service
 docker build -t noslenj/event-service:com-noslen-event-service .
 cd ..
 
+echo "Building lessondb"
+cd lessondb
+docker build -t noslenj/lessondb:com-noslen-event-lessondb .
+cd ..
+
 echo "Building message-service"
 cd message-service
 docker build -t noslenj/message-service:com-noslen-message-service .

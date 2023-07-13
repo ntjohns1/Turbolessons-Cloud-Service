@@ -9,7 +9,7 @@ services:
     image: noslenj/lsa-config-service:com-noslen-lsa-config-service
     container_name: lsa-config-service
     volumes:
-      - /etc/letsencrypt/live/www.turbolessons.com:/etc/letsencrypt/live/www.turbolessons.com
+      - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
     expose:
       - "9999"
     ports:
@@ -20,34 +20,31 @@ services:
     image: noslenj/service-registry:com-noslen-service-registry
     container_name: service-registry
     volumes:
-      - /etc/letsencrypt/live/www.turbolessons.com:/etc/letsencrypt/live/www.turbolessons.com
+      - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
     expose:
       - "8761"
     ports:
       - "8761:8761"
     networks:
       - lsa-cloud-service_lsa
-    depends_on:
-      - lsa-config-service
   admin-service:
     image: noslenj/admin-service:com-noslen-admin-service
     container_name: admin-service
     volumes:
-      - /etc/letsencrypt/live/www.turbolessons.com:/etc/letsencrypt/live/www.turbolessons.com
+      - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
     expose:
       - "5002"
     ports:
       - "5002:5002"
     networks:
       - lsa-cloud-service_lsa
-    depends_on:
-      - service-registry
   email-service:
     image:  noslenj/email-service:com-noslen-email-service
     container_name: email-service
     volumes:
       - emaildb_data:/data/db
-      - /etc/letsencrypt/live/www.turbolessons.com:/etc/letsencrypt/live/www.turbolessons.com
+      - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
+      - /template-thymeleaf.html:/app/mail-templates
     expose:
       - "5003"
     ports:
@@ -55,13 +52,11 @@ services:
     networks:
       - lsa-cloud-service_lsa
       - email-service_lsa
-    depends_on:
-      - emaildb
   emaildb:
     image: mongo:latest
     container_name: emaildb
     volumes:
-      - /etc/letsencrypt/live/www.turbolessons.com:/etc/letsencrypt/live/www.turbolessons.com
+      - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
@@ -73,14 +68,12 @@ services:
     networks:
       - lsa-cloud-service_lsa
       - email-service_lsa
-    depends_on:
-      - admin-service
   event-service:
     image: noslenj/event-service:com-noslen-event-service
     container_name: event-service
     volumes:
       - lessondb_data:/var/lib/mysql
-      - /etc/letsencrypt/live/www.turbolessons.com:/etc/letsencrypt/live/www.turbolessons.com
+      - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
     expose:
       - "5001"
     ports:
@@ -88,13 +81,11 @@ services:
     networks:
       - lsa-cloud-service_lsa
       - event-service_lsa
-    depends_on:
-      - lessondb
   lessondb:
-    image: mysql:latest
+    image: noslenj/lessondb:com-noslen-lessondb
     container_name: lessondb
     volumes:
-      - /etc/letsencrypt/live/www.turbolessons.com:/etc/letsencrypt/live/www.turbolessons.com
+      - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
     environment:
       MYSQL_ROOT_PASSWORD: root_password
       MYSQL_DATABASE: eventplt
@@ -105,13 +96,11 @@ services:
     networks:
       - lsa-cloud-service_lsa
       - event-service_lsa
-    depends_on:
-      - email-service
   message-service:
     image: noslenj/message-service:com-noslen-message-service
     container_name: message-service
     volumes:
-      - /etc/letsencrypt/live/www.turbolessons.com:/etc/letsencrypt/live/www.turbolessons.com
+      - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
     expose:
       - "5005"
     ports:
@@ -119,8 +108,6 @@ services:
     networks:
       - lsa-cloud-service_lsa
       - message-service_lsa
-    depends_on:
-      - messagedb
   messagedb:
     image: mongo:latest
     container_name: messagedb
@@ -131,7 +118,7 @@ services:
       MONGO_INITDB_AUTH_SOURCE: admin
     volumes:
       - messagedb_data:/data/db
-      - /etc/letsencrypt/live/www.turbolessons.com:/etc/letsencrypt/live/www.turbolessons.com
+      - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
     expose:
       - "5055"
     ports:
@@ -139,40 +126,34 @@ services:
     networks:
       - lsa-cloud-service_lsa
       - message-service_lsa
-    depends_on:
-      - event-service
   video-service:
     image: noslenj/video-service:com-noslen-video-service
     container_name: video-service
     environment:
       projectId: lesson-schedule-assistant
-      credentialsPath: /usr/local/lib/google-cloud/lesson-schedule-assistant-cfe4cf3aebad.json
+      credentialsPath: /lesson-schedule-assistant-cfe4cf3aebad.json
       bucketName: noslen-test-bucket
     volumes:
       - /Users/noslen/DevProjects/LSA-Cloud-Service/lsa-cloud-service/:/usr/local/lib/lsa-cloud-service
-      - /Users/noslen/DevProjects/google-cloud/:/usr/local/lib/google-cloud
-      - /etc/letsencrypt/live/www.turbolessons.com:/etc/letsencrypt/live/www.turbolessons.com
+      - ./lesson-schedule-assistant-cfe4cf3aebad.json:/lesson-schedule-assistant-cfe4cf3aebad.json
+      - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
     expose:
       - "5004"
     ports:
       - "5004:5004"
     networks:
       - lsa-cloud-service_lsa
-    depends_on:
-      - message-service
   api-gateway:
     image: noslenj/api-gateway:com-noslen-api-gateway
     container_name: api-gateway
     volumes:
-      - /etc/letsencrypt/live/www.turbolessons.com:/etc/letsencrypt/live/www.turbolessons.com
+      - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
     expose:
       - "443"
     ports:
       - "443:443"
     networks:
       - lsa-cloud-service_lsa
-    depends_on:
-      - video-service
   lsa-frontend:
     image: noslenj/lsa-frontend:lsa-frontend
     container_name: lsa-frontend
@@ -180,11 +161,9 @@ services:
       - "3000:80"
     volumes:
       - /Users/noslen/DevProjects/LSA_Frontend/lsa-frontend/okta.env:/app/okta.env
-      - /etc/letsencrypt/live/www.turbolessons.com:/etc/letsencrypt/live/www.turbolessons.com
+      - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
     networks:
       - lsa-cloud-service_lsa
-    depends_on:
-      - api-gateway
 volumes:
   emaildb_data:
   lessondb_data:
