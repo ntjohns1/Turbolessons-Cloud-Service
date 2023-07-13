@@ -27,8 +27,6 @@ services:
       - "8761:8761"
     networks:
       - lsa-cloud-service_lsa
-    depends_on:
-      - lsa-config-service
   admin-service:
     image: noslenj/admin-service:com-noslen-admin-service
     container_name: admin-service
@@ -40,8 +38,6 @@ services:
       - "5002:5002"
     networks:
       - lsa-cloud-service_lsa
-    depends_on:
-      - service-registry
   email-service:
     image:  noslenj/email-service:com-noslen-email-service
     container_name: email-service
@@ -56,8 +52,6 @@ services:
     networks:
       - lsa-cloud-service_lsa
       - email-service_lsa
-    depends_on:
-      - emaildb
   emaildb:
     image: mongo:latest
     container_name: emaildb
@@ -74,8 +68,6 @@ services:
     networks:
       - lsa-cloud-service_lsa
       - email-service_lsa
-    depends_on:
-      - admin-service
   event-service:
     image: noslenj/event-service:com-noslen-event-service
     container_name: event-service
@@ -89,10 +81,8 @@ services:
     networks:
       - lsa-cloud-service_lsa
       - event-service_lsa
-    depends_on:
-      - lessondb
   lessondb:
-    image: mysql:latest
+    image: noslenj/lessondb:com-noslen-lessondb
     container_name: lessondb
     volumes:
       - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
@@ -106,8 +96,6 @@ services:
     networks:
       - lsa-cloud-service_lsa
       - event-service_lsa
-    depends_on:
-      - email-service
   message-service:
     image: noslenj/message-service:com-noslen-message-service
     container_name: message-service
@@ -120,8 +108,6 @@ services:
     networks:
       - lsa-cloud-service_lsa
       - message-service_lsa
-    depends_on:
-      - messagedb
   messagedb:
     image: mongo:latest
     container_name: messagedb
@@ -140,8 +126,6 @@ services:
     networks:
       - lsa-cloud-service_lsa
       - message-service_lsa
-    depends_on:
-      - event-service
   video-service:
     image: noslenj/video-service:com-noslen-video-service
     container_name: video-service
@@ -159,8 +143,6 @@ services:
       - "5004:5004"
     networks:
       - lsa-cloud-service_lsa
-    depends_on:
-      - message-service
   api-gateway:
     image: noslenj/api-gateway:com-noslen-api-gateway
     container_name: api-gateway
@@ -172,8 +154,6 @@ services:
       - "443:443"
     networks:
       - lsa-cloud-service_lsa
-    depends_on:
-      - video-service
   lsa-frontend:
     image: noslenj/lsa-frontend:lsa-frontend
     container_name: lsa-frontend
@@ -184,8 +164,6 @@ services:
       - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
     networks:
       - lsa-cloud-service_lsa
-    depends_on:
-      - api-gateway
 volumes:
   emaildb_data:
   lessondb_data:
