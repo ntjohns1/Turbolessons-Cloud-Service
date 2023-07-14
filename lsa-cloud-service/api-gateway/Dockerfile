@@ -11,5 +11,5 @@ RUN mvn -f /home/app/pom.xml clean package -DskipTests
 #
 FROM openjdk:17
 COPY --from=build /home/app/target/api-gateway-0.0.1-SNAPSHOT.jar /usr/local/lib/api-gateway.jar
-EXPOSE 443
+EXPOSE 8080
 ENTRYPOINT ["java","-jar","/usr/local/lib/api-gateway.jar"]

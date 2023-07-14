@@ -143,13 +143,18 @@ services:
     networks:
       - lsa-cloud-service_lsa
   lsa-frontend:
-    image: noslenj/lsa-frontend:lsa-frontend
+    image: noslenj/lsa-frontend:lsa-frontend1
     container_name: lsa-frontend
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
+      - /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem:/etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
+      - /etc/letsencrypt/live/www.turbolessons.com/privkey.pem:/etc/letsencrypt/live/www.turbolessons.com/privkey.pem
+      - /etc/letsencrypt/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
+      - /etc/letsencrypt/ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
+      - ~/LSA_Frontend/lsa-frontend/nginx.conf:/etc/nginx/nginx.conf
     networks:
       - lsa-cloud-service_lsa
 volumes:
