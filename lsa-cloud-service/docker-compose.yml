@@ -34,8 +34,6 @@ services:
       - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
     expose:
       - "5002"
-    ports:
-      - "5002:5002"
     networks:
       - lsa-cloud-service_lsa
   email-service:
@@ -47,8 +45,6 @@ services:
       - /template-thymeleaf.html:/app/mail-templates
     expose:
       - "5003"
-    ports:
-      - "5003:5003"
     networks:
       - lsa-cloud-service_lsa
       - email-service_lsa
@@ -76,8 +72,6 @@ services:
       - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
     expose:
       - "5001"
-    ports:
-      - "5001:5001"
     networks:
       - lsa-cloud-service_lsa
       - event-service_lsa
@@ -103,8 +97,6 @@ services:
       - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
     expose:
       - "5005"
-    ports:
-      - "5005:5005"
     networks:
       - lsa-cloud-service_lsa
       - message-service_lsa
@@ -139,8 +131,6 @@ services:
       - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
     expose:
       - "5004"
-    ports:
-      - "5004:5004"
     networks:
       - lsa-cloud-service_lsa
   api-gateway:
@@ -149,18 +139,16 @@ services:
     volumes:
       - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
     expose:
-      - "443"
-    ports:
-      - "443:443"
+      - "8080"
     networks:
       - lsa-cloud-service_lsa
   lsa-frontend:
     image: noslenj/lsa-frontend:lsa-frontend
     container_name: lsa-frontend
     ports:
-      - "3000:80"
+      - "80:80"
+      - "443:443"
     volumes:
-      - /Users/noslen/DevProjects/LSA_Frontend/lsa-frontend/okta.env:/app/okta.env
       - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
     networks:
       - lsa-cloud-service_lsa
