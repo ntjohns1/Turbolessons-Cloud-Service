@@ -155,7 +155,7 @@ services:
       - /etc/letsencrypt/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
       - /etc/letsencrypt/ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
       - ~/LSA_Frontend/lsa-frontend/nginx.conf:/etc/nginx/nginx.conf
-      - ./mime.types:/etc/nginx/mime.types
+      - ~/LSA_Frontend/lsa-frontend/mime.types:/etc/nginx/mime.types
     networks:
       - lsa-cloud-service_lsa
 volumes:
