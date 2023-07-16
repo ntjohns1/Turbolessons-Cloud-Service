@@ -39,11 +39,11 @@ class WebSocketConfig {
         SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
         mapping.setOrder(10);
         Map<String, WebSocketHandler> map = new HashMap<>();
-        map.put("w/ws/messages", wsh);
-        map.put("/ws/messages/{userId}", wsh);
-//        ## wss:// protocol
-//        map.put("wss://www.turbolessons.com/ws/messages", wsh);
-//        map.put("wss://www.turbolessons.com/ws/messages/ws/messages/{userId}", wsh);
+//        ## Uncomment for Local Dev
+//        map.put("w/ws/messages", wsh);
+//        map.put("/ws/messages/{userId}", wsh);
+        map.put("wss://www.turbolessons.com/ws/messages", wsh);
+        map.put("wss://www.turbolessons.com/ws/messages/{userId}", wsh);
         mapping.setUrlMap(map);
         mapping.setCorsConfigurations(Collections.singletonMap("*", new CorsConfiguration().applyPermitDefaultValues()));
         return mapping;
