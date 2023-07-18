@@ -1,0 +1,12 @@
+server:
+  port: 8080
+  ssl:
+    key-alias: www.turbolessons.com
+    key-store: /tmp/www.turbolessons.com.keystore
+    key-store-password: ${KEY_STORE_PASSWORD}
+    key-password: ${KEY_PASSWORD}
+spring:
+  application:
+    name: api-gateway
+  config:
+    import: configserver:https://lsa-config-service:9999
