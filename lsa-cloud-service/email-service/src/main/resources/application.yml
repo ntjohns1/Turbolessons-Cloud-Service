@@ -2,4 +2,4 @@ spring:
     application:
         name: email-service
     config:
-        import: configserver:https://lsa-config-service:9999
+        import: configserver:https://lsa-config-service:9999/
