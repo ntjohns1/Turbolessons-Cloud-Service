@@ -2,7 +2,7 @@ server:
   port: 8080
   ssl:
     key-store-type: PKCS12
-    key-store: /tmp/www.turbolessons.com.p12
+    key-store: /config/www.turbolessons.com.p12
     key-store-password: ${KEY_STORE_PASSWORD}
     key-alias: www.turbolessons.com
 spring:
