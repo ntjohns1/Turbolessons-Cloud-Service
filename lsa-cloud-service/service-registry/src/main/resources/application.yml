@@ -1,0 +1,15 @@
+eureka:
+  client:
+    fetchRegistry: false
+    registerWithEureka: false
+    serviceUrl:
+      defaultZone: https://service-registry:8761
+  instance:
+    hostname: service-registry
+server:
+  port: 8761
+  ssl:
+    key-alias: www.turbolessons.com
+    key-store: /tmp/www.turbolessons.com.keystore
+    key-store-password: ${KEY_STORE_PASSWORD}
+    key-password: ${KEY_PASSWORD}
