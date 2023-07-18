@@ -1,10 +1,10 @@
 server:
   port: 8080
   ssl:
-    key-alias: www.turbolessons.com
-    key-store: /tmp/www.turbolessons.com.keystore
+    key-store-type: PKCS12
+    key-store: /tmp/www.turbolessons.com.p12
     key-store-password: ${KEY_STORE_PASSWORD}
-    key-password: ${KEY_PASSWORD}
+    key-alias: www.turbolessons.com
 spring:
   application:
     name: api-gateway
