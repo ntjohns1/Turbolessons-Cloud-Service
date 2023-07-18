@@ -24,7 +24,7 @@ services:
     env_file:
       - keystore.env
     volumes:
-      - /tmp/www.turbolessons.com.p12:/tmp/www.turbolessons.com.p12
+      - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
     expose:
       - "8761"
     ports:
@@ -37,7 +37,8 @@ services:
     env_file:
       - keystore.env
     volumes:
-      - /tmp/www.turbolessons.com.p12:/tmp/www.turbolessons.com.p12
+      - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
+
     expose:
       - "5002"
     networks:
