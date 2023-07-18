@@ -8,6 +8,8 @@ services:
   lsa-config-service:
     image: noslenj/lsa-config-service:com-noslen-lsa-config-service
     container_name: lsa-config-service
+    env_file:
+      - keystore.env
     volumes:
       - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
     expose:
@@ -19,6 +21,8 @@ services:
   service-registry:
     image: noslenj/service-registry:com-noslen-service-registry
     container_name: service-registry
+    env_file:
+      - keystore.env
     volumes:
       - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
     expose:
@@ -30,6 +34,8 @@ services:
   admin-service:
     image: noslenj/admin-service:com-noslen-admin-service
     container_name: admin-service
+    env_file:
+      - keystore.env
     volumes:
       - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
     expose:
@@ -136,6 +142,8 @@ services:
   api-gateway:
     image: noslenj/api-gateway:com-noslen-api-gateway
     container_name: api-gateway
+    env_file:
+      - keystore.env
     volumes:
       - /tmp/www.turbolessons.com.keystore:/tmp/www.turbolessons.com.keystore
     ports:
