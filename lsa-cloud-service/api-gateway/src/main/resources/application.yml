@@ -6,6 +6,9 @@ server:
     key-store: /config/www.turbolessons.com.p12
     key-store-password: ${KEY_STORE_PASSWORD}
     key-alias: www.turbolessons.com
+    trust-store: /config/turbolessons.jks
+    trust-store-password: ${TRUST_STORE_PASSWORD}
+    trust-store-type: JKS
 spring:
   application:
     name: api-gateway
