@@ -12,7 +12,6 @@ services:
       - keystore.env
     volumes:
       - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
-      - "9999"
     ports:
       - "9999:9999"
     networks:
@@ -24,8 +23,6 @@ services:
       - keystore.env
     volumes:
       - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
-    expose:
-      - "8761"
     ports:
       - "8761:8761"
     networks:
@@ -37,9 +34,8 @@ services:
       - keystore.env
     volumes:
       - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
-
-    expose:
-      - "5002"
+    ports:
+      - "5002:5002"
     networks:
       - lsa-cloud-service_lsa
   email-service:
@@ -49,8 +45,8 @@ services:
       - emaildb_data:/data/db
       - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
       - /template-thymeleaf.html:/app/mail-templates
-    expose:
-      - "5003"
+    ports:
+      - "5003:5003"
     networks:
       - lsa-cloud-service_lsa
       - email-service_lsa
@@ -63,8 +59,6 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
       MONGO_INITDB_AUTH_SOURCE: admin
-    expose:
-      - "5053"
     ports:
       - "5053:27017"
     networks:
@@ -76,8 +70,8 @@ services:
     volumes:
       - lessondb_data:/var/lib/mysql
       - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
-    expose:
-      - "5001"
+    ports:
+      - "5001:5001"
     networks:
       - lsa-cloud-service_lsa
       - event-service_lsa
@@ -89,8 +83,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root_password
       MYSQL_DATABASE: eventplt
-    expose:
-      - "5051"
     ports:
       - "5051:3306"
     networks:
@@ -101,8 +93,8 @@ services:
     container_name: message-service
     volumes:
       - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
-    expose:
-      - "5005"
+    ports:
+      - "5005:5005"
     networks:
       - lsa-cloud-service_lsa
       - message-service_lsa
@@ -117,8 +109,6 @@ services:
     volumes:
       - messagedb_data:/data/db
       - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
-    expose:
-      - "5055"
     ports:
       - "5055:27017"
     networks:
@@ -135,8 +125,8 @@ services:
       - /Users/noslen/DevProjects/LSA-Cloud-Service/lsa-cloud-service/:/usr/local/lib/lsa-cloud-service
       - ./lesson-schedule-assistant-cfe4cf3aebad.json:/lesson-schedule-assistant-cfe4cf3aebad.json
       - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
-    expose:
-      - "5004"
+    ports:
+      - "5004:5004"
     networks:
       - lsa-cloud-service_lsa
   api-gateway:
