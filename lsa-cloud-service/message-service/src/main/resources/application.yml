@@ -2,5 +2,5 @@ spring:
     application:
         name: message-service
     config:
-        import: configserver:https://lsa-config-service:9999
+        import: configserver:http://lsa-config-service:9999
 
