@@ -11,8 +11,7 @@ services:
     env_file:
       - keystore.env
     volumes:
-      - /tmp/www.turbolessons.com.p12:/tmp/www.turbolessons.com.p12
-    expose:
+      - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
       - "9999"
     ports:
       - "9999:9999"
@@ -48,7 +47,7 @@ services:
     container_name: email-service
     volumes:
       - emaildb_data:/data/db
-      - /tmp/www.turbolessons.com.p12:/tmp/www.turbolessons.com.p12
+      - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
       - /template-thymeleaf.html:/app/mail-templates
     expose:
       - "5003"
@@ -59,7 +58,7 @@ services:
     image: mongo:latest
     container_name: emaildb
     volumes:
-      - /tmp/www.turbolessons.com.p12:/tmp/www.turbolessons.com.p12
+      - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
