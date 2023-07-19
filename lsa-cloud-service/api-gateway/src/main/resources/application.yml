@@ -9,6 +9,5 @@ server:
 spring:
   application:
     name: api-gateway
-  cloud:
-    config:
-      uri: configserver:https://lsa-config-service:9999/
+  config:
+    import: configserver:https://lsa-config-service:9999/
