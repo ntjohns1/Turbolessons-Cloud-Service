@@ -1,3 +1,7 @@
+spring:
+  cloud:
+    config:
+      import: optional:configserver:https://lsa-config-service:9999/
 eureka:
   client:
     fetchRegistry: false
@@ -9,6 +13,7 @@ eureka:
 server:
   port: 8761
   ssl:
+    enabled: true
     key-store-type: PKCS12
     key-store: /config/www.turbolessons.com.p12
     key-store-password: ${KEY_STORE_PASSWORD}
