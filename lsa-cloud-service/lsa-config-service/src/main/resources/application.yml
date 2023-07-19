@@ -11,6 +11,7 @@ server:
     trust-store: /config/turbolessons.jks
     trust-store-password: ${TRUST_STORE_PASSWORD}
     trust-store-type: JKS
+    client-auth: need
 spring:
   application:
     name: config-server
