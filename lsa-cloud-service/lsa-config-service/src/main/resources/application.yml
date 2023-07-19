@@ -7,6 +7,7 @@ server:
     key-store: /config/www.turbolessons.com.p12
     key-store-password: ${KEY_STORE_PASSWORD}
     key-alias: www.turbolessons.com
+    enabled: true
 spring:
   application:
     name: config-server
@@ -17,6 +18,8 @@ spring:
         git:
           default-label: main
           uri: https://github.com/ntjohns1/lsa-config.git
+      discovery:
+        enabled: true
 management:
   endpoints:
     web:
