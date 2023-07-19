@@ -1,7 +1,6 @@
 spring:
-  cloud:
-    config:
-      uri: optional:configserver:https://lsa-config-service:9999/
+  config:
+    import: optional:configserver:https://lsa-config-service:9999/
 eureka:
   client:
     fetchRegistry: false
