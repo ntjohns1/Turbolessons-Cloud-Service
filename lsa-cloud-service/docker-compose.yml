@@ -12,6 +12,7 @@ services:
       - keystore.env
     volumes:
       - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
+      - /turbolessons.jks:/config/turbolessons.jks
     ports:
       - "9999:9999"
     networks:
@@ -23,6 +24,7 @@ services:
       - keystore.env
     volumes:
       - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
+      - /turbolessons.jks:/config/turbolessons.jks
     ports:
       - "8761:8761"
     networks:
@@ -136,6 +138,7 @@ services:
       - keystore.env
     volumes:
       - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
+      - /turbolessons.jks:/config/turbolessons.jks
     ports:
       - "8080:8080"
     networks:
@@ -143,11 +146,14 @@ services:
   lsa-frontend:
     image: noslenj/lsa-frontend:lsa-frontend
     container_name: lsa-frontend
+    env_file:
+      - keystore.env
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
+      - /turbolessons.jks:/config/turbolessons.jks
       - /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem:/etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
       - /etc/letsencrypt/live/www.turbolessons.com/privkey.pem:/etc/letsencrypt/live/www.turbolessons.com/privkey.pem
       - /etc/letsencrypt/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
