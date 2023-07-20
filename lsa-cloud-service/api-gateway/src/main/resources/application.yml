@@ -15,16 +15,16 @@ spring:
     name: api-gateway
   config:
     import: configserver:https://lsa-config-service:9999/
-#  cloud:
-#    config:
-#      uri: https://lsa-config-service:9999/
-#      tls:
-#        enabled: true
-#        key-store-type: PKCS12
-#        key-alias: keystore
-#        key-store: /config/keystore.p12
-#        key-store-password: ${KEY_STORE_PASSWORD}
-#        key-password: ${KEY_PASSWORD}
-#        trust-store-type: JKS
-#        trust-store: /config/truststore.jks
-#        trust-store-password: ${TRUST_STORE_PASSWORD}
+  cloud:
+    config:
+      uri: https://lsa-config-service:9999/
+      tls:
+        enabled: true
+        key-store-type: PKCS12
+        key-alias: keystore
+        key-store: /config/keystore.p12
+        key-store-password: ${KEY_STORE_PASSWORD}
+        key-password: ${KEY_PASSWORD}
+        trust-store-type: JKS
+        trust-store: /config/truststore.jks
+        trust-store-password: ${TRUST_STORE_PASSWORD}
