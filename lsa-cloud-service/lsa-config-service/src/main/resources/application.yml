@@ -6,11 +6,11 @@ server:
     enabled: true
     key-store-type: PKCS12
     key-alias: keystore
-    key-store: classpath:/config/keystore.p12
+    key-store: classpath:/keystore.p12
     key-store-password: ${KEY_STORE_PASSWORD}
     key-password: ${KEY_PASSWORD}
     trust-store-type: JKS
-    trust-store: classpath:/config/truststore.jks
+    trust-store: classpath:/truststore.jks
     trust-store-password: ${TRUST_STORE_PASSWORD}
 spring:
   application:
