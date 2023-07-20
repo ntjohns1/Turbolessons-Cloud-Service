@@ -12,7 +12,7 @@ services:
       - keystore.env
     volumes:
       - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
-      - /tmp/truststore.p12:/config/truststore.p12
+      - ~/truststore.p12:/config/truststore.p12
     ports:
       - "9999:9999"
     networks:
@@ -24,7 +24,7 @@ services:
       - keystore.env
     volumes:
       - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
-      - /tmp/truststore.p12:/config/truststore.p12
+      - ~/truststore.p12:/config/truststore.p12
     ports:
       - "8761:8761"
     networks:
@@ -36,7 +36,7 @@ services:
       - keystore.env
     volumes:
       - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
-      - /tmp/truststore.p12:/config/truststore.p12
+      - ~/truststore.p12:/config/truststore.p12
     ports:
       - "5002:5002"
     networks:
@@ -47,7 +47,7 @@ services:
     volumes:
       - emaildb_data:/data/db
       - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
-      - /tmp/truststore.p12:/config/truststore.p12
+      - ~/truststore.p12:/config/truststore.p12
       - /template-thymeleaf.html:/app/mail-templates
     ports:
       - "5003:5003"
@@ -59,7 +59,7 @@ services:
     container_name: emaildb
     volumes:
       - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
-      - /tmp/truststore.p12:/config/truststore.p12
+      - ~/truststore.p12:/config/truststore.p12
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
@@ -75,7 +75,7 @@ services:
     volumes:
       - lessondb_data:/var/lib/mysql
       - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
-      - /tmp/truststore.p12:/config/truststore.p12
+      - ~/truststore.p12:/config/truststore.p12
     ports:
       - "5001:5001"
     networks:
@@ -86,7 +86,7 @@ services:
     container_name: lessondb
     volumes:
       - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
-      - /tmp/truststore.p12:/config/truststore.p12
+      - ~/truststore.p12:/config/truststore.p12
     environment:
       MYSQL_ROOT_PASSWORD: root_password
       MYSQL_DATABASE: eventplt
@@ -100,7 +100,7 @@ services:
     container_name: message-service
     volumes:
       - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
-      - /tmp/truststore.p12:/config/truststore.p12
+      - ~/truststore.p12:/config/truststore.p12
     ports:
       - "5005:5005"
     networks:
@@ -133,7 +133,7 @@ services:
       - /Users/noslen/DevProjects/LSA-Cloud-Service/lsa-cloud-service/:/usr/local/lib/lsa-cloud-service
       - ./lesson-schedule-assistant-cfe4cf3aebad.json:/lesson-schedule-assistant-cfe4cf3aebad.json
       - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
-      - /tmp/truststore.p12:/config/truststore.p12
+      - ~/truststore.p12:/config/truststore.p12
     ports:
       - "5004:5004"
     networks:
@@ -144,8 +144,8 @@ services:
     env_file:
       - keystore.env
     volumes:
-      - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
-      - /tmp/truststore.p12:/config/truststore.p12
+      - ~/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
+      - ~/truststore.p12:/config/truststore.p12
     ports:
       - "8080:8080"
     networks:
@@ -160,7 +160,7 @@ services:
       - "443:443"
     volumes:
       - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
-      - /tmp/truststore.p12:/config/truststore.p12
+      - ~/truststore.p12:/config/truststore.p12
       - /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem:/etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
       - /etc/letsencrypt/live/www.turbolessons.com/privkey.pem:/etc/letsencrypt/live/www.turbolessons.com/privkey.pem
       - /etc/letsencrypt/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
