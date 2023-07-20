@@ -6,10 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f94a8a07-5ee2-46fa-a058-faabe4d06845" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/lsa-config-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/lsa-config-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/service-registry/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/service-registry/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +62,7 @@
     "Git.Branch.Popup.ShowAllRemotes": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "/Users/noslen/DevProjects/LSA-Cloud-Service/lsa-cloud-service",
+    "last_opened_file_path": "/Users/noslen/DevProjects/LSA-Cloud-Service/lsa-cloud-service/api-gateway/src/main/resources/ssl",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2"
@@ -74,11 +70,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/resources/ssl" />
+      <recent name="$PROJECT_DIR$/lsa-cloud-service/service-registry/src/main/resources/ssl" />
+      <recent name="$PROJECT_DIR$/lsa-cloud-service/message-service/src/main/resources/static" />
       <recent name="$PROJECT_DIR$/lsa-cloud-service" />
       <recent name="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/test" />
-      <recent name="$PROJECT_DIR$/lsa-cloud-service/api-gateway" />
-      <recent name="$PROJECT_DIR$/lsa-cloud-service/video-service" />
-      <recent name="$PROJECT_DIR$/lsa-cloud-service/message-service" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lsa-cloud-service" />
