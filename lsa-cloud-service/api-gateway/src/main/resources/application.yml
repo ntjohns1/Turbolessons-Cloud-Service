@@ -15,3 +15,8 @@ spring:
     name: api-gateway
   config:
     import: configserver:https://lsa-config-service:9999/
+  cloud:
+    config:
+      uri: https://lsa-config-service:9999/
+      skip-ssl-validation: true
+
