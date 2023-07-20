@@ -7,11 +7,12 @@ spring:
       tls:
         enabled: true
         key-store-type: PKCS12
+        key-alias: keystore
         key-store: /config/keystore.p12
         key-store-password: ${KEY_STORE_PASSWORD}
         key-password: ${KEY_PASSWORD}
-        trust-store-type: PKCS12
-        trust-store: /config/truststore.p12
+        trust-store-type: JKS
+        trust-store: /config/truststore.jks
         trust-store-password: ${TRUST_STORE_PASSWORD}
 eureka:
   client:
@@ -26,10 +27,10 @@ server:
   ssl:
     enabled: true
     key-store-type: PKCS12
+    key-alias: keystore
     key-store: /config/keystore.p12
     key-store-password: ${KEY_STORE_PASSWORD}
     key-password: ${KEY_PASSWORD}
-    key-alias: www.turbolessons.com
-    trust-store-type: PKCS12
-    trust-store: /config/truststore.p12
+    trust-store-type: JKS
+    trust-store: /config/truststore.jks
     trust-store-password: ${TRUST_STORE_PASSWORD}
