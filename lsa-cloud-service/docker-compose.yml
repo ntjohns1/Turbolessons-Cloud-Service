@@ -144,8 +144,8 @@ services:
     env_file:
       - keystore.env
     volumes:
-      - ~/keystore.p12:/config/keystore.p12
-      - ~/truststore.jks:/config/truststore.jks
+      - ./keystore.p12:/config/keystore.p12
+      - ./truststore.jks:/config/truststore.jks
     ports:
       - "8080:8080"
     networks:
