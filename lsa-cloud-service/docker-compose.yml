@@ -10,6 +10,9 @@ services:
     container_name: lsa-config-service
     env_file:
       - keystore.env
+    volumes:
+      - ./keystore.p12:/config/keystore.p12
+      - ./truststore.p12:/config/truststore.p12
     ports:
       - "9999:9999"
     networks:
@@ -19,6 +22,9 @@ services:
     container_name: service-registry
     env_file:
       - keystore.env
+    volumes:
+      - ./keystore.p12:/config/keystore.p12
+      - ./truststore.p12:/config/truststore.p12
     ports:
       - "8761:8761"
     networks:
@@ -136,6 +142,9 @@ services:
     container_name: api-gateway
     env_file:
       - keystore.env
+    volumes:
+      - ./keystore.p12:/config/keystore.p12
+      - ./truststore.p12:/config/truststore.p12
     ports:
       - "8080:8080"
     networks:

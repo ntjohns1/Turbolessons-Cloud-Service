@@ -4,11 +4,11 @@ server:
     enabled: true
     key-store-type: PKCS12
     key-alias: keystore
-    key-store: classpath:/keystore.p12
+    key-store: /config/keystore.p12
     key-store-password: ${KEY_STORE_PASSWORD}
     key-password: ${KEY_PASSWORD}
     trust-store-type: PKCS12
-    trust-store: classpath:/truststore.p12
+    trust-store: /config/truststore.p12
     trust-store-password: ${TRUST_STORE_PASSWORD}
 spring:
   application:
@@ -22,10 +22,12 @@ spring:
         enabled: true
         key-store-type: PKCS12
         key-alias: keystore
-        key-store: classpath:/keystore.p12
+        key-store: /config/keystore.p12
         key-store-password: ${KEY_STORE_PASSWORD}
         key-password: ${KEY_PASSWORD}
         trust-store-type: PKCS12
-        trust-store: classpath:/truststore.p12
+        trust-store: /config/truststore.p12
         trust-store-password: ${TRUST_STORE_PASSWORD}
-
+trust:
+  store: /config/keystore.p12
+  store.password: ${TRUST_STORE_PASSWORD}
