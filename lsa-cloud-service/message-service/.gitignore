@@ -32,3 +32,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+/src/main/resources/keystore.p12
+/src/main/resources/truststore.p12
