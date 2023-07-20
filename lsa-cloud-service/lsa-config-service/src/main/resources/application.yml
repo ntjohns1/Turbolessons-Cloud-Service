@@ -24,6 +24,9 @@ spring:
           uri: https://github.com/ntjohns1/lsa-config.git
       discovery:
         enabled: true
+trust:
+  store: classpath:/keystore.p12
+  store.password: ${TRUST_STORE_PASSWORD}
 management:
   endpoints:
     web:
