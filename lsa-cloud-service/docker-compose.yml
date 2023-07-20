@@ -11,8 +11,8 @@ services:
     env_file:
       - keystore.env
     volumes:
-      - ~/keystore.p12:/config/keystore.p12
-      - ~/truststore.jks:/config/truststore.jks
+      - ./keystore.p12:/config/keystore.p12
+      - ./truststore.jks:/config/truststore.jks
     ports:
       - "9999:9999"
     networks:
@@ -23,8 +23,8 @@ services:
     env_file:
       - keystore.env
     volumes:
-      - ~/keystore.p12:/config/keystore.p12
-      - ~/truststore.jks:/config/truststore.jks
+      - ./keystore.p12:/config/keystore.p12
+      - ./truststore.jks:/config/truststore.jks
     ports:
       - "8761:8761"
     networks:
@@ -35,8 +35,8 @@ services:
     env_file:
       - keystore.env
     volumes:
-      - ~/keystore.p12:/config/keystore.p12
-      - ~/truststore.jks:/config/truststore.jks
+      - ./keystore.p12:/config/keystore.p12
+      - ./truststore.jks:/config/truststore.jks
     ports:
       - "5002:5002"
     networks:
@@ -46,9 +46,9 @@ services:
     container_name: email-service
     volumes:
       - emaildb_data:/data/db
-      - ~/keystore.p12:/config/keystore.p12
-      - ~/truststore.jks:/config/truststore.jks
-      - /template-thymeleaf.html:/app/mail-templates
+      - ./keystore.p12:/config/keystore.p12
+      - ./truststore.jks:/config/truststore.jks
+      - ./template-thymeleaf.html:/app/mail-templates
     ports:
       - "5003:5003"
     networks:
@@ -58,8 +58,8 @@ services:
     image: mongo:latest
     container_name: emaildb
     volumes:
-      - ~/keystore.p12:/config/keystore.p12
-      - ~/truststore.jks:/config/truststore.jks
+      - ./keystore.p12:/config/keystore.p12
+      - ./truststore.jks:/config/truststore.jks
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
@@ -74,8 +74,8 @@ services:
     container_name: event-service
     volumes:
       - lessondb_data:/var/lib/mysql
-      - ~/keystore.p12:/config/keystore.p12
-      - ~/truststore.jks:/config/truststore.jks
+      - ./keystore.p12:/config/keystore.p12
+      - ./truststore.jks:/config/truststore.jks
     ports:
       - "5001:5001"
     networks:
@@ -85,8 +85,8 @@ services:
     image: noslenj/lessondb:com-noslen-lessondb
     container_name: lessondb
     volumes:
-      - ~/keystore.p12:/config/keystore.p12
-      - ~/truststore.jks:/config/truststore.jks
+      - ./keystore.p12:/config/keystore.p12
+      - ./truststore.jks:/config/truststore.jks
     environment:
       MYSQL_ROOT_PASSWORD: root_password
       MYSQL_DATABASE: eventplt
@@ -99,8 +99,8 @@ services:
     image: noslenj/message-service:com-noslen-message-service
     container_name: message-service
     volumes:
-      - ~/keystore.p12:/config/keystore.p12
-      - ~/truststore.jks:/config/truststore.jks
+      - ./keystore.p12:/config/keystore.p12
+      - ./truststore.jks:/config/truststore.jks
     ports:
       - "5005:5005"
     networks:
@@ -116,7 +116,7 @@ services:
       MONGO_INITDB_AUTH_SOURCE: admin
     volumes:
       - messagedb_data:/data/db
-      - ~/keystore.p12:/config/keystore.p12
+      - ./keystore.p12:/config/keystore.p12
     ports:
       - "5055:27017"
     networks:
@@ -130,10 +130,9 @@ services:
       credentialsPath: /lesson-schedule-assistant-cfe4cf3aebad.json
       bucketName: noslen-test-bucket
     volumes:
-      - /Users/noslen/DevProjects/LSA-Cloud-Service/lsa-cloud-service/:/usr/local/lib/lsa-cloud-service
       - ./lesson-schedule-assistant-cfe4cf3aebad.json:/lesson-schedule-assistant-cfe4cf3aebad.json
-      - ~/keystore.p12:/config/keystore.p12
-      - ~/truststore.jks:/config/truststore.jks
+      - ./keystore.p12:/config/keystore.p12
+      - ./truststore.jks:/config/truststore.jks
     ports:
       - "5004:5004"
     networks:
@@ -159,14 +158,14 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ~/keystore.p12:/config/keystore.p12
-      - ~/truststore.jks:/config/truststore.jks
+      - ./keystore.p12:/config/keystore.p12
+      - ./truststore.jks:/config/truststore.jks
       - /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem:/etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
       - /etc/letsencrypt/live/www.turbolessons.com/privkey.pem:/etc/letsencrypt/live/www.turbolessons.com/privkey.pem
       - /etc/letsencrypt/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
       - /etc/letsencrypt/ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
-      - ~/LSA_Frontend/lsa-frontend/nginx.conf:/etc/nginx/nginx.conf
-      - ~/LSA_Frontend/lsa-frontend/mime.types:/etc/nginx/mime.types
+      - ./LSA_Frontend/lsa-frontend/nginx.conf:/etc/nginx/nginx.conf
+      - ./LSA_Frontend/lsa-frontend/mime.types:/etc/nginx/mime.types
     networks:
       - lsa-cloud-service_lsa
 volumes:
