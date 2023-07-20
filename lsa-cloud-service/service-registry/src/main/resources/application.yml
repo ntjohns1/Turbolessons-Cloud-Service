@@ -12,7 +12,7 @@ spring:
         key-store-password: ${KEY_STORE_PASSWORD}
         key-password: ${KEY_PASSWORD}
         trust-store-type: JKS
-        trust-store: classpath:/truststore.jks
+        trust-store: classpath:/truststore.p12
         trust-store-password: ${TRUST_STORE_PASSWORD}
 eureka:
   client:
@@ -32,5 +32,5 @@ server:
     key-store-password: ${KEY_STORE_PASSWORD}
     key-password: ${KEY_PASSWORD}
     trust-store-type: JKS
-    trust-store: classpath:/truststore.jks
+    trust-store: classpath:/truststore.p12
     trust-store-password: ${TRUST_STORE_PASSWORD}

@@ -35,4 +35,4 @@ build/
 
 /src/main/resources/keystore.p12
 /src/main/resources/truststore.p12
-/src/main/resources/truststore.jks
+/src/main/resources/truststore.p12

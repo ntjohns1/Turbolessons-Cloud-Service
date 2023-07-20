@@ -10,6 +10,7 @@
       <change beforePath="$PROJECT_DIR$/lsa-cloud-service/admin-service/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/admin-service/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lsa-cloud-service/email-service/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/email-service/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lsa-cloud-service/event-service/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/event-service/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lsa-cloud-service/lsa-config-service/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/lsa-config-service/.gitignore" afterDir="false" />
