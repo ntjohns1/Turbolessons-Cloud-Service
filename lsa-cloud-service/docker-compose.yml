@@ -144,7 +144,7 @@ services:
     env_file:
       - keystore.env
     volumes:
-      - ~/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
+      - ~/keystore.p12:/config/keystore.p12
       - ~/truststore.p12:/config/truststore.p12
     ports:
       - "8080:8080"
@@ -159,7 +159,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - /tmp/www.turbolessons.com.p12:/config/www.turbolessons.com.p12
+      - ~/keystore.p12:/config/keystore.p12
       - ~/truststore.p12:/config/truststore.p12
       - /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem:/etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
       - /etc/letsencrypt/live/www.turbolessons.com/privkey.pem:/etc/letsencrypt/live/www.turbolessons.com/privkey.pem
