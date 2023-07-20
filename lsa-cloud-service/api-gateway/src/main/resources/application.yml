@@ -3,7 +3,7 @@ server:
   ssl:
     enabled: true
     key-store-type: PKCS12
-    key-store: /config/www.turbolessons.com.p12
+    key-store: /config/keystore.p12
     key-store-password: ${KEY_STORE_PASSWORD}
     key-password: ${KEY_PASSWORD}
     key-alias: www.turbolessons.com
@@ -18,5 +18,12 @@ spring:
   cloud:
     config:
       uri: https://lsa-config-service:9999/
-      skip-ssl-validation: true
-
+      tls:
+        enabled: true
+        key-store-type: PKCS12
+        key-store: /config/keystore.p12
+        key-store-password: ${KEY_STORE_PASSWORD}
+        key-password: ${KEY_PASSWORD}
+        trust-store-type: PKCS12
+        trust-store: /config/truststore.p12
+        trust-store-password: ${TRUST_STORE_PASSWORD}

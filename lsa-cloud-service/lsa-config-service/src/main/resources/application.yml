@@ -5,7 +5,7 @@ server:
   ssl:
     enabled: true
     key-store-type: PKCS12
-    key-store: /config/www.turbolessons.com.p12
+    key-store: /config/keystore.p12
     key-store-password: ${KEY_STORE_PASSWORD}
     key-password: ${KEY_PASSWORD}
     key-alias: www.turbolessons.com
