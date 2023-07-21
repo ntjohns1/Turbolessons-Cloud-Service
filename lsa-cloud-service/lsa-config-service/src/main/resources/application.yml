@@ -6,7 +6,7 @@ server:
     enabled: true
     key-store-type: PKCS12
     key-alias: keystore
-    key-store: /config/keystore.p12
+    key-store: classpath:/config/keystore.p12
     key-store-password: ${KEY_STORE_PASSWORD}
     key-password: ${KEY_PASSWORD}
 spring:
@@ -29,4 +29,4 @@ management:
 eureka:
   client:
     serviceUrl:
-      defaultZone: https://www.turbolessons.com:8761/eureka/
+      defaultZone: https://service-registry:8761/eureka/
