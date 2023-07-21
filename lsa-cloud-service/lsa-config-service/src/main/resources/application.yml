@@ -29,4 +29,4 @@ management:
 eureka:
   client:
     serviceUrl:
-      defaultZone: https://service-registry:8761/eureka/
+      defaultZone: https://www.turbolessons.com:8761/eureka/

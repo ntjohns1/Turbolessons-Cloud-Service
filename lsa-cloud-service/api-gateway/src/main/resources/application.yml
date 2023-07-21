@@ -14,7 +14,7 @@ spring:
   application:
     name: api-gateway
   config:
-    import: configserver:https://lsa-config-service:9999/
+    import: configserver:https://www.turbolessons.com:9999/
 #        trust-store-type: PKCS12
 #        trust-store: /config/truststore.p12
 #        trust-store-password: ${TRUST_STORE_PASSWORD}
