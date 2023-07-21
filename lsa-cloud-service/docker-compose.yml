@@ -24,7 +24,7 @@ services:
       - keystore.env
     volumes:
       - ./keystore/keystore.p12:/config/keystore.p12
-      - ./truststore/truststore.p12:/config/truststore.p12
+#      - ./truststore/truststore.p12:/config/truststore.p12
     ports:
       - "8761:8761"
     networks:
@@ -144,7 +144,7 @@ services:
       - keystore.env
     volumes:
       - ./keystore/keystore.p12:/config/keystore.p12
-      - ./truststore/truststore.p12:/config/truststore.p12
+#      - ./truststore/truststore.p12:/config/truststore.p12
     ports:
       - "8080:8080"
     networks:
