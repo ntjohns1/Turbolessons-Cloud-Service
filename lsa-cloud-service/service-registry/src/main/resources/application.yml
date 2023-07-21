@@ -1,12 +1,12 @@
 spring:
   config:
-    import: optional:configserver:https://lsa-config-service:9999/
+    import: optional:configserver:https://www.turbolessons.com:9999/
 eureka:
   client:
     fetchRegistry: false
     registerWithEureka: false
     serviceUrl:
-      defaultZone: https://service-registry:8761
+      defaultZone: https://www.turbolessons.com:8761
   instance:
     hostname: service-registry
 server:
