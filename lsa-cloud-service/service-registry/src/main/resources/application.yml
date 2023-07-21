@@ -1,6 +1,6 @@
 spring:
   config:
-    import: optional:configserver:https://www.turbolessons.com:9999/
+    import: 'configserver:'
   cloud:
     config:
       uri: https://www.turbolessons.com:9999/
@@ -16,7 +16,7 @@ eureka:
     fetchRegistry: false
     registerWithEureka: false
     serviceUrl:
-      defaultZone: https://www.turbolessons.com:8761
+      defaultZone: https://service-registry:8761
   instance:
     hostname: service-registry
 server:
