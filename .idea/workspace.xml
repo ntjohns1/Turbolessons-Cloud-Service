@@ -65,7 +65,7 @@
     "Git.Branch.Popup.ShowAllRemotes": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "/Users/noslen/DevProjects/LSA-Cloud-Service/lsa-cloud-service/api-gateway/src/main/resources/ssl",
+    "last_opened_file_path": "/Users/noslen/DevProjects/LSA-Cloud-Service/lsa-cloud-service/api-gateway/src/main/resources",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2"
@@ -73,11 +73,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/resources" />
+      <recent name="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/resources/config" />
       <recent name="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/resources/ssl" />
       <recent name="$PROJECT_DIR$/lsa-cloud-service/service-registry/src/main/resources/ssl" />
       <recent name="$PROJECT_DIR$/lsa-cloud-service/message-service/src/main/resources/static" />
-      <recent name="$PROJECT_DIR$/lsa-cloud-service" />
-      <recent name="$PROJECT_DIR$/lsa-cloud-service/admin-service/src/test" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/lsa-cloud-service" />

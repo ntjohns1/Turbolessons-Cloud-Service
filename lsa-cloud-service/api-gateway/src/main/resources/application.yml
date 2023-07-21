@@ -13,8 +13,9 @@ server:
 spring:
   application:
     name: api-gateway
-  config:
-    import: configserver:https://lsa-config-service:9999/
+  cloud:
+    bootstrap:
+      enabled: true
 #        trust-store-type: PKCS12
 #        trust-store: /config/truststore.p12
 #        trust-store-password: ${TRUST_STORE_PASSWORD}
