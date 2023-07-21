@@ -10,8 +10,8 @@ services:
     container_name: lsa-config-service
     env_file:
       - keystore.env
-    volumes:
-      - ./keystore/keystore.p12:/config/keystore.p12
+#    volumes:
+#      - ./keystore/keystore.p12:/config/keystore.p12
 #      - ./truststore/truststore.p12:/config/truststore.p12
     ports:
       - "9999:9999"
@@ -22,8 +22,8 @@ services:
     container_name: service-registry
     env_file:
       - keystore.env
-    volumes:
-      - ./keystore/keystore.p12:/config/keystore.p12
+#    volumes:
+#      - ./keystore/keystore.p12:/config/keystore.p12
 #      - ./truststore/truststore.p12:/config/truststore.p12
     ports:
       - "8761:8761"
@@ -34,9 +34,9 @@ services:
     container_name: admin-service
     env_file:
       - keystore.env
-    volumes:
-      - ./keystore/keystore.p12:/config/keystore.p12
-      - ./truststore/truststore.p12:/config/truststore.p12
+#    volumes:
+#      - ./keystore/keystore.p12:/config/keystore.p12
+#      - ./truststore/truststore.p12:/config/truststore.p12
     ports:
       - "5002:5002"
     networks:
@@ -142,8 +142,8 @@ services:
     container_name: api-gateway
     env_file:
       - keystore.env
-    volumes:
-      - ./keystore/keystore.p12:/config/keystore.p12
+#    volumes:
+#      - ./keystore/keystore.p12:/config/keystore.p12
 #      - ./truststore/truststore.p12:/config/truststore.p12
     ports:
       - "8080:8080"
@@ -158,8 +158,8 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./keystore/keystore.p12:/config/keystore.p12
-      - ./truststore/truststore.p12:/config/truststore.p12
+#      - ./keystore/keystore.p12:/config/keystore.p12
+#      - ./truststore/truststore.p12:/config/truststore.p12
       - /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem:/etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
       - /etc/letsencrypt/live/www.turbolessons.com/privkey.pem:/etc/letsencrypt/live/www.turbolessons.com/privkey.pem
       - /etc/letsencrypt/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
