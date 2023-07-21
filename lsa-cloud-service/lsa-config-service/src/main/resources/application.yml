@@ -25,7 +25,7 @@ spring:
       discovery:
         enabled: true
 trust:
-  store: /config/keystore.p12
+  store: /config/truststore.p12
   store.password: ${TRUST_STORE_PASSWORD}
 management:
   endpoints:
