@@ -10,6 +10,9 @@ services:
     container_name: lsa-config-service
     env_file:
       - keystore.env
+    volumes:
+      - ./keystore/keystore.p12:/config/keystore.p12
+      - ./truststore/truststore.p12:/config/truststore.p12
     ports:
       - "9999:9999"
     networks:
@@ -19,6 +22,9 @@ services:
     container_name: service-registry
     env_file:
       - keystore.env
+    volumes:
+      - ./keystore/keystore.p12:/config/keystore.p12
+      - ./truststore/truststore.p12:/config/truststore.p12
     ports:
       - "8761:8761"
     networks:
@@ -29,8 +35,8 @@ services:
     env_file:
       - keystore.env
     volumes:
-      - ./keystore.p12:/config/keystore.p12
-      - ./truststore.p12:/config/truststore.p12
+      - ./keystore/keystore.p12:/config/keystore.p12
+      - ./truststore/truststore.p12:/config/truststore.p12
     ports:
       - "5002:5002"
     networks:
@@ -40,8 +46,8 @@ services:
     container_name: email-service
     volumes:
       - emaildb_data:/data/db
-      - ./keystore.p12:/config/keystore.p12
-      - ./truststore.p12:/config/truststore.p12
+      - ./keystore/keystore.p12:/config/keystore.p12
+      - ./truststore/truststore.p12:/config/truststore.p12
       - ./template-thymeleaf.html:/app/mail-templates
     ports:
       - "5003:5003"
@@ -52,8 +58,8 @@ services:
     image: mongo:latest
     container_name: emaildb
     volumes:
-      - ./keystore.p12:/config/keystore.p12
-      - ./truststore.p12:/config/truststore.p12
+      - ./keystore/keystore.p12:/config/keystore.p12
+      - ./truststore/truststore.p12:/config/truststore.p12
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
@@ -68,8 +74,8 @@ services:
     container_name: event-service
     volumes:
       - lessondb_data:/var/lib/mysql
-      - ./keystore.p12:/config/keystore.p12
-      - ./truststore.p12:/config/truststore.p12
+      - ./keystore/keystore.p12:/config/keystore.p12
+      - ./truststore/truststore.p12:/config/truststore.p12
     ports:
       - "5001:5001"
     networks:
@@ -79,8 +85,8 @@ services:
     image: noslenj/lessondb:com-noslen-lessondb
     container_name: lessondb
     volumes:
-      - ./keystore.p12:/config/keystore.p12
-      - ./truststore.p12:/config/truststore.p12
+      - ./keystore/keystore.p12:/config/keystore.p12
+      - ./truststore/truststore.p12:/config/truststore.p12
     environment:
       MYSQL_ROOT_PASSWORD: root_password
       MYSQL_DATABASE: eventplt
@@ -93,8 +99,8 @@ services:
     image: noslenj/message-service:com-noslen-message-service
     container_name: message-service
     volumes:
-      - ./keystore.p12:/config/keystore.p12
-      - ./truststore.p12:/config/truststore.p12
+      - ./keystore/keystore.p12:/config/keystore.p12
+      - ./truststore/truststore.p12:/config/truststore.p12
     ports:
       - "5005:5005"
     networks:
@@ -125,8 +131,8 @@ services:
       bucketName: noslen-test-bucket
     volumes:
       - ./lesson-schedule-assistant-cfe4cf3aebad.json:/lesson-schedule-assistant-cfe4cf3aebad.json
-      - ./keystore.p12:/config/keystore.p12
-      - ./truststore.p12:/config/truststore.p12
+      - ./keystore/keystore.p12:/config/keystore.p12
+      - ./truststore/truststore.p12:/config/truststore.p12
     ports:
       - "5004:5004"
     networks:
@@ -136,6 +142,9 @@ services:
     container_name: api-gateway
     env_file:
       - keystore.env
+    volumes:
+      - ./keystore/keystore.p12:/config/keystore.p12
+      - ./truststore/truststore.p12:/config/truststore.p12
     ports:
       - "8080:8080"
     networks:
@@ -149,8 +158,8 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./keystore.p12:/config/keystore.p12
-      - ./truststore.p12:/config/truststore.p12
+      - ./keystore/keystore.p12:/config/keystore.p12
+      - ./truststore/truststore.p12:/config/truststore.p12
       - /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem:/etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
       - /etc/letsencrypt/live/www.turbolessons.com/privkey.pem:/etc/letsencrypt/live/www.turbolessons.com/privkey.pem
       - /etc/letsencrypt/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
