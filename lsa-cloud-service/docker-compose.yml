@@ -12,7 +12,7 @@ services:
       - keystore.env
     volumes:
       - ./keystore/keystore.p12:/config/keystore.p12
-      - ./truststore/truststore.p12:/config/truststore.p12
+#      - ./truststore/truststore.p12:/config/truststore.p12
     ports:
       - "9999:9999"
     networks:
