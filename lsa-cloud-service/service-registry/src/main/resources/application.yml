@@ -1,12 +1,12 @@
 spring:
   config:
-    import: optional:configserver:https://lsa-config-service:9999/, https://www.turbolessons.com:9999
+    import: optional:configserver:https://lsa-config-service:9999/
 eureka:
   client:
     fetchRegistry: false
     registerWithEureka: false
     serviceUrl:
-      defaultZone: https://www.turbolessons.com:8761
+      defaultZone: https://service-registry:8761
   instance:
     hostname: service-registry
 server:
@@ -15,6 +15,6 @@ server:
     enabled: true
     key-store-type: PKCS12
     key-alias: keystore
-    key-store: classpath:keystore.p12
+    key-store: classpath:/keystore.p12
     key-store-password: ${KEY_STORE_PASSWORD}
     key-password: ${KEY_PASSWORD}
