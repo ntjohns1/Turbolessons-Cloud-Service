@@ -11,7 +11,7 @@ server:
     key-password: ${KEY_PASSWORD}
 spring:
   application:
-    name: config-server
+    name: lsa-config-service
   cloud:
     config:
       server:
@@ -26,3 +26,7 @@ management:
     web:
       exposure:
         include: '*'
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: https://service-registry:8761/eureka/
