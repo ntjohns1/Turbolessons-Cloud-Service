@@ -34,9 +34,8 @@ services:
     container_name: admin-service
     env_file:
       - keystore.env
-#    volumes:
-#      - ./keystore/keystore.p12:/config/keystore.p12
-#      - ./truststore/truststore.p12:/config/truststore.p12
+    volumes:
+      - ./keystore:/config
     ports:
       - "5002:5002"
     networks:
