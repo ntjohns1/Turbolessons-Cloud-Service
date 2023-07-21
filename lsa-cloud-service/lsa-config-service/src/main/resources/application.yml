@@ -6,7 +6,7 @@ server:
     enabled: true
     key-store-type: PKCS12
     key-alias: keystore
-    key-store: classpath:/keystore.p12
+    key-store: ${KEY_STORE_PATH}
     key-store-password: ${KEY_STORE_PASSWORD}
     key-password: ${KEY_PASSWORD}
 spring:
@@ -15,10 +15,12 @@ spring:
   cloud:
     config:
       server:
-        bootstrap: false
+        bootstrap: true
         git:
           default-label: main
           uri: https://github.com/ntjohns1/lsa-config.git
+          username: ${GIT_USERNAME}
+          password: ${GIT_PASSWORD}
       discovery:
         enabled: true
 management:
