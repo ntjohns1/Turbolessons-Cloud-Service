@@ -11,9 +11,6 @@ spring:
         key-store: /config/keystore.p12
         key-store-password: ${KEY_STORE_PASSWORD}
         key-password: ${KEY_PASSWORD}
-#        trust-store-type: PKCS12
-#        trust-store: /config/truststore.p12
-#        trust-store-password: ${TRUST_STORE_PASSWORD}
 eureka:
   client:
     fetchRegistry: false
@@ -31,9 +28,3 @@ server:
     key-store: /config/keystore.p12
     key-store-password: ${KEY_STORE_PASSWORD}
     key-password: ${KEY_PASSWORD}
-#    trust-store-type: PKCS12
-#    trust-store: /config/truststore.p12
-#    trust-store-password: ${TRUST_STORE_PASSWORD}
-#trust:
-#  store: /config/keystore.p12
-#  store.password: ${TRUST_STORE_PASSWORD}
