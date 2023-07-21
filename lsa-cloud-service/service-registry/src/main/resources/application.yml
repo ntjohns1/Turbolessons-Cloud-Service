@@ -3,7 +3,7 @@ spring:
     import: optional:configserver:https://lsa-config-service:9999/
   cloud:
     config:
-      uri: https://lsa-config-service:9999/
+      uri: https://www.turbolessons.com:9999/
       tls:
         enabled: true
         key-store-type: PKCS12
