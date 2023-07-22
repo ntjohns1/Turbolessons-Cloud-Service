@@ -12,7 +12,7 @@ spring:
             username: ${GIT_USERNAME}
             password: ${GIT_PASSWORD}
           - type: native
-            searchLocations: file:/config/
+            searchLocations: file:/props/
       discovery:
         enabled: true
         serviceId: lsa-config-service
