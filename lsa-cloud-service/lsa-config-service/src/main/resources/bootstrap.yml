@@ -1,5 +1,6 @@
 encrypt:
   key: SoGk99F1INl7Shp2pYQQPNzFfL+vdHhP8x9VlLLlg8Ok
+
 spring:
   cloud:
     config:
