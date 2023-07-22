@@ -11,6 +11,7 @@ services:
     env_file:
       - ./keystore.env
     volumes:
+      - ./lsa-config:/config
       - ./keystore:/config
     ports:
       - "9999:9999"

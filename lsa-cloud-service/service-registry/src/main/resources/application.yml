@@ -1,7 +1,6 @@
-spring:
-  cloud:
-    bootstrap:
-      enabled: true
+spring.cloud:
+  bootstrap:
+    enabled: true
 eureka:
   client:
     fetchRegistry: false
