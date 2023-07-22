@@ -9,11 +9,9 @@ services:
     image: noslenj/lsa-config-service:com-noslen-lsa-config-service
     container_name: lsa-config-service
     env_file:
-      - keystore.env
+      - ./keystore.env
     volumes:
       - ./keystore:/config
-#      - ./keystore/keystore.p12:/config/keystore.p12
-#      - ./truststore/truststore.p12:/config/truststore.p12
     ports:
       - "9999:9999"
     networks:
@@ -22,11 +20,9 @@ services:
     image: noslenj/service-registry:com-noslen-service-registry
     container_name: service-registry
     env_file:
-      - keystore.env
+      - ./keystore.env
     volumes:
       - ./keystore:/config
-#      - ./keystore/keystore.p12:/config/keystore.p12
-#      - ./truststore/truststore.p12:/config/truststore.p12
     ports:
       - "8761:8761"
     networks:
@@ -35,7 +31,7 @@ services:
     image: noslenj/admin-service:com-noslen-admin-service
     container_name: admin-service
     env_file:
-      - keystore.env
+      - ./keystore.env
     volumes:
       - ./keystore:/config
     ports:
@@ -142,11 +138,9 @@ services:
     image: noslenj/api-gateway:com-noslen-api-gateway
     container_name: api-gateway
     env_file:
-      - keystore.env
+      - ./keystore.env
     volumes:
       - ./keystore:/config
-#      - ./keystore/keystore.p12:/config/keystore.p12
-#      - ./truststore/truststore.p12:/config/truststore.p12
     ports:
       - "8080:8080"
     networks:
@@ -155,7 +149,7 @@ services:
     image: noslenj/lsa-frontend:lsa-frontend
     container_name: lsa-frontend
     env_file:
-      - keystore.env
+      - ./keystore.env
     ports:
       - "80:80"
       - "443:443"
