@@ -5,11 +5,11 @@ spring:
     config:
       server:
         bootstrap: true
-        git:
-          default-label: main
-          uri: https://github.com/ntjohns1/lsa-config.git
-          username: ${GIT_USERNAME}
-          password: ${GIT_PASSWORD}
+        composite:
+          - type: git
+            uri: https://github.com/ntjohns1/lsa-config.git
+            username: ${GIT_USERNAME}
+            password: ${GIT_PASSWORD}
       discovery:
         enabled: true
         serviceId: lsa-config-service
