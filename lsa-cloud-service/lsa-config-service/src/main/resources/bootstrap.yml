@@ -8,11 +8,10 @@ spring:
         bootstrap: true
         composite:
           - type: git
-            uri: https://github.com/ntjohns1/lsa-config.git
-            username: ${GIT_USERNAME}
-            password: ${GIT_PASSWORD}
+            uri: ${GIT_URI}
           - type: native
             searchLocations: file:/props/
       discovery:
         enabled: true
         serviceId: lsa-config-service
+
