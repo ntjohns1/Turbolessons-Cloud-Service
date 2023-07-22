@@ -1,15 +1,12 @@
 server:
   port: 8080
-#  ssl:
-#    enabled: true
-#    key-store-type: PKCS12
-#    key-alias: keystore
-#    key-store: classpath:/keystore.p12
-#    key-store-password: ${KEY_STORE_PASSWORD}
-#    key-password: ${KEY_PASSWORD}
-#    trust-store-type: PKCS12
-#    trust-store: /config/truststore.p12
-#    trust-store-password: ${TRUST_STORE_PASSWORD}
+  ssl:
+    enabled: true
+    key-store-type: PKCS12
+    key-alias: keystore
+    key-store: /config/keystore.p12
+    key-store-password: ${KEY_STORE_PASSWORD}
+    key-password: ${KEY_PASSWORD}
 spring:
   application:
     name: api-gateway
@@ -21,9 +18,5 @@ eureka:
     enabled: true
     webclient:
       enabled: true
-#        trust-store-type: PKCS12
-#        trust-store: /config/truststore.p12
-#        trust-store-password: ${TRUST_STORE_PASSWORD}
-#trust:
-#  store: /config/keystore.p12
-#  store.password: ${TRUST_STORE_PASSWORD}
+    serviceUrl:
+      defaultZone: https://service-registry:8761/eureka/
