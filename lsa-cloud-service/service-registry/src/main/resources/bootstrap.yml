@@ -3,6 +3,9 @@ encrypt:
 spring:
   cloud:
     config:
+      discovery:
+        enabled: true
+        service-id: lsa-config-server
       uri: https://lsa-config-service:9999/
       tls:
         enabled: true

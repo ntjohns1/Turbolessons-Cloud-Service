@@ -18,6 +18,7 @@ spring:
       enabled: true
 eureka:
   client:
+    enabled: true
     webclient:
       enabled: true
 #        trust-store-type: PKCS12
