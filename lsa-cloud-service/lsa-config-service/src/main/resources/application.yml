@@ -1,3 +1,5 @@
+encrypt:
+  key: SoGk99F1INl7Shp2pYQQPNzFfL+vdHhP8x9VlLLlg8Ok
 server:
   port: 9999
   ssl:
@@ -10,11 +12,24 @@ server:
 spring:
   application:
     name: lsa-config-service
+  cloud:
+    config:
+      server:
+        bootstrap: true
+        git:
+          uri: https://github.com/ntjohns1/lsa-config.git
+          username: ${GIT_USERNAME}
+          password: ${GIT_PASSWORD}
+          default-label: main
+      discovery:
+        enabled: true
+        serviceId: lsa-config-service
 management:
   endpoints:
     web:
       exposure:
         include: '*'
+
 eureka:
   client:
     enabled: true
