@@ -30,5 +30,6 @@ management:
         include: '*'
 eureka:
   client:
+    enabled: true
     serviceUrl:
       defaultZone: https://service-registry:8761/eureka/
