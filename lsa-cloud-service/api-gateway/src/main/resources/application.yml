@@ -10,13 +10,13 @@ server:
 spring:
   application:
     name: api-gateway
-  cloud:
-    bootstrap:
-      enabled: true
+
+spring.cloud:
+  bootstrap:
+    enabled: true
+
 eureka:
   client:
     enabled: true
-    webclient:
-      enabled: true
     serviceUrl:
       defaultZone: https://service-registry:8761/eureka/
