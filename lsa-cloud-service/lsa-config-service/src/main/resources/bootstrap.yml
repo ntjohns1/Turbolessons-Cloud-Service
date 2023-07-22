@@ -11,6 +11,8 @@ spring:
             uri: https://github.com/ntjohns1/lsa-config.git
             username: ${GIT_USERNAME}
             password: ${GIT_PASSWORD}
+          - type: native
+            searchLocations: file:/config/
       discovery:
         enabled: true
         serviceId: lsa-config-service
