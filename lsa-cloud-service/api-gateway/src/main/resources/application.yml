@@ -16,6 +16,10 @@ spring:
   cloud:
     bootstrap:
       enabled: true
+eureka:
+  client:
+    webclient:
+      enabled: true
 #        trust-store-type: PKCS12
 #        trust-store: /config/truststore.p12
 #        trust-store-password: ${TRUST_STORE_PASSWORD}
