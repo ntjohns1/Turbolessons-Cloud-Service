@@ -1,0 +1,15 @@
+encrypt:
+  key: SoGk99F1INl7Shp2pYQQPNzFfL+vdHhP8x9VlLLlg8Ok
+spring:
+  cloud:
+    config:
+      server:
+        bootstrap: true
+        git:
+          default-label: main
+          uri: https://github.com/ntjohns1/lsa-config.git
+          username: ${GIT_USERNAME}
+          password: ${GIT_PASSWORD}
+      discovery:
+        enabled: true
+        serviceId: lsa-config-service
