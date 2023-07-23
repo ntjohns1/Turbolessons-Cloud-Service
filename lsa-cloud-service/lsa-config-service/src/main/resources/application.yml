@@ -17,21 +17,20 @@ spring:
       server:
         bootstrap: true
         git:
-          uri: https://github.com/ntjohns1/lsa-config.git
-          username: ${GIT_USERNAME}
-          password: ${GIT_PASSWORD}
           default-label: main
+          uri: https://github.com/ntjohns1/lsa-config.git
       discovery:
         enabled: true
-        serviceId: lsa-config-service
 management:
   endpoints:
     web:
       exposure:
         include: '*'
-
 eureka:
   client:
-    enabled: true
     serviceUrl:
-      defaultZone: https://service-registry:8761/eureka/
+      defaultZone: ${EUREKA_URI}
+  instance:
+    hostname: lsa-config-service
+    nonSecurePortEnabled: false
+    securePortEnabled: true
