@@ -11,7 +11,7 @@ server:
     keyPassword: ${KEY_PASSWORD}
 spring:
   config:
-    import: optional:configserver:https://lsa-config-service:9999/
+    import: optional:configserver:https://www.turbolessons.com:9999/
   application:
     name: service-registry
   security:
@@ -32,7 +32,7 @@ logging:
 
 eureka:
   instance:
-    hostname: service-registry
+    hostname: www.turbolessons.com
     metadataMap:
       user: ${EUREKA_USERNAME}
       password: ${EUREKA_PASSWORD}
