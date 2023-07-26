@@ -22,7 +22,5 @@ spring:
       client:
         git:
           uri: https://github.com/ntjohns1/lsa-config.git
-          username: ${GIT_USERNAME}
-          password: ${GIT_PASSWORD}
           default-label: main
       fail-fast: true
