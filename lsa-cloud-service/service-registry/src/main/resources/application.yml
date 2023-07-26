@@ -10,6 +10,8 @@ server:
     trustStorePassword: ${TRUST_STORE_PASSWORD}
     keyPassword: ${KEY_PASSWORD}
 spring:
+  config:
+    import: optional:configserver:https://lsa-config-service:9999/
   application:
     name: service-registry
   security:
@@ -31,6 +33,9 @@ logging:
 eureka:
   instance:
     hostname: service-registry
+    metadataMap:
+      user: ${EUREKA_USERNAME}
+      password: ${EUREKA_PASSWORD}
   client:
     securePortEnabled: true
     securePort: 8761
