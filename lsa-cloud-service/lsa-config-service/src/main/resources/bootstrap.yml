@@ -7,7 +7,7 @@ spring:
         bootstrap: true
         git:
           default-label: main
-          uri: ${GIT_URI}
+          uri: https://github.com/ntjohns1/lsa-config.git
       discovery:
         enabled: true
 eureka:
