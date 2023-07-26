@@ -1,6 +1,10 @@
 spring:
   application:
     name: service-registry
+  security:
+    user:
+      name: ${EUREKA_USERNAME}
+      password: ${EUREKA_PASSWORD}
   cloud:
     config:
       discovery:
@@ -9,11 +13,12 @@ spring:
       uri: ${CONFIG_URI}
       tls:
         enabled: true
-        key-store-type: PKCS12
-        key-alias: keystore
-        key-store: ${KEY_STORE_PATH}
-        key-store-password: ${KEY_STORE_PASSWORD}
-        key-password: ${KEY_PASSWORD}
+        keyStore: ${KEY_STORE_PATH}
+        trustStore: ${TRUST_STORE_PATH}
+        keyStoreType: PKCS12
+        keyStorePassword: ${KEY_STORE_PASSWORD}
+        trustStorePassword: ${TRUST_STORE_PASSWORD}
+        keyPassword: ${KEY_PASSWORD}
       client:
         git:
           uri: https://github.com/ntjohns1/lsa-config.git
