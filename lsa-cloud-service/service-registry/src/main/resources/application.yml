@@ -32,6 +32,8 @@ logging:
 
 eureka:
   client:
+    secure-port-enabled: true
+    secure-port: 8761
     registerWithEureka: false
     fetchRegistry: false
     service-url:
