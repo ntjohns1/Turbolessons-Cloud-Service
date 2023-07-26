@@ -22,10 +22,6 @@ management:
       exposure:
         include: "*"
 
-spring.cloud:
-  bootstrap:
-    enabled: true
-
 logging:
   level:
     org:
@@ -33,12 +29,12 @@ logging:
         security: DEBUG
 
 eureka:
+  instance:
+    hostname: service-registry
   client:
-    secure-port-enabled: true
-    secure-port: 8761
+    securePortEnabled: true
+    securePort: 8761
     registerWithEureka: false
     fetchRegistry: false
     service-url:
-      defaultZone: ${EUREKA_URI}
-  server:
-    waitTimeInMsWhenSyncEmpty: 0
+      defaultZone: https://${eureka.instance.hostname}:${server.port}/eureka/
