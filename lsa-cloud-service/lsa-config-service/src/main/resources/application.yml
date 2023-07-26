@@ -12,6 +12,10 @@ server:
     trustStore: ${TRUST_STORE_PATH}
     trustStorePassword: ${TRUST_STORE_PASSWORD}
 
+spring.cloud:
+  bootstrap:
+    enabled: true
+
 management:
   endpoints:
     web:
