@@ -9,6 +9,9 @@ server:
     key-store: ${KEY_STORE_PATH}
     key-store-password: ${KEY_STORE_PASSWORD}
     key-password: ${KEY_PASSWORD}
+    trustStore: ${TRUST_STORE_PATH}
+    trustStorePassword: ${TRUST_STORE_PASSWORD}
+
 spring:
   application:
     name: lsa-config-service
@@ -26,11 +29,20 @@ management:
     web:
       exposure:
         include: '*'
+
 eureka:
   client:
+    secure-port-enabled: true
+    secure-port: 8761
+    registerWithEureka: true
+    fetchRegistry: true
     serviceUrl:
       defaultZone: ${EUREKA_URI}
-  instance:
-    hostname: lsa-config-service
-    nonSecurePortEnabled: false
-    securePortEnabled: true
+    tls:
+      enabled: true
+      keyStore: ${KEY_STORE_PATH}
+      trustStore: ${TRUST_STORE_PATH}
+      keyStoreType: PKCS12
+      keyStorePassword: ${KEY_STORE_PASSWORD}
+      trustStorePassword: ${TRUST_STORE_PASSWORD}
+      keyPassword: ${KEY_PASSWORD}
