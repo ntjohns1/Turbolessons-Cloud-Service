@@ -19,8 +19,4 @@ spring:
         keyStorePassword: ${KEY_STORE_PASSWORD}
         trustStorePassword: ${TRUST_STORE_PASSWORD}
         keyPassword: ${KEY_PASSWORD}
-      client:
-        git:
-          uri: https://github.com/ntjohns1/lsa-config.git
-          default-label: main
       fail-fast: true

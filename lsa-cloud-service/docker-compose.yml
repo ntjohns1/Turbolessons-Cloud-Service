@@ -8,6 +8,8 @@ services:
   lsa-config-service:
     image: noslenj/lsa-config-service:com-noslen-lsa-config-service
     container_name: lsa-config-service
+    environment:
+      - SPRING_CLOUD_BOOTSTRAP_ENABLED=true
     env_file:
       - ./keystore.env
 #    volumes:
