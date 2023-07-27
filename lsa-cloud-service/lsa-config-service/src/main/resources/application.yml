@@ -1,10 +1,10 @@
 encrypt:
   keyStore:
-    location: classpath:/keystore.p12
+    location: classpath:/config.jks
     password: ${KEY_STORE_PASSWORD}
     alias: config
-    type: PKCS12
-    secret: ${KEY_STORE_PASSWORD}
+    type: JKS
+    secret: ${KEY_PASSWORD}
 server:
   port: 9999
 spring:
