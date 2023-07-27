@@ -26,7 +26,7 @@ eureka:
     register-with-eureka: true
     fetchRegistry: true
     serviceUrl:
-      defaultZone: ${EUREKA_URI}
+      defaultZone: http://service-registry:8761/eureka
 #    tls:
 #      enabled: true
 #      key-store: ${KEY_STORE_PATH}
