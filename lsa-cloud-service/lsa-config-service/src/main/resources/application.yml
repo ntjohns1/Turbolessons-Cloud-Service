@@ -5,25 +5,15 @@ spring:
     name: lsa-config-service
   cloud:
     config:
+      discovery:
+        enabled: true
       server:
-        bootstrap: false
+        bootstrap: true
         git:
           default-label: main
           uri: https://github.com/ntjohns1/lsa-config.git
-      discovery:
-        enabled: true
 server:
   port: 9999
-  ssl:
-    enabled: true
-    key-store: classpath:keystore.p12
-    key-store-type: PKCS12
-    key-store-password: ${KEY_STORE_PASSWORD}
-    key-password: ${KEY_PASSWORD}
-    trust-store: classpath:truststore.p12
-    trust-store-type: PKCS12
-    trust-store-password: ${TRUST_STORE_PASSWORD}
-
 
 management:
   endpoints:
@@ -32,21 +22,17 @@ management:
         include: '*'
 
 eureka:
-  instance:
-    nonSecurePortEnabled: false
-    securePortEnabled: true
-    securePort: 8761
   client:
     register-with-eureka: true
     fetchRegistry: true
     serviceUrl:
       defaultZone: ${EUREKA_URI}
-    tls:
-      enabled: true
-      key-store: ${KEY_STORE_PATH}
-      key-store-type: PKCS12
-      key-store-password: ${KEY_STORE_PASSWORD}
-      key-password: ${KEY_PASSWORD}
-      trust-store: ${TRUST_STORE_PATH}
-      trust-store-type: PKCS12
-      trust-store-password: ${TRUST_STORE_PASSWORD}
+#    tls:
+#      enabled: true
+#      key-store: ${KEY_STORE_PATH}
+#      key-store-type: PKCS12
+#      key-store-password: ${KEY_STORE_PASSWORD}
+#      key-password: ${KEY_PASSWORD}
+#      trust-store: ${TRUST_STORE_PATH}
+#      trust-store-type: PKCS12
+#      trust-store-password: ${TRUST_STORE_PASSWORD}

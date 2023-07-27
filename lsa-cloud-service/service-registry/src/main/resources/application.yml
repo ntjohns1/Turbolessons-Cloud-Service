@@ -1,23 +1,23 @@
 server:
   port: 8761
-  ssl:
-    keyAlias: keystore
-    enabled: true
-    keyStore: ${KEY_STORE_PATH}
-    trustStore: ${TRUST_STORE_PATH}
-    keyStoreType: PKCS12
-    keyStorePassword: ${KEY_STORE_PASSWORD}
-    trustStorePassword: ${TRUST_STORE_PASSWORD}
-    keyPassword: ${KEY_PASSWORD}
+#  ssl:
+#    keyAlias: keystore
+#    enabled: true
+#    keyStore: ${KEY_STORE_PATH}
+#    trustStore: ${TRUST_STORE_PATH}
+#    keyStoreType: PKCS12
+#    keyStorePassword: ${KEY_STORE_PASSWORD}
+#    trustStorePassword: ${TRUST_STORE_PASSWORD}
+#    keyPassword: ${KEY_PASSWORD}
 spring:
   config:
-    import: optional:configserver:https://www.turbolessons.com:9999/
+    import: optional:configserver:http://lsa-config-service:9999/
   application:
     name: service-registry
-  security:
-    user:
-      name: ${EUREKA_USERNAME}
-      password: ${EUREKA_PASSWORD}
+#  security:
+#    user:
+#      name: ${EUREKA_USERNAME}
+#      password: ${EUREKA_PASSWORD}
 management:
   endpoints:
     web:
@@ -32,14 +32,9 @@ logging:
 
 eureka:
   instance:
-    hostname: www.turbolessons.com
-    metadataMap:
-      user: ${EUREKA_USERNAME}
-      password: ${EUREKA_PASSWORD}
+    hostname: service-registry
   client:
-    securePortEnabled: true
-    securePort: 8761
     registerWithEureka: false
     fetchRegistry: false
     service-url:
-      defaultZone: https://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
