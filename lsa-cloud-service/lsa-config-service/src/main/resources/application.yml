@@ -4,7 +4,7 @@ encrypt:
     password: ${KEY_STORE_PASSWORD}
     alias: config
     type: PKCS12
-#  key: SoGk99F1INl7Shp2pYQQPNzFfL+vdHhP8x9VlLLlg8Ok
+    secret: SoGk99F1INl7Shp2pYQQPNzFfL+vdHhP8x9VlLLlg8Ok
 server:
   port: 9999
 spring:
