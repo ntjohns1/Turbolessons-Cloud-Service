@@ -1,10 +1,5 @@
 encrypt:
-  keyStore:
-    location: classpath:/config.jks
-    password: ${KEY_STORE_PASSWORD}
-    alias: config
-    type: JKS
-    secret: ${KEY_PASSWORD}
+  key: SoGk99F1INl7Shp2pYQQPNzFfL+vdHhP8x9VlLLlg8Ok
 server:
   port: 9999
 spring:
