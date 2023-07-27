@@ -5,3 +5,7 @@ spring:
     import: configserver:http://lsa-config-service:9999/
   application:
     name: api-gateway
+  cloud:
+    config:
+      username: ${CONFIG_USERNAME}
+      password: ${CONFIG_PASSWORD}

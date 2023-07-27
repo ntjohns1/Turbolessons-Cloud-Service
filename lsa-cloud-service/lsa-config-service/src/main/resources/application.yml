@@ -3,6 +3,10 @@ server:
 spring:
   application:
     name: config-server
+  security:
+    user:
+      name: ${CONFIG_USERNAME}
+      password: ${CONFIG_PASSWORD}
   cloud:
     config:
       discovery:
