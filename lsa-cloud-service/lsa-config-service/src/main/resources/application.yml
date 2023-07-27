@@ -1,8 +1,10 @@
 encrypt:
   key: SoGk99F1INl7Shp2pYQQPNzFfL+vdHhP8x9VlLLlg8Ok
+server:
+  port: 9999
 spring:
   application:
-    name: lsa-config-service
+    name: config-server
   cloud:
     config:
       discovery:
@@ -12,27 +14,11 @@ spring:
         git:
           default-label: main
           uri: https://github.com/ntjohns1/lsa-config.git
-server:
-  port: 9999
-
+  management:
+    security:
+      enabled: false
 management:
   endpoints:
     web:
       exposure:
         include: '*'
-
-eureka:
-  client:
-    register-with-eureka: true
-    fetchRegistry: true
-    serviceUrl:
-      defaultZone: http://service-registry:8761/eureka
-#    tls:
-#      enabled: true
-#      key-store: ${KEY_STORE_PATH}
-#      key-store-type: PKCS12
-#      key-store-password: ${KEY_STORE_PASSWORD}
-#      key-password: ${KEY_PASSWORD}
-#      trust-store: ${TRUST_STORE_PATH}
-#      trust-store-type: PKCS12
-#      trust-store-password: ${TRUST_STORE_PASSWORD}
