@@ -1,6 +1,11 @@
 spring:
-    application:
-        name: message-service
+  application:
+    name: message-service
+  cloud:
     config:
-        import: configserver:http://lsa-config-service:9999
+      username: ${CONFIG_USERNAME}
+      password: ${CONFIG_PASSWORD}
+  config:
+    import: configserver:http://lsa-config-service:9999
+
 
