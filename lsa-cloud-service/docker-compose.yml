@@ -10,9 +10,8 @@ services:
     container_name: lsa-config-service
     env_file:
       - ./keystore.env
-#    volumes:
-#      - ./lsa-config:/config
-#      - ./keystore:/config
+    volumes:
+      - config-keystore:/config
     ports:
       - "9999:9999"
     networks:
@@ -96,6 +95,8 @@ services:
   message-service:
     image: noslenj/message-service:com-noslen-message-service
     container_name: message-service
+    env_file:
+      - ./keystore.env
     volumes:
       - ./keystore/keystore.p12:/config/keystore.p12
       - ./truststore/truststore.p12:/config/truststore.p12
@@ -166,6 +167,7 @@ services:
     networks:
       - lsa-cloud-service_lsa
 volumes:
+  config-keystore:
   emaildb_data:
   lessondb_data:
   messagedb_data:
