@@ -11,8 +11,7 @@ services:
     env_file:
       - ./keystore.env
 #    volumes:
-#      - ./lsa-config:/config
-#      - ./keystore:/config
+#      - config-keystore:/config
     ports:
       - "9999:9999"
     networks:
@@ -22,8 +21,6 @@ services:
     container_name: service-registry
     env_file:
       - ./keystore.env
-#    volumes:
-#      - ./keystore:/config
     ports:
       - "8761:8761"
     networks:
@@ -96,6 +93,8 @@ services:
   message-service:
     image: noslenj/message-service:com-noslen-message-service
     container_name: message-service
+    env_file:
+      - ./keystore.env
     volumes:
       - ./keystore/keystore.p12:/config/keystore.p12
       - ./truststore/truststore.p12:/config/truststore.p12

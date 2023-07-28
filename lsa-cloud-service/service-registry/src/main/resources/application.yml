@@ -1,30 +1,32 @@
 server:
   port: 8761
-  ssl:
-    keyAlias: keystore
-    enabled: true
-    keyStore: ${KEY_STORE_PATH}
-    trustStore: ${TRUST_STORE_PATH}
-    keyStoreType: PKCS12
-    keyStorePassword: ${KEY_STORE_PASSWORD}
-    trustStorePassword: ${TRUST_STORE_PASSWORD}
-    keyPassword: ${KEY_PASSWORD}
+#  ssl:
+#    keyAlias: keystore
+#    enabled: true
+#    keyStore: ${KEY_STORE_PATH}
+#    trustStore: ${TRUST_STORE_PATH}
+#    keyStoreType: PKCS12
+#    keyStorePassword: ${KEY_STORE_PASSWORD}
+#    trustStorePassword: ${TRUST_STORE_PASSWORD}
+#    keyPassword: ${KEY_PASSWORD}
 spring:
+  config:
+    import: optional:configserver:http://lsa-config-service:9999/
   application:
     name: service-registry
-  security:
-    user:
-      name: ${EUREKA_USERNAME}
-      password: ${EUREKA_PASSWORD}
+  cloud:
+    config:
+      username: ${CONFIG_USERNAME}
+      password: ${CONFIG_PASSWORD}
+#  security:
+#    user:
+#      name: ${EUREKA_USERNAME}
+#      password: ${EUREKA_PASSWORD}
 management:
   endpoints:
     web:
       exposure:
         include: "*"
-
-spring.cloud:
-  bootstrap:
-    enabled: true
 
 logging:
   level:
@@ -33,12 +35,10 @@ logging:
         security: DEBUG
 
 eureka:
+  instance:
+    hostname: service-registry
   client:
-    secure-port-enabled: true
-    secure-port: 8761
     registerWithEureka: false
     fetchRegistry: false
     service-url:
-      defaultZone: ${EUREKA_URI}
-  server:
-    waitTimeInMsWhenSyncEmpty: 0
+      defaultZone: http://service-registry:8761/eureka/
