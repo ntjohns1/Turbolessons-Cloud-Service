@@ -1,6 +1,6 @@
 encrypt:
   keyStore:
     location: classpath:/config.jks
-    password: letmein
-    alias: mytestkey
-    secret: letmein
+    password: Butts
+    alias: config
+    secret: Butts
