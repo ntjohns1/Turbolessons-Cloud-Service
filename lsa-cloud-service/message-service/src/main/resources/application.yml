@@ -6,6 +6,6 @@ spring:
       username: ${CONFIG_USERNAME}
       password: ${CONFIG_PASSWORD}
   config:
-    import: configserver:http://lsa-config-service:9999
+    import: configserver:http://lsa-config-service:9999/
 
 
