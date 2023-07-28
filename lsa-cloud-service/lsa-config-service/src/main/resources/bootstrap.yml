@@ -1,8 +1,7 @@
-
-
 encrypt:
   keyStore:
-    location: classpath:/config.jks
+    location: classpath:/keystore.p12
     password: ${KEY_STORE_PASSWORD}
     alias: config
     secret: ${KEY_PASSWORD}
+    type: PKCS12
