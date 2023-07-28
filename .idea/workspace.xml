@@ -5,6 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f94a8a07-5ee2-46fa-a058-faabe4d06845" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_security_2_7_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_config_5_7_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_core_5_7_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_security_spring_security_web_5_7_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/lsa-config-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/lsa-config-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/lsa-config-service/src/main/java/com/noslen/lsaconfigservice/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/lsa-config-service/src/main/java/com/noslen/lsaconfigservice/config/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lsa-cloud-service/lsa-config-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/lsa-config-service/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
