@@ -5,8 +5,8 @@ spring:
     name: config-server
   security:
     user:
-      name: '{cipher}AQBL75pSBRC0ujmcemma2t1hOE6k8Xqwgt/lOFlHkpWkG4Ld3nFlH9godXMGVHBKCqxxoPkoVQBsjIbOedLAAtqGpdCI93P7R/4/vDvOGx8C+uaoqgz39DvTEUhBzOUPnulDhPceEJunuewzipFMoJyV9bqrPnsqfmO9choQ3u10CLhgM5U4KVWYHgogCtMJ0MQYOtqlqb+NfTOU4fJv2DBMEsIiuaU2DeFvjf/cfJtEbLn/AwbbXWcakwYG5shncMINWBmQ1yl2QmFt0xcbecfTOgcZVetaexccF+YlwI5rq1jxuAalG+F9Rh0pmObXLag28JHGRkAFncJJXDoL6U0F+Xh6ZKMMvNGSezCvV3BLPsfyGgKzA5zVZ8wX7n237X8='
-      password: '{cipher}AQA/MlrKlMn4OW/m6MMsRNvWg8QLFoVqXGmB/PTZd1qw5t+NjkcVQenwMtpfpRku8cf5vhmqujdsVPZSb4Vf4V1VP3eljA1c9yCStgrIxJkvcYsyWLyBGIZglxiPJWOVYGoeccxuCjn/U42SwdbtB7Ru1FAoG/sXiuVgG6wN+yN5sbyWo/Es48+uxr2OqhMSd0VbQVtYLrjdt+bt7E43FFkW6F/jhdDCrp8NjLR78iUlb4b1k7ppXPnysGAWuWjJFHdNNDJcZpzJQjR852wwigGPbGiVxWcMs2Rek0U+gh45ymKkL+fMTRTpv5rZmoOB9CaWx6NXxdkXWLNph/7dEfUVc+38zLoAQZZ2wnNWTa3EMUs4+cTQWqbNF82Y/S7vLnQ'
+      name: ${CONFIG_USERNAME}
+      password: ${CONFIG_PASSWORD}
   cloud:
     config:
       discovery:
