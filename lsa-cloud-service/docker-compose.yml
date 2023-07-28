@@ -10,8 +10,8 @@ services:
     container_name: lsa-config-service
     env_file:
       - ./keystore.env
-    volumes:
-      - config-keystore:/config
+#    volumes:
+#      - config-keystore:/config
     ports:
       - "9999:9999"
     networks:
@@ -21,8 +21,6 @@ services:
     container_name: service-registry
     env_file:
       - ./keystore.env
-#    volumes:
-#      - ./keystore:/config
     ports:
       - "8761:8761"
     networks:
@@ -167,7 +165,6 @@ services:
     networks:
       - lsa-cloud-service_lsa
 volumes:
-  config-keystore:
   emaildb_data:
   lessondb_data:
   messagedb_data:
