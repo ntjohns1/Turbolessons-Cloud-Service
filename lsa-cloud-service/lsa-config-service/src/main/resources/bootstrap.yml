@@ -1,6 +1,6 @@
 encrypt:
   keyStore:
-    location: classpath:/config/config.jks
+    location: classpath:/config.jks
     password: ${KEY_STORE_PASSWORD}
     alias: config
     secret: ${KEY_PASSWORD}
