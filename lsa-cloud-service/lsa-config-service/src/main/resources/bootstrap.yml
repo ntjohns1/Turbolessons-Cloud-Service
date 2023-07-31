@@ -1,6 +1,0 @@
-encrypt:
-  keyStore:
-    location: classpath:/server.jks
-    password: letmein
-    alias: mytestkey
-    secret: letmein
