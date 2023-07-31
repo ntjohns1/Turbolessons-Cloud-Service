@@ -1,9 +1,9 @@
 encrypt:
   keyStore:
-    location: classpath:/server.p12
-    password: letmein
-    alias: mytestkey
-    secret: letmein
+    location: classpath:/config/config.p12
+    password: ${KEY_STORE_PASSWORD}
+    alias: config
+    secret: ${KEY_PASSWORD}
     type: PKCS12
 server:
   port: 9999
@@ -12,8 +12,8 @@ spring:
     name: config-server
   security:
     user:
-      name: test
-      password: pass
+      name: ${CONFIG_USERNAME}
+      password: ${CONFIG_PASSWORD}
   cloud:
     config:
       discovery:
