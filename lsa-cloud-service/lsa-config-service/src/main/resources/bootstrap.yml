@@ -4,3 +4,4 @@ encrypt:
     password: letmein
     alias: mytestkey
     secret: letmein
+    type: JKS
