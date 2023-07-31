@@ -3,10 +3,10 @@ server:
 spring:
   application:
     name: config-server
-#  security:
-#    user:
-#      name: test
-#      password: pass
+  security:
+    user:
+      name: test
+      password: pass
   cloud:
     config:
       discovery:
