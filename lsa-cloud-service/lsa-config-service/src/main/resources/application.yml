@@ -1,3 +1,10 @@
+encrypt:
+  keyStore:
+    location: classpath:/server.p12
+    password: letmein
+    alias: mytestkey
+    secret: letmein
+    type: PKCS12
 server:
   port: 9999
 spring:

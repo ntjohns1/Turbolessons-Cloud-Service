@@ -1,7 +1,0 @@
-encrypt:
-  keyStore:
-    location: classpath:/server.p12
-    password: letmein
-    alias: mytestkey
-    secret: letmein
-    type: PKCS12
