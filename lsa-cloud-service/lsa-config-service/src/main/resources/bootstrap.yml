@@ -1,7 +1,7 @@
 encrypt:
   keyStore:
-    location: classpath:/server.jks
+    location: classpath:/server.p12
     password: letmein
     alias: mytestkey
     secret: letmein
-    type: JKS
+    type: PKCS12
