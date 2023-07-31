@@ -30,8 +30,6 @@ services:
     container_name: admin-service
     env_file:
       - ./root.env
-#    volumes:
-#      - ./keystore:/config
     ports:
       - "5002:5002"
     networks:
@@ -41,8 +39,6 @@ services:
     container_name: email-service
     volumes:
       - emaildb_data:/data/db
-      - ./keystore/keystore.p12:/config/keystore.p12
-      - ./truststore/truststore.p12:/config/truststore.p12
       - ./template-thymeleaf.html:/app/mail-templates
     ports:
       - "5003:5003"
@@ -52,9 +48,6 @@ services:
   emaildb:
     image: mongo:latest
     container_name: emaildb
-    volumes:
-      - ./keystore/keystore.p12:/config/keystore.p12
-      - ./truststore/truststore.p12:/config/truststore.p12
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
@@ -69,8 +62,6 @@ services:
     container_name: event-service
     volumes:
       - lessondb_data:/var/lib/mysql
-      - ./keystore/keystore.p12:/config/keystore.p12
-      - ./truststore/truststore.p12:/config/truststore.p12
     ports:
       - "5001:5001"
     networks:
@@ -79,9 +70,6 @@ services:
   lessondb:
     image: noslenj/lessondb:com-noslen-lessondb
     container_name: lessondb
-    volumes:
-      - ./keystore/keystore.p12:/config/keystore.p12
-      - ./truststore/truststore.p12:/config/truststore.p12
     environment:
       MYSQL_ROOT_PASSWORD: root_password
       MYSQL_DATABASE: eventplt
@@ -95,9 +83,6 @@ services:
     container_name: message-service
     env_file:
       - ./root.env
-    volumes:
-      - ./keystore/keystore.p12:/config/keystore.p12
-      - ./truststore/truststore.p12:/config/truststore.p12
     ports:
       - "5005:5005"
     networks:
@@ -113,7 +98,6 @@ services:
       MONGO_INITDB_AUTH_SOURCE: admin
     volumes:
       - messagedb_data:/data/db
-      - ./keystore.p12:/config/keystore.p12
     ports:
       - "5055:27017"
     networks:
@@ -128,8 +112,6 @@ services:
       bucketName: noslen-test-bucket
     volumes:
       - ./lesson-schedule-assistant-cfe4cf3aebad.json:/lesson-schedule-assistant-cfe4cf3aebad.json
-      - ./keystore/keystore.p12:/config/keystore.p12
-      - ./truststore/truststore.p12:/config/truststore.p12
     ports:
       - "5004:5004"
     networks:
@@ -139,8 +121,6 @@ services:
     container_name: api-gateway
     env_file:
       - ./root.env
-#    volumes:
-#      - ./keystore:/config
     ports:
       - "8080:8080"
     networks:
