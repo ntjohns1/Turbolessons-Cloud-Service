@@ -60,6 +60,8 @@ services:
   event-service:
     image: noslenj/event-service:com-noslen-event-service
     container_name: event-service
+    env_file:
+      - ./root.env
     volumes:
       - lessondb_data:/var/lib/mysql
     ports:
