@@ -1,7 +1,7 @@
 server:
+  port: 5004
   error:
     include-message: always
-  port: 5005
 #  ssl:
 #    key-alias: www.turbolessons.com
 #    key-store: /tmp/www.turbolessons.com.keystore
@@ -9,12 +9,10 @@ server:
 #    key-password: '{cipher}3b6994c302f49b0a8ed942f140218cf22f01c3ed8437bb778cdb0511ac6b1624'
 spring:
   application:
-    name: message-service
+    name: video-service
   cloud:
     config:
       username: ${CONFIG_USERNAME}
       password: ${CONFIG_PASSWORD}
   config:
     import: configserver:http://lsa-config-service:9999/
-
-
