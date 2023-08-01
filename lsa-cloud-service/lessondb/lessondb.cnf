@@ -13,7 +13,7 @@ symbolic-links=0
 
 log-error=/var/log/mysqld.log
 pid-file=/var/run/mysqld/mysqld.pid
-bind-address=0.0.0.0
+bind-address=172.24.0.3
 
 #### These optimize the memory use of MySQL
 innodb_buffer_pool_size=5M
