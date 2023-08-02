@@ -48,10 +48,8 @@ services:
   emaildb:
     image: mongo:latest
     container_name: emaildb
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-      MONGO_INITDB_AUTH_SOURCE: admin
+    env_file:
+      - ./root.env
     ports:
       - "5053:27017"
     networks:
@@ -72,9 +70,8 @@ services:
   lessondb:
     image: noslenj/lessondb:com-noslen-lessondb
     container_name: lessondb
-    environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: eventplt
+    env_file:
+      - ./root.env
     ports:
       - "5051:3306"
     networks:
@@ -94,10 +91,8 @@ services:
     image: mongo:latest
     container_name: messagedb
     restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
-      MONGO_INITDB_AUTH_SOURCE: admin
+    env_file:
+      - ./root.env
     volumes:
       - messagedb_data:/data/db
     ports:
@@ -108,12 +103,10 @@ services:
   video-service:
     image: noslenj/video-service:com-noslen-video-service
     container_name: video-service
-    environment:
-      projectId: lesson-schedule-assistant
-      credentialsPath: /lesson-schedule-assistant-cfe4cf3aebad.json
-      bucketName: noslen-test-bucket
+    env_file:
+      - ./root.env
     volumes:
-      - ./lesson-schedule-assistant-cfe4cf3aebad.json:/lesson-schedule-assistant-cfe4cf3aebad.json
+      - ./gcs:/gcs
     ports:
       - "5004:5004"
     networks:
@@ -136,12 +129,9 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-#      - ./keystore/keystore.p12:/config/keystore.p12
-#      - ./truststore/truststore.p12:/config/truststore.p12
-      - /etc/letsencrypt/live/www.turbolessons.com/fullchain.pem:/etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
-      - /etc/letsencrypt/live/www.turbolessons.com/privkey.pem:/etc/letsencrypt/live/www.turbolessons.com/privkey.pem
-      - /etc/letsencrypt/options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
-      - /etc/letsencrypt/ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
+      - ./pem_files/fullchain.pem:/etc/letsencrypt/live/www.turbolessons.com/fullchain.pem
+      - ./pem_files/privkey.pem:/etc/letsencrypt/live/www.turbolessons.com/privkey.pem
+      - ./nginx:/etc/letsencrypt
       - ./LSA_Frontend/lsa-frontend/nginx.conf:/etc/nginx/nginx.conf
       - ./LSA_Frontend/lsa-frontend/mime.types:/etc/nginx/mime.types
     networks:
