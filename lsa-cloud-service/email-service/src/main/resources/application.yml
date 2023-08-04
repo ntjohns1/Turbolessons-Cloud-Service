@@ -1,5 +1,11 @@
-spring:
-    application:
-        name: email-service
+server:
+  port: 5003
+pring:
+  application:
+    name: email-service
+  cloud:
     config:
-        import: configserver:https://lsa-config-service:9999
+      username: ${CONFIG_USERNAME}
+      password: ${CONFIG_PASSWORD}
+  config:
+    import: configserver:http://lsa-config-service:9999/
