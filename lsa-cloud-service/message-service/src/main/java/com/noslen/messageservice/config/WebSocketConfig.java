@@ -39,7 +39,8 @@ class WebSocketConfig {
         SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
         mapping.setOrder(10);
         Map<String, WebSocketHandler> map = new HashMap<>();
-        map.put("w/ws/messages", wsh);
+//        ## Uncomment for Local Dev
+        map.put("/ws/messages", wsh);
         map.put("/ws/messages/{userId}", wsh);
         mapping.setUrlMap(map);
         mapping.setCorsConfigurations(Collections.singletonMap("*", new CorsConfiguration().applyPermitDefaultValues()));
