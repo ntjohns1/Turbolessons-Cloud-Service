@@ -1,0 +1,18 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build and Deploy') {
+            steps {
+                sh 'ssh root@172.233.195.51 ~/run/build_all.sh'
+                sh 'ssh root@172.233.195.51 ~/run/compose.sh'
+            }
+        }
+    }
+}
