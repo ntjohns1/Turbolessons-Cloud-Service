@@ -2,9 +2,8 @@ name: config-service-docker
 
 on:
   push:
-    branches: [ "deploy" ]
-  pull_request:
-    branches: [ "master" ]
+    paths:
+      - 'lsa-cloud-service/lsa-config-service/**'
 
 jobs:
   docker:
@@ -27,6 +26,6 @@ jobs:
       - name: Build and push Docker images
         uses: docker/build-push-action@v4
         with:
-          context: .
+          context: ./lsa-cloud-service/lsa-config-service
           push: true
           tags: noslenj/lsa-config-service:latest
