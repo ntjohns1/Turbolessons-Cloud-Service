@@ -1,9 +1,9 @@
-name: config-service-docker
+name: api-gateway-docker
 
 on:
   push:
     paths:
-      - 'lsa-cloud-service/lsa-config-service/**'
+      - 'lsa-cloud-service/api-gateway/**'
 
 jobs:
   docker:
@@ -23,9 +23,9 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
-      - name: Build and push lsa-config-service
+      - name: Build and push api-gateway
         uses: docker/build-push-action@v4
         with:
-          context: ./lsa-cloud-service/lsa-config-service
+          context: ./lsa-cloud-service/api-gateway
           push: true
-          tags: noslenj/lsa-config-service:latest
+          tags: noslenj/api-gateway:latest
