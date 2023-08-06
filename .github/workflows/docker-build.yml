@@ -1,4 +1,4 @@
-name: config-service-docker
+name: docker-build
 
 on:
   push:
@@ -27,6 +27,6 @@ jobs:
       - name: Build and push Docker images
         uses: docker/build-push-action@v4
         with:
-          context: .
+          context: ./lsa-cloud-service/lsa-config-service
           push: true
           tags: noslenj/lsa-config-service:latest
