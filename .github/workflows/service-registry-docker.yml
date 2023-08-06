@@ -1,9 +1,9 @@
-name: config-service-docker
+name: service-registry-docker
 
 on:
   push:
     paths:
-      - 'lsa-cloud-service/lsa-config-service/**'
+      - 'lsa-cloud-service/service-registry/**'
 
 jobs:
   docker:
@@ -23,9 +23,9 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
-      - name: Build and push lsa-config-service
+      - name: Build and push Docker images
         uses: docker/build-push-action@v4
         with:
-          context: ./lsa-cloud-service/lsa-config-service
+          context: ./lsa-cloud-service/service-registry
           push: true
-          tags: noslenj/lsa-config-service:latest
+          tags: noslenj/service-registry:latest
