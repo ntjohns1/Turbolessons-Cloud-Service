@@ -1,10 +1,9 @@
-name: docker-build
+name: config-service-docker
 
 on:
   push:
-    branches: [ "deploy" ]
-  pull_request:
-    branches: [ "master" ]
+    paths:
+      - 'lsa-cloud-service/lsa-config-service/**'
 
 jobs:
   docker:
