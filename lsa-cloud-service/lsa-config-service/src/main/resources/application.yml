@@ -1,10 +1,10 @@
-#encrypt:
-#  keyStore:
-#    location: file:/config/config.p12
-#    password: ${KEY_STORE_PASSWORD}
-#    alias: config
-#    secret: ${KEY_PASSWORD}
-#    type: PKCS12
+encrypt:
+  keyStore:
+    location: file:/config/config.p12
+    password: ${KEY_STORE_PASSWORD}
+    alias: config
+    secret: ${KEY_PASSWORD}
+    type: PKCS12
 server:
   port: 9999
 spring:
