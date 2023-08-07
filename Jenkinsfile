@@ -10,7 +10,7 @@ pipeline {
 
         stage('Build and Deploy') {
             steps {
-                sshagent(['id_rsa']) {
+                sshagent (credentials: ['id_rsa'])
                     echo "About to run scp..."
                     sh 'scp /tmp/root.env root@172.233.195.51:~/root.env'
                     echo "Completed scp for root.env"
