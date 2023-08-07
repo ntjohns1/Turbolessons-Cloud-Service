@@ -11,7 +11,7 @@ services:
     env_file:
       - ./root.env
     volumes:
-#      - /etc/keystores/config.p12:/app/src/main/resources/config.p12
+      - ./keystores/config.p12:/config/config.p12
       - config_keystore:/config
     ports:
       - "9999:9999"
