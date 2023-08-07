@@ -10,9 +10,11 @@ pipeline {
 
         stage('Build and Deploy') {
             steps {
-                sh 'scp /tmp/root.env root@172.233.195.51:~/root.env'
-                sh 'scp /tmp/gcs/ root@172.233.195.51 ~/gcs/'
-                sh 'ssh root@172.233.195.51 ~/compose.sh'
+                sshagent(['id_rsa']) {
+                    sh 'scp /tmp/root.env root@172.233.195.51:~/root.env'
+                    sh 'scp /tmp/gcp/ root@172.233.195.51 ~/gcp/'
+                    sh 'ssh root@172.233.195.51 ~/compose.sh'
+                }
             }
         }
     }
