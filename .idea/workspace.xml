@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="f94a8a07-5ee2-46fa-a058-faabe4d06845" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/resources/config/test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/src/main/resources/config/test.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/main/resources/static/test.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/message-service/src/main/resources/static/ws.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/Jenkinsfile" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/Jenkinsfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lsa-cloud-service/lsa-config-service/src/main/resources/config/test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/lsa-cloud-service/lsa-config-service/src/main/resources/config/test.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
