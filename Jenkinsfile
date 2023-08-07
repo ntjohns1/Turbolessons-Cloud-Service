@@ -14,7 +14,7 @@ pipeline {
                     echo "About to run scp..."
                     sh 'scp /tmp/root.env root@172.233.195.51:~/root.env'
                     echo "Completed scp for root.env"
-                    sh 'scp /tmp/gcs/ root@172.233.195.51:~/gcs/'
+                    sh 'scp -r /tmp/gcs/ root@172.233.195.51:~/gcs/'
                     sh 'ssh root@172.233.195.51 ~/compose.sh'
                 }
             }
