@@ -1,6 +1,7 @@
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
+.idea/workspace.xml
 !**/src/main/**/target/
 !**/src/test/**/target/
 okta.env
