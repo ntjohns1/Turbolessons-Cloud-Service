@@ -1,6 +1,6 @@
 server:
   port: 5003
-pring:
+spring:
   application:
     name: email-service
   cloud:
