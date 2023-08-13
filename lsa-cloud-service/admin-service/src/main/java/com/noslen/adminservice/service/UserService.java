@@ -115,8 +115,6 @@ public class UserService {
         userApi.updateUser(userId, updateUserRequest, true);
     }
 
-
-
     @Caching(evict = {
             @CacheEvict(value = "userCache", key = "#id"),
             @CacheEvict(value = "userCache", key = "'listAllUsers'"),
