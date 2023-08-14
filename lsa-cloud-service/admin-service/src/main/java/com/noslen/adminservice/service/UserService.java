@@ -127,7 +127,6 @@ public class UserService {
         userApi.deleteUser(id, false);
     }
 
-    // making a random change 2
     // This method wraps UserBuilder.instance()
     protected UserBuilder userBuilder() {
         return UserBuilder.instance();
