@@ -29,3 +29,11 @@ jobs:
           context: ./lsa-cloud-service/admin-service
           push: true
           tags: noslenj/admin-service:latest
+      - name: trigger single Job
+        uses: appleboy/jenkins-action@master
+        with:
+          url: "https://mostly-certain-primate.ngrok-free.app/"
+          user: "root"
+          token: ${{ secrets.JENKINS_TOKEN }}
+          job: "turbolessons_admin"
+      
