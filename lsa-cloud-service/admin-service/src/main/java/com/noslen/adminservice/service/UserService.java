@@ -115,8 +115,6 @@ public class UserService {
         userApi.updateUser(userId, updateUserRequest, true);
     }
 
-
-
     @Caching(evict = {
             @CacheEvict(value = "userCache", key = "#id"),
             @CacheEvict(value = "userCache", key = "'listAllUsers'"),
@@ -129,6 +127,7 @@ public class UserService {
         userApi.deleteUser(id, false);
     }
 
+    // making a random change 2
     // This method wraps UserBuilder.instance()
     protected UserBuilder userBuilder() {
         return UserBuilder.instance();
