@@ -5,12 +5,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.noslen.messageservice.service.MsgCreatedEvent;
 import com.noslen.messageservice.service.MsgCreatedEventPublisher;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtValidationException;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.reactive.HandlerMapping;
 import org.springframework.web.reactive.handler.SimpleUrlHandlerMapping;
+import org.springframework.web.reactive.socket.CloseStatus;
 import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.WebSocketMessage;
 import org.springframework.web.reactive.socket.server.support.WebSocketHandlerAdapter;
@@ -34,6 +38,9 @@ class WebSocketConfig {
         return Executors.newSingleThreadExecutor();
     }
 
+    @Autowired
+    private JwtDecoder jwtDecoder;
+
     @Bean
     HandlerMapping handlerMapping(WebSocketHandler wsh) {
         SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
@@ -52,33 +59,53 @@ class WebSocketConfig {
     }
 
     @Bean
-    WebSocketHandler webSocketHandler(ObjectMapper objectMapper, MsgCreatedEventPublisher eventPublisher) {
+    WebSocketHandler webSocketHandler(ObjectMapper objectMapper, MsgCreatedEventPublisher eventPublisher, JwtDecoder jwtDecoder) {
         Supplier<Flux<MsgCreatedEvent>> supplier = () -> Flux.create(eventPublisher).share();
         Flux<MsgCreatedEvent> publish = Flux.defer(supplier).cache(1);
         return session -> {
             String userId = parseUserId(session.getHandshakeInfo().getUri().toString());
             log.info("WebSocket session opened for user: " + userId);
 
-            session.receive().doOnNext(message -> {
-                log.info("Received message from user " + userId + ": " + message.getPayloadAsText());
-            }).doOnComplete(() -> {
-                log.info("WebSocket session closed for user: " + userId);
-            }).subscribe();
+            return session.receive()
+                    .next()
+                    .flatMap(message -> {
+                        // Here we assume that the first message contains the token
+                        String token = message.getPayloadAsText();
 
+                        try {
+                            jwtDecoder.decode(token);
+                            // Token is valid, we continue with the existing logic
 
-            Flux<WebSocketMessage> messageFlux = publish.filter(evt -> evt.getSource().getRecipient().equals(userId)).map(evt -> {
-                try {
-                    return objectMapper.writeValueAsString(evt.getSource());
-                } catch (JsonProcessingException e) {
-                    throw new RuntimeException(e);
-                }
-            }).map(str -> {
-                log.info("sending " + str);
-                return session.textMessage(str);
-            });
-            return session.send(messageFlux);
+                            session.receive().doOnNext(msg -> {
+                                log.info("Received message from user " + userId + ": " + msg.getPayloadAsText());
+                            }).doOnComplete(() -> {
+                                log.info("WebSocket session closed for user: " + userId);
+                            }).subscribe();
+
+                            Flux<WebSocketMessage> messageFlux = publish
+                                    .filter(evt -> evt.getSource().getRecipient().equals(userId))
+                                    .map(evt -> {
+                                        try {
+                                            return objectMapper.writeValueAsString(evt.getSource());
+                                        } catch (JsonProcessingException e) {
+                                            throw new RuntimeException(e);
+                                        }
+                                    })
+                                    .map(str -> {
+                                        log.info("sending " + str);
+                                        return session.textMessage(str);
+                                    });
+
+                            return session.send(messageFlux);
+
+                        } catch (JwtValidationException e) {
+                            // Token validation failed, we close the session
+                            return session.close(CloseStatus.POLICY_VIOLATION.withReason("Authentication failed"));
+                        }
+                    });
         };
     }
+
 
     private String parseUserId(String uri) {
         MultiValueMap<String, String> queryParams = UriComponentsBuilder.fromUriString(uri).build().getQueryParams();
