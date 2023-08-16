@@ -71,7 +71,7 @@ class WebSocketConfig {
                     .flatMap(message -> {
                         // Here we assume that the first message contains the token
                         String token = message.getPayloadAsText();
-
+                        System.out.println("token: " + token);
                         try {
                             jwtDecoder.decode(token);
                             // Token is valid, we continue with the existing logic
