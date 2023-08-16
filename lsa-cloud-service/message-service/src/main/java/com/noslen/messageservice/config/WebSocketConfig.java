@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.noslen.messageservice.service.MsgCreatedEvent;
 import com.noslen.messageservice.service.MsgCreatedEventPublisher;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
@@ -55,7 +56,7 @@ class WebSocketConfig {
     }
 
     @Bean
-    WebSocketHandler webSocketHandler(ObjectMapper objectMapper, MsgCreatedEventPublisher eventPublisher, JwtDecoder jwtDecoder) {
+    WebSocketHandler webSocketHandler(ObjectMapper objectMapper, MsgCreatedEventPublisher eventPublisher,@Autowired JwtDecoder jwtDecoder) {
         Supplier<Flux<MsgCreatedEvent>> supplier = () -> Flux.create(eventPublisher).share();
         Flux<MsgCreatedEvent> publish = Flux.defer(supplier).cache(1);
         return session -> {
