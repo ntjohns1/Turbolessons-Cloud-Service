@@ -56,7 +56,7 @@ class WebSocketConfig {
     }
 
     @Bean
-    WebSocketHandler webSocketHandler(ObjectMapper objectMapper, MsgCreatedEventPublisher eventPublisher,@Autowired JwtDecoder jwtDecoder) {
+    WebSocketHandler webSocketHandler(ObjectMapper objectMapper, MsgCreatedEventPublisher eventPublisher) {
         Supplier<Flux<MsgCreatedEvent>> supplier = () -> Flux.create(eventPublisher).share();
         Flux<MsgCreatedEvent> publish = Flux.defer(supplier).cache(1);
         return session -> {
