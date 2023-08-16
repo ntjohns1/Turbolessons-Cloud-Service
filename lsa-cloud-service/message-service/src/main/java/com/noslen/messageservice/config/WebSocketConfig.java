@@ -63,7 +63,7 @@ class WebSocketConfig {
     WebSocketHandler webSocketHandler(ObjectMapper objectMapper, MsgCreatedEventPublisher eventPublisher) {
         Supplier<Flux<MsgCreatedEvent>> supplier = () -> Flux.create(eventPublisher).share();
         Flux<MsgCreatedEvent> publish = Flux.defer(supplier).cache(1);
-        JwtDecoder decoder = context.getBean(JwtDecoder.class);
+        JwtDecoder decoder = context.getBean(JwtDecoder.class, true);
         return session -> {
             String userId = parseUserId(session.getHandshakeInfo().getUri().toString());
             log.info("WebSocket session opened for user: " + userId);
