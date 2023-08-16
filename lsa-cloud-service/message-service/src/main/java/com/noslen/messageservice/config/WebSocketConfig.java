@@ -33,6 +33,13 @@ import java.util.function.Supplier;
 public
 class WebSocketConfig {
 
+    private final JwtDecoder jwtDecoder;
+
+    @Autowired
+    public WebSocketConfig(JwtDecoder jwtDecoder) {
+        this.jwtDecoder = jwtDecoder;
+    }
+
     @Bean
     Executor executor() {
         return Executors.newSingleThreadExecutor();
@@ -56,7 +63,7 @@ class WebSocketConfig {
     }
 
     @Bean
-    WebSocketHandler webSocketHandler(ObjectMapper objectMapper, MsgCreatedEventPublisher eventPublisher, JwtDecoder jwtDecoder) {
+    WebSocketHandler webSocketHandler(ObjectMapper objectMapper, MsgCreatedEventPublisher eventPublisher) {
         Supplier<Flux<MsgCreatedEvent>> supplier = () -> Flux.create(eventPublisher).share();
         Flux<MsgCreatedEvent> publish = Flux.defer(supplier).cache(1);
         return session -> {
