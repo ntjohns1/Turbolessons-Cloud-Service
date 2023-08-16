@@ -38,9 +38,6 @@ class WebSocketConfig {
         return Executors.newSingleThreadExecutor();
     }
 
-    @Autowired
-    private JwtDecoder jwtDecoder;
-
     @Bean
     HandlerMapping handlerMapping(WebSocketHandler wsh) {
         SimpleUrlHandlerMapping mapping = new SimpleUrlHandlerMapping();
