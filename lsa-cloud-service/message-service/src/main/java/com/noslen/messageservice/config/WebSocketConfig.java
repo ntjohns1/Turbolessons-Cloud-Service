@@ -56,7 +56,7 @@ class WebSocketConfig {
     }
 
     @Bean
-    WebSocketHandler webSocketHandler(ObjectMapper objectMapper, MsgCreatedEventPublisher eventPublisher,@Autowired JwtDecoder jwtDecoder) {
+    WebSocketHandler webSocketHandler(ObjectMapper objectMapper, MsgCreatedEventPublisher eventPublisher) {
         Supplier<Flux<MsgCreatedEvent>> supplier = () -> Flux.create(eventPublisher).share();
         Flux<MsgCreatedEvent> publish = Flux.defer(supplier).cache(1);
         return session -> {
@@ -70,7 +70,7 @@ class WebSocketConfig {
                         String token = message.getPayloadAsText();
                         System.out.println("token: " + token);
                         try {
-                            jwtDecoder.decode(token);
+//                            jwtDecoder.decode(token);
                             // Token is valid, we continue with the existing logic
 
                             session.receive().doOnNext(msg -> {
