@@ -6,6 +6,7 @@ import com.noslen.messageservice.service.MsgCreatedEvent;
 import com.noslen.messageservice.service.MsgCreatedEventPublisher;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
@@ -33,12 +34,8 @@ import java.util.function.Supplier;
 public
 class WebSocketConfig {
 
-    private final JwtDecoder jwtDecoder;
-
     @Autowired
-    public WebSocketConfig(JwtDecoder jwtDecoder) {
-        this.jwtDecoder = jwtDecoder;
-    }
+    private ApplicationContext context;
 
     @Bean
     Executor executor() {
@@ -66,6 +63,7 @@ class WebSocketConfig {
     WebSocketHandler webSocketHandler(ObjectMapper objectMapper, MsgCreatedEventPublisher eventPublisher) {
         Supplier<Flux<MsgCreatedEvent>> supplier = () -> Flux.create(eventPublisher).share();
         Flux<MsgCreatedEvent> publish = Flux.defer(supplier).cache(1);
+        JwtDecoder decoder = context.getBean(JwtDecoder.class);
         return session -> {
             String userId = parseUserId(session.getHandshakeInfo().getUri().toString());
             log.info("WebSocket session opened for user: " + userId);
@@ -77,7 +75,7 @@ class WebSocketConfig {
                         String token = message.getPayloadAsText();
                         System.out.println("token: " + token);
                         try {
-                            jwtDecoder.decode(token);
+                            decoder.decode(token);
                             // Token is valid, we continue with the existing logic
 
                             session.receive().doOnNext(msg -> {
