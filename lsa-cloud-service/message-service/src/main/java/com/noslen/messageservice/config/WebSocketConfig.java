@@ -22,8 +22,10 @@ import org.springframework.web.reactive.socket.server.support.WebSocketHandlerAd
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 
+import java.net.HttpCookie;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -33,9 +35,6 @@ import java.util.function.Supplier;
 @Configuration
 public
 class WebSocketConfig {
-
-    @Autowired
-    private ApplicationContext context;
 
     @Bean
     Executor executor() {
@@ -60,12 +59,21 @@ class WebSocketConfig {
     }
 
     @Bean
-    WebSocketHandler webSocketHandler(ObjectMapper objectMapper, MsgCreatedEventPublisher eventPublisher) {
+    WebSocketHandler handle(ObjectMapper objectMapper, MsgCreatedEventPublisher eventPublisher) {
         Supplier<Flux<MsgCreatedEvent>> supplier = () -> Flux.create(eventPublisher).share();
         Flux<MsgCreatedEvent> publish = Flux.defer(supplier).cache(1);
-        JwtDecoder decoder = context.getBean(JwtDecoder.class, true);
         return session -> {
             String userId = parseUserId(session.getHandshakeInfo().getUri().toString());
+            List<String> cookies = session.getHandshakeInfo().getHeaders().get("Cookie");
+            String sessionId = null;
+            assert cookies != null;
+            for (String cookie : cookies) {
+                if (cookie.startsWith("sessionId=")) {
+                    sessionId = cookie.split("=")[1];
+                    break;
+                }
+            }
+            log.info("SessionId: " + sessionId);
             log.info("WebSocket session opened for user: " + userId);
 
             return session.receive()
@@ -75,8 +83,7 @@ class WebSocketConfig {
                         String token = message.getPayloadAsText();
                         System.out.println("token: " + token);
                         try {
-                            decoder.decode(token);
-                            // Token is valid, we continue with the existing logic
+
 
                             session.receive().doOnNext(msg -> {
                                 log.info("Received message from user " + userId + ": " + msg.getPayloadAsText());

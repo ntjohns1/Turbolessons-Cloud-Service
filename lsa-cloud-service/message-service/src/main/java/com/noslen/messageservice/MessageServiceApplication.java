@@ -11,14 +11,7 @@ import java.util.Arrays;
 @EnableDiscoveryClient
 @SpringBootApplication
 public class MessageServiceApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(MessageServiceApplication.class, args);
 	}
-
-	@Autowired
-	public void printBeans(ApplicationContext ctx) {
-		System.out.println(Arrays.toString(ctx.getBeanDefinitionNames()));
-	}
-
 }
