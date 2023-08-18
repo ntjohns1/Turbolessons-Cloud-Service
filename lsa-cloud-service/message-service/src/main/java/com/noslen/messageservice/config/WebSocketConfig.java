@@ -22,10 +22,8 @@ import org.springframework.web.reactive.socket.server.support.WebSocketHandlerAd
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
 
-import java.net.HttpCookie;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -64,16 +62,6 @@ class WebSocketConfig {
         Flux<MsgCreatedEvent> publish = Flux.defer(supplier).cache(1);
         return session -> {
             String userId = parseUserId(session.getHandshakeInfo().getUri().toString());
-            List<String> cookies = session.getHandshakeInfo().getHeaders().get("Cookie");
-            String sessionId = null;
-            assert cookies != null;
-            for (String cookie : cookies) {
-                if (cookie.startsWith("sessionId=")) {
-                    sessionId = cookie.split("=")[1];
-                    break;
-                }
-            }
-            log.info("SessionId: " + sessionId);
             log.info("WebSocket session opened for user: " + userId);
 
             return session.receive()
