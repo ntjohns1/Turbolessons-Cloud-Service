@@ -57,49 +57,31 @@ class WebSocketConfig {
     }
 
     @Bean
-    WebSocketHandler handle(ObjectMapper objectMapper, MsgCreatedEventPublisher eventPublisher) {
+    WebSocketHandler webSocketHandler(ObjectMapper objectMapper, MsgCreatedEventPublisher eventPublisher) {
         Supplier<Flux<MsgCreatedEvent>> supplier = () -> Flux.create(eventPublisher).share();
         Flux<MsgCreatedEvent> publish = Flux.defer(supplier).cache(1);
         return session -> {
             String userId = parseUserId(session.getHandshakeInfo().getUri().toString());
             log.info("WebSocket session opened for user: " + userId);
 
-            return session.receive()
-                    .next()
-                    .flatMap(message -> {
-                        // Here we assume that the first message contains the token
-                        String token = message.getPayloadAsText();
-                        System.out.println("token: " + token);
-                        try {
+            session.receive().doOnNext(message -> {
+                log.info("Received message from user " + userId + ": " + message.getPayloadAsText());
+            }).doOnComplete(() -> {
+                log.info("WebSocket session closed for user: " + userId);
+            }).subscribe();
 
 
-                            session.receive().doOnNext(msg -> {
-                                log.info("Received message from user " + userId + ": " + msg.getPayloadAsText());
-                            }).doOnComplete(() -> {
-                                log.info("WebSocket session closed for user: " + userId);
-                            }).subscribe();
-
-                            Flux<WebSocketMessage> messageFlux = publish
-                                    .filter(evt -> evt.getSource().getRecipient().equals(userId))
-                                    .map(evt -> {
-                                        try {
-                                            return objectMapper.writeValueAsString(evt.getSource());
-                                        } catch (JsonProcessingException e) {
-                                            throw new RuntimeException(e);
-                                        }
-                                    })
-                                    .map(str -> {
-                                        log.info("sending " + str);
-                                        return session.textMessage(str);
-                                    });
-
-                            return session.send(messageFlux);
-
-                        } catch (JwtValidationException e) {
-                            // Token validation failed, we close the session
-                            return session.close(CloseStatus.POLICY_VIOLATION.withReason("Authentication failed"));
-                        }
-                    });
+            Flux<WebSocketMessage> messageFlux = publish.filter(evt -> evt.getSource().getRecipient().equals(userId)).map(evt -> {
+                try {
+                    return objectMapper.writeValueAsString(evt.getSource());
+                } catch (JsonProcessingException e) {
+                    throw new RuntimeException(e);
+                }
+            }).map(str -> {
+                log.info("sending " + str);
+                return session.textMessage(str);
+            });
+            return session.send(messageFlux);
         };
     }
 
