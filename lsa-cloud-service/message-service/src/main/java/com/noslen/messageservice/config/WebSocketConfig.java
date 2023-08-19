@@ -82,7 +82,7 @@ class WebSocketConfig {
                 return session.textMessage(str);
             });
 
-            return Flux.merge(responseFlux, messageFlux)
+            return Flux.merge(messageFlux, responseFlux)
                     .doOnTerminate(() -> log.info("WebSocket session closed for user: " + userId))
                     .doOnError(e -> log.error("Error in WebSocket session for user: " + userId, e))
                     .then();
