@@ -5,12 +5,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.noslen.messageservice.service.MsgCreatedEvent;
 import com.noslen.messageservice.service.MsgCreatedEventPublisher;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtValidationException;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.reactive.HandlerMapping;
 import org.springframework.web.reactive.handler.SimpleUrlHandlerMapping;
+import org.springframework.web.reactive.socket.CloseStatus;
 import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.WebSocketMessage;
 import org.springframework.web.reactive.socket.server.support.WebSocketHandlerAdapter;
@@ -60,16 +65,13 @@ class WebSocketConfig {
             String userId = parseUserId(session.getHandshakeInfo().getUri().toString());
             log.info("WebSocket session opened for user: " + userId);
 
-            Flux<WebSocketMessage> responseFlux = session.receive()
-                    .flatMap(message -> {
-                        log.info("Received message from user " + userId + ": " + message.getPayloadAsText());
-                        if ("ping".equals(message.getPayloadAsText())) {
-                            return Flux.just(session.textMessage("pong"));
-                        } else {
-                            // Handle other messages or just return an empty Flux
-                            return Flux.empty();
-                        }
-                    });
+            session.receive()
+                    .doOnNext(message -> {
+                log.info("Received message from user " + userId + ": " + message.getPayloadAsText());
+            }).doOnComplete(() -> {
+                log.info("WebSocket session closed for user: " + userId);
+            }).subscribe();
+
 
             Flux<WebSocketMessage> messageFlux = publish.filter(evt -> evt.getSource().getRecipient().equals(userId)).map(evt -> {
                 try {
@@ -81,13 +83,10 @@ class WebSocketConfig {
                 log.info("sending " + str);
                 return session.textMessage(str);
             });
-
-            return Flux.merge(messageFlux, responseFlux)
-                    .doOnTerminate(() -> log.info("WebSocket session closed for user: " + userId))
-                    .doOnError(e -> log.error("Error in WebSocket session for user: " + userId, e))
-                    .then();
+            return session.send(messageFlux);
         };
     }
+
 
     private String parseUserId(String uri) {
         MultiValueMap<String, String> queryParams = UriComponentsBuilder.fromUriString(uri).build().getQueryParams();
