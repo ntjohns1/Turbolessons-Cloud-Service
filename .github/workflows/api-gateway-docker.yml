@@ -29,3 +29,11 @@ jobs:
           context: ./lsa-cloud-service/api-gateway
           push: true
           tags: noslenj/api-gateway:latest
+
+      - name: Trigger Jenkins Job
+        uses: appleboy/jenkins-action@master
+        with:
+          url: "https://mostly-certain-primate.ngrok-free.app/"
+          user: "root"
+          token: ${{ secrets.JENKINS_TOKEN }}
+          job: "api_gateway"

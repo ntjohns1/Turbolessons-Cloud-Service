@@ -29,3 +29,11 @@ jobs:
           context: ./lsa-cloud-service/lsa-config-service
           push: true
           tags: noslenj/lsa-config-service:latest
+
+      - name: Trigger Jenkins Job
+        uses: appleboy/jenkins-action@master
+        with:
+          url: "https://mostly-certain-primate.ngrok-free.app/"
+          user: "root"
+          token: ${{ secrets.JENKINS_TOKEN }}
+          job: "config_service"

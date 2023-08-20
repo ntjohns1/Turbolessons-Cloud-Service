@@ -5,12 +5,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.noslen.messageservice.service.MsgCreatedEvent;
 import com.noslen.messageservice.service.MsgCreatedEventPublisher;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtValidationException;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.reactive.HandlerMapping;
 import org.springframework.web.reactive.handler.SimpleUrlHandlerMapping;
+import org.springframework.web.reactive.socket.CloseStatus;
 import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.WebSocketMessage;
 import org.springframework.web.reactive.socket.server.support.WebSocketHandlerAdapter;
@@ -51,6 +56,7 @@ class WebSocketConfig {
         return new WebSocketHandlerAdapter();
     }
 
+
     @Bean
     WebSocketHandler webSocketHandler(ObjectMapper objectMapper, MsgCreatedEventPublisher eventPublisher) {
         Supplier<Flux<MsgCreatedEvent>> supplier = () -> Flux.create(eventPublisher).share();
@@ -59,7 +65,8 @@ class WebSocketConfig {
             String userId = parseUserId(session.getHandshakeInfo().getUri().toString());
             log.info("WebSocket session opened for user: " + userId);
 
-            session.receive().doOnNext(message -> {
+            session.receive()
+                    .doOnNext(message -> {
                 log.info("Received message from user " + userId + ": " + message.getPayloadAsText());
             }).doOnComplete(() -> {
                 log.info("WebSocket session closed for user: " + userId);
@@ -79,6 +86,7 @@ class WebSocketConfig {
             return session.send(messageFlux);
         };
     }
+
 
     private String parseUserId(String uri) {
         MultiValueMap<String, String> queryParams = UriComponentsBuilder.fromUriString(uri).build().getQueryParams();
