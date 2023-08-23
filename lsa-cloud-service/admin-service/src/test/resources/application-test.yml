@@ -5,6 +5,7 @@ spring:
     name: admin-service
   config:
     enabled: false
+    fail-fast: false
   cloud:
     gateway:
       enabled: false
