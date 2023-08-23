@@ -3,10 +3,9 @@ server:
 spring:
   application:
     name: admin-service
-  config:
-    enabled: false
-    fail-fast: false
   cloud:
+    config:
+      enabled: false
     gateway:
       enabled: false
       redis:
