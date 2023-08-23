@@ -1,4 +1,4 @@
-name: admin-service-docker
+name: admin-service-test
 
 on:
   push:
