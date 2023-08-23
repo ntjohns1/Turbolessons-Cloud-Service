@@ -10,6 +10,8 @@ spring:
       enabled: false
       redis:
         enabled: false
+    discovery:
+      enabled: false
   mustache:
     check-template-location: false
 eureka:
