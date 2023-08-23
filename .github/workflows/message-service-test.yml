@@ -1,4 +1,4 @@
-name: message-service-docker
+name: message-service-test
 
 on:
   push:

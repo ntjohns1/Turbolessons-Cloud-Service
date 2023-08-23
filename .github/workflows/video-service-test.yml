@@ -1,4 +1,4 @@
-name: video-service-docker
+name: video-service-test
 
 on:
   push:

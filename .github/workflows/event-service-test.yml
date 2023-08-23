@@ -1,4 +1,4 @@
-name: event-service-docker
+name: event-service-test
 
 on:
   push:
