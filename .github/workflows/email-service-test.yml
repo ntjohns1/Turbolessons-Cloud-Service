@@ -1,4 +1,4 @@
-name: email-service-docker
+name: email-service-test
 
 on:
   push:
