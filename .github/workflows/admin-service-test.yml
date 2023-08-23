@@ -24,4 +24,5 @@ jobs:
         echo "Setting environment variables for tests"
 
     - name: Run Maven Tests
+      working-directory: ./lsa-cloud-service/admin-service
       run: mvn test
