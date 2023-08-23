@@ -1,8 +1,6 @@
 server:
   port: 5002
 spring:
-  config:
-    import: optional:configserver:http://lsa-config-service:9999/
   application:
     name: admin-service
   cloud:
