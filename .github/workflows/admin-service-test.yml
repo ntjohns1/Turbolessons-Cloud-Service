@@ -23,10 +23,18 @@ jobs:
 
     - name: Set environment variables for tests
       run: |
-        echo "CONFIG_URI=${{ secrets.CONFIG_URI }}" >> $GITHUB_ENV
-        echo "CONFIG_USERNAME=${{ secrets.CONFIG_USERNAME }}" >> $GITHUB_ENV
-        echo "CONFIG_PASSWORD=${{ secrets.CONFIG_PASSWORD }}" >> $GITHUB_ENV
+        echo "OKTA_CLIENT_ID=${{ secrets.OKTA_CLIENT_ID }}" >> $GITHUB_ENV
+        echo "OKTA_CLIENT_SECRET=${{ secrets.OKTA_CLIENT_SECRET }}" >> $GITHUB_ENV
+        echo "OKTA_ISSUER=${{ secrets.OKTA_ISSUER }}" >> $GITHUB_ENV
+        echo "OKTA_ORG_URL=${{ secrets.OKTA_ORG_URL }}" >> $GITHUB_ENV
+        echo "ADMIN_SERVICE_API_TOKEN=${{ secrets.ADMIN_SERVICE_API_TOKEN }}" >> $GITHUB_ENV
+        
 
     - name: Run Maven Tests
       working-directory: ./lsa-cloud-service/admin-service
-      run: mvn test
+      run: |
+        mvn test -DOKTA_CLIENT_ID=$OKTA_CLIENT_ID \
+              -DOKTA_CLIENT_SECRET=$OKTA_CLIENT_SECRET \
+              -DOKTA_ISSUER=$OKTA_ISSUER \
+              -DOKTA_ORG_URL=$OKTA_ORG_URL \
+              -DADMIN_SERVICE_API_TOKEN=$ADMIN_SERVICE_API_TOKEN
