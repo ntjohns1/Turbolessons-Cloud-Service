@@ -6,26 +6,23 @@ on:
       - "lsa-cloud-service/message-service/**"
 
 jobs:
-  docker:
+  build-and-test:
     runs-on: ubuntu-latest
 
-    env:
-      OKTA_CLIENT_ID: ${{ secrets.OKTA_CLIENT_ID }}
-      OKTA_CLIENT_SECRET: ${{ secrets.OKTA_CLIENT_SECRET }}
-      OKTA_ISSUER: ${{ secrets.OKTA_ISSUER }}
-      OKTA_ORG_URL: ${{ secrets.OKTA_ORG_URL }}
-      ADMIN_SERVICE_API_TOKEN: ${{ secrets.ADMIN_SERVICE_API_TOKEN }}  
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
 
-      - name: Docker Setup Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Build and push message-service
-        uses: docker/build-push-action@v4
-        with:
-          context: ./lsa-cloud-service/message-service
-          push: false
-          tags: noslenj/message-service:latest
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt'
+        java-version: '17'
+    
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Run Maven Tests
+      working-directory: ./lsa-cloud-service/message-service
+      run: |
+        mvn test -DOKTA_CLIENT_ID=${{ secrets.OKTA_CLIENT_ID }} \
+        -DOKTA_CLIENT_SECRET=${{ secrets.OKTA_CLIENT_SECRET }} \
+        -DOKTA_ISSUER=${{ secrets.OKTA_ISSUER }}

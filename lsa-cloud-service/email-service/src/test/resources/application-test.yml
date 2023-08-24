@@ -6,9 +6,10 @@ spring:
       enabled: false
       redis:
         enabled: false
-    cloud:
-      config:
-        enabled: false
+    discovery:
+      enabled: false
+    config:
+      enabled: false
   mail:
     host: smtp.gmail.com
     username: nelsontjohns@gmail.com

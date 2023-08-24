@@ -2,6 +2,12 @@ spring:
   application:
     name: video-service
   cloud:
+    gateway:
+      enabled: false
+      redis:
+        enabled: false
+    discovery:
+      enabled: false
     config:
       enabled: false
 eureka:
