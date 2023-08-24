@@ -4,7 +4,7 @@ spring:
   application:
     name: admin-service
   config:
-    import: '{cipher}AQDK4Hqw4WarwvtsCQBecHNbFuAAVWKSUQB/F8HJTa5fEZ+vQQffc+vXHHCOcZ0hUdkdieu4FeONJ+lFq23GyoiBF8GSfuwaVKLM5DPj2l9ErpzOXbmZuHSi1qTczQaBbC59DjSeLOI8+JmkN+HVVOxd7EgK+RlJgVjSpAYh3hlwel3ajjApS9A3rQxxHg2KEtTllGEaoJi8EnGaVMZMs96dLFRRG5stxt8u5pr9qFhcUS/GBC/WZjKQPnXFu28ot56LkRVU7n8+Gfqr1Phj4IF8O1r+zAEYPEQHRfMAL9pD2MgzlQjf89c4uFN8fAjXJVKC6CD2/NBC6MjVbw+FcGbdIdxU+ZjrJscq7GzfbMgOk7wE28aebLFlVv+GXA8OFTtSmH5hgw1m/7jHOvcPFNl1mfCr74+GmvDzSaooMhgKRO5jvlihgzB4TnKo/+1Ssh8='
+    import: configserver:http://www.turbolessons.com:9999/
   cloud:
     config:
       username: ${CONFIG_USERNAME}
