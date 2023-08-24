@@ -23,8 +23,6 @@ import java.util.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
-@SpringBootTest(properties = "spring.config.name=application-test")
 @TestPropertySource(locations = "classpath:application-test.yml")
 @ActiveProfiles("test")
 public class LessonEventServiceTests {
