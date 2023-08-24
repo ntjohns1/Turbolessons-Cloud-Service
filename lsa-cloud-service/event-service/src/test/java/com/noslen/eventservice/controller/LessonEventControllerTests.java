@@ -29,8 +29,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(SpringExtension.class)
-@WebMvcTest(LessonEventController.class)
 @TestPropertySource(locations = "classpath:application-test.yml")
 @ActiveProfiles("test")
 public class LessonEventControllerTests {
