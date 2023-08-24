@@ -30,7 +30,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(LessonEventController.class)
-@SpringBootTest(properties = "spring.config.name=application-test")
 @ActiveProfiles("test")
 public class LessonEventControllerTests {
 
