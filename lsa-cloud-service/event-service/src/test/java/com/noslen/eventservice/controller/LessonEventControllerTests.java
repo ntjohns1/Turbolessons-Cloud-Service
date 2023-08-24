@@ -31,8 +31,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(LessonEventController.class)
+@TestPropertySource(properties = {"spring.cloud.config.enabled=false", "spring.cloud.bootstrap.enabled=false", "eureka.client.enabled=false"})
 @ActiveProfiles("test")
-@SpringBootTest(properties = "spring.config.name=application-test")
 public class LessonEventControllerTests {
 
     @MockBean
