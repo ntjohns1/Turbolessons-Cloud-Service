@@ -24,8 +24,6 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    // this is to test the workflow
-
     private final UserApi userApi;
 
     @Autowired
