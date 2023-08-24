@@ -4,7 +4,7 @@ spring:
   application:
     name: admin-service
   config:
-    import: configserver:https://www.turbolessons.com:9999/
+    import: configserver:http://www.turbolessons.com:9999/
   cloud:
     config:
       username: ${CONFIG_USERNAME}
