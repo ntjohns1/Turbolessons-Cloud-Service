@@ -32,20 +32,15 @@ import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Objects;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockJwt;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
@@ -124,7 +119,7 @@ public class VideoHandlerTest {
 
     @Test
     public void shouldSaveVideo() throws IOException {
-        Path videoPath = Paths.get("/Users/noslen/Movies/Good_Boy.mp4");
+        Path videoPath = Paths.get(System.getProperty("user.home") + "/Movies/Good_Boy.mp4");
         byte[] videoBytes = Files.readAllBytes(videoPath);
         String filename = videoPath.getFileName().toString();
 
