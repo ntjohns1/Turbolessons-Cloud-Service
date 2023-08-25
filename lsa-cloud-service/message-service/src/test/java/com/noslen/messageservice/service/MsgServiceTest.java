@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.util.StringUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -26,6 +27,10 @@ import static org.mockito.Mockito.mock;
 @DataMongoTest
 @Import(MsgService.class)
 @ActiveProfiles("test")
+@TestPropertySource(
+        locations = "classpath:application-test.yml",
+        properties = { "spring.config.name=application-test" }
+)
 public class MsgServiceTest {
 
     private MsgService service;
