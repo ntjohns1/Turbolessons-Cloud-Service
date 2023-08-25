@@ -17,8 +17,7 @@ spring:
         dialect: org.hibernate.dialect.H2Dialect
   cloud:
     config:
-      username: ${CONFIG_USERNAME}
-      password: ${CONFIG_PASSWORD}
+      enabled: false
     bootstrap:
       enabled: false
     gateway:
