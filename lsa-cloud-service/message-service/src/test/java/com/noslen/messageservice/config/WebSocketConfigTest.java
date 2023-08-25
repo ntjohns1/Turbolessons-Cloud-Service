@@ -9,6 +9,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import org.springframework.web.reactive.socket.WebSocketMessage;
@@ -25,6 +26,10 @@ import static org.springframework.security.test.web.reactive.server.SecurityMock
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
+@TestPropertySource(
+        locations = "classpath:application-test.yml",
+        properties = { "spring.config.name=application-test" }
+)
 @ActiveProfiles("test")
 public class WebSocketConfigTest {
 
