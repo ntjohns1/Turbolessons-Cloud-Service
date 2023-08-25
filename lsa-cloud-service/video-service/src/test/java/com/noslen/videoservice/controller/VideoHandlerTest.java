@@ -119,7 +119,7 @@ public class VideoHandlerTest {
 
     @Test
     public void shouldSaveVideo() throws IOException {
-        Path videoPath = Paths.get(System.getProperty("user.home") + "/Movies/Good_Boy.mp4");
+        Path videoPath = Paths.get("/home/runner/Movies/Good_Boy.mp4");
         byte[] videoBytes = Files.readAllBytes(videoPath);
         String filename = videoPath.getFileName().toString();
 
