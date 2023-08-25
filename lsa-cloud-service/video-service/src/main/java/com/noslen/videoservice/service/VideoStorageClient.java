@@ -21,7 +21,7 @@ import java.nio.channels.WritableByteChannel;
 
 @Slf4j
 public class VideoStorageClient {
-//    test comment
+
     private final Storage storage;
     private final String bucketName;
     Bucket bucket;
