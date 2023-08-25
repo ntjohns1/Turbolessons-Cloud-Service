@@ -31,8 +31,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(LessonEventController.class)
 @TestPropertySource(
-        locations = "classpath:admin-service-test.yml",
-        properties = {"spring.cloud.config.enabled=false",
+        locations = "classpath:application-test.yml",
+        properties = {
+                "spring.config.name=application-test",
+                "spring.cloud.config.enabled=false",
                 "spring.cloud.bootstrap.enabled=false",
                 "eureka.client.enabled=false"}
 )
