@@ -12,6 +12,9 @@ spring:
       enabled: false
     config:
       enabled: false
+  data:
+    mongodb:
+      uri: mongodb://localhost:12345/test
 eureka:
   client:
     enabled: false
