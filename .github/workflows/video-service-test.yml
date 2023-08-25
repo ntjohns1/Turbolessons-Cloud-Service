@@ -19,7 +19,9 @@ jobs:
     
     - name: Checkout code
       uses: actions/checkout@v3
-    
+      
+    - name: Decode and create GCP config file
+      run: echo "${{ secrets.GCP_CONFIG }}" | base64 --decode > /gcs/lesson-schedule-assistant-cfe4cf3aebad.json
     - name: Create test file and set permissions
       run: |
         mkdir -p ~/Movies
