@@ -23,7 +23,7 @@ jobs:
     - name: Decode and create GCP config file
       run: |
         sudo mkdir -p /gcs/
-        echo "${{ secrets.GCS_CONFIG }}" | base64 --decode > /gcs/lesson-schedule-assistant-cfe4cf3aebad.json
+        echo "${{ secrets.GCS_CONFIG }}" | sudo base64 --decode > /gcs/lesson-schedule-assistant-cfe4cf3aebad.json
     
     - name: Create test file and set permissions
       run: |
