@@ -31,7 +31,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(LessonEventController.class)
 @TestPropertySource(
-        locations = "classpath:application-test.yml"
+        locations = "classpath:application-test.yml",
+        properties = { "spring.config.name=application-test" }
 )
 @ActiveProfiles("test")
 public class LessonEventControllerTests {
