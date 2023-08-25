@@ -8,6 +8,8 @@ import org.springframework.test.context.ActiveProfiles;
 @ActiveProfiles("test")
 class EventServiceApplicationTests {
 
+//	test application test
+
 	@Test
 	void contextLoads() {
 	}

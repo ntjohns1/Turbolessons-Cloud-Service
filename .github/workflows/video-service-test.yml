@@ -20,6 +20,14 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
       
+    - name: Decode and create GCP config file
+      run: echo "${{ secrets.GCP_CONFIG }}" | base64 --decode > /gcs/lesson-schedule-assistant-cfe4cf3aebad.json
+    - name: Create test file and set permissions
+      run: |
+        mkdir -p ~/Movies
+        touch ~/Movies/Good_Boy.mp4
+        chmod 777 ~/Movies/Good_Boy.mp4
+    
     - name: Run Maven Tests
       working-directory: ./lsa-cloud-service/video-service
       run: |

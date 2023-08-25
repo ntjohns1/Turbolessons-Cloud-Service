@@ -1,6 +1,8 @@
 spring:
   application:
     name: message-service
+  config:
+    import: optional:configserver:http://www.turbolessons.com:9999/
   cloud:
     gateway:
       enabled: false
@@ -10,6 +12,12 @@ spring:
       enabled: false
     config:
       enabled: false
+  data:
+    mongodb:
+      uri: mongodb://localhost:12345/test
+  mongodb:
+    embedded:
+      version: 4.4.0
 eureka:
   client:
     enabled: false

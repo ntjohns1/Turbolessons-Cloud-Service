@@ -7,12 +7,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.core.io.buffer.DefaultDataBufferFactory;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 @Log4j2
+@TestPropertySource(
+        locations = "classpath:application-test.yml",
+        properties = { "spring.config.name=application-test" }
+)
 @ActiveProfiles("test")
-@Import({VideoEndpointConfig.class,
-        VideoHandler.class, VideoStorageClient.class})
+@Import({
+        VideoEndpointConfig.class,
+        VideoHandler.class,
+        VideoStorageClient.class
+})
 public class FunctionalVideoEndpointsTest {
 
     @BeforeAll

@@ -6,9 +6,14 @@ import org.junit.jupiter.api.BeforeAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 @Log4j2
+@TestPropertySource(
+        locations = "classpath:application-test.yml",
+        properties = { "spring.config.name=application-test" }
+)
 @ActiveProfiles("test")
 @Import({MessageEndpointConfig.class,
         MessageHandler.class, MsgService.class})

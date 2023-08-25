@@ -19,6 +19,8 @@ import org.springframework.core.io.buffer.DefaultDataBufferFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.MultipartBodyBuilder;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -30,24 +32,24 @@ import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Objects;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockJwt;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.jwt;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestPropertySource(
+        locations = "classpath:application-test.yml",
+        properties = { "spring.config.name=application-test" }
+)
+@ActiveProfiles("test")
 public class VideoHandlerTest {
 
     @Mock
@@ -117,7 +119,7 @@ public class VideoHandlerTest {
 
     @Test
     public void shouldSaveVideo() throws IOException {
-        Path videoPath = Paths.get("/Users/noslen/Movies/Good_Boy.mp4");
+        Path videoPath = Paths.get("/home/runner/Movies/Good_Boy.mp4");
         byte[] videoBytes = Files.readAllBytes(videoPath);
         String filename = videoPath.getFileName().toString();
 
