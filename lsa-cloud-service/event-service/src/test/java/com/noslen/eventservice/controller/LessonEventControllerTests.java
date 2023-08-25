@@ -29,10 +29,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(SpringExtension.class)
 @WebMvcTest(LessonEventController.class)
 @TestPropertySource(
-        locations = "./lsa-cloud-service/event-service/src/test/resources/application-test.yml",
+        locations = "classpath:application-test.yml",
         properties = {"spring.cloud.config.enabled=false",
                 "spring.cloud.bootstrap.enabled=false",
                 "eureka.client.enabled=false"}
