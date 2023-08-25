@@ -50,4 +50,8 @@ jobs:
       run: |
         mvn test -DOKTA_CLIENT_ID=${{ secrets.OKTA_CLIENT_ID }} \
         -DOKTA_CLIENT_SECRET=${{ secrets.OKTA_CLIENT_SECRET }} \
-        -DOKTA_ISSUER=${{ secrets.OKTA_ISSUER }}
+        -DOKTA_ISSUER=${{ secrets.OKTA_ISSUER }} \
+        -DprojectId=${{ secrets.PROJECT_ID }} \
+        -DcredentialsPath=${{ secrets.CREDENTIALS_PATH }} \
+        -DbucketName=${{ secrets.BUCKET_NAME }}
+
