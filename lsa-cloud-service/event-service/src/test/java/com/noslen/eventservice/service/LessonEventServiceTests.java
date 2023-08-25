@@ -23,7 +23,7 @@ import java.util.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 
-@TestPropertySource(locations = "classpath:application-test.yml")
+@TestPropertySource(locations = "classpath:admin-service-test.yml")
 @ActiveProfiles("test")
 public class LessonEventServiceTests {
 
