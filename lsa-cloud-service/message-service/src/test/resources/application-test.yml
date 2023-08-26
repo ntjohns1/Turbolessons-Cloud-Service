@@ -1,8 +1,6 @@
 spring:
   application:
     name: message-service
-#  config:
-#    import: optional:configserver:http://www.turbolessons.com:9999/
   cloud:
     gateway:
       enabled: false
