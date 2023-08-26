@@ -12,13 +12,13 @@ jobs:
     steps:
 
     - name: Set up JDK 17
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3.12.0
       with:
         distribution: 'adopt'
         java-version: '17'
     
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3.6.0
       
     - name: Decode and create GCP config file
       run: |
@@ -32,17 +32,17 @@ jobs:
         touch ~/Movies/Good_Boy.mp4
         chmod 777 ~/Movies/Good_Boy.mp4
 
-    - name: Set ownership for GCP config directory
-      run: |
-        sudo chown -R runner:runner /gcs/
+    # - name: Set ownership for GCP config directory
+    #   run: |
+    #     sudo chown -R runner:runner /gcs/
 
-    - name: Set permissions for GCP config directory
-      run: |
-        sudo chmod -R 755 /gcs/
+    # - name: Set permissions for GCP config directory
+    #   run: |
+    #     sudo chmod -R 755 /gcs/
       
-    - name: Set permissions for GCP config file
-      run: |
-        sudo chmod 644 /gcs/lesson-schedule-assistant-cfe4cf3aebad.json
+    # - name: Set permissions for GCP config file
+    #   run: |
+    #     sudo chmod 644 /gcs/lesson-schedule-assistant-cfe4cf3aebad.json
 
     
     - name: Run Maven Tests
