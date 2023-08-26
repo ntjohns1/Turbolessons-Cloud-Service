@@ -1,1 +1,1 @@
-CREATE ALIAS IF NOT EXISTS DATE FOR "org.h2.api.TimestampWithTimeZoneUtils".date;
+CREATE ALIAS DATE AS $$ String date(String s) { return s.split(" ")[0]; } $$;
