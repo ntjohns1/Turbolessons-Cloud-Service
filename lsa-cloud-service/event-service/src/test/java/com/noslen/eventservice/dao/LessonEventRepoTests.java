@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDateTime;
 import java.time.Month;
@@ -24,6 +25,7 @@ import java.util.Optional;
         locations = "classpath:application-test.yml",
         properties = { "spring.config.name=application-test" }
 )
+@Sql(scripts = "/sql/setupH2.sql")
 public class LessonEventRepoTests {
 //        LocalDateTime date = LocalDateTime.of(2033, Month.AUGUST, 17, 15, 0);
         LocalDateTime date = LocalDateTime.of(2033, Month.AUGUST, 17, 15, 0);
