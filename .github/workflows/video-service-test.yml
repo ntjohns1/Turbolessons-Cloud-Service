@@ -31,19 +31,6 @@ jobs:
         mkdir -p ~/Movies
         touch ~/Movies/Good_Boy.mp4
         chmod 777 ~/Movies/Good_Boy.mp4
-
-    # - name: Set ownership for GCP config directory
-    #   run: |
-    #     sudo chown -R runner:runner /gcs/
-
-    # - name: Set permissions for GCP config directory
-    #   run: |
-    #     sudo chmod -R 755 /gcs/
-      
-    # - name: Set permissions for GCP config file
-    #   run: |
-    #     sudo chmod 644 /gcs/lesson-schedule-assistant-cfe4cf3aebad.json
-
     
     - name: Run Maven Tests
       working-directory: ./lsa-cloud-service/video-service
@@ -54,4 +41,3 @@ jobs:
         -DprojectId=${{ secrets.PROJECT_ID }} \
         -DcredentialsPath=${{ secrets.CREDENTIALS_PATH }} \
         -DbucketName=${{ secrets.BUCKET_NAME }}
-
