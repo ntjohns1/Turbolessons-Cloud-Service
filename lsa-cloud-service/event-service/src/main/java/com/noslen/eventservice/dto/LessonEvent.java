@@ -2,6 +2,7 @@ package com.noslen.eventservice.dto;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -12,32 +13,30 @@ public class LessonEvent implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
+    private String title;
+
     private String student;
     private String studentEmail;
     private String teacher;
     private String teacherEmail;
-    private LocalDateTime date;
+    private LocalDate date;
     private String comments;
 
     public LessonEvent() {
     }
 
-    public LessonEvent(Integer id, String student, String studentEmail, String teacher, String teacherEmail, LocalDateTime date, String comments) {
-        this.id = id;
+    public LessonEvent(LocalDateTime startTime, LocalDateTime endTime, String title, String student, String studentEmail, String teacher, String teacherEmail, String comments) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.title = title;
         this.student = student;
         this.studentEmail = studentEmail;
         this.teacher = teacher;
         this.teacherEmail = teacherEmail;
-        this.date = date;
-        this.comments = comments;
-    }
-
-    public LessonEvent(String student, String studentEmail, String teacher, String teacherEmail, LocalDateTime date, String comments) {
-        this.student = student;
-        this.studentEmail = studentEmail;
-        this.teacher = teacher;
-        this.teacherEmail = teacherEmail;
-        this.date = date;
+        this.date = startTime.toLocalDate();
         this.comments = comments;
     }
 
@@ -47,6 +46,31 @@ public class LessonEvent implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+        this.date = startTime.toLocalDate();
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getStudent() {
@@ -81,11 +105,11 @@ public class LessonEvent implements Serializable {
         this.teacherEmail = teacherEmail;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -104,18 +128,34 @@ public class LessonEvent implements Serializable {
 
         LessonEvent that = (LessonEvent) o;
 
-        if (!Objects.equals(id, that.id)) return false;
-        if (!Objects.equals(student, that.student)) return false;
-        if (!Objects.equals(studentEmail, that.studentEmail)) return false;
-        if (!Objects.equals(teacher, that.teacher)) return false;
-        if (!Objects.equals(teacherEmail, that.teacherEmail)) return false;
-        if (!Objects.equals(date, that.date)) return false;
-        return Objects.equals(comments, that.comments);
+        if (!Objects.equals(id,
+                            that.id)) return false;
+        if (!Objects.equals(startTime,
+                            that.startTime)) return false;
+        if (!Objects.equals(endTime,
+                            that.endTime)) return false;
+        if (!Objects.equals(title,
+                            that.title)) return false;
+        if (!Objects.equals(student,
+                            that.student)) return false;
+        if (!Objects.equals(studentEmail,
+                            that.studentEmail)) return false;
+        if (!Objects.equals(teacher,
+                            that.teacher)) return false;
+        if (!Objects.equals(teacherEmail,
+                            that.teacherEmail)) return false;
+        if (!Objects.equals(date,
+                            that.date)) return false;
+        return Objects.equals(comments,
+                              that.comments);
     }
 
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
+        result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
+        result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (student != null ? student.hashCode() : 0);
         result = 31 * result + (studentEmail != null ? studentEmail.hashCode() : 0);
         result = 31 * result + (teacher != null ? teacher.hashCode() : 0);
@@ -127,14 +167,6 @@ public class LessonEvent implements Serializable {
 
     @Override
     public String toString() {
-        return "LessonEvent{" +
-                "id=" + id +
-                ", student='" + student + '\'' +
-                ", studentEmail='" + studentEmail + '\'' +
-                ", teacher='" + teacher + '\'' +
-                ", teacherEmail='" + teacherEmail + '\'' +
-                ", date=" + date +
-                ", comments='" + comments + '\'' +
-                '}';
+        return "LessonEvent{" + "id=" + id + ", startTime=" + startTime + ", endTime=" + endTime + ", title='" + title + '\'' + ", student='" + student + '\'' + ", studentEmail='" + studentEmail + '\'' + ", teacher='" + teacher + '\'' + ", teacherEmail='" + teacherEmail + '\'' + ", date=" + date + ", comments='" + comments + '\'' + '}';
     }
 }

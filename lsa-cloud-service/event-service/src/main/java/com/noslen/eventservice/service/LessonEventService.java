@@ -5,7 +5,6 @@ import com.noslen.eventservice.dto.LessonEvent;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,11 +56,13 @@ public class LessonEventService {
     public void updateLessonEvent(Integer id, LessonEvent lesson) {
         Optional<LessonEvent> fromRepo = repository.findById(id);
         fromRepo.ifPresent(existingLessonEvent -> {
+            existingLessonEvent.setStartTime(lesson.getStartTime());
+            existingLessonEvent.setEndTime(lesson.getEndTime());
+            existingLessonEvent.setTitle(lesson.getTitle());
             existingLessonEvent.setStudent(lesson.getStudent());
             existingLessonEvent.setStudentEmail(lesson.getStudentEmail());
             existingLessonEvent.setTeacher(lesson.getTeacher());
             existingLessonEvent.setTeacherEmail(lesson.getTeacherEmail());
-            existingLessonEvent.setDate(lesson.getDate());
             existingLessonEvent.setComments(lesson.getComments());
             repository.save(existingLessonEvent);
         });
