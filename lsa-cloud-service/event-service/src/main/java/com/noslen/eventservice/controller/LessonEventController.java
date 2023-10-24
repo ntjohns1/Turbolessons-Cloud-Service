@@ -3,7 +3,6 @@ package com.noslen.eventservice.controller;
 
 import com.noslen.eventservice.dto.LessonEvent;
 import com.noslen.eventservice.service.LessonEventService;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -70,7 +69,7 @@ public class LessonEventController {
         LessonEvent fromService = service.findLessonEvent(id);
         fromService.setTeacher(lesson.getTeacher());
         fromService.setStudent(lesson.getStudent());
-        fromService.setDate(lesson.getDate());
+        fromService.setStartTime(lesson.getStartTime());
         fromService.setComments(lesson.getComments());
         service.saveLessonEvent(fromService);
     }
