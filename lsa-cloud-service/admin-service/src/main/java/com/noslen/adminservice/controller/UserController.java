@@ -21,11 +21,6 @@ public class UserController {
         return userService.listAllUsers();
     }
 
-    @GetMapping("/api/users/teacher/{username}")
-    public List<User> getUsersByTeacher(@PathVariable String username) {
-        return userService.listAllUsersByTeacher(username);
-    }
-
     @GetMapping("/api/users/{id}")
     public User getUser(@PathVariable String id) {
         return userService.getUser(id);

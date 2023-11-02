@@ -3,6 +3,7 @@ package com.noslen.adminservice.config;
 import com.okta.sdk.authc.credentials.TokenClientCredentials;
 import com.okta.sdk.client.Clients;
 import org.openapitools.client.ApiClient;
+import org.openapitools.client.api.GroupApi;
 import org.openapitools.client.api.UserApi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -24,5 +25,14 @@ public class OktaApiConfig {
                 .setClientCredentials(new TokenClientCredentials(apiToken))
                 .build();
         return new UserApi(client);
+    }
+
+    @Bean
+    public GroupApi groupApi() {
+        ApiClient client = Clients.builder()
+                .setOrgUrl(orgUrl)
+                .setClientCredentials(new TokenClientCredentials(apiToken))
+                .build();
+        return new GroupApi(client);
     }
 }
