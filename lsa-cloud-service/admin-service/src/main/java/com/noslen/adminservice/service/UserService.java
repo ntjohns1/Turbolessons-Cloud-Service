@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.noslen.adminservice.dto.UserProfileDTO;
 import com.okta.sdk.resource.user.UserBuilder;
+import org.openapitools.client.api.GroupApi;
 import org.openapitools.client.api.UserApi;
+import org.openapitools.client.model.Group;
 import org.openapitools.client.model.UpdateUserRequest;
 import org.openapitools.client.model.User;
 import org.openapitools.client.model.UserProfile;
@@ -18,19 +20,20 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
 public class UserService {
 
     private final UserApi userApi;
+    private final GroupApi groupApi;
 
     @Autowired
     private CacheManager cacheManager;
 
-    public UserService(UserApi userApi) {
+    public UserService(UserApi userApi, GroupApi groupApi) {
         this.userApi = userApi;
+        this.groupApi = groupApi;
     }
 
     //    Get All Users
@@ -46,6 +49,17 @@ public class UserService {
                 null,
                 null);
     }
+
+    @Cacheable(value = "userCache", key = "'listAllUsersByTeacher'")
+    public List<User> listAllUsersByTeacher(String teacherUsername) {
+        //        users.removeIf(u -> !Objects.equals(Objects.requireNonNull(u.getProfile()).getUserType(), "student"));
+        String groupName = "active_student_" + teacherUsername;
+        List<Group> g = groupApi.listGroups(groupName, null,null,1,null,null);
+
+        return groupApi.listGroupUsers(g.get(0).getId(),null,150);
+    }
+
+
 
     @Cacheable(value = "userCache", key = "#id", unless = "#result == null")
     public User getUser(String id) {

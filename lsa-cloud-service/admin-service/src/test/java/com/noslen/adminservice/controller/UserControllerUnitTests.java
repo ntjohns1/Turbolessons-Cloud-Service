@@ -60,6 +60,12 @@ public class UserControllerUnitTests {
     }
 
     @Test
+    public void testGetUsersByTeacher() throws Exception {
+        when(userService.listAllUsersByTeacher(any())).thenReturn(Collections.singletonList(mockedUser));
+        mockMvc.perform(get("/api/users/teacher/test").with(jwt())).andExpect(status().isOk()).andExpect(jsonPath("$[0].profile.displayName").value(Objects.requireNonNull(mockedUser.getProfile()).getDisplayName()));
+    }
+
+    @Test
     public void testGetUser() throws Exception {
         when(userService.getUser("testId")).thenReturn(mockedUser);
         mockMvc.perform(get("/api/users/testId").with(jwt())).andExpect(status().isOk()).andExpect(jsonPath("$.profile.displayName").value(Objects.requireNonNull(mockedUser.getProfile()).getDisplayName()));

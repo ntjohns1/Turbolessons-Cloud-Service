@@ -128,9 +128,9 @@ services:
       - "8080:8080"
     networks:
       - lsa-cloud-service_lsa
-  lsa-frontend:
-    image: noslenj/lsa-frontend:latest
-    container_name: lsa-frontend
+  turbolessons-frontend:
+    image: noslenj/turbolessons-frontend:latest
+    container_name: turbolessons-frontend
     env_file:
       - ./root.env
     ports:
