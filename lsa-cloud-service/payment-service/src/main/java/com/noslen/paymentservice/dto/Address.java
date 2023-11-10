@@ -55,7 +55,7 @@ public class Address {
         this.line2 = line2;
     }
 
-    public String getPostal_code() {
+    public String getPostalCode() {
         return postal_code;
     }
 

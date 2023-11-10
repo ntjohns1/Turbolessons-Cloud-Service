@@ -13,7 +13,6 @@ public class SubscriptionService {
 
     private final StripeClient stripeClient;
     private final CustomerService customerService;
-
     private final PricingService pricingService;
 
     public SubscriptionService(StripeClient stripeClient, CustomerService customerService, PricingService pricingService) {

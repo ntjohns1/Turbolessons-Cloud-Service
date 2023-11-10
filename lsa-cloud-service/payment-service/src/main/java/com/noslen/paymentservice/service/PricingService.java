@@ -35,7 +35,5 @@ public class PricingService {
     private Mono<Price> createPrice(PriceCreateParams params) {
         return Mono.fromCallable(() -> stripeClient.prices().create(params));
     }
-
-    // Additional methods for other price/product operations can be added here
 }
 
