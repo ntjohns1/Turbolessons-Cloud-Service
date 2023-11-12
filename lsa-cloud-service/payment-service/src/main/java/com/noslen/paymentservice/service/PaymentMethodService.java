@@ -6,7 +6,10 @@ import com.stripe.StripeClient;
 import com.stripe.exception.StripeException;
 import com.stripe.model.PaymentMethod;
 import com.stripe.model.StripeCollection;
+import com.stripe.param.PaymentMethodAttachParams;
 import com.stripe.param.PaymentMethodCreateParams;
+import com.stripe.param.PaymentMethodDetachParams;
+import com.stripe.param.PaymentMethodUpdateParams;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -72,5 +75,61 @@ public class PaymentMethodService {
                 .onErrorMap(StripeException.class,
                             e -> new Exception("Error processing Stripe API",
                                                e));
+    }
+
+    public Mono<Void> updateCardPaymentMethod(String id, CardDto cardDto) {
+        PaymentMethodUpdateParams params = PaymentMethodUpdateParams.builder()
+                .setCard(PaymentMethodUpdateParams.Card.builder()
+                                 .setExpMonth(cardDto.getExpMonth())
+                                 .setExpYear(cardDto.getExpYear())
+                                 .build())
+                .build();
+        return Mono.fromRunnable(() -> {
+                    try {
+                        stripeClient.paymentMethods()
+                                .update(id,
+                                        params);
+                    } catch (StripeException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .onErrorMap(StripeException.class,
+                            e -> new Exception("Error processing Stripe API",
+                                               e))
+                .then();
+    }
+
+    public Mono<Void> attachPaymentMethod(String id, String customerId) {
+        PaymentMethodAttachParams params = PaymentMethodAttachParams.builder()
+                .setCustomer(customerId)
+                .build();
+        return Mono.fromRunnable(() -> {
+                    try {
+                        stripeClient.paymentMethods()
+                                .attach(id,
+                                        params);
+                    } catch (StripeException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .onErrorMap(StripeException.class,
+                            e -> new Exception("Error processing Stripe API",
+                                               e))
+                .then();
+    }
+
+    public Mono<Void> detachPaymentMethod(String id) {
+        return Mono.fromRunnable(() -> {
+                    try {
+                        stripeClient.paymentMethods()
+                                .detach(id);
+                    } catch (StripeException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .onErrorMap(StripeException.class,
+                            e -> new Exception("Error processing Stripe API",
+                                               e))
+                .then();
     }
 }
