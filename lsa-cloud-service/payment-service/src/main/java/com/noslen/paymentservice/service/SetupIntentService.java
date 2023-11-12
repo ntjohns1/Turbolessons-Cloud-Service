@@ -5,7 +5,6 @@ import com.stripe.StripeClient;
 import com.stripe.exception.StripeException;
 import com.stripe.model.SetupIntent;
 import com.stripe.model.StripeCollection;
-import com.stripe.param.SetupIntentConfirmParams;
 import com.stripe.param.SetupIntentCreateParams;
 import com.stripe.param.SetupIntentUpdateParams;
 import org.springframework.stereotype.Service;
@@ -24,18 +23,30 @@ public class SetupIntentService {
     //    List All SetupIntents
     public Mono<StripeCollection<SetupIntent>> listSetupIntents() {
         return Mono.fromCallable(() -> stripeClient.setupIntents()
-                .list());
+                        .list())
+                .onErrorMap(StripeException.class,
+                            e -> new Exception("Error processing Stripe API",
+                                               e));
     }
 
     //    Retrieve a SetupIntent
     public Mono<SetupIntent> getSetupIntent(String id) {
         return Mono.fromCallable(() -> stripeClient.setupIntents()
-                .retrieve(id));
+                        .retrieve(id))
+                .onErrorMap(StripeException.class,
+                            e -> new Exception("Error processing Stripe API",
+                                               e));
     }
 
     //    Create a SetupIntent
     public Mono<SetupIntent> createSetupIntent(SetupIntentDto setupIntentDto) {
         SetupIntentCreateParams params = SetupIntentCreateParams.builder()
+                .setAutomaticPaymentMethods(SetupIntentCreateParams.AutomaticPaymentMethods.builder()
+                                                    .setEnabled(true)
+                                                    .build())
+                .setCustomer(setupIntentDto.getCustomer())
+                .setPaymentMethod(setupIntentDto.getPaymentMethod())
+                .setDescription(setupIntentDto.getDescription())
                 .build();
         return Mono.fromCallable(() -> stripeClient.setupIntents()
                         .create(params))
@@ -46,8 +57,6 @@ public class SetupIntentService {
 
     //    Confirm a SetupIntent
     public Mono<Void> confirmSetupIntent(String id) {
-        SetupIntentConfirmParams params = SetupIntentConfirmParams.builder()
-                .build();
         return Mono.fromRunnable(() -> {
                     try {
                         stripeClient.setupIntents()
@@ -62,14 +71,18 @@ public class SetupIntentService {
                 .then();
     }
 
-//    Update a SetupIntent
+    //    Update a SetupIntent
     public Mono<Void> updateSetupIntent(String id, SetupIntentDto setupIntentDto) {
         SetupIntentUpdateParams params = SetupIntentUpdateParams.builder()
+                .setCustomer(setupIntentDto.getCustomer())
+                .setPaymentMethod(setupIntentDto.getPaymentMethod())
+                .setDescription(setupIntentDto.getDescription())
                 .build();
         return Mono.fromRunnable(() -> {
                     try {
                         stripeClient.setupIntents()
-                                .update(id,params);
+                                .update(id,
+                                        params);
                     } catch (StripeException e) {
                         throw new RuntimeException(e);
                     }
@@ -79,7 +92,8 @@ public class SetupIntentService {
                                                e))
                 .then();
     }
-//    Cancel a SetupIntent
+
+    //    Cancel a SetupIntent
     public Mono<Void> cancelSetupIntent(String id) {
         return Mono.fromRunnable(() -> {
                     try {

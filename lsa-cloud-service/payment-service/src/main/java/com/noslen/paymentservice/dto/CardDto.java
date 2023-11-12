@@ -11,6 +11,7 @@ import lombok.*;
 @ToString
 public class CardDto {
 
+    String id;
     String number;
     String cvc;
     Long expMonth;

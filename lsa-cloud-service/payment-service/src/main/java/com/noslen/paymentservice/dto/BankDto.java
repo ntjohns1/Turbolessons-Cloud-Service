@@ -11,6 +11,7 @@ import lombok.*;
 @ToString
 public class BankDto {
 
+    String id;
     String accountNumber;
     String routingNumber;
     Boolean isChecking = true;
