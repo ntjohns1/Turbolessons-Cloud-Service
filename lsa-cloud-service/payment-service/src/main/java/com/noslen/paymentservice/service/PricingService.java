@@ -20,7 +20,7 @@ public class PricingService {
     private void initializeStandardRate() {
         PriceCreateParams standardRateParams = PriceCreateParams.builder()
                 .setUnitAmount(5000L)
-                .setCurrency("USD")
+                .setCurrency("usd")
                 .setProductData(PriceCreateParams.ProductData.builder()
                                         .setName("Standard Lesson")
                                         .build())
