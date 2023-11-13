@@ -5,7 +5,6 @@ import com.noslen.paymentservice.dto.CustomerDto;
 import com.stripe.StripeClient;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
-import com.stripe.model.PaymentMethod;
 import com.stripe.model.StripeCollection;
 import com.stripe.param.CustomerCreateParams;
 import com.stripe.param.CustomerUpdateParams;
