@@ -1,8 +1,12 @@
 package com.noslen.paymentservice.service;
 
+import com.noslen.paymentservice.dto.PriceDTO;
 import com.stripe.StripeClient;
+import com.stripe.exception.StripeException;
 import com.stripe.model.Price;
+import com.stripe.model.StripeCollection;
 import com.stripe.param.PriceCreateParams;
+import com.stripe.param.PriceUpdateParams;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -17,13 +21,21 @@ public class PricingService {
         initializeStandardRate();
     }
 
+    //Initialize the Standard Rate Price Object.
+
     private void initializeStandardRate() {
         PriceCreateParams standardRateParams = PriceCreateParams.builder()
                 .setUnitAmount(5000L)
                 .setCurrency("usd")
+                .setRecurring(PriceCreateParams.Recurring.builder()
+                                      .setInterval(PriceCreateParams.Recurring.Interval.MONTH)
+                                      .setIntervalCount(1L)
+                                      .setUsageType(PriceCreateParams.Recurring.UsageType.METERED)
+                                      .build())
                 .setProductData(PriceCreateParams.ProductData.builder()
                                         .setName("Standard Lesson")
                                         .build())
+                .setLookupKey("standard_lesson")
                 .build();
         this.standardRateMono = createPrice(standardRateParams).cache();
     }
@@ -32,8 +44,80 @@ public class PricingService {
         return standardRateMono;
     }
 
-    private Mono<Price> createPrice(PriceCreateParams params) {
-        return Mono.fromCallable(() -> stripeClient.prices().create(params));
+    private Mono<StripeCollection<Price>> listAllPrices() {
+        return Mono.fromCallable(() -> stripeClient.prices().list())
+                .onErrorMap(StripeException.class,
+                            e -> new Exception("Error processing Stripe API",
+                                               e));
     }
+
+    private Mono<Price> retrievePrice(String id) {
+        return Mono.fromCallable(() -> stripeClient.prices().retrieve(id))
+                .onErrorMap(StripeException.class,
+                            e -> new Exception("Error processing Stripe API",
+                                               e));
+    }
+
+    private Mono<Price> createPrice(PriceCreateParams params) {
+        return Mono.fromCallable(() -> stripeClient.prices()
+                .create(params))
+                .onErrorMap(StripeException.class,
+                            e -> new Exception("Error processing Stripe API",
+                                               e));
+    }
+
+    private Mono<Price> createPrice(PriceDTO priceDTO) {
+        Boolean recurring = priceDTO.getIsRecurring();
+        PriceCreateParams params;
+        if (recurring) {
+            params = PriceCreateParams.builder()
+                    .setUnitAmount(priceDTO.getUnitAmount())
+                    .setCurrency(priceDTO.getCurrency())
+                    .setRecurring(PriceCreateParams.Recurring.builder()
+                                          .setInterval(PriceCreateParams.Recurring.Interval.MONTH)
+                                          .setIntervalCount(1L)
+                                          .setUsageType(PriceCreateParams.Recurring.UsageType.METERED)
+                                          .build())
+                    .setProduct(priceDTO.getProduct())
+                    .build();
+        } else {
+            params = PriceCreateParams.builder()
+                    .setUnitAmount(priceDTO.getUnitAmount())
+                    .setCurrency(priceDTO.getCurrency())
+                    .setProduct(priceDTO.getProduct())
+                    .build();
+        }
+        return Mono.fromCallable(() -> stripeClient.prices()
+                .create(params))
+                .onErrorMap(StripeException.class,
+                            e -> new Exception("Error processing Stripe API",
+                                               e));
+    }
+
+    private Mono<Void> updatePrice(String id, PriceDTO priceDTO) {
+        PriceUpdateParams params = PriceUpdateParams.builder()
+                .setLookupKey(priceDTO.getLookupKey())
+                .setActive(priceDTO.getIsActive())
+                .build();
+        return Mono.fromRunnable(() -> {
+                    try {
+                        stripeClient.prices()
+                                .update(id,
+                                        params);
+                    } catch (StripeException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .onErrorMap(ex -> {
+                    if (ex.getCause() instanceof StripeException) {
+                        return new Exception("Error processing Stripe API",
+                                             ex.getCause());
+                    }
+                    return ex;
+                })
+                .then();
+    }
+
+
 }
 

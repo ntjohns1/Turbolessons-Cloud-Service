@@ -82,9 +82,13 @@ public class PaymentIntentService {
                         throw new RuntimeException(e);
                     }
                 })
-                .onErrorMap(StripeException.class,
-                            e -> new Exception("Error processing Stripe API",
-                                               e))
+                .onErrorMap(ex -> {
+                    if (ex.getCause() instanceof StripeException) {
+                        return new Exception("Error processing Stripe API",
+                                             ex.getCause());
+                    }
+                    return ex;
+                })
                 .then();
     }
 
@@ -105,9 +109,13 @@ public class PaymentIntentService {
                         throw new RuntimeException(e);
                     }
                 })
-                .onErrorMap(StripeException.class,
-                            e -> new Exception("Error processing Stripe API",
-                                               e))
+                .onErrorMap(ex -> {
+                    if (ex.getCause() instanceof StripeException) {
+                        return new Exception("Error processing Stripe API",
+                                             ex.getCause());
+                    }
+                    return ex;
+                })
                 .then();
     }
 }
