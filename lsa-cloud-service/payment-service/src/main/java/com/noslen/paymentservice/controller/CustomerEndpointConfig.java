@@ -22,9 +22,9 @@ public class CustomerEndpointConfig {
     RouterFunction<ServerResponse> routes() {
 
         return route((GET("/api/customer")), handler::listAll)
-                .andRoute(GET("api/customer/{id}"), handler::retrieve)
-                .andRoute(POST("api/customer"), handler::create)
-                .andRoute(PUT("api/customer/{id}"), handler::update)
-                .andRoute(DELETE("api/customer/{id}"), handler::delete);
+                .andRoute(GET("/api/customer/{id}"), handler::retrieve)
+                .andRoute(POST("/api/customer"), handler::create)
+                .andRoute(PUT("/api/customer/{id}"), handler::update)
+                .andRoute(DELETE("/api/customer/{id}"), handler::delete);
     }
 }
