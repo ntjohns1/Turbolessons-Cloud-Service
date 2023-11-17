@@ -22,7 +22,7 @@ public class CustomerService {
 
 //     List All Customers
     public Mono<StripeCollection<Customer>> listAllCustomers() {
-        return Mono.fromCallable(() -> stripeClient.customers()
+        return Mono.fromCallable(() -> this.stripeClient.customers()
                         .list())
                 .onErrorMap(StripeException.class,
                             e -> new Exception("Error processing Stripe API",
@@ -30,8 +30,8 @@ public class CustomerService {
     }
 
 //    Retrieve a Customer
-    public Mono<Customer> getCustomer(String id) {
-        return Mono.fromCallable(() -> stripeClient.customers()
+    public Mono<Customer> retrieveCustomer(String id) {
+        return Mono.fromCallable(() -> this.stripeClient.customers()
                         .retrieve(id))
                 .onErrorMap(StripeException.class,
                             e -> new Exception("Error processing Stripe API",
@@ -54,7 +54,7 @@ public class CustomerService {
                 .setName(customerDto.getName())
                 .setPhone(customerDto.getPhone())
                 .build();
-        return Mono.fromCallable(() -> stripeClient.customers()
+        return Mono.fromCallable(() -> this.stripeClient.customers()
                         .create(customerParams))
                 .onErrorMap(StripeException.class,
                             e -> new Exception("Error processing Stripe API",
@@ -82,7 +82,7 @@ public class CustomerService {
                 .build();
         return Mono.fromRunnable(() -> {
                     try {
-                        stripeClient.customers()
+                        this.stripeClient.customers()
                                 .update(id,
                                         customerParams);
                     } catch (StripeException e) {
@@ -104,7 +104,7 @@ public class CustomerService {
     public Mono<Void> deleteCustomer(String id) {
         return Mono.fromRunnable(() -> {
                     try {
-                        stripeClient.customers()
+                        this.stripeClient.customers()
                                 .delete(id);
                     } catch (StripeException e) {
                         throw new RuntimeException(e);
