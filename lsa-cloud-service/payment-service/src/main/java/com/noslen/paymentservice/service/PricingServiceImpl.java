@@ -14,10 +14,12 @@ import reactor.core.publisher.Mono;
 public class PricingServiceImpl implements PricingService {
 
     private final StripeClient stripeClient;
+    private final StripeClientHelper stripeClientHelper;
     private Mono<Price> standardRateMono;
 
-    public PricingServiceImpl(StripeClient stripeClient) {
+    public PricingServiceImpl(StripeClient stripeClient, StripeClientHelper stripeClientHelper) {
         this.stripeClient = stripeClient;
+        this.stripeClientHelper = stripeClientHelper;
         initializeStandardRate();
     }
 
@@ -48,27 +50,30 @@ public class PricingServiceImpl implements PricingService {
 
     @Override
     public Mono<StripeCollection<Price>> listAllPrices() {
-        return Mono.fromCallable(() -> stripeClient.prices().list())
-                .onErrorMap(StripeException.class,
-                            e -> new Exception("Error processing Stripe API",
-                                               e));
+//        return Mono.fromCallable(() -> stripeClient.prices().list())
+//                .onErrorMap(StripeException.class,
+//                            e -> new Exception("Error processing Stripe API",
+//                                               e));
+        return stripeClientHelper.executeStripeCall(() -> stripeClient.prices().list());
     }
 
     @Override
     public Mono<Price> retrievePrice(String id) {
-        return Mono.fromCallable(() -> stripeClient.prices().retrieve(id))
-                .onErrorMap(StripeException.class,
-                            e -> new Exception("Error processing Stripe API",
-                                               e));
+//        return Mono.fromCallable(() -> stripeClient.prices().retrieve(id))
+//                .onErrorMap(StripeException.class,
+//                            e -> new Exception("Error processing Stripe API",
+//                                               e));
+        return stripeClientHelper.executeStripeCall(() -> stripeClient.prices().retrieve(id));
     }
 
     @Override
     public Mono<Price> createPrice(PriceCreateParams params) {
-        return Mono.fromCallable(() -> stripeClient.prices()
-                .create(params))
-                .onErrorMap(StripeException.class,
-                            e -> new Exception("Error processing Stripe API",
-                                               e));
+//        return Mono.fromCallable(() -> stripeClient.prices()
+//                .create(params))
+//                .onErrorMap(StripeException.class,
+//                            e -> new Exception("Error processin
+        return stripeClientHelper.executeStripeCall(() -> stripeClient.prices()
+                .create(params));
     }
 
     @Override
@@ -93,11 +98,13 @@ public class PricingServiceImpl implements PricingService {
                     .setProduct(priceDTO.getProduct())
                     .build();
         }
-        return Mono.fromCallable(() -> stripeClient.prices()
-                .create(params))
-                .onErrorMap(StripeException.class,
-                            e -> new Exception("Error processing Stripe API",
-                                               e));
+//        return Mono.fromCallable(() -> stripeClient.prices()
+//                .create(params))
+//                .onErrorMap(StripeException.class,
+//                            e -> new Exception("Error processing Stripe API",
+//                                               e));
+        return stripeClientHelper.executeStripeCall(() -> stripeClient.prices()
+                .create(params));
     }
 
     @Override
@@ -106,23 +113,26 @@ public class PricingServiceImpl implements PricingService {
                 .setLookupKey(priceDTO.getLookupKey())
                 .setActive(priceDTO.getIsActive())
                 .build();
-        return Mono.fromRunnable(() -> {
-                    try {
-                        stripeClient.prices()
-                                .update(id,
-                                        params);
-                    } catch (StripeException e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .onErrorMap(ex -> {
-                    if (ex.getCause() instanceof StripeException) {
-                        return new Exception("Error processing Stripe API",
-                                             ex.getCause());
-                    }
-                    return ex;
-                })
-                .then();
+//        return Mono.fromRunnable(() -> {
+//                    try {
+//                        stripeClient.prices()
+//                                .update(id,
+//                                        params);
+//                    } catch (StripeException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                })
+//                .onErrorMap(ex -> {
+//                    if (ex.getCause() instanceof StripeException) {
+//                        return new Exception("Error processing Stripe API",
+//                                             ex.getCause());
+//                    }
+//                    return ex;
+//                })
+//                .then();
+        return stripeClientHelper.executeStripeVoidCall(() -> stripeClient.prices()
+                .update(id,
+                        params));
     }
 
 
