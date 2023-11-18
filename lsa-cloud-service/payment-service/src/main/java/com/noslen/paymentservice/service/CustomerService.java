@@ -1,124 +1,23 @@
 package com.noslen.paymentservice.service;
 
-import com.noslen.paymentservice.dto.Address;
 import com.noslen.paymentservice.dto.CustomerDto;
-import com.stripe.StripeClient;
-import com.stripe.exception.StripeException;
 import com.stripe.model.Customer;
 import com.stripe.model.StripeCollection;
-import com.stripe.param.CustomerCreateParams;
-import com.stripe.param.CustomerUpdateParams;
-import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-@Service
-public class CustomerService {
+public interface CustomerService {
+    //     List All Customers
+    Mono<StripeCollection<Customer>> listAllCustomers();
 
-    private final StripeClient stripeClient;
+    //    Retrieve a Customer
+    Mono<Customer> retrieveCustomer(String id);
 
-    public CustomerService(StripeClient stripeClient) {
-        this.stripeClient = stripeClient;
-    }
+    //    Create a Customer
+    Mono<Customer> createCustomer(CustomerDto customerDto);
 
-//     List All Customers
-    public Mono<StripeCollection<Customer>> listAllCustomers() {
-        return Mono.fromCallable(() -> this.stripeClient.customers()
-                        .list())
-                .onErrorMap(StripeException.class,
-                            e -> new Exception("Error processing Stripe API",
-                                               e));
-    }
+    //    Update a Customer
+    Mono<Void> updateCustomer(String id, CustomerDto customerDto);
 
-//    Retrieve a Customer
-    public Mono<Customer> retrieveCustomer(String id) {
-        return Mono.fromCallable(() -> this.stripeClient.customers()
-                        .retrieve(id))
-                .onErrorMap(StripeException.class,
-                            e -> new Exception("Error processing Stripe API",
-                                               e));
-    }
-
-//    Create a Customer
-    public Mono<Customer> createCustomer(CustomerDto customerDto) {
-        Address address = customerDto.getAddress();
-        CustomerCreateParams customerParams = CustomerCreateParams.builder()
-                .setAddress(CustomerCreateParams.Address.builder()
-                                    .setCity(address.getCity())
-                                    .setCountry("US")
-                                    .setLine1(address.getLine1())
-                                    .setLine2(address.getLine2())
-                                    .setState(address.getState())
-                                    .setPostalCode(address.getPostalCode())
-                                    .build())
-                .setEmail(customerDto.getEmail())
-                .setName(customerDto.getName())
-                .setPhone(customerDto.getPhone())
-                .build();
-        return Mono.fromCallable(() -> this.stripeClient.customers()
-                        .create(customerParams))
-                .onErrorMap(StripeException.class,
-                            e -> new Exception("Error processing Stripe API",
-                                               e));
-    }
-
-//    Update a Customer
-    public Mono<Void> updateCustomer(String id, CustomerDto customerDto) {
-        Address address = customerDto.getAddress();
-        CustomerUpdateParams customerParams = CustomerUpdateParams.builder()
-                .setAddress(CustomerUpdateParams.Address.builder()
-                                    .setCity(address.getCity())
-                                    .setCountry("US")
-                                    .setLine1(address.getLine1())
-                                    .setLine2(address.getLine2())
-                                    .setState(address.getState())
-                                    .setPostalCode(address.getPostalCode())
-                                    .build())
-                .setEmail(customerDto.getEmail())
-                .setName(customerDto.getName())
-                .setPhone(customerDto.getPhone())
-//                .setInvoiceSettings(CustomerUpdateParams.InvoiceSettings.builder()
-//                                            .setDefaultPaymentMethod(customerDto.getDefaultPaymentMethod())
-//                                            .build())
-                .build();
-        return Mono.fromRunnable(() -> {
-                    try {
-                        this.stripeClient.customers()
-                                .update(id,
-                                        customerParams);
-                    } catch (StripeException e) {
-                        throw new RuntimeException("Error processing Stripe API",
-                                                   e);
-                    }
-                })
-                .onErrorMap(ex -> {
-                    if (ex.getCause() instanceof StripeException) {
-                        return new Exception("Error processing Stripe API",
-                                             ex.getCause());
-                     }
-                    return ex;
-                })
-                .then();
-    }
-
-//    Delete a Customer
-    public Mono<Void> deleteCustomer(String id) {
-        return Mono.fromRunnable(() -> {
-                    try {
-                        this.stripeClient.customers()
-                                .delete(id);
-                    } catch (StripeException e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .onErrorMap(ex -> {
-                    if (ex.getCause() instanceof StripeException) {
-                        return new Exception("Error processing Stripe API",
-                                             ex.getCause());
-                    }
-                    return ex;
-                })
-                .then();
-    }
-
-
+    //    Delete a Customer
+    Mono<Void> deleteCustomer(String id);
 }

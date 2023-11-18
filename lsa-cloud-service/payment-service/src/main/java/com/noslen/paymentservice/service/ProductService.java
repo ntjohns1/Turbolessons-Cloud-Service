@@ -1,89 +1,18 @@
 package com.noslen.paymentservice.service;
 
 import com.noslen.paymentservice.dto.ProductDto;
-import com.stripe.StripeClient;
-import com.stripe.exception.StripeException;
 import com.stripe.model.Product;
 import com.stripe.model.StripeCollection;
-import com.stripe.param.ProductCreateParams;
-import com.stripe.param.ProductUpdateParams;
-import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-@Service
-public class ProductService {
+public interface ProductService {
+    Mono<StripeCollection<Product>> listAllProducts();
 
-    private final StripeClient stripeClient;
+    Mono<Product> retrieveProduct(String id);
 
-    public ProductService(StripeClient stripeClient) {
-        this.stripeClient = stripeClient;
-    }
+    Mono<Product> createProduct(ProductDto productDto);
 
-    public Mono<StripeCollection<Product>> listAllProducts() {
-        return Mono.fromCallable(() -> stripeClient.products()
-                        .list())
-                .onErrorMap(StripeException.class,
-                            e -> new Exception("Error processing Stripe API",
-                                               e));
-    }
+    Mono<Void> updateProduct(String id, ProductDto productDto);
 
-    public Mono<Product> retrieveProduct(String id) {
-        return Mono.fromCallable(() -> stripeClient.products()
-                .retrieve(id));
-    }
-
-    public Mono<Product> createProduct(ProductDto productDto) {
-        ProductCreateParams params = ProductCreateParams.builder()
-                .setName(productDto.getName())
-                .setDescription(productDto.getDescription())
-                .build();
-        return Mono.fromCallable(() -> stripeClient.products()
-                        .create(params))
-                .onErrorMap(StripeException.class,
-                            e -> new Exception("Error processing Stripe API",
-                                               e));
-    }
-
-    public Mono<Void> updateProduct(String id, ProductDto productDto) {
-        ProductUpdateParams params = ProductUpdateParams.builder()
-                .setName(productDto.getName())
-                .setDescription(productDto.getDescription())
-                .build();
-        return Mono.fromRunnable(() -> {
-                    try {
-                        stripeClient.products()
-                                .update(id);
-                    } catch (StripeException e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .onErrorMap(ex -> {
-                    if (ex.getCause() instanceof StripeException) {
-                        return new Exception("Error processing Stripe API",
-                                             ex.getCause());
-                    }
-                    return ex;
-                })
-                .then();
-    }
-
-    public Mono<Void> deleteProduct(String id) {
-        return Mono.fromRunnable(() -> {
-                    try {
-                        stripeClient.products()
-                                .delete(id);
-                    } catch (StripeException e) {
-                        throw new RuntimeException(e);
-                    }
-                })
-                .onErrorMap(ex -> {
-                    if (ex.getCause() instanceof StripeException) {
-                        return new Exception("Error processing Stripe API",
-                                             ex.getCause());
-                    }
-                    return ex;
-                })
-                .then();
-    }
-
+    Mono<Void> deleteProduct(String id);
 }
