@@ -44,7 +44,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     //    Retrieve a Subscription by id
     @Override
-    public Mono<Subscription> getSubscription(String id) {
+    public Mono<Subscription> retrieveSubscription(String id) {
 //        return Mono.fromCallable(() -> stripeClient.subscriptions()
 //                        .retrieve(id))
 //                .onErrorMap(StripeException.class,

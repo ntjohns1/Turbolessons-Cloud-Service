@@ -12,7 +12,7 @@ public interface SubscriptionService {
     Mono<StripeCollection<Subscription>> listAllSubscriptions();
 
     //    Retrieve a Subscription by id
-    Mono<Subscription> getSubscription(String id);
+    Mono<Subscription> retrieveSubscription(String id);
 
     //    Search Subscriptions by Customer
     Mono<StripeSearchResult<Subscription>> getSubscriptionsByCustomer(String customerId);

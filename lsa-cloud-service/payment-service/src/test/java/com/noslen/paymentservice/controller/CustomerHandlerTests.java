@@ -31,7 +31,7 @@ import static org.springframework.security.test.web.reactive.server.SecurityMock
 
 @Log4j2
 @WebFluxTest
-@Import(CustomerHandler.class)
+@Import(CustomerHandlerImpl.class)
 @AutoConfigureWebTestClient
 @ActiveProfiles("test")
 @TestPropertySource(locations = "classpath:application-test.yml", properties = {"spring.config.name=application-test"})
@@ -44,7 +44,7 @@ public class CustomerHandlerTests {
     private WebTestClient webTestClient;
 
     @Autowired
-    private CustomerHandler customerHandler;
+    private CustomerHandlerImpl customerHandler;
 
     @BeforeEach
     public void setUp() {
@@ -57,7 +57,7 @@ public class CustomerHandlerTests {
     public void shouldHandleListAllCustomers() {
         StripeCollection<Customer> mockCustomers = createMockStripeCollection();
         when(customerService.listAllCustomers()).thenReturn(Mono.just(mockCustomers));
-
+        System.out.println(mockCustomers);
         webTestClient.get()
                 .uri("/api/customer")
                 .exchange()
@@ -73,7 +73,7 @@ public class CustomerHandlerTests {
     @Test
     void shouldHandleRetrieveCustomer() {
         Customer customer = createMockCustomer();
-        when(customerService.retrieveCustomer(any())).thenReturn(Mono.just(customer));
+        when(customerService.retrieveCustomer(anyString())).thenReturn(Mono.just(customer));
         webTestClient.get()
                 .uri("/api/customer/cus_123")
                 .exchange()
