@@ -3,7 +3,6 @@ package com.noslen.paymentservice.controller;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -11,8 +10,8 @@ import reactor.core.publisher.Mono;
 
 public abstract class BaseHandler {
 
-    
-    protected  <T> Mono<ServerResponse> handleListAll(ServerRequest request, ReadRequestProcessor<T> processor, ParameterizedTypeReference<T> typeReference) {
+
+    protected <T> Mono<ServerResponse> handleListAll(ServerRequest request, ReadRequestProcessor<T> processor, ParameterizedTypeReference<T> typeReference) {
         return processor.process(request)
                 .flatMap(responseBody -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
@@ -22,7 +21,7 @@ public abstract class BaseHandler {
                 .onErrorResume(this::handleError);
     }
 
-    
+
     protected <T> Mono<ServerResponse> handleRetrieve(ServerRequest request, ReadRequestProcessor<T> processor, Class<T> responseBodyClass) {
         return processor.process(request)
                 .flatMap(responseBody -> ServerResponse.ok()
@@ -33,7 +32,7 @@ public abstract class BaseHandler {
                 .onErrorResume(this::handleError);
     }
 
-    
+
     protected <T, R> Mono<ServerResponse> handleCreate(ServerRequest request, CreateRequestProcessor<T, R> processor, Class<T> requestBodyClass, Class<R> responseBodyClass) {
         Mono<T> requestBody = request.bodyToMono(requestBodyClass);
         return processor.process(requestBody)
@@ -46,15 +45,16 @@ public abstract class BaseHandler {
     }
 
 
-    
     protected <U, T> Mono<ServerResponse> handleUpdate(ServerRequest request, UpdateRequestProcessor<U, T, Void> processor, U additionalParam, Class<T> requestBodyClass) {
         Mono<T> requestBody = request.bodyToMono(requestBodyClass);
-        return processor.process(additionalParam, requestBody)
-                .then(ServerResponse.noContent().build())
+        return processor.process(additionalParam,
+                                 requestBody)
+                .then(ServerResponse.noContent()
+                              .build())
                 .onErrorResume(this::handleError);
     }
 
-    
+
     protected <T> Mono<ServerResponse> handleDelete(ServerRequest request, ReadRequestProcessor<T> processor) {
         return processor.process(request)
                 .then(ServerResponse.noContent()
