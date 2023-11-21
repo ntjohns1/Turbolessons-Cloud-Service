@@ -11,8 +11,8 @@ import lombok.*;
 @ToString
 public class PriceDTO {
 
-//    In cents;
     private String id;
+//    In cents;
     private Long unitAmount;
     private String currency = "usd";
     private String lookupKey;
