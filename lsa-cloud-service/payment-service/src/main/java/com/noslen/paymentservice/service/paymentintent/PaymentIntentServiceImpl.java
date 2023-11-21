@@ -32,25 +32,14 @@ public class PaymentIntentServiceImpl implements PaymentIntentService {
 
     @Override
     public Mono<PaymentIntent> retrievePaymentIntent(String id) {
-//        return Mono.fromCallable(() -> stripeClient.paymentIntents()
-//                        .retrieve(id))
-//                .onErrorMap(StripeException.class,
-//                            e -> new Exception("Error processing Stripe API",
-//                                               e));
+
         return stripeClientHelper.executeStripeCall(() -> stripeClient.paymentIntents()
                         .retrieve(id));
     }
 
     @Override
     public Mono<StripeSearchResult<PaymentIntent>> searchPaymentIntentByCustomer(String customerId) {
-//        return Mono.fromCallable(() -> stripeClient.paymentIntents()
-//                        .search(PaymentIntentSearchParams.builder()
-//                                        .setQuery(String.format("customer:%s",
-//                                                                customerId))
-//                                        .build()))
-//                .onErrorMap(StripeException.class,
-//                            e -> new Exception("Error processing Stripe API",
-//                                               e));
+
         return stripeClientHelper.executeStripeCall(() -> stripeClient.paymentIntents()
                 .search(PaymentIntentSearchParams.builder()
                                 .setQuery(String.format("customer:%s",
@@ -69,11 +58,7 @@ public class PaymentIntentServiceImpl implements PaymentIntentService {
                 .setCurrency("usd")
 
                 .build();
-//        return Mono.fromCallable(() -> stripeClient.paymentIntents()
-//                        .create(params))
-//                .onErrorMap(StripeException.class,
-//                            e -> new Exception("Error processing Stripe API",
-//                                               e));
+
         return stripeClientHelper.executeStripeCall(() -> stripeClient.paymentIntents()
                 .create(params));
     }
@@ -86,23 +71,7 @@ public class PaymentIntentServiceImpl implements PaymentIntentService {
                 .setDescription(paymentIntentDto.getDescription())
                 .setPaymentMethod(paymentIntentDto.getPaymentMethod())
                 .build();
-//        return Mono.fromRunnable(() -> {
-//                    try {
-//                        stripeClient.paymentIntents()
-//                                .update(id,
-//                                        params);
-//                    } catch (StripeException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                })
-//                .onErrorMap(ex -> {
-//                    if (ex.getCause() instanceof StripeException) {
-//                        return new Exception("Error processing Stripe API",
-//                                             ex.getCause());
-//                    }
-//                    return ex;
-//                })
-//                .then();
+
         return stripeClientHelper.executeStripeVoidCall(() -> stripeClient.paymentIntents()
                 .update(id,
                         params));
@@ -110,33 +79,14 @@ public class PaymentIntentServiceImpl implements PaymentIntentService {
 
     @Override
     public Mono<PaymentIntent> capturePaymentIntent(String id) {
-//        return Mono.fromCallable(() -> stripeClient.paymentIntents()
-//                        .capture(id))
-//                .onErrorMap(StripeException.class,
-//                            e -> new Exception("Error processing Stripe API",
-//                                               e));
+
         return stripeClientHelper.executeStripeCall(() -> stripeClient.paymentIntents()
                 .capture(id));
     }
 
     @Override
     public Mono<Void> cancelPaymentIntent(String id) {
-//        return Mono.fromRunnable(() -> {
-//                    try {
-//                        stripeClient.paymentIntents()
-//                                .cancel(id);
-//                    } catch (StripeException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                })
-//                .onErrorMap(ex -> {
-//                    if (ex.getCause() instanceof StripeException) {
-//                        return new Exception("Error processing Stripe API",
-//                                             ex.getCause());
-//                    }
-//                    return ex;
-//                })
-//                .then();
+
         return stripeClientHelper.executeStripeVoidCall(() -> stripeClient.paymentIntents()
                 .cancel(id));
     }

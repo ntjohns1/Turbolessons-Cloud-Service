@@ -3,8 +3,10 @@ package com.noslen.paymentservice.controller.paymentintent;
 import com.noslen.paymentservice.controller.customer.CustomerEndpointConfig;
 import com.noslen.paymentservice.controller.customer.CustomerHandlerImpl;
 import com.noslen.paymentservice.service.customer.CustomerService;
+import com.noslen.paymentservice.service.paymentintent.PaymentIntentService;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
@@ -25,7 +27,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 public class PaymentIntentHandlerTests {
 
     @MockBean
-    private CustomerService customerService;
+    private PaymentIntentService paymentIntentService;
 
     @Autowired
     private WebTestClient webTestClient;
@@ -40,5 +42,33 @@ public class PaymentIntentHandlerTests {
                 .build();
     }
 
+    @Test
+    void shouldListAllPaymentIntents() {
+    }
+
+    @Test
+    void shouldRetrievePaymentIntent() {
+    }
+
+    @Test
+    void shouldSearchPaymentIntentsByCustomer() {
+    }
+
+    @Test
+    void shouldCreatePaymentIntent() {
+    }
+
+    @Test
+    void shouldUpdatePaymentIntent() {
+    }
+
+    @Test
+    void shouldCapturePaymentIntent() {
+    }
+
+    @Test
+    void shouldCancelPaymentIntent() {
+    }
 
 }
+
