@@ -1,13 +1,14 @@
 package com.noslen.paymentservice.controller.product;
 
-import com.noslen.paymentservice.controller.customer.CustomerHandlerImpl;
-import com.noslen.paymentservice.controller.paymentmethod.PaymentMethodEndpointConfig;
-import com.noslen.paymentservice.controller.paymentmethod.PaymentMethodHandler;
-import com.noslen.paymentservice.service.paymentmethod.PaymentMethodService;
+import com.noslen.paymentservice.dto.CustomerDto;
+import com.noslen.paymentservice.dto.ProductDto;
 import com.noslen.paymentservice.service.product.ProductService;
+import com.stripe.model.Product;
+import com.stripe.model.StripeCollection;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
@@ -20,6 +21,14 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockJwt;
 
 @Log4j2
 @WebFluxTest
@@ -46,22 +55,135 @@ public class ProductHandlerTests {
     }
 
     @Test
-    void shouldRetrievePrice(ServerRequest r) {
+    void shouldHandleListAllProducts() {
+
+        StripeCollection<Product> mockProducts = createMockStripeCollection();
+        when(productService.listAllProducts()).thenReturn(Mono.just(mockProducts));
+        webTestClient.get()
+                .uri("/api/product")
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBody()
+                .jsonPath("$.object")
+                .isEmpty()
+                .jsonPath("$.data")
+                .isNotEmpty();
+    }
+
+    @Test
+    void shouldHandleRetrieveProduct(ServerRequest r) {
+
+        Product product = createMockProduct("prod_123",
+                                            "Test Product",
+                                            "Test Description");
+
+        when(productService.retrieveProduct(anyString())).thenReturn(Mono.just(product));
+        webTestClient.get()
+                .uri("/api/product/prod_123")
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBody()
+                .jsonPath("$.id")
+                .isEqualTo(product.getId())
+                .jsonPath("$.name")
+                .isEqualTo(product.getName())
+                .jsonPath("$.description")
+                .isEqualTo(product.getDescription());
+    }
+
+    @Test
+    void shouldHandleCreateProduct(ServerRequest r) {
+        Product product = createMockProduct("prod_123",
+                                            "Test Product",
+                                            "Test Description");
+        ProductDto dto = createMockProductDto("prod_123",
+                                              "Test Product",
+                                              "Test Description");
+        when(productService.createProduct(dto)).thenReturn(Mono.just(product));
+
+        webTestClient.mutateWith(mockJwt())
+                .post()
+                .uri("/api/product")
+                .body(Mono.just(dto),
+                      CustomerDto.class)
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBody()
+                .jsonPath("$.id")
+                .isEqualTo(product.getId())
+                .jsonPath("$.name")
+                .isEqualTo(product.getName())
+                .jsonPath("$.description")
+                .isEqualTo(product.getDescription());
 
     }
 
     @Test
-    void shouldCreatePrice(ServerRequest r) {
+    void shouldHandleUpdateProduct(ServerRequest r) {
+        Product product = createMockProduct("prod_123",
+                                            "Test Product",
+                                            "Test Description");
+        ProductDto dto = createMockProductDto("prod_456",
+                                              "Updated Test Product",
+                                              "Updated Test Description");
+        when(productService.updateProduct(anyString(),
+                                          any(ProductDto.class))).thenReturn(Mono.empty());
+
+        webTestClient.mutateWith(mockJwt())
+                .put()
+                .uri("/api/product/prod_123")
+                .body(Mono.just(dto),
+                      CustomerDto.class)
+                .exchange()
+                .expectStatus()
+                .isNoContent();
 
     }
 
     @Test
-    void shouldUpdatePrice(ServerRequest r) {
+    void shouldHandleDeleteProduct(ServerRequest r) {
+        when(productService.deleteProduct(anyString())).thenReturn(Mono.empty());
+
+        webTestClient.mutateWith(mockJwt())
+                .delete()
+                .uri("/api/product/prod_123")
+                .exchange()
+                .expectStatus()
+                .isNoContent();
+
 
     }
 
-    @Test
-    void shouldDeletePrice(ServerRequest r) {
+    private StripeCollection<Product> createMockStripeCollection() {
 
+        StripeCollection<Product> products = new StripeCollection<>();
+        Product product1 = createMockProduct("prod_123",
+                                             "product1",
+                                             "Test Product 1");
+        Product product2 = createMockProduct("prod_456",
+                                             "product2",
+                                             "Test Product 2");
+
+        List<Product> productList = Arrays.asList(product1,
+                                                  product2);
+        products.setData(productList);
+        return products;
+    }
+
+    private Product createMockProduct(String id, String name, String description) {
+        Product product = Mockito.mock(Product.class);
+        when(product.getId()).thenReturn(id);
+        when(product.getName()).thenReturn(name);
+        when(product.getDescription()).thenReturn(description);
+        return product;
+    }
+
+    private ProductDto createMockProductDto(String id, String name, String description) {
+        return new ProductDto(id,
+                              name,
+                              description);
     }
 }

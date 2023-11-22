@@ -6,6 +6,9 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 public interface ProductHandler {
+
+    Mono<ServerResponse> listAll(ServerRequest r);
+
     Mono<ServerResponse> retrieve(ServerRequest r);
 
     Mono<ServerResponse> create(ServerRequest r);

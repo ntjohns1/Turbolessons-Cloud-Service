@@ -13,6 +13,8 @@ import reactor.core.publisher.Mono;
 @Service
 public class ProductHandlerImpl extends BaseHandler implements ProductHandler {
 
+    public Mono<ServerResponse> listAll(ServerRequest r) { return null; }
+
     @Override
     public Mono<ServerResponse> retrieve(ServerRequest r) {
         return null;
