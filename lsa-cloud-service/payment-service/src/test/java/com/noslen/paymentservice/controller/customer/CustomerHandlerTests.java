@@ -57,7 +57,6 @@ public class CustomerHandlerTests {
     public void shouldHandleListAllCustomers() {
         StripeCollection<Customer> mockCustomers = createMockStripeCollection();
         when(customerService.listAllCustomers()).thenReturn(Mono.just(mockCustomers));
-        System.out.println(mockCustomers);
         webTestClient.get()
                 .uri("/api/customer")
                 .exchange()
@@ -72,7 +71,8 @@ public class CustomerHandlerTests {
 
     @Test
     void shouldHandleRetrieveCustomer() {
-        Customer customer = createMockCustomer();
+        Customer customer = createMockCustomer("test@example.com",
+                                               "Andrew Anderson");
         when(customerService.retrieveCustomer(anyString())).thenReturn(Mono.just(customer));
         webTestClient.get()
                 .uri("/api/customer/cus_123")
@@ -81,7 +81,7 @@ public class CustomerHandlerTests {
                 .isOk()
                 .expectBody()
                 .jsonPath("$.id")
-                .isEqualTo("cus_123")
+                .isEqualTo(customer.getId())
                 .jsonPath("$.email")
                 .isEqualTo("test@example.com")
                 .jsonPath("$.name")
@@ -90,7 +90,8 @@ public class CustomerHandlerTests {
 
     @Test
     void shouldHandleCreateCustomer() {
-        Customer customer = createMockCustomer();
+        Customer customer = createMockCustomer("test@example.com",
+                                               "Claudia Coulthard");
         Address address = new Address();
         address.setCity("Los Angeles");
         address.setState("CA");
@@ -121,12 +122,13 @@ public class CustomerHandlerTests {
                 .jsonPath("$.email")
                 .isEqualTo("test@example.com")
                 .jsonPath("$.name")
-                .isEqualTo("Andrew Anderson");
+                .isEqualTo("Claudia Coulthard");
     }
 
     @Test
     void shouldHandleUpdateCustomer() {
-        Customer customer = createMockCustomer();
+        Customer customer = createMockCustomer("email@example.com",
+                                               "Claudia Coulthard");
         CustomerDto data = createCustomerDto();
         Address address = new Address();
         address.setCity("Columbus");
@@ -143,8 +145,8 @@ public class CustomerHandlerTests {
                                                  "1234567890",
                                                  "pm_789",
                                                  "Updated Test DTO");
-        when(customerService.updateCustomer(anyString(), any(CustomerDto.class)))
-                .thenReturn(Mono.empty());
+        when(customerService.updateCustomer(anyString(),
+                                            any(CustomerDto.class))).thenReturn(Mono.empty());
 
         webTestClient.mutateWith(mockJwt())
                 .put()
@@ -152,7 +154,8 @@ public class CustomerHandlerTests {
                 .body(Mono.just(updateData),
                       CustomerDto.class)
                 .exchange()
-                .expectStatus().isNoContent();
+                .expectStatus()
+                .isNoContent();
 
     }
 
@@ -164,18 +167,17 @@ public class CustomerHandlerTests {
                 .delete()
                 .uri("/api/customer/cus_123")
                 .exchange()
-                .expectStatus().isNoContent();
+                .expectStatus()
+                .isNoContent();
     }
 
     // Helper method to create mock StripeCollection
     private StripeCollection<Customer> createMockStripeCollection() {
         StripeCollection<Customer> customers = new StripeCollection<>();
 
-        Customer mockCustomer1 = Mockito.mock(Customer.class);
-        when(mockCustomer1.getId()).thenReturn("cus_123");
+        Customer mockCustomer1 = createMockCustomer("test@example.com","Andrew Anderson");
 
-        Customer mockCustomer2 = Mockito.mock(Customer.class);
-        when(mockCustomer2.getId()).thenReturn("cus_456");
+        Customer mockCustomer2 = createMockCustomer("test@example.com","Claudia Coulthard");
 
         List<Customer> customerList = Arrays.asList(mockCustomer1,
                                                     mockCustomer2);
@@ -183,11 +185,11 @@ public class CustomerHandlerTests {
         return customers;
     }
 
-    private Customer createMockCustomer() {
+    private Customer createMockCustomer(String email, String name) {
         Customer customer = Mockito.mock(Customer.class);
         when(customer.getId()).thenReturn("cus_123");
-        when(customer.getEmail()).thenReturn("test@example.com");
-        when(customer.getName()).thenReturn("Andrew Anderson");
+        when(customer.getEmail()).thenReturn(email);
+        when(customer.getName()).thenReturn(name);
         return customer;
     }
 

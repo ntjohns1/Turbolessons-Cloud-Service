@@ -2,9 +2,7 @@ package com.noslen.paymentservice.controller.paymentmethod;
 
 
 import com.noslen.paymentservice.controller.BaseHandler;
-import com.noslen.paymentservice.dto.BankDto;
-import com.noslen.paymentservice.dto.CardDto;
-import com.noslen.paymentservice.service.paymentintent.PaymentIntentService;
+import com.noslen.paymentservice.service.paymentmethod.PaymentMethodService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.server.ServerRequest;
@@ -15,10 +13,10 @@ import reactor.core.publisher.Mono;
 @Service
 public class PaymentMethodHandlerImpl extends BaseHandler implements PaymentMethodHandler {
 
-    private final PaymentIntentService paymentIntentService;
+    private final PaymentMethodService paymentMethodService;
 
-    public PaymentMethodHandlerImpl(PaymentIntentService paymentIntentService) {
-        this.paymentIntentService = paymentIntentService;
+    public PaymentMethodHandlerImpl(PaymentMethodService paymentMethodService) {
+        this.paymentMethodService = paymentMethodService;
     }
 
     @Override
