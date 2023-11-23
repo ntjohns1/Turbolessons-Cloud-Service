@@ -22,9 +22,10 @@ public class PaymentIntentEndpointConfig {
 
       return  route((GET("/api/paymentintent")), handler::listAll)
                 .andRoute(GET("/api/paymentintent/{id}"), handler::retrieve)
+                .andRoute(GET("/api/paymentintent/customer/{id}"), handler::searchByCustomer)
                 .andRoute(POST("/api/paymentintent"), handler::create)
                 .andRoute(PUT("/api/paymentintent/{id}"), handler::update)
-                .andRoute(PUT("/api/paymentintent/{id}"), handler::capture)
+                .andRoute(PUT("/api/paymentintent/capture/{id}"), handler::capture)
                 .andRoute(DELETE("/api/paymentintent/{id}"), handler::cancel);
     }
 }

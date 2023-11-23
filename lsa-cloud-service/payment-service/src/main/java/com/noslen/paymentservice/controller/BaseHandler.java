@@ -44,6 +44,16 @@ public abstract class BaseHandler {
                 .onErrorResume(this::handleError);
     }
 
+    protected <T> Mono<ServerResponse> handleSearch(ServerRequest request, ReadRequestProcessor<T> processor, ParameterizedTypeReference<T> typeReference) {
+        return processor.process(request)
+                .flatMap(responseBody -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .bodyValue(responseBody))
+                .switchIfEmpty(ServerResponse.notFound()
+                                       .build())
+                .onErrorResume(this::handleError);
+    }
+
 
     protected <U, T> Mono<ServerResponse> handleUpdate(ServerRequest request, UpdateRequestProcessor<U, T, Void> processor, U additionalParam, Class<T> requestBodyClass) {
         Mono<T> requestBody = request.bodyToMono(requestBodyClass);
@@ -54,6 +64,15 @@ public abstract class BaseHandler {
                 .onErrorResume(this::handleError);
     }
 
+    protected <T> Mono<ServerResponse> handleCapture(ServerRequest request, ReadRequestProcessor<T> processor, Class<T> responseBodyClass) {
+        return processor.process(request)
+                .flatMap(responseBody -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .bodyValue(responseBody))
+                .switchIfEmpty(ServerResponse.notFound()
+                                       .build())
+                .onErrorResume(this::handleError);
+    }
 
     protected <T> Mono<ServerResponse> handleDelete(ServerRequest request, ReadRequestProcessor<T> processor) {
         return processor.process(request)

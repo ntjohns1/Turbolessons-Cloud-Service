@@ -96,7 +96,7 @@ public class PaymentIntentHandlerTests {
                 .isEqualTo("cus_123")
                 .jsonPath("$.description")
                 .isEqualTo("Test PaymentIntent")
-                .jsonPath("$.payment_method")
+                .jsonPath("$.paymentMethod")
                 .isEqualTo("pm_123")
                 .jsonPath("$.invoice")
                 .isEqualTo("in_123")
@@ -124,14 +124,14 @@ public class PaymentIntentHandlerTests {
                 .isEqualTo(customerId)
                 .jsonPath("$.data[0].description")
                 .isEqualTo("Test PaymentIntent")
-                .jsonPath("$.data[0].payment_method")
+                .jsonPath("$.data[0].paymentMethod")
                 .isEqualTo("pm_123")
                 .jsonPath("$.data[0].invoice")
                 .isEqualTo("in_123")
                 .jsonPath("$.data[0].status")
                 .isEqualTo("processing");
+        // Additional assertions...
     }
-
 
     @Test
     void shouldHandleCreatePaymentIntent() {
@@ -146,30 +146,30 @@ public class PaymentIntentHandlerTests {
                                                           "cus_123",
                                                           "Test PaymentIntent",
                                                           "pm_123");
-        when(paymentIntentService.createPaymentIntent(any())
-                     .thenReturn(paymentIntent));
+        when(paymentIntentService.createPaymentIntent(any(PaymentIntentDto.class)))
+                .thenReturn(Mono.just(paymentIntent));
         webTestClient.mutateWith(mockJwt())
                 .post()
-                .uri("api/paymentintent")
+                .uri("/api/paymentintent")
                 .body(Mono.just(dto),
                       PaymentIntentDto.class)
                 .exchange()
                 .expectStatus()
                 .isOk()
                 .expectBody()
-                .jsonPath("$.data[0].id")
+                .jsonPath("$.id")
                 .isEqualTo("pi_123")
-                .jsonPath("$.data[0].amount")
+                .jsonPath("$.amount")
                 .isEqualTo(5000)
-                .jsonPath("$.data[0].customer")
+                .jsonPath("$.customer")
                 .isEqualTo("cus_123")
-                .jsonPath("$.data[0].description")
+                .jsonPath("$.description")
                 .isEqualTo("Test PaymentIntent")
-                .jsonPath("$.data[0].payment_method")
+                .jsonPath("$.paymentMethod")
                 .isEqualTo("pm_123")
-                .jsonPath("$.data[0].invoice")
+                .jsonPath("$.invoice")
                 .isEqualTo("in_123")
-                .jsonPath("$.data[0].status")
+                .jsonPath("$.status")
                 .isEqualTo("processing");
     }
 
@@ -183,22 +183,22 @@ public class PaymentIntentHandlerTests {
                                                               "pm_456",
                                                               "processing");
         PaymentIntentDto updateData = createMockPaymentIntentDto(6000L,
-                                                          "cus_456",
-                                                          "Updated Test PaymentIntent",
-                                                          "pm_456");
+                                                                 "cus_456",
+                                                                 "Updated Test PaymentIntent",
+                                                                 "pm_456");
 
-        when(paymentIntentService.updatePaymentIntent(anyString(),
-                                                      any(PaymentIntentDto.class)).thenReturn(paymentIntent));
+        when(paymentIntentService.updatePaymentIntent(anyString(), any(PaymentIntentDto.class)))
+                .thenReturn(Mono.empty());
 
         webTestClient.mutateWith(mockJwt())
                 .put()
                 .uri("/api/paymentintent/pi_123")
-                .body(Mono.just(updateData),
-                      PaymentIntentDto.class)
+                .body(Mono.just(updateData), PaymentIntentDto.class)
                 .exchange()
                 .expectStatus()
                 .isNoContent();
     }
+
 
     @Test
     void shouldHandleCapturePaymentIntent() {
@@ -210,19 +210,21 @@ public class PaymentIntentHandlerTests {
                                                               "pm_123",
                                                               "succeeded");
 
-        when(paymentIntentService.capturePaymentIntent(anyString()).thenReturn(paymentIntent));
+        when(paymentIntentService.capturePaymentIntent(anyString())).thenReturn(Mono.just(paymentIntent));
 
         webTestClient.mutateWith(mockJwt())
                 .put()
                 .uri("/api/paymentintent/capture/pi_123")
                 .exchange()
                 .expectStatus()
-                .isNoContent();
+                .isOk();
     }
+
 
     @Test
     void shouldHandleCancelPaymentIntent() {
-        when(paymentIntentService.cancelPaymentIntent(anyString()).thenReturn(Mono.empty()));
+        when(paymentIntentService.cancelPaymentIntent(anyString()))
+                .thenReturn(Mono.empty());
 
         webTestClient.mutateWith(mockJwt())
                 .delete()
@@ -287,19 +289,19 @@ public class PaymentIntentHandlerTests {
 
     private StripeSearchResult<PaymentIntent> createMockStripeSearchResult() {
         StripeSearchResult<PaymentIntent> searchResult = new StripeSearchResult<>();
-
-        PaymentIntent mockPaymentIntent1 = createMockPaymentIntent("pi_123",
-                                                                   5000L,
-                                                                   "cus_123",
-                                                                   "Test PaymentIntent",
-                                                                   "in_123",
-                                                                   "pm_123",
-                                                                   "processing");
-
-        List<PaymentIntent> paymentIntentList = List.of(mockPaymentIntent1);
+        List<PaymentIntent> paymentIntentList = List.of(createMockPaymentIntent("pi_123",
+                                                                                5000L,
+                                                                                "cus_123",
+                                                                                "Test PaymentIntent",
+                                                                                "in_123",
+                                                                                "pm_123",
+                                                                                "processing")
+                                                        // Add more mock PaymentIntents if necessary
+        );
         searchResult.setData(paymentIntentList);
         return searchResult;
     }
+
 
 }
 
