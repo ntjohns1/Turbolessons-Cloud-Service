@@ -103,8 +103,8 @@ public class SetupIntentHandlerTests {
                                                         "cus_123",
                                                         "pm_456");
         SetupIntentDto dto = createMockSetupIntentDto("Test Description");
-        when(setupIntentService.createSetupIntent(any(SetupIntentDto.class))
-                     .thenReturn(setupIntent));
+        when(setupIntentService.createSetupIntent(any(SetupIntentDto.class)))
+                     .thenReturn(Mono.just(setupIntent));
         webTestClient.mutateWith(mockJwt())
                 .post()
                 .uri("/api/setupintent/si_123")
@@ -127,8 +127,8 @@ public class SetupIntentHandlerTests {
     @Test
     void shouldConfirmSetupIntent(ServerRequest r) {
 
-        when(setupIntentService.confirmSetupIntent(anyString())
-                     .thenReturn(Mono.empty()));
+        when(setupIntentService.confirmSetupIntent(anyString()))
+                     .thenReturn(Mono.empty());
         webTestClient.mutateWith(mockJwt())
                 .put()
                 .uri("/api/setupintent/confirm/si_123")

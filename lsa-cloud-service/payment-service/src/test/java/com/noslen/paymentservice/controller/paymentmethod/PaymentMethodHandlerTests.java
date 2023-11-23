@@ -57,8 +57,8 @@ public class PaymentMethodHandlerTests {
     @Test
     void shouldRetrievePaymentMethod() {
         PaymentMethod paymentMethod = createMockCardPaymentMethod("pm_123");
-        when(paymentMethodService.retrievePaymentMethod(anyString())
-                     .thenReturn(Mono.just(paymentMethod)));
+        when(paymentMethodService.retrievePaymentMethod(anyString()))
+                     .thenReturn(Mono.just(paymentMethod));
 
         webTestClient.get()
                 .uri("/api/paymentmethod/pm_123")
@@ -73,8 +73,8 @@ public class PaymentMethodHandlerTests {
     @Test
     void shouldRetrievePaymentMethodByCustomer() {
         StripeCollection<PaymentMethod> paymentMethods = createMockStripeCollection();
-        when(paymentMethodService.retrieveCustomerPaymentMethods(anyString())
-                     .thenReturn(paymentMethods));
+        when(paymentMethodService.retrieveCustomerPaymentMethods(anyString()))
+                     .thenReturn(Mono.just(paymentMethods));
 
         webTestClient.get()
                 .uri("/api/paymentmethod/customer/cus_123")
@@ -98,8 +98,8 @@ public class PaymentMethodHandlerTests {
                                   1L,
                                   2028L);
         when(paymentMethodService.createCardPaymentMethod("cus_123",
-                                                          dto)
-                     .thenReturn(paymentMethod));
+                                                          dto))
+                     .thenReturn(Mono.just(paymentMethod));
 
         webTestClient.mutateWith(mockJwt())
                 .post()
@@ -125,8 +125,8 @@ public class PaymentMethodHandlerTests {
                                   "123456789",
                                   true);
         when(paymentMethodService.createBankPaymentMethod("cus_123",
-                                                          dto)
-                     .thenReturn(paymentMethod));
+                                                          dto))
+                     .thenReturn(Mono.just(paymentMethod));
 
         webTestClient.mutateWith(mockJwt())
                 .post()
@@ -152,7 +152,7 @@ public class PaymentMethodHandlerTests {
                                   "353",
                                   2L,
                                   2029L);
-        when(paymentMethodService.updateCardPaymentMethod(anyString(),any(CardDto.class)).thenReturn(paymentMethod));
+        when(paymentMethodService.updateCardPaymentMethod(anyString(),any(CardDto.class))).thenReturn(Mono.empty());
 
         webTestClient.mutateWith(mockJwt())
                 .put()
@@ -168,7 +168,7 @@ public class PaymentMethodHandlerTests {
 
         PaymentMethod paymentMethod = createMockBankPaymentMethod("cus_123");
 
-        when(paymentMethodService.attachPaymentMethod(anyString(),anyString()).thenReturn(paymentMethod));
+        when(paymentMethodService.attachPaymentMethod(anyString(),anyString())).thenReturn(Mono.empty());
 
         webTestClient.mutateWith(mockJwt())
                 .put()
@@ -182,7 +182,7 @@ public class PaymentMethodHandlerTests {
     void shouldDetachPaymentMethod() {
         PaymentMethod paymentMethod = createMockBankPaymentMethod("cus_123");
 
-        when(paymentMethodService.attachPaymentMethod(anyString(),anyString()).thenReturn(paymentMethod));
+        when(paymentMethodService.attachPaymentMethod(anyString(),anyString())).thenReturn(Mono.empty());
 
         webTestClient.mutateWith(mockJwt())
                 .put()

@@ -57,8 +57,8 @@ public class PriceHandlerTests {
     void shouldListAllPrices(ServerRequest r) {
 
         StripeCollection<Price> prices = createMockPriceCollection();
-        when(pricingService.listAllPrices()
-                     .thenReturn(prices));
+        when(pricingService.listAllPrices())
+                     .thenReturn(Mono.just(prices));
 
         webTestClient.get()
                 .uri("/api/price")
@@ -78,8 +78,8 @@ public class PriceHandlerTests {
                                       5000L,
                                       "Test Price",
                                       "Test Product");
-        when(pricingService.retrievePrice(anyString())
-                     .thenReturn(price));
+        when(pricingService.retrievePrice(anyString()))
+                     .thenReturn(Mono.just(price));
 
         webTestClient.get()
                 .uri("/api/price/price_123")
@@ -106,8 +106,8 @@ public class PriceHandlerTests {
                                       "Test Product");
         PriceDTO dto = createMockPriceDto("test_key",
                                           true);
-        when(pricingService.createPrice(any(PriceDTO.class))
-                     .thenReturn(price));
+        when(pricingService.createPrice(any(PriceDTO.class)))
+                     .thenReturn(Mono.just(price));
 
         webTestClient.mutateWith(mockJwt())
                 .post()
@@ -130,8 +130,8 @@ public class PriceHandlerTests {
         PriceDTO dto = createMockPriceDto("updated_key",
                                           false);
         when(pricingService.updatePrice(anyString(),
-                                        any(PriceDTO.class))
-                     .thenReturn(price));
+                                        any(PriceDTO.class)))
+                     .thenReturn(Mono.empty());
         webTestClient.mutateWith(mockJwt())
                 .put()
                 .uri("/api/price/price_123")
