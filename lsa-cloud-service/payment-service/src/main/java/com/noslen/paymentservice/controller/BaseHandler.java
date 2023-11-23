@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
 public abstract class BaseHandler {
 
 
-    protected <T> Mono<ServerResponse> handleListAll(ServerRequest request, ReadRequestProcessor<T> processor, ParameterizedTypeReference<T> typeReference) {
+    protected <T> Mono<ServerResponse> handleList(ServerRequest request, ReadRequestProcessor<T> processor, ParameterizedTypeReference<T> typeReference) {
         return processor.process(request)
                 .flatMap(responseBody -> ServerResponse.ok()
                         .contentType(MediaType.APPLICATION_JSON)
@@ -44,6 +44,15 @@ public abstract class BaseHandler {
                 .onErrorResume(this::handleError);
     }
 
+    protected <T, R> Mono<ServerResponse> handleCreatePaymentMethod(String id, Mono<T> requestBody, CreateParamRequestProcessor<String, T, R> processor, Class<R> responseBodyClass) {
+        return processor.process(id, requestBody)
+                .flatMap(responseBody -> ServerResponse.ok()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .bodyValue(responseBody))
+                .switchIfEmpty(ServerResponse.notFound().build())
+                .onErrorResume(this::handleError);
+    }
+
     protected <T> Mono<ServerResponse> handleSearch(ServerRequest request, ReadRequestProcessor<T> processor, ParameterizedTypeReference<T> typeReference) {
         return processor.process(request)
                 .flatMap(responseBody -> ServerResponse.ok()
@@ -55,9 +64,9 @@ public abstract class BaseHandler {
     }
 
 
-    protected <U, T> Mono<ServerResponse> handleUpdate(ServerRequest request, UpdateRequestProcessor<U, T, Void> processor, U additionalParam, Class<T> requestBodyClass) {
+    protected <U, T> Mono<ServerResponse> handleUpdate(ServerRequest request, UpdateRequestProcessor<U, T, Void> processor, U idParam, Class<T> requestBodyClass) {
         Mono<T> requestBody = request.bodyToMono(requestBodyClass);
-        return processor.process(additionalParam,
+        return processor.process(idParam,
                                  requestBody)
                 .then(ServerResponse.noContent()
                               .build())

@@ -19,9 +19,9 @@ public class PaymentIntentHandlerImpl extends BaseHandler implements PaymentInte
 
     @Override
     public Mono<ServerResponse> listAll(ServerRequest r) {
-        return handleListAll(r,
+        return handleList(r,
                              request -> paymentIntentService.listAllPaymentIntents(),
-                             new ParameterizedTypeReference<>() {
+                          new ParameterizedTypeReference<>() {
                              });
     }
 

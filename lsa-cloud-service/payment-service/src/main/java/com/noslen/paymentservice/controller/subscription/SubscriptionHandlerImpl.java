@@ -27,9 +27,9 @@ public class SubscriptionHandlerImpl extends BaseHandler implements Subscription
     //    @Override
     @Override
     public Mono<ServerResponse> listAll(ServerRequest r) {
-        return handleListAll(r,
+        return handleList(r,
                              request -> subscriptionService.listAllSubscriptions(),
-                             new ParameterizedTypeReference<>() {
+                          new ParameterizedTypeReference<>() {
                              });
     }
 

@@ -103,8 +103,8 @@ public class PaymentMethodHandlerTests {
 
         webTestClient.mutateWith(mockJwt())
                 .post()
-                .uri("/api/paymentmethod")
-                .body(dto,
+                .uri("/api/paymentmethod/card/cus_123")
+                .body(Mono.just(dto),
                       CardDto.class)
                 .exchange()
                 .expectStatus()
@@ -112,7 +112,7 @@ public class PaymentMethodHandlerTests {
                 .expectBody()
                 .jsonPath("$.object")
                 .isEmpty()
-                .jsonPath("$.data")
+                .jsonPath("$.id")
                 .isNotEmpty();
     }
 
@@ -130,8 +130,8 @@ public class PaymentMethodHandlerTests {
 
         webTestClient.mutateWith(mockJwt())
                 .post()
-                .uri("/api/paymentmethod")
-                .body(dto,
+                .uri("/api/paymentmethod/bank/cus_123")
+                .body(Mono.just(dto),
                       CardDto.class)
                 .exchange()
                 .expectStatus()
@@ -139,7 +139,7 @@ public class PaymentMethodHandlerTests {
                 .expectBody()
                 .jsonPath("$.object")
                 .isEmpty()
-                .jsonPath("$.data")
+                .jsonPath("$.id")
                 .isNotEmpty();
     }
 
@@ -157,7 +157,7 @@ public class PaymentMethodHandlerTests {
         webTestClient.mutateWith(mockJwt())
                 .put()
                 .uri("/api/paymentmethod/pm_123")
-                .body(dto, CardDto.class)
+                .body(Mono.just(dto), CardDto.class)
                 .exchange()
                 .expectStatus()
                 .isNoContent();
@@ -182,11 +182,11 @@ public class PaymentMethodHandlerTests {
     void shouldDetachPaymentMethod() {
         PaymentMethod paymentMethod = createMockBankPaymentMethod("cus_123");
 
-        when(paymentMethodService.attachPaymentMethod(anyString(),anyString())).thenReturn(Mono.empty());
+        when(paymentMethodService.detachPaymentMethod(anyString())).thenReturn(Mono.empty());
 
         webTestClient.mutateWith(mockJwt())
                 .put()
-                .uri("/api/paymentmethod/attach/pm_123/cus123")
+                .uri("/api/paymentmethod/detach/pm_123")
                 .exchange()
                 .expectStatus()
                 .isNoContent();

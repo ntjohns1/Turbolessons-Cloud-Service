@@ -24,9 +24,9 @@ public class CustomerHandlerImpl extends BaseHandler implements CustomerHandler 
 
     @Override
     public Mono<ServerResponse> listAll(ServerRequest r) {
-        return handleListAll(r,
+        return handleList(r,
                              request -> customerService.listAllCustomers(),
-                             new ParameterizedTypeReference<>() {
+                          new ParameterizedTypeReference<>() {
                              });
     }
 
@@ -49,8 +49,7 @@ public class CustomerHandlerImpl extends BaseHandler implements CustomerHandler 
     public Mono<ServerResponse> update(ServerRequest r) {
         String id = id(r);
         return handleUpdate(r,
-                            (idParam, requestBody) -> requestBody.flatMap(dto -> customerService.updateCustomer(idParam,
-                                                                                                                dto)),
+                            (idParam, requestBody) -> requestBody.flatMap(dto -> customerService.updateCustomer(idParam, dto)),
                             id,
                             CustomerDto.class);
     }
