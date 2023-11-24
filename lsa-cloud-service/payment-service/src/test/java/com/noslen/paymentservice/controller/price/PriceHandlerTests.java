@@ -54,7 +54,7 @@ public class PriceHandlerTests {
     }
 
     @Test
-    void shouldListAllPrices(ServerRequest r) {
+    void shouldListAllPrices() {
 
         StripeCollection<Price> prices = createMockPriceCollection();
         when(pricingService.listAllPrices())
@@ -73,7 +73,7 @@ public class PriceHandlerTests {
     }
 
     @Test
-    void shouldRetrievePrice(ServerRequest r) {
+    void shouldRetrievePrice() {
         Price price = createMockPrice("price_123",
                                       5000L,
                                       "Test Price",
@@ -98,7 +98,7 @@ public class PriceHandlerTests {
     }
 
     @Test
-    void shouldCreatePrice(ServerRequest r) {
+    void shouldCreatePrice() {
 
         Price price = createMockPrice("price_123",
                                       5000L,
@@ -121,7 +121,7 @@ public class PriceHandlerTests {
     }
 
     @Test
-    void shouldUpdatePrice(ServerRequest r) {
+    void shouldUpdatePrice() {
 
         Price price = createMockPrice("price_123",
                                       5000L,

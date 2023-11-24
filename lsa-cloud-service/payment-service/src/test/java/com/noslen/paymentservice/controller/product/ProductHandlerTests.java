@@ -72,7 +72,7 @@ public class ProductHandlerTests {
     }
 
     @Test
-    void shouldHandleRetrieveProduct(ServerRequest r) {
+    void shouldHandleRetrieveProduct() {
 
         Product product = createMockProduct("prod_123",
                                             "Test Product",
@@ -94,7 +94,7 @@ public class ProductHandlerTests {
     }
 
     @Test
-    void shouldHandleCreateProduct(ServerRequest r) {
+    void shouldHandleCreateProduct() {
         Product product = createMockProduct("prod_123",
                                             "Test Product",
                                             "Test Description");
@@ -122,7 +122,7 @@ public class ProductHandlerTests {
     }
 
     @Test
-    void shouldHandleUpdateProduct(ServerRequest r) {
+    void shouldHandleUpdateProduct() {
         Product product = createMockProduct("prod_123",
                                             "Test Product",
                                             "Test Description");
@@ -144,7 +144,7 @@ public class ProductHandlerTests {
     }
 
     @Test
-    void shouldHandleDeleteProduct(ServerRequest r) {
+    void shouldHandleDeleteProduct() {
         when(productService.deleteProduct(anyString())).thenReturn(Mono.empty());
 
         webTestClient.mutateWith(mockJwt())

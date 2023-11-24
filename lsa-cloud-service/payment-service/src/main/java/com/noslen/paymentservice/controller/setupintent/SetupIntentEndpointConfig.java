@@ -20,10 +20,11 @@ public class SetupIntentEndpointConfig {
     @Bean
     RouterFunction<ServerResponse> routes() {
 
-        return route((GET("")),handler::listAll)
-                .andRoute(GET(""),handler::retrieve)
-                .andRoute(POST(""),handler::create)
-                .andRoute(PUT(""),handler::update)
-                .andRoute(DELETE(""),handler::cancel);
+        return route((GET("/api/setupintent")),handler::listAll)
+                .andRoute(GET("/api/setupintent/{id}"),handler::retrieve)
+                .andRoute(POST("/api/setupintent"),handler::create)
+                .andRoute(PUT("/api/setupintent/confirm/{id}"),handler::confirm)
+                .andRoute(PUT("/api/setupintent/{id}"),handler::update)
+                .andRoute(DELETE("/api/setupintent/{id}"),handler::cancel);
     }
 }

@@ -20,7 +20,7 @@ public class PaymentIntentHandlerImpl extends BaseHandler implements PaymentInte
     @Override
     public Mono<ServerResponse> listAll(ServerRequest r) {
         return handleList(r,
-                             request -> paymentIntentService.listAllPaymentIntents(),
+                             request -> this.paymentIntentService.listAllPaymentIntents(),
                           new ParameterizedTypeReference<>() {
                              });
     }
@@ -29,14 +29,14 @@ public class PaymentIntentHandlerImpl extends BaseHandler implements PaymentInte
     public Mono<ServerResponse> retrieve(ServerRequest r) {
 
         return handleRetrieve(r,
-                              request -> paymentIntentService.retrievePaymentIntent(id(request)),
+                              request -> this.paymentIntentService.retrievePaymentIntent(id(request)),
                               PaymentIntent.class);
     }
 
     @Override
     public Mono<ServerResponse> searchByCustomer(ServerRequest r) {
         return handleSearch(r,
-                            request -> paymentIntentService.searchPaymentIntentByCustomer(id(request)),
+                            request -> this.paymentIntentService.searchPaymentIntentByCustomer(id(request)),
                             new ParameterizedTypeReference<>() {
                             });
     }
@@ -44,7 +44,7 @@ public class PaymentIntentHandlerImpl extends BaseHandler implements PaymentInte
     @Override
     public Mono<ServerResponse> create(ServerRequest r) {
         return handleCreate(r,
-                            requestBody -> requestBody.flatMap(paymentIntentService::createPaymentIntent),
+                            requestBody -> requestBody.flatMap(this.paymentIntentService::createPaymentIntent),
                             PaymentIntentDto.class,
                             PaymentIntent.class);
     }
@@ -53,7 +53,7 @@ public class PaymentIntentHandlerImpl extends BaseHandler implements PaymentInte
     public Mono<ServerResponse> update(ServerRequest r) {
         String id = id(r);
         return handleUpdate(r,
-                            (idParam, requestBody) -> requestBody.flatMap(dto -> paymentIntentService.updatePaymentIntent(idParam,
+                            (idParam, requestBody) -> requestBody.flatMap(dto -> this.paymentIntentService.updatePaymentIntent(idParam,
                                                                                                                           dto)),
                             id,
                             PaymentIntentDto.class);
@@ -62,13 +62,13 @@ public class PaymentIntentHandlerImpl extends BaseHandler implements PaymentInte
     @Override
     public Mono<ServerResponse> capture(ServerRequest r) {
         return handleCapture(r,
-                             request -> paymentIntentService.capturePaymentIntent(id(request)),
+                             request -> this.paymentIntentService.capturePaymentIntent(id(request)),
                              PaymentIntent.class);
     }
 
     @Override
     public Mono<ServerResponse> cancel(ServerRequest r) {
         return handleDelete(r,
-                            request -> paymentIntentService.cancelPaymentIntent(id(request)));
+                            request -> this.paymentIntentService.cancelPaymentIntent(id(request)));
     }
 }

@@ -55,7 +55,7 @@ public class SetupIntentHandlerTests {
     }
 
     @Test
-    void shouldHandleListAllSetupIntents(ServerRequest r) {
+    void shouldHandleListAllSetupIntents() {
 
         StripeCollection<SetupIntent> setupIntents = createMockSetupIntentCollection();
         when(setupIntentService.listSetupIntents()).thenReturn(Mono.just(setupIntents));
@@ -73,7 +73,7 @@ public class SetupIntentHandlerTests {
 
     //    Retrieve a SetupIntent
     @Test
-    void shouldRetrieveSetupIntent(ServerRequest r) {
+    void shouldRetrieveSetupIntent() {
 
         SetupIntent setupIntent = createMockSetupIntent("si_123",
                                                         "cus_123",
@@ -87,9 +87,9 @@ public class SetupIntentHandlerTests {
                 .expectBody()
                 .jsonPath("$.id")
                 .isEqualTo(setupIntent.getId())
-                .jsonPath("$.name")
+                .jsonPath("$.customer")
                 .isEqualTo(setupIntent.getCustomer())
-                .jsonPath("$.payment_method")
+                .jsonPath("$.paymentMethod")
                 .isEqualTo(setupIntent.getPaymentMethod())
                 .jsonPath("$.description")
                 .isEqualTo(setupIntent.getDescription());
@@ -97,7 +97,7 @@ public class SetupIntentHandlerTests {
 
     //    Create a SetupIntent
     @Test
-    void shouldCreateSetupIntent(ServerRequest r) {
+    void shouldCreateSetupIntent() {
 
         SetupIntent setupIntent = createMockSetupIntent("si_123",
                                                         "cus_123",
@@ -107,16 +107,17 @@ public class SetupIntentHandlerTests {
                      .thenReturn(Mono.just(setupIntent));
         webTestClient.mutateWith(mockJwt())
                 .post()
-                .uri("/api/setupintent/si_123")
+                .uri("/api/setupintent")
+                .body(Mono.just(dto), SetupIntentDto.class)
                 .exchange()
                 .expectStatus()
                 .isOk()
                 .expectBody()
                 .jsonPath("$.id")
                 .isEqualTo(setupIntent.getId())
-                .jsonPath("$.name")
+                .jsonPath("$.customer")
                 .isEqualTo(setupIntent.getCustomer())
-                .jsonPath("$.payment_method")
+                .jsonPath("$.paymentMethod")
                 .isEqualTo(setupIntent.getPaymentMethod())
                 .jsonPath("$.description")
                 .isEqualTo(setupIntent.getDescription());
@@ -125,7 +126,7 @@ public class SetupIntentHandlerTests {
 
     //    Confirm a SetupIntent
     @Test
-    void shouldConfirmSetupIntent(ServerRequest r) {
+    void shouldConfirmSetupIntent() {
 
         when(setupIntentService.confirmSetupIntent(anyString()))
                      .thenReturn(Mono.empty());
@@ -139,7 +140,7 @@ public class SetupIntentHandlerTests {
 
     //    Update a SetupIntent
     @Test
-    void shouldUpdateSetupIntent(ServerRequest r) {
+    void shouldUpdateSetupIntent() {
 
         SetupIntent setupIntent = createMockSetupIntent("si_123",
                                                         "cus_123",
@@ -159,7 +160,7 @@ public class SetupIntentHandlerTests {
 
     //    Cancel a SetupIntent
     @Test
-    void shouldCancelSetupIntent(ServerRequest r) {
+    void shouldCancelSetupIntent() {
         when(setupIntentService.cancelSetupIntent(anyString())).thenReturn(Mono.empty());
         webTestClient.mutateWith(mockJwt())
                 .delete()

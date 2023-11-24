@@ -25,7 +25,7 @@ public class CustomerHandlerImpl extends BaseHandler implements CustomerHandler 
     @Override
     public Mono<ServerResponse> listAll(ServerRequest r) {
         return handleList(r,
-                             request -> customerService.listAllCustomers(),
+                             request -> this.customerService.listAllCustomers(),
                           new ParameterizedTypeReference<>() {
                              });
     }
@@ -33,14 +33,14 @@ public class CustomerHandlerImpl extends BaseHandler implements CustomerHandler 
     @Override
     public Mono<ServerResponse> retrieve(ServerRequest r) {
         return handleRetrieve(r,
-                              request -> customerService.retrieveCustomer(id(request)),
+                              request -> this.customerService.retrieveCustomer(id(request)),
                               Customer.class);
     }
 
     @Override
     public Mono<ServerResponse> create(ServerRequest r) {
         return handleCreate(r,
-                            requestBody -> requestBody.flatMap(customerService::createCustomer),
+                            requestBody -> requestBody.flatMap(this.customerService::createCustomer),
                             CustomerDto.class,
                             Customer.class);
     }
@@ -49,7 +49,7 @@ public class CustomerHandlerImpl extends BaseHandler implements CustomerHandler 
     public Mono<ServerResponse> update(ServerRequest r) {
         String id = id(r);
         return handleUpdate(r,
-                            (idParam, requestBody) -> requestBody.flatMap(dto -> customerService.updateCustomer(idParam, dto)),
+                            (idParam, requestBody) -> requestBody.flatMap(dto -> this.customerService.updateCustomer(idParam, dto)),
                             id,
                             CustomerDto.class);
     }
@@ -58,7 +58,7 @@ public class CustomerHandlerImpl extends BaseHandler implements CustomerHandler 
     @Override
     public Mono<ServerResponse> delete(ServerRequest r) {
         return handleDelete(r,
-                            request -> customerService.deleteCustomer(id(request)));
+                            request -> this.customerService.deleteCustomer(id(request)));
     }
 
 }
