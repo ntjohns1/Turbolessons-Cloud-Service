@@ -7,17 +7,21 @@ import org.springframework.web.reactive.function.server.RequestPredicate;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
-import javax.ws.rs.DELETE;
-import javax.ws.rs.POST;
-
 import static org.springframework.web.reactive.function.server.RequestPredicates.*;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 @Configuration
 class MessageEndpointConfig {
 
+    private final MessageHandler handler;
+
+    MessageEndpointConfig(MessageHandler handler) {
+        this.handler = handler;
+    }
+
+
     @Bean
-    RouterFunction<ServerResponse> routes(MessageHandler handler) {
+    RouterFunction<ServerResponse> routes() {
         return route(i(GET("/api/messages")), handler::all)
                 .andRoute(i(GET("/api/messages/{id}")), handler::getById)
                 .andRoute(i(GET("/api/messages/sender/{sender}")), handler::getBySender)
