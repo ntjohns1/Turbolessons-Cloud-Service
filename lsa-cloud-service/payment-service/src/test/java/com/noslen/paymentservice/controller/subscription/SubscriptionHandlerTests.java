@@ -1,5 +1,6 @@
 package com.noslen.paymentservice.controller.subscription;
 
+import com.noslen.paymentservice.dto.CustomerDto;
 import com.noslen.paymentservice.dto.SubscriptionDto;
 import com.noslen.paymentservice.service.subscription.SubscriptionService;
 import com.stripe.model.Subscription;
@@ -51,7 +52,7 @@ public class SubscriptionHandlerTests {
 
     @BeforeEach
     public void setUp() {
-        RouterFunction<ServerResponse> routerFunction = new SubscriptionEndpointConfig(subscriptionHandler).routes();
+        RouterFunction<ServerResponse> routerFunction = new SubscriptionEndpointConfig(subscriptionHandler).subscriptionRoutes();
         this.webTestClient = WebTestClient.bindToRouterFunction(routerFunction)
                 .build();
     }
@@ -99,10 +100,10 @@ public class SubscriptionHandlerTests {
     void shouldHandleCreateSubscription() {
         Subscription subscription = createMockSubscription();
         SubscriptionDto data = createSubscriptionDto();
-        when(subscriptionService.createSubscription(any())).thenReturn(Mono.just(subscription));
+        when(subscriptionService.createSubscription(anyString(),any(CustomerDto.class))).thenReturn(Mono.just(subscription));
         webTestClient.mutateWith(mockJwt())
                 .post()
-                .uri("/api/subscription")
+                .uri("/api/subscription/price_123")
                 .body(Mono.just(data),
                       SubscriptionDto.class)
                 .exchange()

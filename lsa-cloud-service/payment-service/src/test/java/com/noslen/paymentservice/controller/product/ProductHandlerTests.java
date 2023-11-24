@@ -49,7 +49,7 @@ public class ProductHandlerTests {
 
     @BeforeEach
     public void setUp() {
-        RouterFunction<ServerResponse> routerFunction = new ProductEndpointConfig(productHandler).routes();
+        RouterFunction<ServerResponse> routerFunction = new ProductEndpointConfig(productHandler).productRoutes();
         this.webTestClient = WebTestClient.bindToRouterFunction(routerFunction)
                 .build();
     }

@@ -20,33 +20,33 @@ public class PricingServiceImpl implements PricingService {
     public PricingServiceImpl(StripeClient stripeClient, StripeClientHelper stripeClientHelper) {
         this.stripeClient = stripeClient;
         this.stripeClientHelper = stripeClientHelper;
-        initializeStandardRate();
+//        initializeStandardRate();
     }
 
     //Initialize the Standard Rate Price Object.
 
-    @Override
-    public void initializeStandardRate() {
-        PriceCreateParams standardRateParams = PriceCreateParams.builder()
-                .setUnitAmount(5000L)
-                .setCurrency("usd")
-                .setRecurring(PriceCreateParams.Recurring.builder()
-                                      .setInterval(PriceCreateParams.Recurring.Interval.MONTH)
-                                      .setIntervalCount(1L)
-                                      .setUsageType(PriceCreateParams.Recurring.UsageType.METERED)
-                                      .build())
-                .setProductData(PriceCreateParams.ProductData.builder()
-                                        .setName("Standard Lesson")
-                                        .build())
-                .setLookupKey("standard_lesson")
-                .build();
-        this.standardRateMono = createPrice(standardRateParams).cache();
-    }
+//    @Override
+//    public void initializeStandardRate() {
+//        PriceCreateParams standardRateParams = PriceCreateParams.builder()
+//                .setUnitAmount(5000L)
+//                .setCurrency("usd")
+//                .setRecurring(PriceCreateParams.Recurring.builder()
+//                                      .setInterval(PriceCreateParams.Recurring.Interval.MONTH)
+//                                      .setIntervalCount(1L)
+//                                      .setUsageType(PriceCreateParams.Recurring.UsageType.METERED)
+//                                      .build())
+//                .setProductData(PriceCreateParams.ProductData.builder()
+//                                        .setName("Standard Lesson")
+//                                        .build())
+//                .setLookupKey("standard_lesson")
+//                .build();
+//        this.standardRateMono = createPrice(standardRateParams).cache();
+//    }
 
-    @Override
-    public Mono<Price> getStandardRate() {
-        return standardRateMono;
-    }
+//    @Override
+//    public Mono<Price> getStandardRate() {
+//        return standardRateMono;
+//    }
 
     @Override
     public Mono<StripeCollection<Price>> listAllPrices() {

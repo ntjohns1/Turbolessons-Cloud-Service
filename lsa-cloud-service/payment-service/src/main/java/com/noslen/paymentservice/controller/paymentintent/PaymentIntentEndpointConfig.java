@@ -18,7 +18,7 @@ public class PaymentIntentEndpointConfig {
     }
 
     @Bean
-    RouterFunction<ServerResponse> routes() {
+    RouterFunction<ServerResponse> paymentIntentRoutes() {
 
       return  route((GET("/api/paymentintent")), handler::listAll)
                 .andRoute(GET("/api/paymentintent/{id}"), handler::retrieve)

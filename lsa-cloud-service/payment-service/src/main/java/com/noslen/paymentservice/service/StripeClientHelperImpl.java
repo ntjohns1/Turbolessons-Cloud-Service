@@ -1,8 +1,10 @@
 package com.noslen.paymentservice.service;
 
 import com.stripe.exception.StripeException;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
+@Service
 public class StripeClientHelperImpl implements StripeClientHelper {
 
     @Override

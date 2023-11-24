@@ -49,7 +49,7 @@ public class SetupIntentHandlerTests {
 
     @BeforeEach
     public void setUp() {
-        RouterFunction<ServerResponse> routerFunction = new SetupIntentEndpointConfig(setupIntentHandler).routes();
+        RouterFunction<ServerResponse> routerFunction = new SetupIntentEndpointConfig(setupIntentHandler).setupIntentRoutes();
         this.webTestClient = WebTestClient.bindToRouterFunction(routerFunction)
                 .build();
     }

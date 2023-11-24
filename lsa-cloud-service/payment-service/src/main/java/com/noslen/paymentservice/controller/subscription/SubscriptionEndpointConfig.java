@@ -18,11 +18,11 @@ public class SubscriptionEndpointConfig {
     }
 
     @Bean
-    RouterFunction<ServerResponse> routes() {
+    RouterFunction<ServerResponse> subscriptionRoutes() {
 
         return route((GET("/api/subscription")), handler::listAll)
                 .andRoute(GET("/api/subscription/{id}"), handler::retrieve)
-                .andRoute(POST("/api/subscription"), handler::create)
+                .andRoute(POST("/api/subscription/{priceId}"), handler::create)
                 .andRoute(PUT("/api/subscription/{id}"), handler::update)
                 .andRoute(DELETE("/api/subscription/{id}"), handler::cancel);
     }

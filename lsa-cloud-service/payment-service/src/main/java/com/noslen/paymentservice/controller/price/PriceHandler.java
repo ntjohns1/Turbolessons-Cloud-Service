@@ -6,7 +6,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 public interface PriceHandler {
-    Mono<ServerResponse> getStandardRate(ServerRequest r);
+//    Mono<ServerResponse> getStandardRate(ServerRequest r);
 
     Mono<ServerResponse> listAll(ServerRequest r);
 

@@ -7,9 +7,9 @@ import com.stripe.param.PriceCreateParams;
 import reactor.core.publisher.Mono;
 
 public interface PricingService {
-    void initializeStandardRate();
-
-    Mono<Price> getStandardRate();
+//    void initializeStandardRate();
+//
+//    Mono<Price> getStandardRate();
 
     Mono<StripeCollection<Price>> listAllPrices();
 

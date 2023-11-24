@@ -48,7 +48,7 @@ public class PriceHandlerTests {
 
     @BeforeEach
     public void setUp() {
-        RouterFunction<ServerResponse> routerFunction = new PriceEndpointConfig(priceHandler).routes();
+        RouterFunction<ServerResponse> routerFunction = new PriceEndpointConfig(priceHandler).priceRoutes();
         this.webTestClient = WebTestClient.bindToRouterFunction(routerFunction)
                 .build();
     }

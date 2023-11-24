@@ -19,7 +19,7 @@ public class CustomerEndpointConfig {
     }
 
     @Bean
-    RouterFunction<ServerResponse> routes() {
+    RouterFunction<ServerResponse> customerRoutes() {
 
         return route((GET("/api/customer")), handler::listAll)
                 .andRoute(GET("/api/customer/{id}"), handler::retrieve)

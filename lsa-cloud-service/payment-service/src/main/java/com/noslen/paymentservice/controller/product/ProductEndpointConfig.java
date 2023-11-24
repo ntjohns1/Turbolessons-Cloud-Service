@@ -18,7 +18,7 @@ public class ProductEndpointConfig {
     }
 
     @Bean
-    RouterFunction<ServerResponse> routes() {
+    RouterFunction<ServerResponse> productRoutes() {
 
         return route((GET("/api/product")),handler::listAll)
                 .andRoute(GET("/api/product/{id}"),handler::retrieve)

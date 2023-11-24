@@ -22,13 +22,13 @@ public class PriceHandlerImpl extends BaseHandler implements PriceHandler {
         this.pricingService = pricingService;
     }
 
-    @Override
-    public Mono<ServerResponse> getStandardRate(ServerRequest r) {
-
-        return handleRetrieve(r,
-                              request -> this.pricingService.getStandardRate(),
-                              Price.class);
-    }
+//    @Override
+//    public Mono<ServerResponse> getStandardRate(ServerRequest r) {
+//
+//        return handleRetrieve(r,
+//                              request -> this.pricingService.getStandardRate(),
+//                              Price.class);
+//    }
 
     @Override
     public Mono<ServerResponse> listAll(ServerRequest r) {

@@ -49,7 +49,7 @@ public class PaymentMethodHandlerTests {
 
     @BeforeEach
     public void setUp() {
-        RouterFunction<ServerResponse> routerFunction = new PaymentMethodEndpointConfig(paymentMethodHandler).routes();
+        RouterFunction<ServerResponse> routerFunction = new PaymentMethodEndpointConfig(paymentMethodHandler).paymentMethodRoutes();
         this.webTestClient = WebTestClient.bindToRouterFunction(routerFunction)
                 .build();
     }

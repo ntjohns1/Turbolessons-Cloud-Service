@@ -76,15 +76,14 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     //    Create a Subscription
     @Override
-    public Mono<Subscription> createSubscription(CustomerDto customerDto) {
-        return pricingService.getStandardRate()
-                .flatMap(standardRate -> customerService.createCustomer(customerDto)
+    public Mono<Subscription> createSubscription(String id, CustomerDto customerDto) {
+        return customerService.createCustomer(customerDto)
                         .flatMap(customer -> {
                             String customerId = customer.getId();
                             SubscriptionCreateParams params = SubscriptionCreateParams.builder()
                                     .setCustomer(customerId)
                                     .addItem(SubscriptionCreateParams.Item.builder()
-                                                     .setPrice(standardRate.getId())
+                                                     .setPrice(id)
                                                      .build())
                                     .setDefaultPaymentMethod(customerDto.getDefaultPaymentMethod())
                                     .build();
@@ -95,7 +94,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 //                                               e));
                             return stripeClientHelper.executeStripeCall(() -> stripeClient.subscriptions()
                                     .create(params));
-                        }));
+                        });
 
 
     }

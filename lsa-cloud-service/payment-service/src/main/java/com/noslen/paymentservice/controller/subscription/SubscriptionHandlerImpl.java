@@ -1,12 +1,17 @@
 package com.noslen.paymentservice.controller.subscription;
 
 import com.noslen.paymentservice.controller.BaseHandler;
+import com.noslen.paymentservice.dto.CardDto;
 import com.noslen.paymentservice.dto.CustomerDto;
+import com.noslen.paymentservice.dto.PriceDTO;
 import com.noslen.paymentservice.dto.SubscriptionDto;
 import com.noslen.paymentservice.service.subscription.SubscriptionService;
+import com.stripe.model.PaymentMethod;
+import com.stripe.model.Price;
 import com.stripe.model.Subscription;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -42,10 +47,13 @@ public class SubscriptionHandlerImpl extends BaseHandler implements Subscription
 
     @Override
     public Mono<ServerResponse> create(ServerRequest r) {
-        return handleCreate(r,
-                            requestBody -> requestBody.flatMap(subscriptionService::createSubscription),
-                            CustomerDto.class,
-                            Subscription.class);
+        String priceId = r.pathVariable("priceId"); // Extract the customer ID from the request
+        Mono<CustomerDto> customerDtoMono = r.bodyToMono(CustomerDto.class);
+        return handleCreateWithParam(priceId,
+                                         customerDtoMono,
+                                         (id, dtoMono) -> dtoMono.flatMap(dto -> subscriptionService.createSubscription(id,
+                                                                                                                              dto)),
+                                         Subscription.class);
     }
 
     @Override

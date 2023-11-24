@@ -1,5 +1,6 @@
 package com.noslen.paymentservice.config;
 
+import com.noslen.paymentservice.service.StripeClientHelper;
 import com.stripe.StripeClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

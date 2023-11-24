@@ -18,7 +18,7 @@ public class SetupIntentEndpointConfig {
     }
 
     @Bean
-    RouterFunction<ServerResponse> routes() {
+    RouterFunction<ServerResponse> setupIntentRoutes() {
 
         return route((GET("/api/setupintent")),handler::listAll)
                 .andRoute(GET("/api/setupintent/{id}"),handler::retrieve)

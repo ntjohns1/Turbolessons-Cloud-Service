@@ -48,7 +48,7 @@ public class CustomerHandlerTests {
 
     @BeforeEach
     public void setUp() {
-        RouterFunction<ServerResponse> routerFunction = new CustomerEndpointConfig(customerHandler).routes();
+        RouterFunction<ServerResponse> routerFunction = new CustomerEndpointConfig(customerHandler).customerRoutes();
         this.webTestClient = WebTestClient.bindToRouterFunction(routerFunction)
                 .build();
     }

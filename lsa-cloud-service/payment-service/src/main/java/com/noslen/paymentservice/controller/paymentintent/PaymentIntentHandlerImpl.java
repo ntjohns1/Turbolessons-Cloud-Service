@@ -4,11 +4,16 @@ import com.noslen.paymentservice.controller.BaseHandler;
 import com.noslen.paymentservice.dto.PaymentIntentDto;
 import com.noslen.paymentservice.service.paymentintent.PaymentIntentService;
 import com.stripe.model.PaymentIntent;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
+
+@Slf4j
+@Service
 public class PaymentIntentHandlerImpl extends BaseHandler implements PaymentIntentHandler {
 
     private final PaymentIntentService paymentIntentService;

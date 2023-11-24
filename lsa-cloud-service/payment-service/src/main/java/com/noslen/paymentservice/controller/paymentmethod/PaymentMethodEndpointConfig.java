@@ -19,7 +19,7 @@ public class PaymentMethodEndpointConfig {
 
 
     @Bean
-    RouterFunction<ServerResponse> routes() {
+    RouterFunction<ServerResponse> paymentMethodRoutes() {
        return route((GET("/api/paymentmethod/{id}")), handler::retrieve)
                 .andRoute(GET("/api/paymentmethod/customer/{id}"), handler::retrieveByCustomer)
                 .andRoute(POST("/api/paymentmethod/card/{id}"), handler::createCard)
