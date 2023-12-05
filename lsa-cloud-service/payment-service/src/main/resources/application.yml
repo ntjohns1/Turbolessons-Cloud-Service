@@ -8,5 +8,4 @@ spring:
       username: ${CONFIG_USERNAME}
       password: ${CONFIG_PASSWORD}
   config:
-    import: configserver:http://www.turbolessons.com:9999/
-#test
+    import: configserver:http://lsa-config-service:9999/
