@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+//test
 public class StripeConfig {
 
     @Value("${STRIPE_SECRET_KEY}")
