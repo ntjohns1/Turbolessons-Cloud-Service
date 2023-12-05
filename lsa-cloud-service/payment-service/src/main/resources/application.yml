@@ -9,3 +9,4 @@ spring:
       password: ${CONFIG_PASSWORD}
   config:
     import: configserver:http://www.turbolessons.com:9999/
+#test
