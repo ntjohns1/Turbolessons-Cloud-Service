@@ -38,6 +38,11 @@ cd message-service
 docker build -t noslenj/message-service:com-noslen-message-service .
 cd ..
 
+echo "Building payment-service"
+cd payment-service
+docker build -t noslenj/payment-service:com-noslen-payment-service .
+cd ..
+
 echo "Building video-service"
 cd video-service
 docker build -t noslenj/video-service:com-noslen-video-service .
