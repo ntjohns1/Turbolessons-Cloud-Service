@@ -20,6 +20,7 @@ public class OktaApiConfig {
 
     @Bean
     public UserApi userApi() {
+        System.out.println(apiToken);
         ApiClient client = Clients.builder()
                 .setOrgUrl(orgUrl)
                 .setClientCredentials(new TokenClientCredentials(apiToken))
