@@ -1,5 +1,6 @@
 package com.noslen.adminservice;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -8,8 +9,12 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 @SpringBootApplication
 public class AdminServiceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(AdminServiceApplication.class, args);
-	}
+    @Value("${okta.client.token}")
+    private static String apiToken;
+
+    public static void main(String[] args) {
+		System.out.println(apiToken);
+        SpringApplication.run(AdminServiceApplication.class, args);
+    }
 
 }
