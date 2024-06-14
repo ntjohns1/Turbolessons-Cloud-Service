@@ -7,8 +7,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="event-service" />
         <module name="video-service" />
+        <module name="event-service" />
         <module name="email-service" />
         <module name="lsa-config-service" />
         <module name="api-gateway" />
