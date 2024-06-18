@@ -5,10 +5,10 @@
     <file url="file://$PROJECT_DIR$/turbolessons-cloud-service/admin-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/turbolessons-cloud-service/api-gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/turbolessons-cloud-service/api-gateway/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/turbolessons-cloud-service/config-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/turbolessons-cloud-service/email-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/turbolessons-cloud-service/event-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/turbolessons-cloud-service/event-service/src/test/resources/sql/setupH2.sql" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/turbolessons-cloud-service/lsa-config-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/turbolessons-cloud-service/message-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/turbolessons-cloud-service/payment-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/turbolessons-cloud-service/payment-service/src/main/resources" charset="UTF-8" />

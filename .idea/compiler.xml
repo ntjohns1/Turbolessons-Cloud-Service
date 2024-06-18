@@ -8,10 +8,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="payment-service" />
+        <module name="config-service" />
         <module name="video-service" />
         <module name="event-service" />
         <module name="email-service" />
-        <module name="lsa-config-service" />
         <module name="api-gateway" />
         <module name="message-service" />
         <module name="service-registry" />
@@ -21,9 +21,9 @@
     <bytecodeTargetLevel>
       <module name="admin-service" target="17" />
       <module name="api-gateway" target="17" />
+      <module name="config-service" target="17" />
       <module name="email-service" target="17" />
       <module name="event-service" target="17" />
-      <module name="lsa-config-service" target="17" />
       <module name="message-service" target="17" />
       <module name="payment-service" target="17" />
       <module name="service-registry" target="17" />
@@ -35,9 +35,9 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="admin-service" options="-parameters" />
       <module name="api-gateway" options="-parameters" />
+      <module name="config-service" options="-parameters" />
       <module name="email-service" options="-parameters" />
       <module name="event-service" options="-parameters" />
-      <module name="lsa-config-service" options="-parameters" />
       <module name="message-service" options="-parameters" />
       <module name="payment-service" options="-parameters" />
       <module name="service-registry" options="-parameters" />
