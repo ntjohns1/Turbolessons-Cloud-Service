@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.noslen</groupId>
-    <artifactId>lsa-cloud-service</artifactId>
+    <artifactId>turbolessons_cloud_service</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>lsa-cloud-service</name>
+    <name>turbolessons_cloud_service</name>
     <url>http://maven.apache.org</url>
 
     <properties>
