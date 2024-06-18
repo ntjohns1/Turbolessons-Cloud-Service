@@ -23,11 +23,11 @@
       <module name="api-gateway" target="17" />
       <module name="email-service" target="17" />
       <module name="event-service" target="17" />
-      <module name="lsa-cloud-service" target="1.5" />
       <module name="lsa-config-service" target="17" />
       <module name="message-service" target="17" />
       <module name="payment-service" target="17" />
       <module name="service-registry" target="17" />
+      <module name="turbolessons-cloud-service" target="1.5" />
       <module name="video-service" target="17" />
     </bytecodeTargetLevel>
   </component>

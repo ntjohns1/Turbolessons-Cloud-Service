@@ -1,9 +1,9 @@
 version: "3.9"
 networks:
-  turbolessons_cloud_service_lsa:
-  email-service_lsa:
-  event-service_lsa:
-  message-service_lsa:
+  turbolessons_cloud_service_net:
+  email-service_net:
+  event-service_net:
+  message-service_net:
 services:
   lsa-config-service:
     image: noslenj/lsa-config-service:latest
@@ -16,7 +16,7 @@ services:
     ports:
       - "9999:9999"
     networks:
-      - turbolessons_cloud_service_lsa
+      - turbolessons_cloud_service_net
   service-registry:
     image: noslenj/service-registry:latest
     container_name: service-registry
@@ -25,7 +25,7 @@ services:
     ports:
       - "8761:8761"
     networks:
-      - turbolessons_cloud_service_lsa
+      - turbolessons_cloud_service_net
   admin-service:
     image: noslenj/admin-service:latest
     container_name: admin-service
@@ -34,7 +34,7 @@ services:
     ports:
       - "5002:5002"
     networks:
-      - turbolessons_cloud_service_lsa
+      - turbolessons_cloud_service_net
   email-service:
     image:  noslenj/email-service:latest
     container_name: email-service
@@ -46,8 +46,8 @@ services:
     ports:
       - "5003:5003"
     networks:
-      - turbolessons_cloud_service_lsa
-      - email-service_lsa
+      - turbolessons_cloud_service_net
+      - email-service_net
     depends_on:
       - emaildb
   emaildb:
@@ -58,8 +58,8 @@ services:
     ports:
       - "5053:27017"
     networks:
-      - turbolessons_cloud_service_lsa
-      - email-service_lsa
+      - turbolessons_cloud_service_net
+      - email-service_net
   event-service:
     image: noslenj/event-service:latest
     container_name: event-service
@@ -70,8 +70,8 @@ services:
     ports:
       - "5001:5001"
     networks:
-      - turbolessons_cloud_service_lsa
-      - event-service_lsa
+      - turbolessons_cloud_service_net
+      - event-service_net
   lessondb:
     image: noslenj/lessondb:latest
     container_name: lessondb
@@ -83,8 +83,8 @@ services:
       - ~/init.sql:/docker-entrypoint-initdb.d/init.sql
       - lessondb_data:/var/lib/mysql
     networks:
-      - turbolessons_cloud_service_lsa
-      - event-service_lsa
+      - turbolessons_cloud_service_net
+      - event-service_net
   message-service:
     image: noslenj/message-service:latest
     container_name: message-service
@@ -93,8 +93,8 @@ services:
     ports:
       - "5005:5005"
     networks:
-      - turbolessons_cloud_service_lsa
-      - message-service_lsa
+      - turbolessons_cloud_service_net
+      - message-service_net
     depends_on:
       - messagedb
   messagedb:
@@ -108,8 +108,8 @@ services:
     ports:
       - "5055:27017"
     networks:
-      - turbolessons_cloud_service_lsa
-      - message-service_lsa
+      - turbolessons_cloud_service_net
+      - message-service_net
   video-service:
     image: noslenj/video-service:latest
     container_name: video-service
@@ -120,7 +120,7 @@ services:
     ports:
       - "5004:5004"
     networks:
-      - turbolessons_cloud_service_lsa
+      - turbolessons_cloud_service_net
   api-gateway:
     image: noslenj/api-gateway:latest
     container_name: api-gateway
@@ -129,7 +129,7 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - turbolessons_cloud_service_lsa
+      - turbolessons_cloud_service_net
   payment-service:
     image: noslenj/payment-service:latest
     container_name: payment-service
@@ -138,7 +138,7 @@ services:
     ports:
       - "5010:5010"
     networks:
-      - turbolessons_cloud_service_lsa
+      - turbolessons_cloud_service_net
   turbolessons-frontend:
     image: noslenj/turbolessons-frontend:latest
     container_name: turbolessons-frontend
@@ -154,7 +154,7 @@ services:
       - ./options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
       - ./ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
     networks:
-      - turbolessons_cloud_service_lsa
+      - turbolessons_cloud_service_net
 volumes:
   emaildb_data:
   lessondb_data:

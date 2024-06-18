@@ -6,11 +6,11 @@
       <module fileurl="file://$PROJECT_DIR$/lsa-cloud-service/api-gateway/api-gateway.iml" filepath="$PROJECT_DIR$/lsa-cloud-service/api-gateway/api-gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/lsa-cloud-service/email-service/email-service.iml" filepath="$PROJECT_DIR$/lsa-cloud-service/email-service/email-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/lsa-cloud-service/event-service/event-service.iml" filepath="$PROJECT_DIR$/lsa-cloud-service/event-service/event-service.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lsa-cloud-service/lsa-cloud-service.iml" filepath="$PROJECT_DIR$/lsa-cloud-service/lsa-cloud-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/lsa-cloud-service/lsa-config-service/lsa-config-service.iml" filepath="$PROJECT_DIR$/lsa-cloud-service/lsa-config-service/lsa-config-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/lsa-cloud-service/message-service/message-service.iml" filepath="$PROJECT_DIR$/lsa-cloud-service/message-service/message-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/lsa-cloud-service/payment-service/payment-service.iml" filepath="$PROJECT_DIR$/lsa-cloud-service/payment-service/payment-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/lsa-cloud-service/service-registry/service-registry.iml" filepath="$PROJECT_DIR$/lsa-cloud-service/service-registry/service-registry.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lsa-cloud-service/turbolessons-cloud-service.iml" filepath="$PROJECT_DIR$/lsa-cloud-service/turbolessons-cloud-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/lsa-cloud-service/video-service/video-service.iml" filepath="$PROJECT_DIR$/lsa-cloud-service/video-service/video-service.iml" />
     </modules>
   </component>

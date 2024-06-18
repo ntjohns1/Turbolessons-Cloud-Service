@@ -3,7 +3,7 @@ name: email-service-test
 on:
   push:
     paths:
-      - "lsa-cloud-service/email-service/**"
+      - "turbolessons-cloud-service/email-service/**"
 
 jobs:
   build-and-test:
@@ -21,7 +21,7 @@ jobs:
       uses: actions/checkout@v3.6.0
       
     - name: Run Maven Tests
-      working-directory: ./lsa-cloud-service/email-service
+      working-directory: ./turbolessons-cloud-service/email-service
       run: |
         mvn test -DOKTA_CLIENT_ID=${{ secrets.OKTA_CLIENT_ID }} \
         -DOKTA_CLIENT_SECRET=${{ secrets.OKTA_CLIENT_SECRET }} \
