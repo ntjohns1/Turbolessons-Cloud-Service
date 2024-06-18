@@ -4,8 +4,8 @@ echo "Performing a clean Maven build"
 ./mvnw clean package -DskipTests=true
 
 echo "Building the config server"
-cd lsa-config-service
-docker build -t noslenj/lsa-config-service:com-noslen-lsa-config-service .
+cd config-service
+docker build -t noslenj/config-service:com-noslen-config-service .
 cd ..
 
 echo "Building the service registry"

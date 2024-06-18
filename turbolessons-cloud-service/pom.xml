@@ -15,7 +15,7 @@
     </properties>
 
     <modules>
-        <module>lsa-config-service</module>
+        <module>config-service</module>
         <module>service-registry</module>
         <module>event-service</module>
         <module>email-service</module>

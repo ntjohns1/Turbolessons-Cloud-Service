@@ -40,10 +40,10 @@ public class EmailObjectRepoTest {
 
     @Test
     void shouldGetAllEmailData() {
-        String testText = "Greetings, This is a test from LSA Love, LSA Admin";
-        MailObject email1 = new MailObject(UUID.randomUUID().toString(),"dorflundgren@email.com","Dorf Lundgren","Lesson Reminder",testText,"LSA");
-        MailObject email2 = new MailObject(UUID.randomUUID().toString(),"bhardbarrel@email.com","Biff Hardbarrel","Lesson Reminder",testText,"LSA");
-        MailObject email3 = new MailObject(UUID.randomUUID().toString(),"braffhanesley@email.com","Braff Hanesley","Lesson Reminder",testText,"LSA");
+        String testText = "Greetings, This is a test from TURBOLESSONS Love, TURBOLESSONS Admin";
+        MailObject email1 = new MailObject(UUID.randomUUID().toString(),"dorflundgren@email.com","Dorf Lundgren","Lesson Reminder",testText,"TURBOLESSONS");
+        MailObject email2 = new MailObject(UUID.randomUUID().toString(),"bhardbarrel@email.com","Biff Hardbarrel","Lesson Reminder",testText,"TURBOLESSONS");
+        MailObject email3 = new MailObject(UUID.randomUUID().toString(),"braffhanesley@email.com","Braff Hanesley","Lesson Reminder",testText,"TURBOLESSONS");
 
         Flux<MailObject> mailObjectFlux = Flux.just(email1,email2,email3);
 
@@ -57,8 +57,8 @@ public class EmailObjectRepoTest {
     @Test
     void shouldAddGetDeleteEmailObject() {
 
-        String testText = "Greetings, This is a test from LSA Love, LSA Admin";
-        MailObject email = new MailObject(UUID.randomUUID().toString(),"dorflundgren@email.com","Dorf Lundgren","Lesson Reminder",testText,"LSA");
+        String testText = "Greetings, This is a test from TURBOLESSONS Love, TURBOLESSONS Admin";
+        MailObject email = new MailObject(UUID.randomUUID().toString(),"dorflundgren@email.com","Dorf Lundgren","Lesson Reminder",testText,"TURBOLESSONS");
 
         Mono<MailObject> savedEmailMono = repository.save(email);
         Mono<MailObject> retrievedEmailMono = savedEmailMono.flatMap(savedEmail-> repository.findById(savedEmail.getId()));

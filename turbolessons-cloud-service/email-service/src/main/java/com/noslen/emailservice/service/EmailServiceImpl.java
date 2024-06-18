@@ -71,8 +71,8 @@ public class EmailServiceImpl implements EmailService {
             Map<String, Object> templateModel = new HashMap<>();
             templateModel.put("recipientName", l.getStudent());
             String formattedTime = String.format("%02d:%02d %s", hour, minute, am_pm); // makes sure it's always 2 digits
-            templateModel.put("text", String.format("This is an auto reminder from LSA. You have a lesson scheduled for tomorrow at %s.", formattedTime));
-            templateModel.put("senderName", "LSA");
+            templateModel.put("text", String.format("This is an auto reminder from TURBOLESSONS. You have a lesson scheduled for tomorrow at %s.", formattedTime));
+            templateModel.put("senderName", "TURBOLESSONS");
             sendHTMLMessage(l.getStudentEmail(), "Lesson Reminder", templateModel);
         }
         System.out.println("Got Lessons for: " + tomorrow);

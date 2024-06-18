@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.noslen</groupId>
-	<artifactId>lsa-config-service</artifactId>
+	<artifactId>config-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>lsa-config-service</name>
+	<name>config-service</name>
 	<description>Config Service for Lesson Schedule Assistant App</description>
 	<properties>
 		<java.version>17</java.version>

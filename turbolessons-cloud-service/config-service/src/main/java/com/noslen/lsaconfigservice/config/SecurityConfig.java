@@ -1,4 +1,4 @@
-package com.noslen.lsaconfigservice.config;
+package com.noslen.turbolessonsconfigservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

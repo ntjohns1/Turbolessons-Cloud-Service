@@ -5,9 +5,9 @@ networks:
   event-service_net:
   message-service_net:
 services:
-  lsa-config-service:
-    image: noslenj/lsa-config-service:latest
-    container_name: lsa-config-service
+  config-service:
+    image: noslenj/config-service:latest
+    container_name: config-service
     env_file:
       - ./root.env
     volumes:

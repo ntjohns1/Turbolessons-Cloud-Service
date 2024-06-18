@@ -10,6 +10,6 @@ RUN mvn -f /home/app/pom.xml clean package -DskipTests
 # Package stage
 #
 FROM openjdk:17
-COPY --from=build /home/app/target/lsa-config-service-0.0.1-SNAPSHOT.jar /usr/local/lib/lsa-config-service.jar
+COPY --from=build /home/app/target/config-service-0.0.1-SNAPSHOT.jar /usr/local/lib/config-service.jar
 EXPOSE 9999
-ENTRYPOINT ["java","-jar","/usr/local/lib/lsa-config-service.jar"]
+ENTRYPOINT ["java","-jar","/usr/local/lib/config-service.jar"]
