@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="payment-service" />
         <module name="video-service" />
         <module name="event-service" />
         <module name="email-service" />
@@ -25,6 +26,7 @@
       <module name="lsa-cloud-service" target="1.5" />
       <module name="lsa-config-service" target="17" />
       <module name="message-service" target="17" />
+      <module name="payment-service" target="17" />
       <module name="service-registry" target="17" />
       <module name="video-service" target="17" />
     </bytecodeTargetLevel>
@@ -37,6 +39,7 @@
       <module name="event-service" options="-parameters" />
       <module name="lsa-config-service" options="-parameters" />
       <module name="message-service" options="-parameters" />
+      <module name="payment-service" options="-parameters" />
       <module name="service-registry" options="-parameters" />
       <module name="video-service" options="-parameters" />
     </option>
