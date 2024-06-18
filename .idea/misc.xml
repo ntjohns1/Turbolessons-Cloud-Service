@@ -5,6 +5,7 @@
       <list>
         <option value="$PROJECT_DIR$/lsa-cloud-service/pom.xml" />
         <option value="$PROJECT_DIR$/lsa-cloud-service/admin-service/pom.xml" />
+        <option value="$PROJECT_DIR$/lsa-cloud-service/payment-service/pom.xml" />
       </list>
     </option>
   </component>
