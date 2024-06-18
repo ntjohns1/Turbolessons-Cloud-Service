@@ -10,7 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/lsa-cloud-service/message-service/message-service.iml" filepath="$PROJECT_DIR$/lsa-cloud-service/message-service/message-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/lsa-cloud-service/payment-service/payment-service.iml" filepath="$PROJECT_DIR$/lsa-cloud-service/payment-service/payment-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/lsa-cloud-service/service-registry/service-registry.iml" filepath="$PROJECT_DIR$/lsa-cloud-service/service-registry/service-registry.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lsa-cloud-service/turbolessons-cloud-service.iml" filepath="$PROJECT_DIR$/lsa-cloud-service/turbolessons-cloud-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lsa-cloud-service/turbolessons.iml" filepath="$PROJECT_DIR$/lsa-cloud-service/turbolessons.iml" />
       <module fileurl="file://$PROJECT_DIR$/lsa-cloud-service/video-service/video-service.iml" filepath="$PROJECT_DIR$/lsa-cloud-service/video-service/video-service.iml" />
     </modules>
   </component>

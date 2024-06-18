@@ -27,7 +27,7 @@
       <module name="message-service" target="17" />
       <module name="payment-service" target="17" />
       <module name="service-registry" target="17" />
-      <module name="turbolessons-cloud-service" target="1.5" />
+      <module name="turbolessons" target="1.5" />
       <module name="video-service" target="17" />
     </bytecodeTargetLevel>
   </component>
