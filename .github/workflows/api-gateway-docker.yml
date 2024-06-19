@@ -3,7 +3,7 @@ name: api-gateway-docker
 on:
   push:
     paths:
-      - 'lsa-cloud-service/api-gateway/**'
+      - 'turbolessons/api-gateway/**'
 
 jobs:
   docker:
@@ -26,7 +26,7 @@ jobs:
       - name: Build and push api-gateway
         uses: docker/build-push-action@v4
         with:
-          context: ./lsa-cloud-service/api-gateway
+          context: turbolessons/api-gateway
           push: true
           tags: noslenj/api-gateway:latest
 
@@ -34,6 +34,6 @@ jobs:
         uses: appleboy/jenkins-action@master
         with:
           url: "https://mostly-certain-primate.ngrok-free.app/"
-          user: "root"
+          user: "noslen"
           token: ${{ secrets.JENKINS_TOKEN }}
           job: "api_gateway"
