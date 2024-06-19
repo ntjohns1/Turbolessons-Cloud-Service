@@ -3,7 +3,7 @@ name: lessondb-docker
 on:
   push:
     paths:
-      - 'lsa-cloud-service/lessondb/**'
+      - 'turbolessons-cloud-service/lessondb/**'
 
 jobs:
   docker:
@@ -26,7 +26,7 @@ jobs:
       - name: Build and push lessondb
         uses: docker/build-push-action@v4
         with:
-          context: ./lsa-cloud-service/lessondb
+          context: ./turbolessons-cloud-service/lessondb
           push: true
           tags: noslenj/lessondb:latest
     
