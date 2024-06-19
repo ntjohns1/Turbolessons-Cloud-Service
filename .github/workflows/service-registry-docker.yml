@@ -3,7 +3,7 @@ name: service-registry-docker
 on:
   push:
     paths:
-      - 'turbolessons-cloud-service/service-registry/**'
+      - 'turbolessons/service-registry/**'
 
 jobs:
   docker:
@@ -26,7 +26,7 @@ jobs:
       - name: Build and push Docker images
         uses: docker/build-push-action@v4
         with:
-          context: turbolessons-cloud-service/service-registry
+          context: turbolessons/service-registry
           push: true
           tags: noslenj/service-registry:latest
           
