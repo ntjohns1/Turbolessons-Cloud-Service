@@ -33,7 +33,7 @@ jobs:
         chmod 777 ~/Movies/Good_Boy.mp4
     
     - name: Run Maven Tests
-      working-directory: ./turbolessons-cloud-service/video-service
+      working-directory: turbolessons-cloud-service/video-service
       run: |
         mvn test -DOKTA_CLIENT_ID=${{ secrets.OKTA_CLIENT_ID }} \
         -DOKTA_CLIENT_SECRET=${{ secrets.OKTA_CLIENT_SECRET }} \

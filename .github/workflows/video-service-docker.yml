@@ -33,7 +33,7 @@ jobs:
           chmod 777 ~/Movies/Good_Boy.mp4
       
       - name: Run Maven Tests
-        working-directory: ./turbolessons-cloud-service/video-service
+        working-directory: turbolessons-cloud-service/video-service
         run: |
           mvn test -DOKTA_CLIENT_ID=${{ secrets.OKTA_CLIENT_ID }} \
           -DOKTA_CLIENT_SECRET=${{ secrets.OKTA_CLIENT_SECRET }} \
@@ -54,7 +54,7 @@ jobs:
       - name: Build and push video-service
         uses: docker/build-push-action@v4
         with:
-          context: ./turbolessons-cloud-service/video-service
+          context: turbolessons-cloud-service/video-service
           push: true
           tags: noslenj/video-service:latest
       
@@ -62,6 +62,6 @@ jobs:
         uses: appleboy/jenkins-action@master
         with:
           url: "https://mostly-certain-primate.ngrok-free.app/"
-          user: "root"
+          user: "noslen"
           token: ${{ secrets.JENKINS_TOKEN }}
           job: "video_service"

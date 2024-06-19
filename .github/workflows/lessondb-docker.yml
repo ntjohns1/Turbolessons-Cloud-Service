@@ -26,7 +26,7 @@ jobs:
       - name: Build and push lessondb
         uses: docker/build-push-action@v4
         with:
-          context: ./turbolessons-cloud-service/lessondb
+          context: turbolessons-cloud-service/lessondb
           push: true
           tags: noslenj/lessondb:latest
     
@@ -34,6 +34,6 @@ jobs:
         uses: appleboy/jenkins-action@master
         with:
           url: "https://mostly-certain-primate.ngrok-free.app/"
-          user: "root"
+          user: "noslen"
           token: ${{ secrets.JENKINS_TOKEN }}
           job: "lessondb"
