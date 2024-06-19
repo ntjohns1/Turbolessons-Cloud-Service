@@ -26,7 +26,7 @@ jobs:
       - name: Build and push lsa-config-service
         uses: docker/build-push-action@v4
         with:
-          context: ./turbolessons-cloud-service/lsa-config-service
+          context: turbolessons-cloud-service/lsa-config-service
           push: true
           tags: noslenj/lsa-config-service:latest
 
@@ -34,6 +34,6 @@ jobs:
         uses: appleboy/jenkins-action@master
         with:
           url: "https://mostly-certain-primate.ngrok-free.app/"
-          user: "root"
+          user: "noslen"
           token: ${{ secrets.JENKINS_TOKEN }}
           job: "config_service"
