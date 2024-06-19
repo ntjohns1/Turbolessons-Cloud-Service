@@ -2,6 +2,8 @@ name: event-service-docker
 
 on:
   push:
+    branches:
+      - 'master'
     paths:
       - 'turbolessons/event-service/**'
 
