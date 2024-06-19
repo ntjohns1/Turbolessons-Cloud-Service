@@ -3,7 +3,7 @@ name: config-service-docker
 on:
   push:
     paths:
-      - 'turbolessons-cloud-service/lsa-config-service/**'
+      - 'turbolessons-cloud-service/config-service/**'
 
 jobs:
   docker:
@@ -23,12 +23,12 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
-      - name: Build and push lsa-config-service
+      - name: Build and push config-service
         uses: docker/build-push-action@v4
         with:
-          context: turbolessons-cloud-service/lsa-config-service
+          context: turbolessons-cloud-service/config-service
           push: true
-          tags: noslenj/lsa-config-service:latest
+          tags: noslenj/config-service:latest
 
       - name: Trigger Jenkins Job
         uses: appleboy/jenkins-action@master
