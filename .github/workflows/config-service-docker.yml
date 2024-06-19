@@ -3,7 +3,7 @@ name: config-service-docker
 on:
   push:
     paths:
-      - 'turbolessons-cloud-service/config-service/**'
+      - 'turbolessons/config-service/**'
 
 jobs:
   docker:
@@ -26,7 +26,7 @@ jobs:
       - name: Build and push config-service
         uses: docker/build-push-action@v4
         with:
-          context: turbolessons-cloud-service/config-service
+          context: turbolessons/config-service
           push: true
           tags: noslenj/config-service:latest
 

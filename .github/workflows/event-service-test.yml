@@ -3,7 +3,7 @@ name: event-service-test
 on:
   push:
     paths:
-      - "turbolessons-cloud-service/event-service/**"
+      - "turbolessons/event-service/**"
 
 jobs:
   build-and-test:
@@ -21,7 +21,7 @@ jobs:
       uses: actions/checkout@v3.6.0
       
     - name: Run Maven Tests
-      working-directory: turbolessons-cloud-service/event-service
+      working-directory: turbolessons/event-service
       run: |
         mvn test -DOKTA_CLIENT_ID=${{ secrets.OKTA_CLIENT_ID }} \
         -DOKTA_CLIENT_SECRET=${{ secrets.OKTA_CLIENT_SECRET }} \

@@ -3,7 +3,7 @@ name: api-gateway-docker
 on:
   push:
     paths:
-      - 'turbolessons-cloud-service/api-gateway/**'
+      - 'turbolessons/api-gateway/**'
 
 jobs:
   docker:
@@ -26,7 +26,7 @@ jobs:
       - name: Build and push api-gateway
         uses: docker/build-push-action@v4
         with:
-          context: turbolessons-cloud-service/api-gateway
+          context: turbolessons/api-gateway
           push: true
           tags: noslenj/api-gateway:latest
 
