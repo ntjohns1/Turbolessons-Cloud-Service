@@ -3,7 +3,7 @@ name: service-registry-docker
 on:
   push:
     paths:
-      - 'lsa-cloud-service/service-registry/**'
+      - 'turbolessons/service-registry/**'
 
 jobs:
   docker:
@@ -26,7 +26,7 @@ jobs:
       - name: Build and push Docker images
         uses: docker/build-push-action@v4
         with:
-          context: ./lsa-cloud-service/service-registry
+          context: turbolessons/service-registry
           push: true
           tags: noslenj/service-registry:latest
           
@@ -34,6 +34,6 @@ jobs:
         uses: appleboy/jenkins-action@master
         with:
           url: "https://mostly-certain-primate.ngrok-free.app/"
-          user: "root"
+          user: "noslen"
           token: ${{ secrets.JENKINS_TOKEN }}
           job: "service_registry"
