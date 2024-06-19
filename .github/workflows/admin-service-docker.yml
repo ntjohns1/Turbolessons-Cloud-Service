@@ -10,11 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: List directory contents
-        run: ls -la turbolessons/admin-service
-
-      - name: Print working directory
-        run: pwd
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3.12.0
