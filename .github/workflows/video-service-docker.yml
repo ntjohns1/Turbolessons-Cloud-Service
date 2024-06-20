@@ -2,6 +2,8 @@ name: video-service-docker
 
 on:
   push:
+    branches:
+      - 'master'
     paths:
       - 'turbolessons/video-service/**'
 

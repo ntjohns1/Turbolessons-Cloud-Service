@@ -2,6 +2,8 @@ name: service-registry-docker
 
 on:
   push:
+    branches:
+      - 'master'
     paths:
       - 'turbolessons/service-registry/**'
 

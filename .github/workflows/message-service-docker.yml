@@ -2,6 +2,8 @@ name: message-service-docker
 
 on:
   push:
+    branches:
+      - 'master'
     paths:
       - 'turbolessons/message-service/**'
 
