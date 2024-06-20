@@ -2,6 +2,8 @@ name: email-service-docker
 
 on:
   push:
+    branches:
+      - 'master'
     paths:
       - 'turbolessons/email-service/**'
 
