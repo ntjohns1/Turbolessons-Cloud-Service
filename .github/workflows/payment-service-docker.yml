@@ -2,6 +2,8 @@ name: payment-service-docker
 
 on:
   push:
+    branches:
+      - 'master'
     paths:
       - 'turbolessons/payment-service/**'
 

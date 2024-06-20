@@ -2,6 +2,8 @@ name: api-gateway-docker
 
 on:
   push:
+    branches:
+      - 'master'
     paths:
       - 'turbolessons/api-gateway/**'
 
