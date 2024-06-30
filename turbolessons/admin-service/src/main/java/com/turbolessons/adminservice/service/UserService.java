@@ -50,7 +50,7 @@ public class UserService {
                 null);
     }
 
-    @Cacheable(value = "userCache", key = "'listAllUsersByTeacher'")
+    @Cacheable(value = "userCache", key = "'listAllUsersByTeacher:' + #teacherUsername")
     public List<User> listAllUsersByTeacher(String teacherUsername) {
         //        users.removeIf(u -> !Objects.equals(Objects.requireNonNull(u.getProfile()).getUserType(), "student"));
         String groupName = "active_student_" + teacherUsername;
@@ -91,7 +91,8 @@ public class UserService {
     @Caching(put = {
             @CachePut(value = "userCache", key = "#result.id")
     }, evict = {
-            @CacheEvict(value = "userCache", key = "'listAllUsers'")
+            @CacheEvict(value = "userCache", key = "'listAllUsers'"),
+            @CacheEvict(value = "userCache", key = "'listAllUsersByTeacher:' + #teacherUsername")
     })
     public User createUser(String email, String firstName, String lastName) {
         User user = userBuilder()
@@ -116,7 +117,8 @@ public class UserService {
             @CachePut(value = "profileCache", key = "#userId")
     }, evict = {
             @CacheEvict(value = "userCache", key = "'listAllUsers'"),
-            @CacheEvict(value = "userCache", key = "#userId")
+            @CacheEvict(value = "userCache", key = "#userId"),
+            @CacheEvict(value = "userCache", key = "'listAllUsersByTeacher:' + #teacherUsername")
     })
     public void updateUser(String userId, UserProfileDTO userProfileDTO) {
         ObjectMapper mapper = new ObjectMapper();
@@ -132,7 +134,8 @@ public class UserService {
     @Caching(evict = {
             @CacheEvict(value = "userCache", key = "#id"),
             @CacheEvict(value = "userCache", key = "'listAllUsers'"),
-            @CacheEvict(value = "profileCache", key = "#id")
+            @CacheEvict(value = "profileCache", key = "#id"),
+            @CacheEvict(value = "userCache", key = "'listAllUsersByTeacher:' + #teacherUsername")
     })
     public void deleteUser(String id) {
         // deactivate first
