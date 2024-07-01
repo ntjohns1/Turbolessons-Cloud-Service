@@ -89,7 +89,8 @@ public class UserService {
     }
 
     @Caching(put = {
-            @CachePut(value = "userCache", key = "#result.id")
+            @CachePut(value = "userCache", key = "#result.id"),
+            @CachePut(value = "profileCache", key = "#result.id")
     }, evict = {
             @CacheEvict(value = "userCache", key = "'listAllUsers'"),
             @CacheEvict(value = "userCache", key = "'listAllUsersByTeacher:' + #teacherUsername")
@@ -114,10 +115,10 @@ public class UserService {
     }
 
     @Caching(put = {
-            @CachePut(value = "profileCache", key = "#userId")
+            @CachePut(value = "profileCache", key = "#userId"),
+            @CachePut(value = "userCache", key = "#userId")
     }, evict = {
             @CacheEvict(value = "userCache", key = "'listAllUsers'"),
-            @CacheEvict(value = "userCache", key = "#userId"),
             @CacheEvict(value = "userCache", key = "'listAllUsersByTeacher:' + #teacherUsername")
     })
     public void updateUser(String userId, UserProfileDTO userProfileDTO) {
