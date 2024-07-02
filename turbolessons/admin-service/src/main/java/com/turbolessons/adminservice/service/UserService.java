@@ -68,7 +68,6 @@ public class UserService {
         return u.orElse(null);
     }
 
-    @Cacheable(value = "profileCache", key = "#id", unless = "#result == null")
     public UserProfileDTO getUserProfile(String id) {
         UserProfileDTO dto = new UserProfileDTO();
         UserProfile userProfile = userApi.getUser(id).getProfile();
@@ -91,7 +90,6 @@ public class UserService {
 
     @Caching(put = {
             @CachePut(value = "userCache", key = "#result.id"),
-            @CachePut(value = "profileCache", key = "#result.id")
     }, evict = {
             @CacheEvict(value = "userCache", key = "'listAllUsers'"),
             @CacheEvict(value = "userCache", key = "'listAllUsersByTeacher:' + #teacherUsername")
@@ -116,7 +114,6 @@ public class UserService {
     }
 
     @Caching(put = {
-            @CachePut(value = "profileCache", key = "#userId"),
             @CachePut(value = "userCache", key = "#userId")
     }, evict = {
             @CacheEvict(value = "userCache", key = "'listAllUsers'"),
@@ -131,18 +128,11 @@ public class UserService {
         userProfile.setAdditionalProperties(map);
         updateUserRequest.setProfile(userProfile);
         userApi.updateUser(userId, updateUserRequest, true);
-        UserProfileDTO updatedUserProfile = getUserProfile(userId);
-        Objects.requireNonNull(cacheManager.getCache("profileCache"))
-                .put(userId, updatedUserProfile);
-        User updatedUser = getUser(userId);
-        Objects.requireNonNull(cacheManager.getCache("userCache"))
-                .put(userId, updatedUser);
     }
 
     @Caching(evict = {
             @CacheEvict(value = "userCache", key = "#id"),
             @CacheEvict(value = "userCache", key = "'listAllUsers'"),
-            @CacheEvict(value = "profileCache", key = "#id"),
             @CacheEvict(value = "userCache", key = "'listAllUsersByTeacher:' + #teacherUsername")
     })
     public void deleteUser(String id) {
