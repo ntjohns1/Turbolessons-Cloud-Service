@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -130,6 +131,12 @@ public class UserService {
         userProfile.setAdditionalProperties(map);
         updateUserRequest.setProfile(userProfile);
         userApi.updateUser(userId, updateUserRequest, true);
+        UserProfileDTO updatedUserProfile = getUserProfile(userId);
+        Objects.requireNonNull(cacheManager.getCache("profileCache"))
+                .put(userId, updatedUserProfile);
+        User updatedUser = getUser(userId);
+        Objects.requireNonNull(cacheManager.getCache("userCache"))
+                .put(userId, updatedUser);
     }
 
     @Caching(evict = {
