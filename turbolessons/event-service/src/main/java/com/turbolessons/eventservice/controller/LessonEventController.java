@@ -67,9 +67,13 @@ public class LessonEventController {
     @PutMapping("/api/lessons/{id}")
     public void updateLesson(@PathVariable Integer id, @RequestBody LessonEvent lesson) {
         LessonEvent fromService = service.findLessonEvent(id);
-        fromService.setTeacher(lesson.getTeacher());
-        fromService.setStudent(lesson.getStudent());
         fromService.setStartTime(lesson.getStartTime());
+        fromService.setEndTime(lesson.getEndTime());
+        fromService.setTitle(lesson.getTitle());
+        fromService.setStudent(lesson.getStudent());
+        fromService.setStudentEmail(lesson.getStudentEmail());
+        fromService.setTeacher(lesson.getTeacher());
+        fromService.setTeacherEmail(lesson.getTeacherEmail());
         fromService.setComments(lesson.getComments());
         service.saveLessonEvent(fromService);
     }
