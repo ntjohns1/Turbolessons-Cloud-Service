@@ -1,10 +1,10 @@
 package com.turbolessons.paymentservice.controller.subscription;
 
+import com.stripe.model.Subscription;
 import com.turbolessons.paymentservice.controller.BaseHandler;
 import com.turbolessons.paymentservice.dto.CustomerDto;
 import com.turbolessons.paymentservice.dto.SubscriptionDto;
 import com.turbolessons.paymentservice.service.subscription.SubscriptionService;
-import com.stripe.model.Subscription;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
