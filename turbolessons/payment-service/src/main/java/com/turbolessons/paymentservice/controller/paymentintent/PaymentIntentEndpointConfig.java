@@ -20,12 +20,12 @@ public class PaymentIntentEndpointConfig {
     @Bean
     RouterFunction<ServerResponse> paymentIntentRoutes() {
 
-      return  route((GET("/api/paymentintent")), handler::listAll)
-                .andRoute(GET("/api/paymentintent/{id}"), handler::retrieve)
-                .andRoute(GET("/api/paymentintent/customer/{id}"), handler::searchByCustomer)
-                .andRoute(POST("/api/paymentintent"), handler::create)
-                .andRoute(PUT("/api/paymentintent/{id}"), handler::update)
-                .andRoute(PUT("/api/paymentintent/capture/{id}"), handler::capture)
-                .andRoute(DELETE("/api/paymentintent/{id}"), handler::cancel);
+      return  route((GET("/api/payments/paymentintent")), handler::listAll)
+                .andRoute(GET("/api/payments/paymentintent/{id}"), handler::retrieve)
+                .andRoute(GET("/api/payments/paymentintent/customer/{id}"), handler::searchByCustomer)
+                .andRoute(POST("/api/payments/paymentintent"), handler::create)
+                .andRoute(PUT("/api/payments/paymentintent/{id}"), handler::update)
+                .andRoute(PUT("/api/payments/paymentintent/capture/{id}"), handler::capture)
+                .andRoute(DELETE("/api/payments/paymentintent/{id}"), handler::cancel);
     }
 }

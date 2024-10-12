@@ -11,7 +11,7 @@ server:
 #    keyPassword: ${KEY_PASSWORD}
 spring:
   config:
-    import: optional:configserver:http://lsa-config-service:9999/
+    import: optional:configserver:http://config-service:9999/
   application:
     name: service-registry
   cloud:

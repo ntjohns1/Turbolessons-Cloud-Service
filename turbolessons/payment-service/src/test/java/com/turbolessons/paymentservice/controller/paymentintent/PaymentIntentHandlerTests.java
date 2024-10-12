@@ -59,7 +59,7 @@ public class PaymentIntentHandlerTests {
         StripeCollection<PaymentIntent> paymentIntents = createMockStripeCollection();
         when(paymentIntentService.listAllPaymentIntents()).thenReturn(Mono.just(paymentIntents));
         webTestClient.get()
-                .uri("/api/paymentintent")
+                .uri("/api/payments/paymentintent")
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -81,7 +81,7 @@ public class PaymentIntentHandlerTests {
                                                               "processing");
         when(paymentIntentService.retrievePaymentIntent(anyString())).thenReturn(Mono.just(paymentIntent));
         webTestClient.get()
-                .uri("/api/paymentintent/pi_123")
+                .uri("/api/payments/paymentintent/pi_123")
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -111,7 +111,7 @@ public class PaymentIntentHandlerTests {
         when(paymentIntentService.searchPaymentIntentByCustomer(customerId)).thenReturn(Mono.just(mockSearchResult));
 
         webTestClient.get()
-                .uri("/api/paymentintent/customer/" + customerId)
+                .uri("/api/payments/paymentintent/customer/" + customerId)
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -150,7 +150,7 @@ public class PaymentIntentHandlerTests {
                 .thenReturn(Mono.just(paymentIntent));
         webTestClient.mutateWith(mockJwt())
                 .post()
-                .uri("/api/paymentintent")
+                .uri("/api/payments/paymentintent")
                 .body(Mono.just(dto),
                       PaymentIntentDto.class)
                 .exchange()
@@ -192,7 +192,7 @@ public class PaymentIntentHandlerTests {
 
         webTestClient.mutateWith(mockJwt())
                 .put()
-                .uri("/api/paymentintent/pi_123")
+                .uri("/api/payments/paymentintent/pi_123")
                 .body(Mono.just(updateData), PaymentIntentDto.class)
                 .exchange()
                 .expectStatus()
@@ -214,7 +214,7 @@ public class PaymentIntentHandlerTests {
 
         webTestClient.mutateWith(mockJwt())
                 .put()
-                .uri("/api/paymentintent/capture/pi_123")
+                .uri("/api/payments/paymentintent/capture/pi_123")
                 .exchange()
                 .expectStatus()
                 .isOk();
@@ -228,7 +228,7 @@ public class PaymentIntentHandlerTests {
 
         webTestClient.mutateWith(mockJwt())
                 .delete()
-                .uri("/api/paymentintent/pi_123")
+                .uri("/api/payments/paymentintent/pi_123")
                 .exchange()
                 .expectStatus()
                 .isNoContent();

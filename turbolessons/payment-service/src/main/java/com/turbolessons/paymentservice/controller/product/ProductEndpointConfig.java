@@ -20,10 +20,10 @@ public class ProductEndpointConfig {
     @Bean
     RouterFunction<ServerResponse> productRoutes() {
 
-        return route((GET("/api/product")),handler::listAll)
-                .andRoute(GET("/api/product/{id}"),handler::retrieve)
-                .andRoute(POST("/api/product"),handler::create)
-                .andRoute(PUT("/api/product/{id}"),handler::update)
-                .andRoute(DELETE("/api/product/{id}"),handler::delete);
+        return route((GET("/api/payments/product")),handler::listAll)
+                .andRoute(GET("/api/payments/product/{id}"),handler::retrieve)
+                .andRoute(POST("/api/payments/product"),handler::create)
+                .andRoute(PUT("/api/payments/product/{id}"),handler::update)
+                .andRoute(DELETE("/api/payments/product/{id}"),handler::delete);
     }
 }

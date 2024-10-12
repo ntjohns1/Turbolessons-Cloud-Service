@@ -20,9 +20,9 @@ public class PriceEndpointConfig {
     @Bean
     RouterFunction<ServerResponse> priceRoutes() {
 
-        return route((GET("/api/price")),handler::listAll)
-                .andRoute(GET("/api/price/{id}"),handler::retrieve)
-                .andRoute(POST("/api/price"),handler::create)
-                .andRoute(PUT("/api/price/{id}"),handler::update);
+        return route((GET("/api/payments/price")),handler::listAll)
+                .andRoute(GET("/api/payments/price/{id}"),handler::retrieve)
+                .andRoute(POST("/api/payments/price"),handler::create)
+                .andRoute(PUT("/api/payments/price/{id}"),handler::update);
     }
 }

@@ -58,7 +58,7 @@ public class CustomerHandlerTests {
         StripeCollection<Customer> mockCustomers = createMockStripeCollection();
         when(customerService.listAllCustomers()).thenReturn(Mono.just(mockCustomers));
         webTestClient.get()
-                .uri("/api/customer")
+                .uri("/api/payments/customer")
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -75,7 +75,7 @@ public class CustomerHandlerTests {
                                                "Andrew Anderson");
         when(customerService.retrieveCustomer(anyString())).thenReturn(Mono.just(customer));
         webTestClient.get()
-                .uri("/api/customer/cus_123")
+                .uri("/api/payments/customer/cus_123")
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -110,7 +110,7 @@ public class CustomerHandlerTests {
         when(customerService.createCustomer(any())).thenReturn(Mono.just(customer));
         webTestClient.mutateWith(mockJwt())
                 .post()
-                .uri("/api/customer")
+                .uri("/api/payments/customer")
                 .body(Mono.just(data),
                       CustomerDto.class)
                 .exchange()
@@ -150,7 +150,7 @@ public class CustomerHandlerTests {
 
         webTestClient.mutateWith(mockJwt())
                 .put()
-                .uri("/api/customer/cus_123")
+                .uri("/api/payments/customer/cus_123")
                 .body(Mono.just(updateData),
                       CustomerDto.class)
                 .exchange()
@@ -165,7 +165,7 @@ public class CustomerHandlerTests {
 
         webTestClient.mutateWith(mockJwt())
                 .delete()
-                .uri("/api/customer/cus_123")
+                .uri("/api/payments/customer/cus_123")
                 .exchange()
                 .expectStatus()
                 .isNoContent();

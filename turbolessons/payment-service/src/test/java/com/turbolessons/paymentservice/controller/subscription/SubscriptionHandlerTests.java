@@ -63,7 +63,7 @@ public class SubscriptionHandlerTests {
         when(subscriptionService.listAllSubscriptions()).thenReturn(Mono.just(mockSubscriptions));
         System.out.println(mockSubscriptions);
         webTestClient.get()
-                .uri("/api/subscription")
+                .uri("/api/payments/subscription")
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -79,7 +79,7 @@ public class SubscriptionHandlerTests {
         Subscription subscription = createMockSubscription();
         when(subscriptionService.retrieveSubscription(anyString())).thenReturn(Mono.just(subscription));
         webTestClient.get()
-                .uri("/api/subscription/cus_123")
+                .uri("/api/payments/subscription/cus_123")
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -103,7 +103,7 @@ public class SubscriptionHandlerTests {
         when(subscriptionService.createSubscription(anyString(),any(CustomerDto.class))).thenReturn(Mono.just(subscription));
         webTestClient.mutateWith(mockJwt())
                 .post()
-                .uri("/api/subscription/price_123")
+                .uri("/api/payments/subscription/price_123")
                 .body(Mono.just(data),
                       SubscriptionDto.class)
                 .exchange()
@@ -132,7 +132,7 @@ public class SubscriptionHandlerTests {
 
         webTestClient.mutateWith(mockJwt())
                 .put()
-                .uri("/api/subscription/sub_123")
+                .uri("/api/payments/subscription/sub_123")
                 .body(Mono.just(updateData),
                       SubscriptionDto.class)
                 .exchange()
@@ -146,7 +146,7 @@ public class SubscriptionHandlerTests {
 
         webTestClient.mutateWith(mockJwt())
                 .delete()
-                .uri("/api/subscription/cus_123")
+                .uri("/api/payments/subscription/cus_123")
                 .exchange()
                 .expectStatus().isNoContent();
     }
