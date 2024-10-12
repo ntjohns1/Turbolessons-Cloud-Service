@@ -20,10 +20,10 @@ public class CustomerEndpointConfig {
     @Bean
     RouterFunction<ServerResponse> customerRoutes() {
 
-        return route((GET("/api/customer")), handler::listAll)
-                .andRoute(GET("/api/customer/{id}"), handler::retrieve)
-                .andRoute(POST("/api/customer"), handler::create)
-                .andRoute(PUT("/api/customer/{id}"), handler::update)
-                .andRoute(DELETE("/api/customer/{id}"), handler::delete);
+        return route((GET("/api/payments/customer")), handler::listAll)
+                .andRoute(GET("/api/payments/customer/{id}"), handler::retrieve)
+                .andRoute(POST("/api/payments/customer"), handler::create)
+                .andRoute(PUT("/api/payments/customer/{id}"), handler::update)
+                .andRoute(DELETE("/api/payments/customer/{id}"), handler::delete);
     }
 }

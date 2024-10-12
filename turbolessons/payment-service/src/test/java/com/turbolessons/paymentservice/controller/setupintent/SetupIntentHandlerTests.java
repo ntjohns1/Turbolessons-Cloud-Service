@@ -59,7 +59,7 @@ public class SetupIntentHandlerTests {
         StripeCollection<SetupIntent> setupIntents = createMockSetupIntentCollection();
         when(setupIntentService.listSetupIntents()).thenReturn(Mono.just(setupIntents));
         webTestClient.get()
-                .uri("/api/setupintent")
+                .uri("/api/payments/setupintent")
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -79,7 +79,7 @@ public class SetupIntentHandlerTests {
                                                         "pm_123");
         when(setupIntentService.retrieveSetupIntent(anyString())).thenReturn(Mono.just(setupIntent));
         webTestClient.get()
-                .uri("/api/setupintent/si_123")
+                .uri("/api/payments/setupintent/si_123")
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -106,7 +106,7 @@ public class SetupIntentHandlerTests {
                      .thenReturn(Mono.just(setupIntent));
         webTestClient.mutateWith(mockJwt())
                 .post()
-                .uri("/api/setupintent")
+                .uri("/api/payments/setupintent")
                 .body(Mono.just(dto), SetupIntentDto.class)
                 .exchange()
                 .expectStatus()
@@ -131,7 +131,7 @@ public class SetupIntentHandlerTests {
                      .thenReturn(Mono.empty());
         webTestClient.mutateWith(mockJwt())
                 .put()
-                .uri("/api/setupintent/confirm/si_123")
+                .uri("/api/payments/setupintent/confirm/si_123")
                 .exchange()
                 .expectStatus()
                 .isNoContent();
@@ -150,7 +150,7 @@ public class SetupIntentHandlerTests {
                                                   any(SetupIntentDto.class))).thenReturn(Mono.empty());
         webTestClient.mutateWith(mockJwt())
                 .put()
-                .uri("/api/setupintent/si_123")
+                .uri("/api/payments/setupintent/si_123")
                 .exchange()
                 .expectStatus()
                 .isNoContent();
@@ -163,7 +163,7 @@ public class SetupIntentHandlerTests {
         when(setupIntentService.cancelSetupIntent(anyString())).thenReturn(Mono.empty());
         webTestClient.mutateWith(mockJwt())
                 .delete()
-                .uri("/api/setupintent/si_123")
+                .uri("/api/payments/setupintent/si_123")
                 .exchange()
                 .expectStatus()
                 .isNoContent();

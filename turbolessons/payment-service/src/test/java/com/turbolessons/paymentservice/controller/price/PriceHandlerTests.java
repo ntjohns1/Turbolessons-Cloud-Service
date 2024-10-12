@@ -60,7 +60,7 @@ public class PriceHandlerTests {
                      .thenReturn(Mono.just(prices));
 
         webTestClient.get()
-                .uri("/api/price")
+                .uri("/api/payments/price")
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -81,7 +81,7 @@ public class PriceHandlerTests {
                      .thenReturn(Mono.just(price));
 
         webTestClient.get()
-                .uri("/api/price/price_123")
+                .uri("/api/payments/price/price_123")
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -110,7 +110,7 @@ public class PriceHandlerTests {
 
         webTestClient.mutateWith(mockJwt())
                 .post()
-                .uri("/api/price")
+                .uri("/api/payments/price")
                 .body(Mono.just(dto),
                       PriceDTO.class)
                 .exchange()
@@ -133,7 +133,7 @@ public class PriceHandlerTests {
                      .thenReturn(Mono.empty());
         webTestClient.mutateWith(mockJwt())
                 .put()
-                .uri("/api/price/price_123")
+                .uri("/api/payments/price/price_123")
                 .body(Mono.just(dto),
                       PriceDTO.class)
                 .exchange()

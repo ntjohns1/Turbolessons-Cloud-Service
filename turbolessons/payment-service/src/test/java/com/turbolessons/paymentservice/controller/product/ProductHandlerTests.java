@@ -59,7 +59,7 @@ public class ProductHandlerTests {
         StripeCollection<Product> mockProducts = createMockStripeCollection();
         when(productService.listAllProducts()).thenReturn(Mono.just(mockProducts));
         webTestClient.get()
-                .uri("/api/product")
+                .uri("/api/payments/product")
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -79,7 +79,7 @@ public class ProductHandlerTests {
 
         when(productService.retrieveProduct(anyString())).thenReturn(Mono.just(product));
         webTestClient.get()
-                .uri("/api/product/prod_123")
+                .uri("/api/payments/product/prod_123")
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -104,7 +104,7 @@ public class ProductHandlerTests {
 
         webTestClient.mutateWith(mockJwt())
                 .post()
-                .uri("/api/product")
+                .uri("/api/payments/product")
                 .body(Mono.just(dto),
                       CustomerDto.class)
                 .exchange()
@@ -133,7 +133,7 @@ public class ProductHandlerTests {
 
         webTestClient.mutateWith(mockJwt())
                 .put()
-                .uri("/api/product/prod_123")
+                .uri("/api/payments/product/prod_123")
                 .body(Mono.just(dto),
                       CustomerDto.class)
                 .exchange()
@@ -148,7 +148,7 @@ public class ProductHandlerTests {
 
         webTestClient.mutateWith(mockJwt())
                 .delete()
-                .uri("/api/product/prod_123")
+                .uri("/api/payments/product/prod_123")
                 .exchange()
                 .expectStatus()
                 .isNoContent();
