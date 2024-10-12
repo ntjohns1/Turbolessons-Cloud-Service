@@ -2,6 +2,8 @@ name: config-service-docker
 
 on:
   push:
+    branches:
+      - 'master'
     paths:
       - 'turbolessons/config-service/**'
 
