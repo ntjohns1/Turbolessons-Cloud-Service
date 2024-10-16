@@ -1,10 +1,10 @@
 package com.turbolessons.paymentservice.controller.customer;
 
+import com.stripe.model.Customer;
+import com.stripe.model.StripeCollection;
 import com.turbolessons.paymentservice.dto.Address;
 import com.turbolessons.paymentservice.dto.CustomerDto;
 import com.turbolessons.paymentservice.service.customer.CustomerService;
-import com.stripe.model.Customer;
-import com.stripe.model.StripeCollection;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,9 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -100,13 +102,18 @@ public class CustomerHandlerTests {
         address.setLine2("APT A");
         address.setPostalCode("12345");
 
+        Map<String, String> metadata = new HashMap<>();
+        metadata.put("okta_id",
+                     "00u75cn4yauHU7bl55d7");
+
         CustomerDto data = new CustomerDto("cus_123",
                                            address,
                                            "email@example.com",
                                            "Claudia Coulthard",
                                            "1234567890",
                                            "pm_789",
-                                           "Test DTO");
+                                           "Test DTO",
+                                           metadata);
         when(customerService.createCustomer(any())).thenReturn(Mono.just(customer));
         webTestClient.mutateWith(mockJwt())
                 .post()
@@ -138,13 +145,18 @@ public class CustomerHandlerTests {
         address.setLine2("");
         address.setPostalCode("45678");
 
+        Map<String, String> metadata = new HashMap<>();
+        metadata.put("okta_id",
+                     "00u75cn4yauHU7bl55d7");
+
         CustomerDto updateData = new CustomerDto("cus_123",
                                                  address,
                                                  "new_email@example.com",
                                                  "Claudia C. Coulthard",
                                                  "1234567890",
                                                  "pm_789",
-                                                 "Updated Test DTO");
+                                                 "Updated Test DTO",
+                                                 metadata);
         when(customerService.updateCustomer(anyString(),
                                             any(CustomerDto.class))).thenReturn(Mono.empty());
 
@@ -175,9 +187,11 @@ public class CustomerHandlerTests {
     private StripeCollection<Customer> createMockStripeCollection() {
         StripeCollection<Customer> customers = new StripeCollection<>();
 
-        Customer mockCustomer1 = createMockCustomer("test@example.com","Andrew Anderson");
+        Customer mockCustomer1 = createMockCustomer("test@example.com",
+                                                    "Andrew Anderson");
 
-        Customer mockCustomer2 = createMockCustomer("test@example.com","Claudia Coulthard");
+        Customer mockCustomer2 = createMockCustomer("test@example.com",
+                                                    "Claudia Coulthard");
 
         List<Customer> customerList = Arrays.asList(mockCustomer1,
                                                     mockCustomer2);
@@ -193,7 +207,11 @@ public class CustomerHandlerTests {
         return customer;
     }
 
+
     private CustomerDto createCustomerDto() {
+        Map<String, String> metadata = new HashMap<>();
+        metadata.put("okta_id",
+                     "00u75cn4yauHU7bl55d7");
         Address address = new Address();
         address.setCity("Los Angeles");
         address.setState("CA");
@@ -207,7 +225,8 @@ public class CustomerHandlerTests {
                                "Claudia Coulthard",
                                "1234567890",
                                "pm_789",
-                               "Test DTO");
+                               "Test DTO",
+                               metadata);
     }
 
 }
