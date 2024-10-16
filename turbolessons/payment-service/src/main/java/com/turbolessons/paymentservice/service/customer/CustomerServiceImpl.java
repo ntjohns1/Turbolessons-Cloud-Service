@@ -1,5 +1,6 @@
 package com.turbolessons.paymentservice.service.customer;
 
+import com.stripe.param.CustomerSearchParams;
 import com.turbolessons.paymentservice.dto.Address;
 import com.turbolessons.paymentservice.dto.CustomerDto;
 import com.turbolessons.paymentservice.service.StripeClientHelper;
@@ -10,6 +11,14 @@ import com.stripe.param.CustomerCreateParams;
 import com.stripe.param.CustomerUpdateParams;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+
+//You can perform searches on metadata that you’ve added to objects that support it.
+//
+// metadata search: metadata["<field>"]:"<value>".
+//
+// queries for records with a donation ID of “asdf-jkl”: metadata["donation-id"]:"asdf-jkl".
+//
+// You can query for the presence of a metadata key on an object. The following clause would match all records where donation-id is a metadata key. -metadata["donation-id"]:null
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -35,6 +44,23 @@ public class CustomerServiceImpl implements CustomerService {
         return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
                 .retrieve(id));
     }
+
+    @Override
+    public Mono<Customer> searchCustomerBySystemId(String id) {
+        String query = String.format("metadata['okta_id']:'%s'", id);
+        CustomerSearchParams params =
+                CustomerSearchParams.builder()
+                        .setQuery(query)
+                        .build();
+        return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
+                        .search(params))
+                .flatMap(customerSearchResult -> {
+                    if (customerSearchResult.getData() != null && !customerSearchResult.getData().isEmpty()) {
+                        return Mono.just(customerSearchResult.getData().get(0));
+                    } else {
+                        return Mono.empty();
+                    }
+                });    }
 
     //    Create a Customer
     @Override
