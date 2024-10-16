@@ -52,6 +52,7 @@ public class CustomerServiceImpl implements CustomerService {
                 .setEmail(customerDto.getEmail())
                 .setName(customerDto.getName())
                 .setPhone(customerDto.getPhone())
+                .setMetadata(customerDto.getMetadata())
                 .build();
 
         return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
