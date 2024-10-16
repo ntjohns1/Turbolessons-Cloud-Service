@@ -9,6 +9,8 @@ public interface CustomerHandler {
 
     Mono<ServerResponse> retrieve(ServerRequest r);
 
+    Mono<ServerResponse> search(ServerRequest r);
+
     Mono<ServerResponse> create(ServerRequest r);
 
     Mono<ServerResponse> update(ServerRequest r);
