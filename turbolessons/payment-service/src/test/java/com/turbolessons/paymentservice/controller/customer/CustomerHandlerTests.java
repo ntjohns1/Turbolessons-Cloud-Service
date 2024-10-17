@@ -91,6 +91,30 @@ public class CustomerHandlerTests {
     }
 
     @Test
+    void shouldHandleSearchBySystemId() {
+        Customer customer = createMockCustomer("test@example.com",
+                                               "Claudia Coulthard");
+        Map<String, String> metadata = new HashMap<>();
+        metadata.put("okta_id",
+                     "00u75cn4yauHU7bl55d7");
+        customer.setMetadata(metadata);
+        when(customerService.searchCustomerBySystemId(anyString())).thenReturn(Mono.just(customer));
+
+        webTestClient.get()
+                .uri("/api/payments/customer/lookup/00u75cn4yauHU7bl55d7")
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBody()
+                .jsonPath("$.id")
+                .isEqualTo(customer.getId())
+                .jsonPath("$.email")
+                .isEqualTo("test@example.com")
+                .jsonPath("$.name")
+                .isEqualTo("Claudia Coulthard");
+    }
+
+    @Test
     void shouldHandleCreateCustomer() {
         Customer customer = createMockCustomer("test@example.com",
                                                "Claudia Coulthard");
