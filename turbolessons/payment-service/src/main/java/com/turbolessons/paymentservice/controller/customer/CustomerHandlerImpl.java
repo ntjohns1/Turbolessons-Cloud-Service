@@ -37,6 +37,11 @@ public class CustomerHandlerImpl extends BaseHandler implements CustomerHandler 
                               Customer.class);
     }
 
+    public Mono<ServerResponse> search(ServerRequest r) {
+        return handleRetrieve(r,
+                            request -> this.customerService.searchCustomerBySystemId(id(request)), Customer.class);
+    }
+
     @Override
     public Mono<ServerResponse> create(ServerRequest r) {
         return handleCreate(r,

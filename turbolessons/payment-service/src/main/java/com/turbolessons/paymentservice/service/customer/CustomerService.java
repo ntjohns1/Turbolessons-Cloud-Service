@@ -12,6 +12,8 @@ public interface CustomerService {
     //    Retrieve a Customer
     Mono<Customer> retrieveCustomer(String id);
 
+    Mono<Customer> searchCustomerBySystemId(String id);
+
     //    Create a Customer
     Mono<Customer> createCustomer(CustomerDto customerDto);
 
