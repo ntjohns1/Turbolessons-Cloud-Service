@@ -108,7 +108,7 @@ public class CustomerHandlerTests {
                 .jsonPath("$.id")
                 .isEqualTo(customer.getId())
                 .jsonPath("$.email")
-                .isEqualTo("test@example.com")
+                .isEqualTo("email@example.com")
                 .jsonPath("$.name")
                 .isEqualTo("Claudia Coulthard");
     }
