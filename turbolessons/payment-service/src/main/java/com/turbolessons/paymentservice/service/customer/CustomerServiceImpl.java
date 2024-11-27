@@ -1,14 +1,14 @@
 package com.turbolessons.paymentservice.service.customer;
 
-import com.stripe.param.CustomerSearchParams;
-import com.turbolessons.paymentservice.dto.Address;
-import com.turbolessons.paymentservice.dto.CustomerDto;
-import com.turbolessons.paymentservice.service.StripeClientHelper;
 import com.stripe.StripeClient;
 import com.stripe.model.Customer;
 import com.stripe.model.StripeCollection;
 import com.stripe.param.CustomerCreateParams;
+import com.stripe.param.CustomerSearchParams;
 import com.stripe.param.CustomerUpdateParams;
+import com.turbolessons.paymentservice.dto.Address;
+import com.turbolessons.paymentservice.dto.CustomerDto;
+import com.turbolessons.paymentservice.service.StripeClientHelper;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -45,23 +45,50 @@ public class CustomerServiceImpl implements CustomerService {
                 .retrieve(id));
     }
 
-//    Search Customers
+    //    Search Customers
+    private CustomerDto mapCustomerToDto(Customer customer) {
+        return new CustomerDto(customer.getId(),
+                               mapAddress(customer.getAddress()),
+                               customer.getEmail(),
+                               customer.getName(),
+                               customer.getPhone(),
+                               customer.getInvoiceSettings() != null ? customer.getInvoiceSettings()
+                                       .getDefaultPaymentMethod() : null,
+                               customer.getDescription(),
+                               customer.getMetadata());
+    }
+
+    private Address mapAddress(com.stripe.model.Address stripeAddress) {
+        if (stripeAddress == null) {
+            return null; // Handle cases where address is not set
+        }
+
+        return new Address(stripeAddress.getCity(),
+                           stripeAddress.getCountry(),
+                           stripeAddress.getLine1(),
+                           stripeAddress.getLine2(),
+                           stripeAddress.getPostalCode(),
+                           stripeAddress.getState());
+    }
+
     @Override
-    public Mono<Customer> searchCustomerBySystemId(String id) {
+    public Mono<CustomerDto> searchCustomerBySystemId(String id) {
         String query = String.format("metadata['okta_id']:'%s'", id);
-        CustomerSearchParams params =
-                CustomerSearchParams.builder()
-                        .setQuery(query)
-                        .build();
-        return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
-                        .search(params))
+        CustomerSearchParams params = CustomerSearchParams.builder()
+                .setQuery(query)
+                .build();
+
+        return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers().search(params))
                 .flatMap(customerSearchResult -> {
                     if (customerSearchResult.getData() != null && !customerSearchResult.getData().isEmpty()) {
-                        return Mono.just(customerSearchResult.getData().get(0));
+                        Customer customer = customerSearchResult.getData().get(0);
+                        CustomerDto dto = mapCustomerToDto(customer);
+                        return Mono.just(dto);
                     } else {
                         return Mono.empty();
                     }
-                });    }
+                });
+    }
 
     //    Create a Customer
     @Override

@@ -92,8 +92,7 @@ public class CustomerHandlerTests {
 
     @Test
     void shouldHandleSearchBySystemId() {
-        Customer customer = createMockCustomer("test@example.com",
-                                               "Claudia Coulthard");
+        CustomerDto customer = createCustomerDto();
         Map<String, String> metadata = new HashMap<>();
         metadata.put("okta_id",
                      "00u75cn4yauHU7bl55d7");
