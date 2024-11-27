@@ -1,9 +1,9 @@
 package com.turbolessons.paymentservice.controller.customer;
 
+import com.stripe.model.Customer;
 import com.turbolessons.paymentservice.controller.BaseHandler;
 import com.turbolessons.paymentservice.dto.CustomerDto;
 import com.turbolessons.paymentservice.service.customer.CustomerService;
-import com.stripe.model.Customer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
@@ -25,9 +25,9 @@ public class CustomerHandlerImpl extends BaseHandler implements CustomerHandler 
     @Override
     public Mono<ServerResponse> listAll(ServerRequest r) {
         return handleList(r,
-                             request -> this.customerService.listAllCustomers(),
+                          request -> this.customerService.listAllCustomers(),
                           new ParameterizedTypeReference<>() {
-                             });
+                          });
     }
 
     @Override
@@ -39,7 +39,8 @@ public class CustomerHandlerImpl extends BaseHandler implements CustomerHandler 
 
     public Mono<ServerResponse> search(ServerRequest r) {
         return handleRetrieve(r,
-                            request -> this.customerService.searchCustomerBySystemId(id(request)), Customer.class);
+                              request -> this.customerService.searchCustomerBySystemId(id(request)),
+                              CustomerDto.class);
     }
 
     @Override
@@ -54,7 +55,8 @@ public class CustomerHandlerImpl extends BaseHandler implements CustomerHandler 
     public Mono<ServerResponse> update(ServerRequest r) {
         String id = id(r);
         return handleUpdate(r,
-                            (idParam, requestBody) -> requestBody.flatMap(dto -> this.customerService.updateCustomer(idParam, dto)),
+                            (idParam, requestBody) -> requestBody.flatMap(dto -> this.customerService.updateCustomer(idParam,
+                                                                                                                     dto)),
                             id,
                             CustomerDto.class);
     }
