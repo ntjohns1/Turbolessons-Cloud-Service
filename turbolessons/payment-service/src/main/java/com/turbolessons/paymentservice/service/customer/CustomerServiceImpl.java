@@ -8,6 +8,7 @@ import com.stripe.param.CustomerSearchParams;
 import com.stripe.param.CustomerUpdateParams;
 import com.turbolessons.paymentservice.dto.Address;
 import com.turbolessons.paymentservice.dto.CustomerDto;
+import com.turbolessons.paymentservice.exception.CustomerNotFoundException;
 import com.turbolessons.paymentservice.service.StripeClientHelper;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -73,19 +74,23 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Mono<CustomerDto> searchCustomerBySystemId(String id) {
-        String query = String.format("metadata['okta_id']:'%s'", id);
+        String query = String.format("metadata['okta_id']:'%s'",
+                                     id);
         CustomerSearchParams params = CustomerSearchParams.builder()
                 .setQuery(query)
                 .build();
 
-        return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers().search(params))
+        return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
+                        .search(params))
                 .flatMap(customerSearchResult -> {
-                    if (customerSearchResult.getData() != null && !customerSearchResult.getData().isEmpty()) {
-                        Customer customer = customerSearchResult.getData().get(0);
-                        CustomerDto dto = mapCustomerToDto(customer);
-                        return Mono.just(dto);
+                    if (customerSearchResult.getData() != null && !customerSearchResult.getData()
+                            .isEmpty()) {
+                        Customer customer = customerSearchResult.getData()
+                                .get(0);
+                        return Mono.just(mapCustomerToDto(customer));
                     } else {
-                        return Mono.empty();
+                        throw new CustomerNotFoundException(String.format("Customer with Okta ID '%s' not found",
+                                                                          id));
                     }
                 });
     }
