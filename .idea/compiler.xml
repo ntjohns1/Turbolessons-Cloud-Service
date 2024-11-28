@@ -9,13 +9,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="payment-service" />
         <module name="config-service" />
-        <module name="video-service" />
         <module name="event-service" />
+        <module name="video-service" />
         <module name="email-service" />
         <module name="api-gateway" />
         <module name="message-service" />
-        <module name="service-registry" />
         <module name="admin-service" />
+        <module name="service-registry" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -28,6 +28,7 @@
       <module name="payment-service" target="17" />
       <module name="service-registry" target="17" />
       <module name="turbolessons" target="1.5" />
+      <module name="turbolessons_cloud_service" target="1.5" />
       <module name="video-service" target="17" />
     </bytecodeTargetLevel>
   </component>
