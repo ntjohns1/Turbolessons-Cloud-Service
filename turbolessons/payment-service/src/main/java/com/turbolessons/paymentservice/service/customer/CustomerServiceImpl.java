@@ -10,6 +10,7 @@ import com.turbolessons.paymentservice.dto.Address;
 import com.turbolessons.paymentservice.dto.CustomerDto;
 import com.turbolessons.paymentservice.exception.CustomerNotFoundException;
 import com.turbolessons.paymentservice.service.StripeClientHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -20,7 +21,7 @@ import reactor.core.publisher.Mono;
 // queries for records with a donation ID of “asdf-jkl”: metadata["donation-id"]:"asdf-jkl".
 //
 // You can query for the presence of a metadata key on an object. The following clause would match all records where donation-id is a metadata key. -metadata["donation-id"]:null
-
+@Slf4j
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
@@ -48,8 +49,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     //    Search Customers
     private CustomerDto mapCustomerToDto(Customer customer) {
+        log.debug("Mapping Stripe Customer to DTO: {}",
+                  customer);
         return new CustomerDto(customer.getId(),
-                               mapAddress(customer.getAddress()),
+                               customer.getAddress() != null ? mapAddress(customer.getAddress()) : null,
                                customer.getEmail(),
                                customer.getName(),
                                customer.getPhone(),
@@ -82,6 +85,8 @@ public class CustomerServiceImpl implements CustomerService {
 
         return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
                         .search(params))
+                .doOnNext(response -> log.debug("Stripe API response: {}",
+                                                response))
                 .flatMap(customerSearchResult -> {
                     if (customerSearchResult.getData() != null && !customerSearchResult.getData()
                             .isEmpty()) {
