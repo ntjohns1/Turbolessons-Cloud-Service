@@ -24,9 +24,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public Mono<ServerResponse> handleGeneralException(Exception ex) {
-        log.error("Unhandled exception: {}",
+        log.error("Unhandled exception occurred: {}",
                   ex.getMessage(),
-                  ex);
+                  ex); // Added full stack trace logging
         return ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(),
