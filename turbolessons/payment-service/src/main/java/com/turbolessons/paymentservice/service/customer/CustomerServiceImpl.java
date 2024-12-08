@@ -3,9 +3,7 @@ package com.turbolessons.paymentservice.service.customer;
 import com.stripe.StripeClient;
 import com.stripe.model.Customer;
 import com.stripe.model.StripeCollection;
-import com.stripe.param.CustomerCreateParams;
-import com.stripe.param.CustomerSearchParams;
-import com.stripe.param.CustomerUpdateParams;
+import com.stripe.param.*;
 import com.turbolessons.paymentservice.dto.Address;
 import com.turbolessons.paymentservice.dto.CustomerDto;
 import com.turbolessons.paymentservice.service.StripeClientHelper;
@@ -35,14 +33,18 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Mono<StripeCollection<Customer>> listAllCustomers() {
         return stripeClientHelper.executeStripeCall(() -> stripeClient.customers()
-                .list());
+                .list(CustomerListParams.builder()
+                              .addExpand("data.subscriptions")
+                              .build()));
     }
 
     //    Retrieve a Customer
     @Override
     public Mono<Customer> retrieveCustomer(String id) {
         return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
-                .retrieve(id));
+                .retrieve(id, CustomerRetrieveParams.builder()
+                        .addExpand("subscriptions")
+                        .build()));
     }
 
     //    Search Customers
@@ -76,6 +78,7 @@ public class CustomerServiceImpl implements CustomerService {
         String query = String.format("metadata['okta_id']:'%s'",
                                      id);
         CustomerSearchParams params = CustomerSearchParams.builder()
+                .addExpand("data.subscriptions")
                 .setQuery(query)
                 .build();
 
