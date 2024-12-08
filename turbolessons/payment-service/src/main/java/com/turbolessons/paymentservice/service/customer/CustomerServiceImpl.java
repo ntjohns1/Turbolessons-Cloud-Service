@@ -78,7 +78,7 @@ public class CustomerServiceImpl implements CustomerService {
         String query = String.format("metadata['okta_id']:'%s'",
                                      id);
         CustomerSearchParams params = CustomerSearchParams.builder()
-                .addExpand("data.subscriptions")
+                .addExpand("subscriptions")
                 .setQuery(query)
                 .build();
 
