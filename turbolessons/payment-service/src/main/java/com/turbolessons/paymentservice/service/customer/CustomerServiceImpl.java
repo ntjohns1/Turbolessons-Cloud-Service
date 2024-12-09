@@ -89,6 +89,7 @@ public class CustomerServiceImpl implements CustomerService {
                             .isEmpty()) {
                         Customer customer = customerSearchResult.getData()
                                 .get(0);
+                        System.out.println(customer);
                         return Mono.just(mapCustomerToDto(customer));
                     } else {
                         return Mono.empty();
