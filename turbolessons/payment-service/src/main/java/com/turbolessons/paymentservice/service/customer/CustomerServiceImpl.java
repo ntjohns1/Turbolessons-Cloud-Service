@@ -48,43 +48,44 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Mono<Customer> retrieveCustomer(String id) {
         return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
-                .retrieve(id, CustomerRetrieveParams.builder()
-                        .addExpand("subscriptions")
-                        .build()));
+                .retrieve(id,
+                          CustomerRetrieveParams.builder()
+                                  .addExpand("subscriptions")
+                                  .build()));
     }
 
     //    Search Customers
     private CustomerDto mapCustomerToDto(Customer customer) {
         List<SubscriptionDto> subscriptionDtos = new ArrayList<>();
 
-        if (customer.getSubscriptions() != null && customer.getSubscriptions().getData() != null) {
-            for (Subscription subscription : customer.getSubscriptions().getData()) {
+        if (customer.getSubscriptions() != null && customer.getSubscriptions()
+                .getData() != null) {
+            for (Subscription subscription : customer.getSubscriptions()
+                    .getData()) {
                 subscriptionDtos.add(mapSubscriptionToDto(subscription));
             }
         }
 
-        return new CustomerDto(
-                customer.getId(),
-                customer.getAddress() != null ? mapAddress(customer.getAddress()) : null,
-                customer.getEmail(),
-                customer.getName(),
-                customer.getPhone(),
-                customer.getInvoiceSettings() != null ? customer.getInvoiceSettings().getDefaultPaymentMethod() : null,
-                customer.getDescription(),
-                customer.getMetadata(),
-                subscriptionDtos
-        );
+        return new CustomerDto(customer.getId(),
+                               customer.getAddress() != null ? mapAddress(customer.getAddress()) : null,
+                               customer.getEmail(),
+                               customer.getName(),
+                               customer.getPhone(),
+                               customer.getInvoiceSettings() != null ? customer.getInvoiceSettings()
+                                       .getDefaultPaymentMethod() : null,
+                               customer.getDescription(),
+                               customer.getMetadata(),
+                               subscriptionDtos);
     }
 
     private SubscriptionDto mapSubscriptionToDto(Subscription subscription) {
-        return new SubscriptionDto(
-                subscription.getId(),
-                subscription.getCustomer(),
-                subscription.getCancelAtPeriodEnd(),
-                subscription.getCancelAt() != null ? new Date(subscription.getCancelAt() * 1000) : null,
-                subscription.getDefaultPaymentMethod()
-        );
+        return new SubscriptionDto(subscription.getId(),
+                                   subscription.getCustomer(),
+                                   subscription.getCancelAtPeriodEnd(),
+                                   subscription.getCancelAt() != null ? new Date(subscription.getCancelAt() * 1000) : null,
+                                   subscription.getDefaultPaymentMethod());
     }
+
     private Address mapAddress(com.stripe.model.Address stripeAddress) {
         if (stripeAddress == null) {
             return null; // Handle cases where address is not set
@@ -98,10 +99,35 @@ public class CustomerServiceImpl implements CustomerService {
                            stripeAddress.getState());
     }
 
+    //    @Override
+//    public Mono<CustomerDto> searchCustomerBySystemId(String id) {
+//        String query = String.format("metadata['okta_id']:'%s'",
+//                                     id);
+//        CustomerSearchParams params = CustomerSearchParams.builder()
+//                .addExpand("subscriptions")
+//                .setQuery(query)
+//                .build();
+//
+//        return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
+//                        .search(params))
+//                .flatMap(customerSearchResult -> {
+//                    if (customerSearchResult.getData() != null && !customerSearchResult.getData()
+//                            .isEmpty()) {
+//                        Customer customer = customerSearchResult.getData()
+//                                .get(0);
+//                        System.out.println(customer);
+//                        return Mono.just(mapCustomerToDto(customer));
+//                    } else {
+//                        return Mono.empty();
+//                    }
+//                });
+//    }
     @Override
     public Mono<CustomerDto> searchCustomerBySystemId(String id) {
         String query = String.format("metadata['okta_id']:'%s'",
                                      id);
+        System.out.println("Received request for ID: " + id);
+
         CustomerSearchParams params = CustomerSearchParams.builder()
                 .addExpand("subscriptions")
                 .setQuery(query)
@@ -110,15 +136,21 @@ public class CustomerServiceImpl implements CustomerService {
         return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
                         .search(params))
                 .flatMap(customerSearchResult -> {
+                    System.out.println("Customer search result: " + customerSearchResult);
                     if (customerSearchResult.getData() != null && !customerSearchResult.getData()
                             .isEmpty()) {
                         Customer customer = customerSearchResult.getData()
                                 .get(0);
-                        System.out.println(customer);
+                        System.out.println("Retrieved customer: " + customer);
                         return Mono.just(mapCustomerToDto(customer));
                     } else {
+                        System.out.println("No customer found for ID: " + id);
                         return Mono.empty();
                     }
+                })
+                .doOnError(e -> {
+                    System.err.println("Error during searchCustomerBySystemId: " + e.getMessage());
+                    e.printStackTrace();
                 });
     }
 
