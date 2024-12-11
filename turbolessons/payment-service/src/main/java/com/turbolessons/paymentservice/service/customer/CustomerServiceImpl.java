@@ -3,12 +3,18 @@ package com.turbolessons.paymentservice.service.customer;
 import com.stripe.StripeClient;
 import com.stripe.model.Customer;
 import com.stripe.model.StripeCollection;
+import com.stripe.model.Subscription;
 import com.stripe.param.*;
 import com.turbolessons.paymentservice.dto.Address;
 import com.turbolessons.paymentservice.dto.CustomerDto;
+import com.turbolessons.paymentservice.dto.SubscriptionDto;
 import com.turbolessons.paymentservice.service.StripeClientHelper;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 //You can perform searches on metadata that you’ve added to objects that support it.
 //
@@ -49,17 +55,36 @@ public class CustomerServiceImpl implements CustomerService {
 
     //    Search Customers
     private CustomerDto mapCustomerToDto(Customer customer) {
-        return new CustomerDto(customer.getId(),
-                               customer.getAddress() != null ? mapAddress(customer.getAddress()) : null,
-                               customer.getEmail(),
-                               customer.getName(),
-                               customer.getPhone(),
-                               customer.getInvoiceSettings() != null ? customer.getInvoiceSettings()
-                                       .getDefaultPaymentMethod() : null,
-                               customer.getDescription(),
-                               customer.getMetadata());
+        List<SubscriptionDto> subscriptionDtos = new ArrayList<>();
+
+        if (customer.getSubscriptions() != null && customer.getSubscriptions().getData() != null) {
+            for (Subscription subscription : customer.getSubscriptions().getData()) {
+                subscriptionDtos.add(mapSubscriptionToDto(subscription));
+            }
+        }
+
+        return new CustomerDto(
+                customer.getId(),
+                customer.getAddress() != null ? mapAddress(customer.getAddress()) : null,
+                customer.getEmail(),
+                customer.getName(),
+                customer.getPhone(),
+                customer.getInvoiceSettings() != null ? customer.getInvoiceSettings().getDefaultPaymentMethod() : null,
+                customer.getDescription(),
+                customer.getMetadata(),
+                subscriptionDtos
+        );
     }
 
+    private SubscriptionDto mapSubscriptionToDto(Subscription subscription) {
+        return new SubscriptionDto(
+                subscription.getId(),
+                subscription.getCustomer(),
+                subscription.getCancelAtPeriodEnd(),
+                subscription.getCancelAt() != null ? new Date(subscription.getCancelAt() * 1000) : null,
+                subscription.getDefaultPaymentMethod()
+        );
+    }
     private Address mapAddress(com.stripe.model.Address stripeAddress) {
         if (stripeAddress == null) {
             return null; // Handle cases where address is not set
