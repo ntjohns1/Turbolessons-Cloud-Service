@@ -25,5 +25,5 @@ public class CustomerDto implements Serializable {
     private String defaultPaymentMethod;
     private String description;
     private Map<String,String> metadata;
-    private List<SubscriptionDto> subscriptions;
+    private List<String> subscriptions;
 }
