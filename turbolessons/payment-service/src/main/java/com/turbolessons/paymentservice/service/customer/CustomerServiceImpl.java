@@ -121,7 +121,7 @@ public class CustomerServiceImpl implements CustomerService {
         System.out.println("Received request for ID: " + id);
 
         CustomerSearchParams params = CustomerSearchParams.builder()
-                .addExpand("subscriptions")
+                .addExpand("data.subscriptions")
                 .setQuery(query)
                 .build();
 
