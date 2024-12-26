@@ -4,7 +4,6 @@ import com.stripe.model.Customer;
 import com.stripe.model.StripeCollection;
 import com.turbolessons.paymentservice.dto.Address;
 import com.turbolessons.paymentservice.dto.CustomerDto;
-import com.turbolessons.paymentservice.dto.SubscriptionDto;
 import com.turbolessons.paymentservice.service.customer.CustomerService;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,7 +21,10 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -113,21 +115,26 @@ public class CustomerHandlerTests {
 
     @Test
     void shouldHandleCreateCustomer() {
-        Customer customer = createMockCustomer("test@example.com", "Claudia Coulthard");
+        Customer customer = createMockCustomer("test@example.com",
+                                               "Claudia Coulthard");
         CustomerDto data = createCustomerDto();
         when(customerService.createCustomer(any())).thenReturn(Mono.just(customer));
 
         webTestClient.mutateWith(mockJwt())
                 .post()
                 .uri("/api/payments/customer")
-                .body(Mono.just(data), CustomerDto.class)
+                .body(Mono.just(data),
+                      CustomerDto.class)
                 .exchange()
                 .expectStatus()
                 .isOk()
                 .expectBody()
-                .jsonPath("$.id").isEqualTo("cus_123")
-                .jsonPath("$.email").isEqualTo("test@example.com")
-                .jsonPath("$.name").isEqualTo("Claudia Coulthard");
+                .jsonPath("$.id")
+                .isEqualTo("cus_123")
+                .jsonPath("$.email")
+                .isEqualTo("test@example.com")
+                .jsonPath("$.name")
+                .isEqualTo("Claudia Coulthard");
     }
 
     @Test
@@ -196,7 +203,8 @@ public class CustomerHandlerTests {
 
     private CustomerDto createCustomerDto() {
         Map<String, String> metadata = new HashMap<>();
-        metadata.put("okta_id", "00u75cn4yauHU7bl55d7");
+        metadata.put("okta_id",
+                     "00u75cn4yauHU7bl55d7");
 
         Address address = new Address();
         address.setCity("Los Angeles");
@@ -206,26 +214,19 @@ public class CustomerHandlerTests {
         address.setLine2("APT A");
         address.setPostalCode("12345");
 
-        List<SubscriptionDto> subscriptions = List.of(
-                new SubscriptionDto(
-                        "sub_123",
-                        "cus_123",
-                        false,
-                        new Date(1702051200000L),// Example date
-                        "pm_789"
-                )
-        );
+        List<String> subscriptions = List.of("sub_123");
 
-        return new CustomerDto(
-                "cus_123",
-                address,
-                "email@example.com",
-                "Claudia Coulthard",
-                "1234567890",
-                "pm_789",
-                "Test DTO",
-                metadata,
-                subscriptions // Add subscriptions
+        return new CustomerDto("cus_123",
+                               address,
+                               "email@example.com",
+                               "Claudia Coulthard",
+                               "1234567890",
+                               "pm_789",
+                               "Test DTO",
+                               metadata,
+                               subscriptions
+                               // Add subscriptions
         );
-    }};
+    }
+};
 

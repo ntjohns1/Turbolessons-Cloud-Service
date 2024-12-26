@@ -56,34 +56,26 @@ public class CustomerServiceImpl implements CustomerService {
 
     //    Search Customers
     private CustomerDto mapCustomerToDto(Customer customer) {
-        List<SubscriptionDto> subscriptionDtos = new ArrayList<>();
+        List<String> subscriptionIds = new ArrayList<>();
 
-        if (customer.getSubscriptions() != null && customer.getSubscriptions()
-                .getData() != null) {
-            for (Subscription subscription : customer.getSubscriptions()
-                    .getData()) {
-                subscriptionDtos.add(mapSubscriptionToDto(subscription));
+        // Extract subscription IDs
+        if (customer.getSubscriptions() != null && customer.getSubscriptions().getData() != null) {
+            for (Subscription subscription : customer.getSubscriptions().getData()) {
+                subscriptionIds.add(subscription.getId());
             }
         }
 
-        return new CustomerDto(customer.getId(),
-                               customer.getAddress() != null ? mapAddress(customer.getAddress()) : null,
-                               customer.getEmail(),
-                               customer.getName(),
-                               customer.getPhone(),
-                               customer.getInvoiceSettings() != null ? customer.getInvoiceSettings()
-                                       .getDefaultPaymentMethod() : null,
-                               customer.getDescription(),
-                               customer.getMetadata(),
-                               subscriptionDtos);
-    }
-
-    private SubscriptionDto mapSubscriptionToDto(Subscription subscription) {
-        return new SubscriptionDto(subscription.getId(),
-                                   subscription.getCustomer(),
-                                   subscription.getCancelAtPeriodEnd(),
-                                   subscription.getCancelAt() != null ? new Date(subscription.getCancelAt() * 1000) : null,
-                                   subscription.getDefaultPaymentMethod());
+        return new CustomerDto(
+                customer.getId(),
+                customer.getAddress() != null ? mapAddress(customer.getAddress()) : null,
+                customer.getEmail(),
+                customer.getName(),
+                customer.getPhone(),
+                customer.getInvoiceSettings() != null ? customer.getInvoiceSettings().getDefaultPaymentMethod() : null,
+                customer.getDescription(),
+                customer.getMetadata(),
+                subscriptionIds // Set subscription IDs
+        );
     }
 
     private Address mapAddress(com.stripe.model.Address stripeAddress) {
