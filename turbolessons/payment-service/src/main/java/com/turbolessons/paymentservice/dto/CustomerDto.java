@@ -3,6 +3,7 @@ package com.turbolessons.paymentservice.dto;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 //@Document
@@ -24,4 +25,5 @@ public class CustomerDto implements Serializable {
     private String defaultPaymentMethod;
     private String description;
     private Map<String,String> metadata;
+    private List<String> subscriptions;
 }

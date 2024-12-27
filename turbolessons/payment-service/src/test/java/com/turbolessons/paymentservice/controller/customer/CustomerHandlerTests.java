@@ -117,27 +117,9 @@ public class CustomerHandlerTests {
     void shouldHandleCreateCustomer() {
         Customer customer = createMockCustomer("test@example.com",
                                                "Claudia Coulthard");
-        Address address = new Address();
-        address.setCity("Los Angeles");
-        address.setState("CA");
-        address.setCountry("US");
-        address.setLine1("123 Easy St.");
-        address.setLine2("APT A");
-        address.setPostalCode("12345");
-
-        Map<String, String> metadata = new HashMap<>();
-        metadata.put("okta_id",
-                     "00u75cn4yauHU7bl55d7");
-
-        CustomerDto data = new CustomerDto("cus_123",
-                                           address,
-                                           "email@example.com",
-                                           "Claudia Coulthard",
-                                           "1234567890",
-                                           "pm_789",
-                                           "Test DTO",
-                                           metadata);
+        CustomerDto data = createCustomerDto();
         when(customerService.createCustomer(any())).thenReturn(Mono.just(customer));
+
         webTestClient.mutateWith(mockJwt())
                 .post()
                 .uri("/api/payments/customer")
@@ -168,25 +150,13 @@ public class CustomerHandlerTests {
         address.setLine2("");
         address.setPostalCode("45678");
 
-        Map<String, String> metadata = new HashMap<>();
-        metadata.put("okta_id",
-                     "00u75cn4yauHU7bl55d7");
-
-        CustomerDto updateData = new CustomerDto("cus_123",
-                                                 address,
-                                                 "new_email@example.com",
-                                                 "Claudia C. Coulthard",
-                                                 "1234567890",
-                                                 "pm_789",
-                                                 "Updated Test DTO",
-                                                 metadata);
         when(customerService.updateCustomer(anyString(),
                                             any(CustomerDto.class))).thenReturn(Mono.empty());
 
         webTestClient.mutateWith(mockJwt())
                 .put()
                 .uri("/api/payments/customer/cus_123")
-                .body(Mono.just(updateData),
+                .body(Mono.just(data),
                       CustomerDto.class)
                 .exchange()
                 .expectStatus()
@@ -235,6 +205,7 @@ public class CustomerHandlerTests {
         Map<String, String> metadata = new HashMap<>();
         metadata.put("okta_id",
                      "00u75cn4yauHU7bl55d7");
+
         Address address = new Address();
         address.setCity("Los Angeles");
         address.setState("CA");
@@ -242,6 +213,9 @@ public class CustomerHandlerTests {
         address.setLine1("123 Easy St.");
         address.setLine2("APT A");
         address.setPostalCode("12345");
+
+        List<String> subscriptions = List.of("sub_123");
+
         return new CustomerDto("cus_123",
                                address,
                                "email@example.com",
@@ -249,8 +223,10 @@ public class CustomerHandlerTests {
                                "1234567890",
                                "pm_789",
                                "Test DTO",
-                               metadata);
+                               metadata,
+                               subscriptions
+                               // Add subscriptions
+        );
     }
-
-}
+};
 
