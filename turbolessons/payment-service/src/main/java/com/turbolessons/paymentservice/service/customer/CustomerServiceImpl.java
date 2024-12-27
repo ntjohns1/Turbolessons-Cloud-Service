@@ -7,13 +7,11 @@ import com.stripe.model.Subscription;
 import com.stripe.param.*;
 import com.turbolessons.paymentservice.dto.Address;
 import com.turbolessons.paymentservice.dto.CustomerDto;
-import com.turbolessons.paymentservice.dto.SubscriptionDto;
 import com.turbolessons.paymentservice.service.StripeClientHelper;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 //You can perform searches on metadata that you’ve added to objects that support it.
@@ -59,22 +57,25 @@ public class CustomerServiceImpl implements CustomerService {
         List<String> subscriptionIds = new ArrayList<>();
 
         // Extract subscription IDs
-        if (customer.getSubscriptions() != null && customer.getSubscriptions().getData() != null) {
-            for (Subscription subscription : customer.getSubscriptions().getData()) {
+        if (customer.getSubscriptions() != null && customer.getSubscriptions()
+                .getData() != null) {
+            for (Subscription subscription : customer.getSubscriptions()
+                    .getData()) {
                 subscriptionIds.add(subscription.getId());
             }
         }
 
-        return new CustomerDto(
-                customer.getId(),
-                customer.getAddress() != null ? mapAddress(customer.getAddress()) : null,
-                customer.getEmail(),
-                customer.getName(),
-                customer.getPhone(),
-                customer.getInvoiceSettings() != null ? customer.getInvoiceSettings().getDefaultPaymentMethod() : null,
-                customer.getDescription(),
-                customer.getMetadata(),
-                subscriptionIds // Set subscription IDs
+        return new CustomerDto(customer.getId(),
+                               customer.getAddress() != null ? mapAddress(customer.getAddress()) : null,
+                               customer.getEmail(),
+                               customer.getName(),
+                               customer.getPhone(),
+                               customer.getInvoiceSettings() != null ? customer.getInvoiceSettings()
+                                       .getDefaultPaymentMethod() : null,
+                               customer.getDescription(),
+                               customer.getMetadata(),
+                               subscriptionIds
+                               // Set subscription IDs
         );
     }
 
@@ -91,35 +92,10 @@ public class CustomerServiceImpl implements CustomerService {
                            stripeAddress.getState());
     }
 
-    //    @Override
-//    public Mono<CustomerDto> searchCustomerBySystemId(String id) {
-//        String query = String.format("metadata['okta_id']:'%s'",
-//                                     id);
-//        CustomerSearchParams params = CustomerSearchParams.builder()
-//                .addExpand("subscriptions")
-//                .setQuery(query)
-//                .build();
-//
-//        return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
-//                        .search(params))
-//                .flatMap(customerSearchResult -> {
-//                    if (customerSearchResult.getData() != null && !customerSearchResult.getData()
-//                            .isEmpty()) {
-//                        Customer customer = customerSearchResult.getData()
-//                                .get(0);
-//                        System.out.println(customer);
-//                        return Mono.just(mapCustomerToDto(customer));
-//                    } else {
-//                        return Mono.empty();
-//                    }
-//                });
-//    }
     @Override
     public Mono<CustomerDto> searchCustomerBySystemId(String id) {
         String query = String.format("metadata['okta_id']:'%s'",
                                      id);
-        System.out.println("Received request for ID: " + id);
-
         CustomerSearchParams params = CustomerSearchParams.builder()
                 .addExpand("data.subscriptions")
                 .setQuery(query)
@@ -128,45 +104,45 @@ public class CustomerServiceImpl implements CustomerService {
         return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
                         .search(params))
                 .flatMap(customerSearchResult -> {
-                    System.out.println("Customer search result: " + customerSearchResult);
                     if (customerSearchResult.getData() != null && !customerSearchResult.getData()
                             .isEmpty()) {
                         Customer customer = customerSearchResult.getData()
                                 .get(0);
-                        System.out.println("Retrieved customer: " + customer);
                         return Mono.just(mapCustomerToDto(customer));
                     } else {
-                        System.out.println("No customer found for ID: " + id);
                         return Mono.empty();
                     }
-                })
-                .doOnError(e -> {
-                    System.err.println("Error during searchCustomerBySystemId: " + e.getMessage());
-                    e.printStackTrace();
                 });
     }
 
     //    Create a Customer
     @Override
     public Mono<Customer> createCustomer(CustomerDto customerDto) {
-        Address address = customerDto.getAddress();
-        CustomerCreateParams customerParams = CustomerCreateParams.builder()
-                .setAddress(CustomerCreateParams.Address.builder()
-                                    .setCity(address.getCity())
-                                    .setCountry("US")
-                                    .setLine1(address.getLine1())
-                                    .setLine2(address.getLine2())
-                                    .setState(address.getState())
-                                    .setPostalCode(address.getPostalCode())
-                                    .build())
-                .setEmail(customerDto.getEmail())
-                .setName(customerDto.getName())
-                .setPhone(customerDto.getPhone())
-                .setMetadata(customerDto.getMetadata())
-                .build();
-
-        return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
-                .create(customerParams));
+        System.out.println("Received createCustomer Request:" + customerDto);
+        try {
+            Address address = customerDto.getAddress();
+            CustomerCreateParams customerParams = CustomerCreateParams.builder()
+                    .setAddress(CustomerCreateParams.Address.builder()
+                                        .setCity(address.getCity())
+                                        .setCountry("US")
+                                        .setLine1(address.getLine1())
+                                        .setLine2(address.getLine2())
+                                        .setState(address.getState())
+                                        .setPostalCode(address.getPostalCode())
+                                        .build())
+                    .setEmail(customerDto.getEmail())
+                    .setName(customerDto.getName())
+                    .setPhone(customerDto.getPhone())
+                    .setMetadata(customerDto.getMetadata())
+                    .build();
+            System.out.println("CustomerCreateParams: " + customerParams);
+            return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
+                    .create(customerParams));
+        } catch (Exception e) {
+            System.err.println("Error creating customer: " + e.getMessage());
+            e.printStackTrace();
+            return Mono.error(e);
+        }
     }
 
     //    Update a Customer
