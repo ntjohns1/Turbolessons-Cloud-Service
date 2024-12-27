@@ -48,7 +48,7 @@ public class CustomerHandlerImpl extends BaseHandler implements CustomerHandler 
         return handleCreate(r,
                             requestBody -> requestBody.flatMap(this.customerService::createCustomer),
                             CustomerDto.class,
-                            Customer.class);
+                            CustomerDto.class);
     }
 
     @Override

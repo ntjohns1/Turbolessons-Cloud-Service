@@ -118,7 +118,7 @@ public class CustomerHandlerTests {
         Customer customer = createMockCustomer("test@example.com",
                                                "Claudia Coulthard");
         CustomerDto data = createCustomerDto();
-        when(customerService.createCustomer(any())).thenReturn(Mono.just(customer));
+        when(customerService.createCustomer(any())).thenReturn(Mono.just(data));
 
         webTestClient.mutateWith(mockJwt())
                 .post()
@@ -132,7 +132,7 @@ public class CustomerHandlerTests {
                 .jsonPath("$.id")
                 .isEqualTo("cus_123")
                 .jsonPath("$.email")
-                .isEqualTo("test@example.com")
+                .isEqualTo("email@example.com")
                 .jsonPath("$.name")
                 .isEqualTo("Claudia Coulthard");
     }

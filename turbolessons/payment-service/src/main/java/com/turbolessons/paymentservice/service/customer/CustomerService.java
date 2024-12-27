@@ -15,7 +15,7 @@ public interface CustomerService {
     Mono<CustomerDto> searchCustomerBySystemId(String id);
 
     //    Create a Customer
-    Mono<Customer> createCustomer(CustomerDto customerDto);
+    Mono<CustomerDto> createCustomer(CustomerDto customerDto);
 
     //    Update a Customer
     Mono<Void> updateCustomer(String id, CustomerDto customerDto);
