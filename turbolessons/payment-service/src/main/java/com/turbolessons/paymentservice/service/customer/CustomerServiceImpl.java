@@ -92,29 +92,6 @@ public class CustomerServiceImpl implements CustomerService {
                            stripeAddress.getState());
     }
 
-    //    @Override
-//    public Mono<CustomerDto> searchCustomerBySystemId(String id) {
-//        String query = String.format("metadata['okta_id']:'%s'",
-//                                     id);
-//        CustomerSearchParams params = CustomerSearchParams.builder()
-//                .addExpand("subscriptions")
-//                .setQuery(query)
-//                .build();
-//
-//        return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
-//                        .search(params))
-//                .flatMap(customerSearchResult -> {
-//                    if (customerSearchResult.getData() != null && !customerSearchResult.getData()
-//                            .isEmpty()) {
-//                        Customer customer = customerSearchResult.getData()
-//                                .get(0);
-//                        System.out.println(customer);
-//                        return Mono.just(mapCustomerToDto(customer));
-//                    } else {
-//                        return Mono.empty();
-//                    }
-//                });
-//    }
     @Override
     public Mono<CustomerDto> searchCustomerBySystemId(String id) {
         String query = String.format("metadata['okta_id']:'%s'",
@@ -141,24 +118,31 @@ public class CustomerServiceImpl implements CustomerService {
     //    Create a Customer
     @Override
     public Mono<Customer> createCustomer(CustomerDto customerDto) {
-        Address address = customerDto.getAddress();
-        CustomerCreateParams customerParams = CustomerCreateParams.builder()
-                .setAddress(CustomerCreateParams.Address.builder()
-                                    .setCity(address.getCity())
-                                    .setCountry("US")
-                                    .setLine1(address.getLine1())
-                                    .setLine2(address.getLine2())
-                                    .setState(address.getState())
-                                    .setPostalCode(address.getPostalCode())
-                                    .build())
-                .setEmail(customerDto.getEmail())
-                .setName(customerDto.getName())
-                .setPhone(customerDto.getPhone())
-                .setMetadata(customerDto.getMetadata())
-                .build();
-
-        return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
-                .create(customerParams));
+        System.out.println("Received createCustomer Request:" + customerDto);
+        try {
+            Address address = customerDto.getAddress();
+            CustomerCreateParams customerParams = CustomerCreateParams.builder()
+                    .setAddress(CustomerCreateParams.Address.builder()
+                                        .setCity(address.getCity())
+                                        .setCountry("US")
+                                        .setLine1(address.getLine1())
+                                        .setLine2(address.getLine2())
+                                        .setState(address.getState())
+                                        .setPostalCode(address.getPostalCode())
+                                        .build())
+                    .setEmail(customerDto.getEmail())
+                    .setName(customerDto.getName())
+                    .setPhone(customerDto.getPhone())
+                    .setMetadata(customerDto.getMetadata())
+                    .build();
+            System.out.println("CustomerCreateParams: " + customerParams);
+            return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
+                    .create(customerParams));
+        } catch (Exception e) {
+            System.err.println("Error creating customer: " + e.getMessage());
+            e.printStackTrace();
+            return Mono.error(e);
+        }
     }
 
     //    Update a Customer
