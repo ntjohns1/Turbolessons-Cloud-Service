@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 
 @Data
@@ -17,8 +18,9 @@ public class SubscriptionDto implements Serializable {
 
     private String id;
     private String customer;
+    private List<String> items;
     private Boolean cancelAtPeriodEnd;
-    private Date cancelAt;
+    private Long cancelAt;
     private String defaultPaymentMethod;
 
 }

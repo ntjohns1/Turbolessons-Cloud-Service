@@ -18,7 +18,7 @@ public interface SubscriptionService {
     Mono<StripeSearchResult<Subscription>> getSubscriptionsByCustomer(String customerId);
 
     //    Create a Subscription
-    Mono<Subscription> createSubscription(String id, CustomerDto customerDto);
+    Mono<SubscriptionDto> createSubscription(SubscriptionDto subscriptionDto);
 
     //    Update a Subscription
     Mono<Void> updateSubscription(String id, SubscriptionDto subscriptionDto);

@@ -49,7 +49,9 @@ public class CustomerServiceImpl implements CustomerService {
                 .addExpand("subscriptions")
                 .build();
         return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
-                .retrieve(id, params)).map(this::mapCustomerToDto);
+                        .retrieve(id,
+                                  params))
+                .map(this::mapCustomerToDto);
     }
 
     //    Search Customers
@@ -119,31 +121,27 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Mono<CustomerDto> createCustomer(CustomerDto customerDto) {
         System.out.println("Received createCustomer Request:" + customerDto);
-        try {
-            Address address = customerDto.getAddress();
-            CustomerCreateParams customerParams = CustomerCreateParams.builder()
-                    .setAddress(CustomerCreateParams.Address.builder()
-                                        .setCity(address.getCity())
-                                        .setCountry("US")
-                                        .setLine1(address.getLine1())
-                                        .setLine2(address.getLine2())
-                                        .setState(address.getState())
-                                        .setPostalCode(address.getPostalCode())
-                                        .build())
-                    .setEmail(customerDto.getEmail())
-                    .setName(customerDto.getName())
-                    .setPhone(customerDto.getPhone())
-                    .setMetadata(customerDto.getMetadata())
-                    .build();
-            System.out.println("CustomerCreateParams: " + customerParams);
-            return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
-                            .create(customerParams))
-                    .map(this::mapCustomerToDto);
-        } catch (Exception e) {
-            System.err.println("Error creating customer: " + e.getMessage());
-            e.printStackTrace();
-            return Mono.error(e);
-        }
+
+        Address address = customerDto.getAddress();
+        CustomerCreateParams customerParams = CustomerCreateParams.builder()
+                .setAddress(CustomerCreateParams.Address.builder()
+                                    .setCity(address.getCity())
+                                    .setCountry("US")
+                                    .setLine1(address.getLine1())
+                                    .setLine2(address.getLine2())
+                                    .setState(address.getState())
+                                    .setPostalCode(address.getPostalCode())
+                                    .build())
+                .setEmail(customerDto.getEmail())
+                .setName(customerDto.getName())
+                .setPhone(customerDto.getPhone())
+                .setMetadata(customerDto.getMetadata())
+                .build();
+        System.out.println("CustomerCreateParams: " + customerParams);
+        return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
+                        .create(customerParams))
+                .map(this::mapCustomerToDto);
+
     }
 
     //    Update a Customer
