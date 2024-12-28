@@ -10,7 +10,7 @@ public interface CustomerService {
     Mono<StripeCollection<Customer>> listAllCustomers();
 
     //    Retrieve a Customer
-    Mono<Customer> retrieveCustomer(String id);
+    Mono<CustomerDto> retrieveCustomer(String id);
 
     Mono<CustomerDto> searchCustomerBySystemId(String id);
 

@@ -44,12 +44,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     //    Retrieve a Customer
     @Override
-    public Mono<Customer> retrieveCustomer(String id) {
+    public Mono<CustomerDto> retrieveCustomer(String id) {
+        CustomerRetrieveParams params = CustomerRetrieveParams.builder()
+                .addExpand("subscriptions")
+                .build();
         return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
-                .retrieve(id,
-                          CustomerRetrieveParams.builder()
-                                  .addExpand("subscriptions")
-                                  .build()));
+                .retrieve(id, params)).map(this::mapCustomerToDto);
     }
 
     //    Search Customers
