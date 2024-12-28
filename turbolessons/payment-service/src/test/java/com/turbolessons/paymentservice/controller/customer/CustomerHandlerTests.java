@@ -73,8 +73,7 @@ public class CustomerHandlerTests {
 
     @Test
     void shouldHandleRetrieveCustomer() {
-        Customer customer = createMockCustomer("test@example.com",
-                                               "Andrew Anderson");
+        CustomerDto customer = createCustomerDto();
         when(customerService.retrieveCustomer(anyString())).thenReturn(Mono.just(customer));
         webTestClient.get()
                 .uri("/api/payments/customer/cus_123")
@@ -85,9 +84,9 @@ public class CustomerHandlerTests {
                 .jsonPath("$.id")
                 .isEqualTo(customer.getId())
                 .jsonPath("$.email")
-                .isEqualTo("test@example.com")
+                .isEqualTo("email@example.com")
                 .jsonPath("$.name")
-                .isEqualTo("Andrew Anderson");
+                .isEqualTo("Claudia Coulthard");
     }
 
     @Test
@@ -115,10 +114,8 @@ public class CustomerHandlerTests {
 
     @Test
     void shouldHandleCreateCustomer() {
-        Customer customer = createMockCustomer("test@example.com",
-                                               "Claudia Coulthard");
         CustomerDto data = createCustomerDto();
-        when(customerService.createCustomer(any())).thenReturn(Mono.just(customer));
+        when(customerService.createCustomer(any())).thenReturn(Mono.just(data));
 
         webTestClient.mutateWith(mockJwt())
                 .post()
@@ -132,7 +129,7 @@ public class CustomerHandlerTests {
                 .jsonPath("$.id")
                 .isEqualTo("cus_123")
                 .jsonPath("$.email")
-                .isEqualTo("test@example.com")
+                .isEqualTo("email@example.com")
                 .jsonPath("$.name")
                 .isEqualTo("Claudia Coulthard");
     }

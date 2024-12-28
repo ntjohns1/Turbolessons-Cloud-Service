@@ -44,12 +44,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     //    Retrieve a Customer
     @Override
-    public Mono<Customer> retrieveCustomer(String id) {
+    public Mono<CustomerDto> retrieveCustomer(String id) {
+        CustomerRetrieveParams params = CustomerRetrieveParams.builder()
+                .addExpand("subscriptions")
+                .build();
         return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
-                .retrieve(id,
-                          CustomerRetrieveParams.builder()
-                                  .addExpand("subscriptions")
-                                  .build()));
+                .retrieve(id, params)).map(this::mapCustomerToDto);
     }
 
     //    Search Customers
@@ -117,7 +117,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     //    Create a Customer
     @Override
-    public Mono<Customer> createCustomer(CustomerDto customerDto) {
+    public Mono<CustomerDto> createCustomer(CustomerDto customerDto) {
         System.out.println("Received createCustomer Request:" + customerDto);
         try {
             Address address = customerDto.getAddress();
@@ -137,7 +137,8 @@ public class CustomerServiceImpl implements CustomerService {
                     .build();
             System.out.println("CustomerCreateParams: " + customerParams);
             return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
-                    .create(customerParams));
+                            .create(customerParams))
+                    .map(this::mapCustomerToDto);
         } catch (Exception e) {
             System.err.println("Error creating customer: " + e.getMessage());
             e.printStackTrace();

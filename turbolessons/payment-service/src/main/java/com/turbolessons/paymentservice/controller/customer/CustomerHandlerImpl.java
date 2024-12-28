@@ -34,7 +34,7 @@ public class CustomerHandlerImpl extends BaseHandler implements CustomerHandler 
     public Mono<ServerResponse> retrieve(ServerRequest r) {
         return handleRetrieve(r,
                               request -> this.customerService.retrieveCustomer(id(request)),
-                              Customer.class);
+                              CustomerDto.class);
     }
 
     public Mono<ServerResponse> search(ServerRequest r) {
@@ -48,7 +48,7 @@ public class CustomerHandlerImpl extends BaseHandler implements CustomerHandler 
         return handleCreate(r,
                             requestBody -> requestBody.flatMap(this.customerService::createCustomer),
                             CustomerDto.class,
-                            Customer.class);
+                            CustomerDto.class);
     }
 
     @Override
