@@ -22,7 +22,7 @@ public class SubscriptionEndpointConfig {
 
         return route((GET("/api/payments/subscription")), handler::listAll)
                 .andRoute(GET("/api/payments/subscription/{id}"), handler::retrieve)
-                .andRoute(POST("/api/payments/subscription/{priceId}"), handler::create)
+                .andRoute(POST("/api/payments/subscription"), handler::create)
                 .andRoute(PUT("/api/payments/subscription/{id}"), handler::update)
                 .andRoute(DELETE("/api/payments/subscription/{id}"), handler::cancel);
     }

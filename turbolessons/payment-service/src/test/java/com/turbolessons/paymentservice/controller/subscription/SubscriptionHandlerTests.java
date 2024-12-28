@@ -1,10 +1,9 @@
 package com.turbolessons.paymentservice.controller.subscription;
 
-import com.turbolessons.paymentservice.dto.CustomerDto;
+import com.stripe.model.StripeCollection;
+import com.stripe.model.Subscription;
 import com.turbolessons.paymentservice.dto.SubscriptionDto;
 import com.turbolessons.paymentservice.service.subscription.SubscriptionService;
-import com.stripe.model.Subscription;
-import com.stripe.model.StripeCollection;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,7 +47,7 @@ public class SubscriptionHandlerTests {
     @Autowired
     private SubscriptionHandlerImpl subscriptionHandler;
 
-    private final Date testDate = new Date();
+    private final Long testDate = 12345678L;
 
     @BeforeEach
     public void setUp() {
@@ -100,10 +99,10 @@ public class SubscriptionHandlerTests {
     void shouldHandleCreateSubscription() {
         Subscription subscription = createMockSubscription();
         SubscriptionDto data = createSubscriptionDto();
-        when(subscriptionService.createSubscription(anyString(),any(CustomerDto.class))).thenReturn(Mono.just(subscription));
+        when(subscriptionService.createSubscription(any())).thenReturn(Mono.just(data));
         webTestClient.mutateWith(mockJwt())
                 .post()
-                .uri("/api/payments/subscription/price_123")
+                .uri("/api/payments/subscription")
                 .body(Mono.just(data),
                       SubscriptionDto.class)
                 .exchange()
@@ -126,9 +125,16 @@ public class SubscriptionHandlerTests {
     void shouldHandleUpdateSubscription() {
         Subscription subscription = createMockSubscription();
         SubscriptionDto data = createSubscriptionDto();
-        SubscriptionDto updateData = new SubscriptionDto("sub_123","cust_123",true,testDate,"pm_456");
-        when(subscriptionService.updateSubscription(anyString(), any(SubscriptionDto.class)))
-                .thenReturn(Mono.empty());
+        List<String> items = List.of("price_123",
+                                     "price_234");
+        SubscriptionDto updateData = new SubscriptionDto("sub_123",
+                                                         "cust_123",
+                                                         items,
+                                                         true,
+                                                         12345678L,
+                                                         "pm_456");
+        when(subscriptionService.updateSubscription(anyString(),
+                                                    any(SubscriptionDto.class))).thenReturn(Mono.empty());
 
         webTestClient.mutateWith(mockJwt())
                 .put()
@@ -136,7 +142,8 @@ public class SubscriptionHandlerTests {
                 .body(Mono.just(updateData),
                       SubscriptionDto.class)
                 .exchange()
-                .expectStatus().isNoContent();
+                .expectStatus()
+                .isNoContent();
 
     }
 
@@ -148,7 +155,8 @@ public class SubscriptionHandlerTests {
                 .delete()
                 .uri("/api/payments/subscription/cus_123")
                 .exchange()
-                .expectStatus().isNoContent();
+                .expectStatus()
+                .isNoContent();
     }
 
     // Helper method to create mock StripeCollection
@@ -162,7 +170,7 @@ public class SubscriptionHandlerTests {
         when(mockSubscription2.getId()).thenReturn("cus_456");
 
         List<Subscription> subscriptionList = Arrays.asList(mockSubscription1,
-                                                    mockSubscription2);
+                                                            mockSubscription2);
         subscriptions.setData(subscriptionList);
         return subscriptions;
     }
@@ -171,13 +179,20 @@ public class SubscriptionHandlerTests {
         Subscription subscription = Mockito.mock(Subscription.class);
         when(subscription.getId()).thenReturn("sub_123");
         when(subscription.getCancelAtPeriodEnd()).thenReturn(false);
-        when(subscription.getCancelAt()).thenReturn(testDate.getTime());
+        when(subscription.getCancelAt()).thenReturn(testDate);
         when(subscription.getCustomer()).thenReturn("cus_123");
         when(subscription.getDefaultPaymentMethod()).thenReturn("pm_123");
         return subscription;
     }
 
     private SubscriptionDto createSubscriptionDto() {
-        return new SubscriptionDto("sub_123","cust_123",false,testDate,"pm_123");
+        List<String> items = List.of("price_123",
+                                     "price_234");
+        return new SubscriptionDto("sub_123",
+                                   "cus_123",
+                                   items,
+                                   false,
+                                   12345678L,
+                                   "pm_123");
     }
 }
