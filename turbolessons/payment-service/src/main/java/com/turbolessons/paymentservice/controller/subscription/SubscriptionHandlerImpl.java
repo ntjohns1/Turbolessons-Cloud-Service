@@ -2,7 +2,6 @@ package com.turbolessons.paymentservice.controller.subscription;
 
 import com.stripe.model.Subscription;
 import com.turbolessons.paymentservice.controller.BaseHandler;
-import com.turbolessons.paymentservice.dto.CustomerDto;
 import com.turbolessons.paymentservice.dto.SubscriptionDto;
 import com.turbolessons.paymentservice.service.subscription.SubscriptionService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,9 +27,9 @@ public class SubscriptionHandlerImpl extends BaseHandler implements Subscription
     @Override
     public Mono<ServerResponse> listAll(ServerRequest r) {
         return handleList(r,
-                             request -> subscriptionService.listAllSubscriptions(),
+                          request -> subscriptionService.listAllSubscriptions(),
                           new ParameterizedTypeReference<>() {
-                             });
+                          });
     }
 
     @Override
@@ -42,21 +41,17 @@ public class SubscriptionHandlerImpl extends BaseHandler implements Subscription
 
     @Override
     public Mono<ServerResponse> create(ServerRequest r) {
-        String priceId = r.pathVariable("priceId"); // Extract the customer ID from the request
-        Mono<CustomerDto> customerDtoMono = r.bodyToMono(CustomerDto.class);
-        return handleCreateWithParam(priceId,
-                                         customerDtoMono,
-                                         (id, dtoMono) -> dtoMono.flatMap(dto -> subscriptionService.createSubscription(id,
-                                                                                                                              dto)),
-                                         Subscription.class);
+        return handleCreate(r,
+                            requestBody -> requestBody.flatMap(this.subscriptionService::createSubscription),
+                            SubscriptionDto.class,
+                            SubscriptionDto.class);
     }
 
     @Override
     public Mono<ServerResponse> update(ServerRequest r) {
         String id = id(r);
         return handleUpdate(r,
-                            (idParam, requestBody) -> requestBody.flatMap(dto -> subscriptionService.updateSubscription(idParam,
-                                                                                                                dto)),
+                            (idParam, requestBody) -> requestBody.flatMap(dto -> subscriptionService.updateSubscription(idParam, dto)),
                             id,
                             SubscriptionDto.class);
     }
