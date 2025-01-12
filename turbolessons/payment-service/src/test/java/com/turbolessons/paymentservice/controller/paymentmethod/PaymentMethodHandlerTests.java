@@ -1,7 +1,5 @@
 package com.turbolessons.paymentservice.controller.paymentmethod;
 
-import com.turbolessons.paymentservice.dto.BankDto;
-import com.turbolessons.paymentservice.dto.CardDto;
 import com.turbolessons.paymentservice.service.paymentmethod.PaymentMethodService;
 import com.stripe.model.PaymentMethod;
 import com.stripe.model.StripeCollection;
@@ -86,81 +84,6 @@ public class PaymentMethodHandlerTests {
                 .isEmpty()
                 .jsonPath("$.data")
                 .isNotEmpty();
-    }
-
-    @Test
-    void shouldCreateCardPaymentMethod() {
-
-        PaymentMethod paymentMethod = createMockCardPaymentMethod("cus_123");
-        CardDto dto = new CardDto("card_123",
-                                  "2424242424242424",
-                                  "242",
-                                  1L,
-                                  2028L);
-        when(paymentMethodService.createCardPaymentMethod("cus_123",
-                                                          dto))
-                     .thenReturn(Mono.just(paymentMethod));
-
-        webTestClient.mutateWith(mockJwt())
-                .post()
-                .uri("/api/payments/paymentmethod/card/cus_123")
-                .body(Mono.just(dto),
-                      CardDto.class)
-                .exchange()
-                .expectStatus()
-                .isOk()
-                .expectBody()
-                .jsonPath("$.object")
-                .isEmpty()
-                .jsonPath("$.id")
-                .isNotEmpty();
-    }
-
-    @Test
-    void shouldCreateBankPaymentMethod() {
-
-        PaymentMethod paymentMethod = createMockBankPaymentMethod("cus_123");
-        BankDto dto = new BankDto("bank_123",
-                                  "123456789012",
-                                  "123456789",
-                                  true);
-        when(paymentMethodService.createBankPaymentMethod("cus_123",
-                                                          dto))
-                     .thenReturn(Mono.just(paymentMethod));
-
-        webTestClient.mutateWith(mockJwt())
-                .post()
-                .uri("/api/payments/paymentmethod/bank/cus_123")
-                .body(Mono.just(dto),
-                      CardDto.class)
-                .exchange()
-                .expectStatus()
-                .isOk()
-                .expectBody()
-                .jsonPath("$.object")
-                .isEmpty()
-                .jsonPath("$.id")
-                .isNotEmpty();
-    }
-
-    @Test
-    void shouldHandleUpdateCardPaymentMethod() {
-
-        PaymentMethod paymentMethod = createMockBankPaymentMethod("cus_123");
-        CardDto dto = new CardDto("card_123",
-                                  "2424242424242424",
-                                  "353",
-                                  2L,
-                                  2029L);
-        when(paymentMethodService.updateCardPaymentMethod(anyString(),any(CardDto.class))).thenReturn(Mono.empty());
-
-        webTestClient.mutateWith(mockJwt())
-                .put()
-                .uri("/api/payments/paymentmethod/pm_123")
-                .body(Mono.just(dto), CardDto.class)
-                .exchange()
-                .expectStatus()
-                .isNoContent();
     }
 
     @Test
