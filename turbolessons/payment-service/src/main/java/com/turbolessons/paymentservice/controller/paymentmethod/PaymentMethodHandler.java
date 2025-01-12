@@ -9,12 +9,6 @@ public interface PaymentMethodHandler {
 
     Mono<ServerResponse> retrieveByCustomer(ServerRequest r);
 
-    Mono<ServerResponse> createCard(ServerRequest r);
-
-    Mono<ServerResponse> createBank(ServerRequest r);
-
-    Mono<ServerResponse> updateCard(ServerRequest r);
-
     Mono<ServerResponse> attach(ServerRequest r);
 
     Mono<ServerResponse> detach(ServerRequest r);

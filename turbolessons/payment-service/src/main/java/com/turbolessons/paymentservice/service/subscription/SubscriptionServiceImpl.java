@@ -56,11 +56,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     //    List all Subscriptions
     @Override
     public Mono<StripeCollection<Subscription>> listAllSubscriptions() {
-//        return Mono.fromCallable(() -> stripeClient.subscriptions()
-//                        .list())
-//                .onErrorMap(StripeException.class,
-//                            e -> new Exception("Error processing Stripe API",
-//                                               e));
         return stripeClientHelper.executeStripeCall(() -> stripeClient.subscriptions()
                 .list());
     }
@@ -68,11 +63,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     //    Retrieve a Subscription by id
     @Override
     public Mono<Subscription> retrieveSubscription(String id) {
-//        return Mono.fromCallable(() -> stripeClient.subscriptions()
-//                        .retrieve(id))
-//                .onErrorMap(StripeException.class,
-//                            e -> new Exception("Error processing Stripe API",
-//                                               e));
         return stripeClientHelper.executeStripeCall(() -> stripeClient.subscriptions()
                 .retrieve(id));
     }
@@ -80,14 +70,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     //    Search Subscriptions by Customer
     @Override
     public Mono<StripeSearchResult<Subscription>> getSubscriptionsByCustomer(String customerId) {
-//        return Mono.fromCallable(() -> stripeClient.subscriptions()
-//                        .search(SubscriptionSearchParams.builder()
-//                                        .setQuery(String.format("customer:%s",
-//                                                                customerId))
-//                                        .build()))
-//                .onErrorMap(StripeException.class,
-//                            e -> new Exception("Error processing Stripe API",
-//                                               e));
         return stripeClientHelper.executeStripeCall(() -> stripeClient.subscriptions()
                 .search(SubscriptionSearchParams.builder()
                                 .setQuery(String.format("customer:%s",
@@ -96,27 +78,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     //    Create a Subscription
-//    @Override
-//    public Mono<Subscription> createSubscription(String id, CustomerDto customerDto) {
-//        return customerService.createCustomer(customerDto)
-//                .flatMap(customer -> {
-//                    String customerId = customer.getId();
-//                    SubscriptionCreateParams params = SubscriptionCreateParams.builder()
-//                            .setCustomer(customerId)
-//                            .addItem(SubscriptionCreateParams.Item.builder()
-//                                             .setPrice(id)
-//                                             .build())
-//                            .setDefaultPaymentMethod(customerDto.getDefaultPaymentMethod())
-//                            .build();
-////                            return Mono.fromCallable(() -> stripeClient.subscriptions()
-////                                    .create(subscriptionParams));
-//                    //                .onErrorMap(StripeException.class,
-////                            e -> new Exception("Error processing Stripe API",
-////                                               e));
-//                    return stripeClientHelper.executeStripeCall(() -> stripeClient.subscriptions()
-//                            .create(params));
-//                });
-//    }
     @Override
     public Mono<SubscriptionDto> createSubscription(SubscriptionDto subscriptionDto) {
 
@@ -138,7 +99,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     }
 
-
     //    Update a Subscription
     @Override
     public Mono<Void> updateSubscription(String id, SubscriptionDto subscriptionDto) {
@@ -148,23 +108,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
                 .setCancelAtPeriodEnd(subscriptionDto.getCancelAtPeriodEnd())
                 .setDefaultPaymentMethod(subscriptionDto.getDefaultPaymentMethod())
                 .build();
-//        return Mono.fromRunnable(() -> {
-//                    try {
-//                        stripeClient.subscriptions()
-//                                .update(id,
-//                                        params);
-//                    } catch (StripeException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                })
-//                .onErrorMap(ex -> {
-//                    if (ex.getCause() instanceof StripeException) {
-//                        return new Exception("Error processing Stripe API",
-//                                             ex.getCause());
-//                    }
-//                    return ex;
-//                })
-//                .then();
         return stripeClientHelper.executeStripeVoidCall(() -> stripeClient.subscriptions()
                 .update(id,
                         params));
@@ -173,23 +116,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     //    Cancel a Subscription
     @Override
     public Mono<Void> cancelSubscription(String id) {
-
-//        return Mono.fromRunnable(() -> {
-//                    try {
-//                        stripeClient.subscriptions()
-//                                .cancel(id);
-//                    } catch (StripeException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                })
-//                .onErrorMap(ex -> {
-//                    if (ex.getCause() instanceof StripeException) {
-//                        return new Exception("Error processing Stripe API",
-//                                             ex.getCause());
-//                    }
-//                    return ex;
-//                })
-//                .then();
         return stripeClientHelper.executeStripeVoidCall(() -> stripeClient.subscriptions()
                 .cancel(id));
     }

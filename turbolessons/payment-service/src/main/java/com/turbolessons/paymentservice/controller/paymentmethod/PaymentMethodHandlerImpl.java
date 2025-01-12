@@ -2,8 +2,6 @@ package com.turbolessons.paymentservice.controller.paymentmethod;
 
 
 import com.turbolessons.paymentservice.controller.BaseHandler;
-import com.turbolessons.paymentservice.dto.BankDto;
-import com.turbolessons.paymentservice.dto.CardDto;
 import com.turbolessons.paymentservice.service.paymentmethod.PaymentMethodService;
 import com.stripe.model.PaymentMethod;
 import lombok.extern.slf4j.Slf4j;
@@ -39,40 +37,6 @@ public class PaymentMethodHandlerImpl extends BaseHandler implements PaymentMeth
                           request -> paymentMethodService.retrieveCustomerPaymentMethods(id(request)),
                           new ParameterizedTypeReference<>() {
                           });
-    }
-
-    @Override
-    public Mono<ServerResponse> createCard(ServerRequest r) {
-        String customerId = id(r); // Extract the customer ID from the request
-        Mono<CardDto> cardDtoMono = r.bodyToMono(CardDto.class);
-        return handleCreatePaymentMethod(customerId,
-                            cardDtoMono,
-                            (id, dtoMono) -> dtoMono.flatMap(dto -> paymentMethodService.createCardPaymentMethod(id,
-                                                                                                                 dto)),
-                            PaymentMethod.class);
-    }
-
-    @Override
-    public Mono<ServerResponse> createBank(ServerRequest r) {
-
-        String customerId = id(r);
-        Mono<BankDto> bankDtoMono = r.bodyToMono(BankDto.class);
-        return handleCreatePaymentMethod(customerId,
-                            bankDtoMono,
-                            (id, dtoMono) -> dtoMono.flatMap(dto -> paymentMethodService.createBankPaymentMethod(id,
-                                                                                                                 dto)),
-                            PaymentMethod.class);
-    }
-
-    @Override
-    public Mono<ServerResponse> updateCard(ServerRequest r) {
-
-        String id = id(r);
-        return handleUpdate(r,
-                            (idParam, requestBody) -> requestBody.flatMap(dto -> paymentMethodService.updateCardPaymentMethod(idParam,
-                                                                                                                              dto)),
-                            id,
-                            CardDto.class);
     }
 
     @Override
