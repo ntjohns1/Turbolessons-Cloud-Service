@@ -22,9 +22,6 @@ public class PaymentMethodEndpointConfig {
     RouterFunction<ServerResponse> paymentMethodRoutes() {
        return route((GET("/api/payments/paymentmethod/{id}")), handler::retrieve)
                 .andRoute(GET("/api/payments/paymentmethod/customer/{id}"), handler::retrieveByCustomer)
-                .andRoute(POST("/api/payments/paymentmethod/card/{id}"), handler::createCard)
-                .andRoute(POST("/api/payments/paymentmethod/bank/{id}"), handler::createBank)
-                .andRoute(PUT("/api/payments/paymentmethod/{id}"), handler::updateCard)
                 .andRoute(PUT("/api/payments/paymentmethod/attach/{id}/{customerId}"),handler::attach)
                 .andRoute(PUT("/api/payments/paymentmethod/detach/{id}"),handler::detach);
     }
