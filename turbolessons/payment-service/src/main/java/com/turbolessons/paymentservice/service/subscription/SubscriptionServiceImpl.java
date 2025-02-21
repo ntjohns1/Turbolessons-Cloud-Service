@@ -119,5 +119,4 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         return stripeClientHelper.executeStripeVoidCall(() -> stripeClient.subscriptions()
                 .cancel(id));
     }
-
 }
