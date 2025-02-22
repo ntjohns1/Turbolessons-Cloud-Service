@@ -1,4 +1,4 @@
-package com.turbolessons.paymentservice.controller.usagerecord;
+package com.turbolessons.paymentservice.controller.meter;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,11 +9,11 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 @Configuration
-public class UsageRecordEndpointConfig {
+public class MeterEndpointConfig {
 
-    private final UsageRecordHandler handler;
+    private final MeterHandler handler;
 
-    public UsageRecordEndpointConfig(UsageRecordHandler handler) {
+    public MeterEndpointConfig(MeterHandler handler) {
         this.handler = handler;
     }
 
