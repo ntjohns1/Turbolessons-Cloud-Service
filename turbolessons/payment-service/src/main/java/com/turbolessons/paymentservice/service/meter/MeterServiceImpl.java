@@ -10,6 +10,7 @@ import com.stripe.param.billing.MeterUpdateParams;
 import com.turbolessons.paymentservice.dto.MeterDto;
 import com.turbolessons.paymentservice.dto.MeterEventDto;
 import com.turbolessons.paymentservice.service.StripeClientHelper;
+import org.slf4j.Logger;
 import reactor.core.publisher.Mono;
 
 public class MeterServiceImpl implements MeterService {
@@ -114,6 +115,7 @@ public class MeterServiceImpl implements MeterService {
                             meterEventDto.stripeCustomerId())
                 .setIdentifier(meterEventDto.identifier())
                 .build();
+        System.out.println("Meter service params:" + params);
         return stripeClientHelper.executeStripeCall(() -> stripeClient.billing()
                         .meterEvents()
                         .create(params))
