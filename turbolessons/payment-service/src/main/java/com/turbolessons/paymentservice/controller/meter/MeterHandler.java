@@ -5,5 +5,16 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 public interface MeterHandler {
+
+
+    Mono<ServerResponse> listAll(ServerRequest r);
+    Mono<ServerResponse> retrieve(ServerRequest r);
     Mono<ServerResponse> create(ServerRequest r);
+    Mono<ServerResponse> update(ServerRequest r);
+    Mono<ServerResponse> deactivate(ServerRequest r);
+    Mono<ServerResponse> reactivate(ServerRequest r);
+    Mono<ServerResponse> createEvent(ServerRequest r);
+
+
+
 }

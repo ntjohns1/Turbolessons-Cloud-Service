@@ -51,7 +51,8 @@ public class SubscriptionHandlerImpl extends BaseHandler implements Subscription
     public Mono<ServerResponse> update(ServerRequest r) {
         String id = id(r);
         return handleUpdate(r,
-                            (idParam, requestBody) -> requestBody.flatMap(dto -> subscriptionService.updateSubscription(idParam, dto)),
+                            (idParam, requestBody) -> requestBody.flatMap(dto -> subscriptionService.updateSubscription(idParam,
+                                                                                                                        dto)),
                             id,
                             SubscriptionDto.class);
     }
