@@ -9,7 +9,7 @@ import lombok.*;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class PriceDTO {
+public class PriceData {
 
     private String id;
 //    In cents;

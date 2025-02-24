@@ -1,6 +1,6 @@
 package com.turbolessons.paymentservice.service.product;
 
-import com.turbolessons.paymentservice.dto.ProductDto;
+import com.turbolessons.paymentservice.dto.ProductData;
 import com.turbolessons.paymentservice.service.StripeClientHelper;
 import com.stripe.StripeClient;
 import com.stripe.model.Product;
@@ -36,11 +36,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Mono<Product> createProduct(ProductDto productDto) {
+    public Mono<Product> createProduct(ProductData productData) {
 
         ProductCreateParams params = ProductCreateParams.builder()
-                .setName(productDto.getName())
-                .setDescription(productDto.getDescription())
+                .setName(productData.getName())
+                .setDescription(productData.getDescription())
                 .build();
 
         return stripeClientHelper.executeStripeCall(() -> stripeClient.products()
@@ -48,11 +48,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Mono<Void> updateProduct(String id, ProductDto productDto) {
+    public Mono<Void> updateProduct(String id, ProductData productData) {
 
         ProductUpdateParams params = ProductUpdateParams.builder()
-                .setName(productDto.getName())
-                .setDescription(productDto.getDescription())
+                .setName(productData.getName())
+                .setDescription(productData.getDescription())
                 .build();
 
         return stripeClientHelper.executeStripeVoidCall(() -> stripeClient.products()

@@ -1,7 +1,7 @@
 package com.turbolessons.paymentservice.controller.paymentintent;
 
 import com.turbolessons.paymentservice.controller.BaseHandler;
-import com.turbolessons.paymentservice.dto.PaymentIntentDto;
+import com.turbolessons.paymentservice.dto.PaymentIntentData;
 import com.turbolessons.paymentservice.service.paymentintent.PaymentIntentService;
 import com.stripe.model.PaymentIntent;
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +50,7 @@ public class PaymentIntentHandlerImpl extends BaseHandler implements PaymentInte
     public Mono<ServerResponse> create(ServerRequest r) {
         return handleCreate(r,
                             requestBody -> requestBody.flatMap(this.paymentIntentService::createPaymentIntent),
-                            PaymentIntentDto.class,
+                            PaymentIntentData.class,
                             PaymentIntent.class);
     }
 
@@ -61,7 +61,7 @@ public class PaymentIntentHandlerImpl extends BaseHandler implements PaymentInte
                             (idParam, requestBody) -> requestBody.flatMap(dto -> this.paymentIntentService.updatePaymentIntent(idParam,
                                                                                                                           dto)),
                             id,
-                            PaymentIntentDto.class);
+                            PaymentIntentData.class);
     }
 
     @Override

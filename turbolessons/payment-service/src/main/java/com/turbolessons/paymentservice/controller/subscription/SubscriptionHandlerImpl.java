@@ -2,7 +2,7 @@ package com.turbolessons.paymentservice.controller.subscription;
 
 import com.stripe.model.Subscription;
 import com.turbolessons.paymentservice.controller.BaseHandler;
-import com.turbolessons.paymentservice.dto.SubscriptionDto;
+import com.turbolessons.paymentservice.dto.SubscriptionData;
 import com.turbolessons.paymentservice.service.subscription.SubscriptionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -43,8 +43,8 @@ public class SubscriptionHandlerImpl extends BaseHandler implements Subscription
     public Mono<ServerResponse> create(ServerRequest r) {
         return handleCreate(r,
                             requestBody -> requestBody.flatMap(this.subscriptionService::createSubscription),
-                            SubscriptionDto.class,
-                            SubscriptionDto.class);
+                            SubscriptionData.class,
+                            SubscriptionData.class);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class SubscriptionHandlerImpl extends BaseHandler implements Subscription
                             (idParam, requestBody) -> requestBody.flatMap(dto -> subscriptionService.updateSubscription(idParam,
                                                                                                                         dto)),
                             id,
-                            SubscriptionDto.class);
+                            SubscriptionData.class);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.turbolessons.paymentservice.service.invoice;
 
-import com.turbolessons.paymentservice.dto.InvoiceDto;
+import com.turbolessons.paymentservice.dto.InvoiceDtoV1;
 import com.turbolessons.paymentservice.service.StripeClientHelper;
 import com.stripe.StripeClient;
 import com.stripe.model.Invoice;
@@ -76,7 +76,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public Mono<Invoice> createInvoice(InvoiceDto invoiceDto) {
+    public Mono<Invoice> createInvoice(InvoiceDtoV1 invoiceDto) {
         InvoiceCreateParams params = InvoiceCreateParams.builder()
                 .setCustomer(invoiceDto.getCustomer())
                 .setSubscription(invoiceDto.getSubscription())
@@ -92,7 +92,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public Mono<Void> updateInvoice(String id, InvoiceDto invoiceDto) {
+    public Mono<Void> updateInvoice(String id, InvoiceDtoV1 invoiceDto) {
 
 
         InvoiceUpdateParams params = InvoiceUpdateParams.builder()

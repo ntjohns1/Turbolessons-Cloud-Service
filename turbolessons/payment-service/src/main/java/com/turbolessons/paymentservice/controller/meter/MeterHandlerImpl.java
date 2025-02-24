@@ -1,8 +1,8 @@
 package com.turbolessons.paymentservice.controller.meter;
 
 import com.turbolessons.paymentservice.controller.BaseHandler;
-import com.turbolessons.paymentservice.dto.MeterDto;
-import com.turbolessons.paymentservice.dto.MeterEventDto;
+import com.turbolessons.paymentservice.dto.MeterData;
+import com.turbolessons.paymentservice.dto.MeterEventData;
 import com.turbolessons.paymentservice.service.meter.MeterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -34,15 +34,15 @@ public class MeterHandlerImpl extends BaseHandler implements MeterHandler {
     public Mono<ServerResponse> retrieve(ServerRequest r) {
         return handleRetrieve(r,
                               request -> meterService.retrieveMeter(id(request)),
-                              MeterDto.class);
+                              MeterData.class);
     }
 
     @Override
     public Mono<ServerResponse> create(ServerRequest r) {
         return handleCreate(r,
                             requestBody -> requestBody.flatMap(this.meterService::createMeter),
-                            MeterDto.class,
-                            MeterDto.class);
+                            MeterData.class,
+                            MeterData.class);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class MeterHandlerImpl extends BaseHandler implements MeterHandler {
                             (idParam, requestBody) -> requestBody.flatMap(dto -> meterService.updateMeter(idParam,
                                                                                                           dto)),
                             id,
-                            MeterDto.class);
+                            MeterData.class);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class MeterHandlerImpl extends BaseHandler implements MeterHandler {
     public Mono<ServerResponse> createEvent(ServerRequest r) {
         return handleCreate(r,
                             requestBody -> requestBody.flatMap(this.meterService::createMeterEvent),
-                            MeterEventDto.class,
-                            MeterEventDto.class);
+                            MeterEventData.class,
+                            MeterEventData.class);
     }
 }

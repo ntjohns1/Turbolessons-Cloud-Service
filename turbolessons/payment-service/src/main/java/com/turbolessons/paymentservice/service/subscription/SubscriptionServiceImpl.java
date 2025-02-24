@@ -8,7 +8,7 @@ import com.stripe.model.SubscriptionItem;
 import com.stripe.param.SubscriptionCreateParams;
 import com.stripe.param.SubscriptionSearchParams;
 import com.stripe.param.SubscriptionUpdateParams;
-import com.turbolessons.paymentservice.dto.SubscriptionDto;
+import com.turbolessons.paymentservice.dto.SubscriptionData;
 import com.turbolessons.paymentservice.service.StripeClientHelper;
 import com.turbolessons.paymentservice.service.customer.CustomerService;
 import com.turbolessons.paymentservice.service.price.PricingService;
@@ -36,7 +36,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         this.pricingService = pricingService;
     }
 
-    private SubscriptionDto mapSubscriptionToDto(Subscription subscription) {
+    private SubscriptionData mapSubscriptionToDto(Subscription subscription) {
         List<String> items = new ArrayList<>();
         if (subscription.getItems() != null && subscription.getItems()
                 .getData() != null) {
@@ -45,12 +45,12 @@ public class SubscriptionServiceImpl implements SubscriptionService {
                 items.add(item.getId());
             }
         }
-        return new SubscriptionDto(subscription.getId(),
-                                   subscription.getCustomer(),
-                                   items,
-                                   subscription.getCancelAtPeriodEnd(),
-                                   subscription.getCanceledAt(),
-                                   subscription.getDefaultPaymentMethod());
+        return new SubscriptionData(subscription.getId(),
+                                    subscription.getCustomer(),
+                                    items,
+                                    subscription.getCancelAtPeriodEnd(),
+                                    subscription.getCanceledAt(),
+                                    subscription.getDefaultPaymentMethod());
     }
 
     //    List all Subscriptions
@@ -79,15 +79,15 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     //    Create a Subscription
     @Override
-    public Mono<SubscriptionDto> createSubscription(SubscriptionDto subscriptionDto) {
+    public Mono<SubscriptionData> createSubscription(SubscriptionData subscriptionData) {
 
         SubscriptionCreateParams.Builder paramsBuilder = SubscriptionCreateParams.builder()
-                .setCustomer(subscriptionDto.getCustomer())
-                .setCancelAtPeriodEnd(subscriptionDto.getCancelAtPeriodEnd())
-                .setCancelAt(subscriptionDto.getCancelAt())
-                .setDefaultPaymentMethod(subscriptionDto.getDefaultPaymentMethod());
+                .setCustomer(subscriptionData.getCustomer())
+                .setCancelAtPeriodEnd(subscriptionData.getCancelAtPeriodEnd())
+                .setCancelAt(subscriptionData.getCancelAt())
+                .setDefaultPaymentMethod(subscriptionData.getDefaultPaymentMethod());
 
-        subscriptionDto.getItems()
+        subscriptionData.getItems()
                 .forEach(priceId -> paramsBuilder.addItem(SubscriptionCreateParams.Item.builder()
                                                                   .setPrice(priceId)
                                                                   .build()));
@@ -101,12 +101,12 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     //    Update a Subscription
     @Override
-    public Mono<Void> updateSubscription(String id, SubscriptionDto subscriptionDto) {
+    public Mono<Void> updateSubscription(String id, SubscriptionData subscriptionData) {
 
         SubscriptionUpdateParams params = SubscriptionUpdateParams.builder()
-                .setCancelAt(subscriptionDto.getCancelAt())
-                .setCancelAtPeriodEnd(subscriptionDto.getCancelAtPeriodEnd())
-                .setDefaultPaymentMethod(subscriptionDto.getDefaultPaymentMethod())
+                .setCancelAt(subscriptionData.getCancelAt())
+                .setCancelAtPeriodEnd(subscriptionData.getCancelAtPeriodEnd())
+                .setDefaultPaymentMethod(subscriptionData.getDefaultPaymentMethod())
                 .build();
         return stripeClientHelper.executeStripeVoidCall(() -> stripeClient.subscriptions()
                 .update(id,

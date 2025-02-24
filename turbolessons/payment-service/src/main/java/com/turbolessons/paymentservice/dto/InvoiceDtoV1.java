@@ -9,10 +9,13 @@ import lombok.*;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class SetupIntentDto {
+public class InvoiceDtoV1 {
 
     String id;
+
+    String currency = "usd";
+    String status;
     String customer;
-    String paymentMethod;
+    String subscription;
     String description;
 }

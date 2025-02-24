@@ -1,6 +1,6 @@
 package com.turbolessons.paymentservice.service.invoice;
 
-import com.turbolessons.paymentservice.dto.InvoiceDto;
+import com.turbolessons.paymentservice.dto.InvoiceDtoV1;
 import com.stripe.model.Invoice;
 import com.stripe.model.InvoiceLineItem;
 import com.stripe.model.StripeCollection;
@@ -15,9 +15,11 @@ public interface InvoiceService {
 
     Mono<Invoice> retrieveInvoice(String id);
 
-    Mono<Invoice> createInvoice(InvoiceDto invoiceDto);
 
-    Mono<Void> updateInvoice(String id, InvoiceDto invoiceDto);
+
+    Mono<Invoice> createInvoice(InvoiceDtoV1 invoiceDto);
+
+    Mono<Void> updateInvoice(String id, InvoiceDtoV1 invoiceDto);
 
     Mono<Void> deleteDraftInvoice(String id);
 

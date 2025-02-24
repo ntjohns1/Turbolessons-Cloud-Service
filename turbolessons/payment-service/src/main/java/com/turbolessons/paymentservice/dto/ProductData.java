@@ -9,12 +9,9 @@ import lombok.*;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class InvoiceDto {
+public class ProductData {
 
     String id;
-    String currency = "usd";
-    String status;
-    String customer;
-    String subscription;
+    String name;
     String description;
 }

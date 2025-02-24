@@ -6,7 +6,7 @@ import com.stripe.model.StripeCollection;
 import com.stripe.model.Subscription;
 import com.stripe.param.*;
 import com.turbolessons.paymentservice.dto.Address;
-import com.turbolessons.paymentservice.dto.CustomerDto;
+import com.turbolessons.paymentservice.dto.CustomerData;
 import com.turbolessons.paymentservice.service.StripeClientHelper;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -44,7 +44,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     //    Retrieve a Customer
     @Override
-    public Mono<CustomerDto> retrieveCustomer(String id) {
+    public Mono<CustomerData> retrieveCustomer(String id) {
         CustomerRetrieveParams params = CustomerRetrieveParams.builder()
                 .addExpand("subscriptions")
                 .build();
@@ -55,7 +55,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     //    Search Customers
-    private CustomerDto mapCustomerToDto(Customer customer) {
+    private CustomerData mapCustomerToDto(Customer customer) {
         List<String> subscriptionIds = new ArrayList<>();
 
         // Extract subscription IDs
@@ -67,17 +67,17 @@ public class CustomerServiceImpl implements CustomerService {
             }
         }
 
-        return new CustomerDto(customer.getId(),
-                               customer.getAddress() != null ? mapAddress(customer.getAddress()) : null,
-                               customer.getEmail(),
-                               customer.getName(),
-                               customer.getPhone(),
-                               customer.getInvoiceSettings() != null ? customer.getInvoiceSettings()
+        return new CustomerData(customer.getId(),
+                                customer.getAddress() != null ? mapAddress(customer.getAddress()) : null,
+                                customer.getEmail(),
+                                customer.getName(),
+                                customer.getPhone(),
+                                customer.getInvoiceSettings() != null ? customer.getInvoiceSettings()
                                        .getDefaultPaymentMethod() : null,
-                               customer.getDescription(),
-                               customer.getMetadata(),
-                               subscriptionIds
-                               // Set subscription IDs
+                                customer.getDescription(),
+                                customer.getMetadata(),
+                                subscriptionIds
+                                // Set subscription IDs
         );
     }
 
@@ -95,7 +95,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Mono<CustomerDto> searchCustomerBySystemId(String id) {
+    public Mono<CustomerData> searchCustomerBySystemId(String id) {
         String query = String.format("metadata['okta_id']:'%s'",
                                      id);
         CustomerSearchParams params = CustomerSearchParams.builder()
@@ -119,10 +119,10 @@ public class CustomerServiceImpl implements CustomerService {
 
     //    Create a Customer
     @Override
-    public Mono<CustomerDto> createCustomer(CustomerDto customerDto) {
-        System.out.println("Received createCustomer Request:" + customerDto);
+    public Mono<CustomerData> createCustomer(CustomerData customerData) {
+        System.out.println("Received createCustomer Request:" + customerData);
 
-        Address address = customerDto.getAddress();
+        Address address = customerData.getAddress();
         CustomerCreateParams customerParams = CustomerCreateParams.builder()
                 .setAddress(CustomerCreateParams.Address.builder()
                                     .setCity(address.getCity())
@@ -132,10 +132,10 @@ public class CustomerServiceImpl implements CustomerService {
                                     .setState(address.getState())
                                     .setPostalCode(address.getPostalCode())
                                     .build())
-                .setEmail(customerDto.getEmail())
-                .setName(customerDto.getName())
-                .setPhone(customerDto.getPhone())
-                .setMetadata(customerDto.getMetadata())
+                .setEmail(customerData.getEmail())
+                .setName(customerData.getName())
+                .setPhone(customerData.getPhone())
+                .setMetadata(customerData.getMetadata())
                 .build();
         System.out.println("CustomerCreateParams: " + customerParams);
         return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
@@ -146,8 +146,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     //    Update a Customer
     @Override
-    public Mono<Void> updateCustomer(String id, CustomerDto customerDto) {
-        Address address = customerDto.getAddress();
+    public Mono<Void> updateCustomer(String id, CustomerData customerData) {
+        Address address = customerData.getAddress();
         CustomerUpdateParams customerParams = CustomerUpdateParams.builder()
                 .setAddress(CustomerUpdateParams.Address.builder()
                                     .setCity(address.getCity())
@@ -157,11 +157,11 @@ public class CustomerServiceImpl implements CustomerService {
                                     .setState(address.getState())
                                     .setPostalCode(address.getPostalCode())
                                     .build())
-                .setEmail(customerDto.getEmail())
-                .setName(customerDto.getName())
-                .setPhone(customerDto.getPhone())
+                .setEmail(customerData.getEmail())
+                .setName(customerData.getName())
+                .setPhone(customerData.getPhone())
 //                .setInvoiceSettings(CustomerUpdateParams.InvoiceSettings.builder()
-//                                            .setDefaultPaymentMethod(customerDto.getDefaultPaymentMethod())
+//                                            .setDefaultPaymentMethod(customerData.getDefaultPaymentMethod())
 //                                            .build())
                 .build();
 

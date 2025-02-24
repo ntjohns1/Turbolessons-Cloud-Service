@@ -1,16 +1,11 @@
 package com.turbolessons.paymentservice.controller.meter;
 
-import com.stripe.model.StripeCollection;
-import com.stripe.model.billing.Meter;
-import com.stripe.model.billing.MeterEvent;
-import com.turbolessons.paymentservice.controller.customer.CustomerHandlerImpl;
-import com.turbolessons.paymentservice.dto.MeterDto;
-import com.turbolessons.paymentservice.dto.MeterEventDto;
+import com.turbolessons.paymentservice.dto.MeterData;
+import com.turbolessons.paymentservice.dto.MeterEventData;
 import com.turbolessons.paymentservice.service.meter.MeterService;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
@@ -23,7 +18,6 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -55,24 +49,23 @@ public class MeterHandlerTests {
                 .build();
     }
 
-//    @Test
-//    public void shouldHandleListAllMeters() {
-//        StripeCollection<Meter> meters = new StripeCollection<>();
-//                meters.setData(List.of(createMeterDto("mtr_123"), createMeterDto("mtr_234")));
-//        when(meterService.listAllMeters()).thenReturn(Mono.just(meters));
-//
-//        webTestClient.get()
-//                .uri("/api/payments/meter")
-//                .exchange()
-//                .expectStatus()
-//                .isOk()
-//                .expectBodyList(MeterDto.class)
-//                .hasSize(2);
-//    }
+    @Test
+    public void shouldHandleListAllMeters() {
+        when(meterService.listAllMeters()).thenReturn(Mono.just(List.of(createMeterDto("mtr_123"),
+                                                                        createMeterDto("mtr_234"))));
+
+        webTestClient.get()
+                .uri("/api/payments/meter")
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBodyList(MeterData.class)
+                .hasSize(2);
+    }
 
     @Test
     public void shouldHandleRetrieveMeter() {
-        MeterDto meter = createMeterDto("mtr_123");
+        MeterData meter = createMeterDto("mtr_123");
         when(meterService.retrieveMeter(anyString())).thenReturn(Mono.just(meter));
 
         webTestClient.get()
@@ -81,34 +74,39 @@ public class MeterHandlerTests {
                 .expectStatus()
                 .isOk()
                 .expectBody()
-                .jsonPath("$.id").isEqualTo("mtr_123");
+                .jsonPath("$.id")
+                .isEqualTo("mtr_123");
     }
 
     @Test
     public void shouldHandleCreateMeter() {
-        MeterDto meter = createMeterDto("mtr_123");
+        MeterData meter = createMeterDto("mtr_123");
         when(meterService.createMeter(any())).thenReturn(Mono.just(meter));
 
         webTestClient.mutateWith(mockJwt())
                 .post()
                 .uri("/api/payments/meter")
-                .body(Mono.just(meter), MeterDto.class)
+                .body(Mono.just(meter),
+                      MeterData.class)
                 .exchange()
                 .expectStatus()
                 .isOk()
                 .expectBody()
-                .jsonPath("$.id").isEqualTo("mtr_123");
+                .jsonPath("$.id")
+                .isEqualTo("mtr_123");
     }
 
     @Test
     public void shouldHandleUpdateMeter() {
-        MeterDto meter = createMeterDto("mtr_123");
-        when(meterService.updateMeter(anyString(), any())).thenReturn(Mono.empty());
+        MeterData meter = createMeterDto("mtr_123");
+        when(meterService.updateMeter(anyString(),
+                                      any())).thenReturn(Mono.empty());
 
         webTestClient.mutateWith(mockJwt())
                 .post()
                 .uri("/api/payments/meter/mtr_123")
-                .body(Mono.just(meter), MeterDto.class)
+                .body(Mono.just(meter),
+                      MeterData.class)
                 .exchange()
                 .expectStatus()
                 .isNoContent();
@@ -140,25 +138,31 @@ public class MeterHandlerTests {
 
     @Test
     public void shouldHandleCreateMeterEvent() {
-        MeterEventDto meterEvent = createMeterEventDto("mtr_123");
+        MeterEventData meterEvent = createMeterEventDto("mtr_123");
         when(meterService.createMeterEvent(any())).thenReturn(Mono.just(meterEvent));
 
         webTestClient.mutateWith(mockJwt())
                 .post()
                 .uri("/api/payments/meter_event")
-                .body(Mono.just(meterEvent), MeterEventDto.class)
+                .body(Mono.just(meterEvent),
+                      MeterEventData.class)
                 .exchange()
                 .expectStatus()
                 .isOk();
 
     }
 
-    // Helper methods to create mock MeterDto and MeterEventDto
-    private MeterDto createMeterDto(String id) {
-        return new MeterDto(id, "Lesson Meter", "lesson_123");
+    // Helper methods to create mock MeterData and MeterEventData
+    private MeterData createMeterDto(String id) {
+        return new MeterData(id,
+                             "Lesson Meter",
+                             "lesson_123");
     }
 
-    private MeterEventDto createMeterEventDto(String meterId) {
-        return new MeterEventDto(meterId, "lesson_123", "cus_123", "50");
+    private MeterEventData createMeterEventDto(String meterId) {
+        return new MeterEventData(meterId,
+                                  "lesson_123",
+                                  "cus_123",
+                                  "50");
     }
 }
