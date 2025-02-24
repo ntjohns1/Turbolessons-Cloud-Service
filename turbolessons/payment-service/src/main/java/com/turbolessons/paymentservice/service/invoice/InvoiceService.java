@@ -1,35 +1,35 @@
 package com.turbolessons.paymentservice.service.invoice;
-
-import com.turbolessons.paymentservice.dto.InvoiceDtoV1;
-import com.stripe.model.Invoice;
-import com.stripe.model.InvoiceLineItem;
 import com.stripe.model.StripeCollection;
+import com.turbolessons.paymentservice.dto.InvoiceData;
+import com.stripe.model.InvoiceLineItem;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 public interface InvoiceService {
-    Mono<StripeCollection<Invoice>> listAllInvoices();
+    Mono<List<InvoiceData>> listAllInvoices();
 
-    Mono<StripeCollection<Invoice>> listAllInvoiceByCustomer(String customerId);
+    Mono<List<InvoiceData>> listAllInvoiceByCustomer(String customerId);
 
-    Mono<StripeCollection<Invoice>> listAllInvoiceBySubscription(String subscriptionId);
+    Mono<InvoiceData> retrieveUpcomingInvoice(String customerId);
 
-    Mono<Invoice> retrieveInvoice(String id);
+    Mono<List<InvoiceData>> listAllInvoiceBySubscription(String subscriptionId);
 
+    Mono<InvoiceData> retrieveInvoice(String id);
 
+    Mono<InvoiceData> createInvoice(InvoiceData invoiceDto);
 
-    Mono<Invoice> createInvoice(InvoiceDtoV1 invoiceDto);
-
-    Mono<Void> updateInvoice(String id, InvoiceDtoV1 invoiceDto);
+    Mono<Void> updateInvoice(String id, InvoiceData invoiceDto);
 
     Mono<Void> deleteDraftInvoice(String id);
 
-    Mono<Invoice> finalizeInvoice(String id);
+    Mono<InvoiceData> finalizeInvoice(String id);
 
-    Mono<Invoice> payInvoice(String id);
+    Mono<InvoiceData> payInvoice(String id);
 
-    Mono<Invoice> voidInvoice(String id);
+    Mono<InvoiceData> voidInvoice(String id);
 
-    Mono<Invoice> markInvoiceUncollectible(String id);
+    Mono<InvoiceData> markInvoiceUncollectible(String id);
 
     Mono<StripeCollection<InvoiceLineItem>> getLineItems(String id);
 }
