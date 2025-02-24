@@ -1,7 +1,8 @@
 package com.turbolessons.paymentservice.service.invoice;
+
+import com.stripe.model.InvoiceLineItem;
 import com.stripe.model.StripeCollection;
 import com.turbolessons.paymentservice.dto.InvoiceData;
-import com.stripe.model.InvoiceLineItem;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -11,11 +12,12 @@ public interface InvoiceService {
 
     Mono<List<InvoiceData>> listAllInvoiceByCustomer(String customerId);
 
-    Mono<InvoiceData> retrieveUpcomingInvoice(String customerId);
 
     Mono<List<InvoiceData>> listAllInvoiceBySubscription(String subscriptionId);
 
     Mono<InvoiceData> retrieveInvoice(String id);
+
+    Mono<InvoiceData> retrieveUpcomingInvoice(String customerId);
 
     Mono<InvoiceData> createInvoice(InvoiceData invoiceDto);
 

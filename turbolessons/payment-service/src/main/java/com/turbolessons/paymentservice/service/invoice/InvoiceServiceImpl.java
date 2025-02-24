@@ -10,11 +10,13 @@ import com.stripe.param.InvoiceUpcomingParams;
 import com.stripe.param.InvoiceUpdateParams;
 import com.turbolessons.paymentservice.dto.InvoiceData;
 import com.turbolessons.paymentservice.service.StripeClientHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class InvoiceServiceImpl implements InvoiceService {
     private final StripeClient stripeClient;
@@ -77,16 +79,6 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public Mono<InvoiceData> retrieveUpcomingInvoice(String customerId) {
-        InvoiceUpcomingParams params = InvoiceUpcomingParams.builder()
-                .setCustomer(customerId)
-                .build();
-        return stripeClientHelper.executeStripeCall(() -> stripeClient.invoices()
-                        .upcoming(params))
-                .map(this::mapInvoiceData);
-    }
-
-    @Override
     public Mono<List<InvoiceData>> listAllInvoiceBySubscription(String subscriptionId) {
 
         InvoiceListParams params = InvoiceListParams.builder()
@@ -115,6 +107,16 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         return stripeClientHelper.executeStripeCall(() -> stripeClient.invoices()
                         .retrieve(id))
+                .map(this::mapInvoiceData);
+    }
+
+    @Override
+    public Mono<InvoiceData> retrieveUpcomingInvoice(String customerId) {
+        InvoiceUpcomingParams params = InvoiceUpcomingParams.builder()
+                .setCustomer(customerId)
+                .build();
+        return stripeClientHelper.executeStripeCall(() -> stripeClient.invoices()
+                        .upcoming(params))
                 .map(this::mapInvoiceData);
     }
 
