@@ -18,16 +18,20 @@ public class InvoiceEndpointConfig {
     }
 
     @Bean
-    RouterFunction<ServerResponse> meterRoutes() {
+    RouterFunction<ServerResponse> invoiceRoutes() {
         return route((GET("/api/payments/invoice")), handler::listAll)
-                .andRoute(GET("/api/payments/invoice/customer_list/{id}"), handler::listAllByCustomer)
-                .andRoute(GET("/api/payments/invoice/subscription_list/{id}"), handler::listAllBySubscription)
+                .andRoute(GET("/api/payments/invoice/{id}/customer"), handler::listAllByCustomer)
+                .andRoute(GET("/api/payments/invoice/{id}/subscription"), handler::listAllBySubscription)
                 .andRoute(GET("/api/payments/invoice/{id}"), handler::retrieve)
-                .andRoute(GET("/api/payments/invoice/upcoming/{id}"), handler::retrieveUpcoming)
+                .andRoute(GET("/api/payments/invoice/{id}/upcoming"), handler::retrieveUpcoming)
                 .andRoute(POST("/api/payments/invoice"), handler::create)
                 .andRoute(PUT("/api/payments/invoice/{id}"), handler::update)
                 .andRoute(DELETE("/api/payments/invoice/{id}"), handler::deleteDraft)
-                .andRoute(GET("/api/payments/invoice/subscription_list/{id}"), handler::finalize)
-                ;
+                .andRoute(POST("/api/payments/invoice/{id}/finalize"), handler::finalize)
+                .andRoute(POST("/api/payments/invoice/{id}/pay"), handler::payInvoice)
+                .andRoute(POST("/api/payments/invoice/{id}/void"), handler::voidInvoice)
+                .andRoute(POST("/api/payments/invoice/{id}/mark_uncollectible"), handler::markUncollectible)
+                .andRoute(POST("/api/payments/invoice/{id}/line_items"), handler::retrieveLineItems)
+                .andRoute(POST("/api/payments/invoice/{id}/upcoming/line_items"), handler::retrieveUpcomingLineItems);
     }
 }

@@ -24,4 +24,15 @@ public interface InvoiceHandler {
 
     Mono<ServerResponse> finalize(ServerRequest r);
 
+    Mono<ServerResponse> payInvoice(ServerRequest r);
+
+    Mono<ServerResponse> voidInvoice(ServerRequest r);
+
+    Mono<ServerResponse> markUncollectible(ServerRequest r);
+
+    Mono<ServerResponse> retrieveLineItems(ServerRequest r);
+
+    Mono<ServerResponse> retrieveUpcomingLineItems(ServerRequest r);
+
+
 }

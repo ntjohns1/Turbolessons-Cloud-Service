@@ -86,9 +86,53 @@ public class InvoiceHandlerImpl extends BaseHandler implements InvoiceHandler {
     @Override
     public Mono<ServerResponse> finalize(ServerRequest r) {
         return invoiceService.finalizeInvoice(id(r))
+                .then(ServerResponse.noContent()
+                              .build())
+                .onErrorResume(e -> ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .build());
+    }
+
+    @Override
+    public Mono<ServerResponse> payInvoice(ServerRequest r) {
+        return invoiceService.payInvoice(id(r))
                 .then(ServerResponse.ok()
                               .build())
                 .onErrorResume(e -> ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .build());
     }
+
+    @Override
+    public Mono<ServerResponse> voidInvoice(ServerRequest r) {
+        return invoiceService.voidInvoice(id(r))
+                .then(ServerResponse.ok()
+                              .build())
+                .onErrorResume(e -> ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .build());
+    }
+
+    @Override
+    public Mono<ServerResponse> markUncollectible(ServerRequest r) {
+        return invoiceService.markInvoiceUncollectible(id(r))
+                .then(ServerResponse.ok()
+                              .build())
+                .onErrorResume(e -> ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .build());
+    }
+
+    @Override
+    public Mono<ServerResponse> retrieveLineItems(ServerRequest r) {
+        return handleSearch(r,
+                            request -> this.invoiceService.getLineItems(id(request)),
+                            new ParameterizedTypeReference<>() {
+                            });
+    }
+
+    @Override
+    public Mono<ServerResponse> retrieveUpcomingLineItems(ServerRequest r) {
+        return handleSearch(r,
+                            request -> this.invoiceService.getUpcomingLineItems(id(request)),
+                            new ParameterizedTypeReference<>() {
+                            });
+    }
+
 }

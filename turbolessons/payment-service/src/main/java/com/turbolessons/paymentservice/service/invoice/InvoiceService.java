@@ -3,6 +3,7 @@ package com.turbolessons.paymentservice.service.invoice;
 import com.stripe.model.InvoiceLineItem;
 import com.stripe.model.StripeCollection;
 import com.turbolessons.paymentservice.dto.InvoiceData;
+import com.turbolessons.paymentservice.dto.LineItemData;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public interface InvoiceService {
 
     Mono<Void> deleteDraftInvoice(String id);
 
-    Mono<InvoiceData> finalizeInvoice(String id);
+    Mono<Void> finalizeInvoice(String id);
 
     Mono<InvoiceData> payInvoice(String id);
 
@@ -33,5 +34,7 @@ public interface InvoiceService {
 
     Mono<InvoiceData> markInvoiceUncollectible(String id);
 
-    Mono<StripeCollection<InvoiceLineItem>> getLineItems(String id);
+    Mono<List<LineItemData>> getLineItems(String id);
+
+    Mono<List<LineItemData>> getUpcomingLineItems(String customerId);
 }
