@@ -14,7 +14,7 @@ import java.util.Map;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class CustomerDto implements Serializable {
+public class CustomerData implements Serializable {
 
 //    @Id
     private String id;

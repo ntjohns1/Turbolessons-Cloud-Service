@@ -1,7 +1,7 @@
 package com.turbolessons.paymentservice.controller.product;
 
-import com.turbolessons.paymentservice.dto.CustomerDto;
-import com.turbolessons.paymentservice.dto.ProductDto;
+import com.turbolessons.paymentservice.dto.CustomerData;
+import com.turbolessons.paymentservice.dto.ProductData;
 import com.turbolessons.paymentservice.service.product.ProductService;
 import com.stripe.model.Product;
 import com.stripe.model.StripeCollection;
@@ -97,16 +97,16 @@ public class ProductHandlerTests {
         Product product = createMockProduct("prod_123",
                                             "Test Product",
                                             "Test Description");
-        ProductDto dto = createMockProductDto("prod_123",
-                                              "Test Product",
-                                              "Test Description");
+        ProductData dto = createMockProductDto("prod_123",
+                                               "Test Product",
+                                               "Test Description");
         when(productService.createProduct(dto)).thenReturn(Mono.just(product));
 
         webTestClient.mutateWith(mockJwt())
                 .post()
                 .uri("/api/payments/product")
                 .body(Mono.just(dto),
-                      CustomerDto.class)
+                      CustomerData.class)
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -125,17 +125,17 @@ public class ProductHandlerTests {
         Product product = createMockProduct("prod_123",
                                             "Test Product",
                                             "Test Description");
-        ProductDto dto = createMockProductDto("prod_456",
-                                              "Updated Test Product",
-                                              "Updated Test Description");
+        ProductData dto = createMockProductDto("prod_456",
+                                               "Updated Test Product",
+                                               "Updated Test Description");
         when(productService.updateProduct(anyString(),
-                                          any(ProductDto.class))).thenReturn(Mono.empty());
+                                          any(ProductData.class))).thenReturn(Mono.empty());
 
         webTestClient.mutateWith(mockJwt())
                 .put()
                 .uri("/api/payments/product/prod_123")
                 .body(Mono.just(dto),
-                      CustomerDto.class)
+                      CustomerData.class)
                 .exchange()
                 .expectStatus()
                 .isNoContent();
@@ -180,9 +180,9 @@ public class ProductHandlerTests {
         return product;
     }
 
-    private ProductDto createMockProductDto(String id, String name, String description) {
-        return new ProductDto(id,
-                              name,
-                              description);
+    private ProductData createMockProductDto(String id, String name, String description) {
+        return new ProductData(id,
+                               name,
+                               description);
     }
 }

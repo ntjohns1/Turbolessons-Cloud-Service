@@ -23,6 +23,4 @@ public class StripeService {
         }
     };
 
-    CustomerService service = new CustomerService(responseGetter);
-
 }

@@ -1,6 +1,6 @@
 package com.turbolessons.paymentservice.controller.price;
 
-import com.turbolessons.paymentservice.dto.PriceDTO;
+import com.turbolessons.paymentservice.dto.PriceData;
 import com.turbolessons.paymentservice.service.price.PricingService;
 import com.stripe.model.Price;
 import com.stripe.model.StripeCollection;
@@ -103,16 +103,16 @@ public class PriceHandlerTests {
                                       5000L,
                                       "Test Price",
                                       "Test Product");
-        PriceDTO dto = createMockPriceDto("test_key",
-                                          true);
-        when(pricingService.createPrice(any(PriceDTO.class)))
+        PriceData dto = createMockPriceDto("test_key",
+                                           true);
+        when(pricingService.createPrice(any(PriceData.class)))
                      .thenReturn(Mono.just(price));
 
         webTestClient.mutateWith(mockJwt())
                 .post()
                 .uri("/api/payments/price")
                 .body(Mono.just(dto),
-                      PriceDTO.class)
+                      PriceData.class)
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -126,16 +126,16 @@ public class PriceHandlerTests {
                                       5000L,
                                       "updated_key",
                                       "prod_123");
-        PriceDTO dto = createMockPriceDto("updated_key",
-                                          false);
+        PriceData dto = createMockPriceDto("updated_key",
+                                           false);
         when(pricingService.updatePrice(anyString(),
-                                        any(PriceDTO.class)))
+                                        any(PriceData.class)))
                      .thenReturn(Mono.empty());
         webTestClient.mutateWith(mockJwt())
                 .put()
                 .uri("/api/payments/price/price_123")
                 .body(Mono.just(dto),
-                      PriceDTO.class)
+                      PriceData.class)
                 .exchange()
                 .expectStatus()
                 .isNoContent();
@@ -153,14 +153,14 @@ public class PriceHandlerTests {
         return price;
     }
 
-    private PriceDTO createMockPriceDto(String lookupKey, Boolean isActive) {
-        return new PriceDTO("price_123",
-                                    5000L,
-                                    "usd",
-                                    lookupKey,
-                                    "prod_123",
-                                    isActive,
-                                    true);
+    private PriceData createMockPriceDto(String lookupKey, Boolean isActive) {
+        return new PriceData("price_123",
+                             5000L,
+                             "usd",
+                             lookupKey,
+                             "prod_123",
+                             isActive,
+                             true);
 
     }
 

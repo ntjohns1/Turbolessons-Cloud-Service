@@ -1,7 +1,7 @@
 package com.turbolessons.paymentservice.controller.product;
 
 import com.turbolessons.paymentservice.controller.BaseHandler;
-import com.turbolessons.paymentservice.dto.ProductDto;
+import com.turbolessons.paymentservice.dto.ProductData;
 import com.turbolessons.paymentservice.service.product.ProductService;
 import com.stripe.model.Product;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +39,7 @@ public class ProductHandlerImpl extends BaseHandler implements ProductHandler {
     public Mono<ServerResponse> create(ServerRequest r) {
         return handleCreate(r,
                             requestBody -> requestBody.flatMap(productService::createProduct),
-                            ProductDto.class,
+                            ProductData.class,
                             Product.class);
     }
 
@@ -50,7 +50,7 @@ public class ProductHandlerImpl extends BaseHandler implements ProductHandler {
                             (idParam, requestBody) -> requestBody.flatMap(dto -> this.productService.updateProduct(idParam,
                                                                                                                    dto)),
                             id,
-                            ProductDto.class);
+                            ProductData.class);
     }
 
     @Override

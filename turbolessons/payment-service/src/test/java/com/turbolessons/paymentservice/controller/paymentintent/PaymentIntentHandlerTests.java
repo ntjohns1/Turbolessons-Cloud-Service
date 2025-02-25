@@ -1,6 +1,6 @@
 package com.turbolessons.paymentservice.controller.paymentintent;
 
-import com.turbolessons.paymentservice.dto.PaymentIntentDto;
+import com.turbolessons.paymentservice.dto.PaymentIntentData;
 import com.turbolessons.paymentservice.service.paymentintent.PaymentIntentService;
 import com.stripe.model.PaymentIntent;
 import com.stripe.model.StripeCollection;
@@ -142,17 +142,17 @@ public class PaymentIntentHandlerTests {
                                                               "in_123",
                                                               "pm_123",
                                                               "processing");
-        PaymentIntentDto dto = createMockPaymentIntentDto(5000L,
-                                                          "cus_123",
-                                                          "Test PaymentIntent",
-                                                          "pm_123");
-        when(paymentIntentService.createPaymentIntent(any(PaymentIntentDto.class)))
+        PaymentIntentData dto = createMockPaymentIntentDto(5000L,
+                                                           "cus_123",
+                                                           "Test PaymentIntent",
+                                                           "pm_123");
+        when(paymentIntentService.createPaymentIntent(any(PaymentIntentData.class)))
                 .thenReturn(Mono.just(paymentIntent));
         webTestClient.mutateWith(mockJwt())
                 .post()
                 .uri("/api/payments/paymentintent")
                 .body(Mono.just(dto),
-                      PaymentIntentDto.class)
+                      PaymentIntentData.class)
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -182,18 +182,18 @@ public class PaymentIntentHandlerTests {
                                                               "in_123",
                                                               "pm_456",
                                                               "processing");
-        PaymentIntentDto updateData = createMockPaymentIntentDto(6000L,
-                                                                 "cus_456",
-                                                                 "Updated Test PaymentIntent",
-                                                                 "pm_456");
+        PaymentIntentData updateData = createMockPaymentIntentDto(6000L,
+                                                                  "cus_456",
+                                                                  "Updated Test PaymentIntent",
+                                                                  "pm_456");
 
-        when(paymentIntentService.updatePaymentIntent(anyString(), any(PaymentIntentDto.class)))
+        when(paymentIntentService.updatePaymentIntent(anyString(), any(PaymentIntentData.class)))
                 .thenReturn(Mono.empty());
 
         webTestClient.mutateWith(mockJwt())
                 .put()
                 .uri("/api/payments/paymentintent/pi_123")
-                .body(Mono.just(updateData), PaymentIntentDto.class)
+                .body(Mono.just(updateData), PaymentIntentData.class)
                 .exchange()
                 .expectStatus()
                 .isNoContent();
@@ -274,8 +274,8 @@ public class PaymentIntentHandlerTests {
         return paymentIntent;
     }
 
-    private PaymentIntentDto createMockPaymentIntentDto(Long amount, String customer, String description, String paymentMethod) {
-        PaymentIntentDto dto = Mockito.mock(PaymentIntentDto.class);
+    private PaymentIntentData createMockPaymentIntentDto(Long amount, String customer, String description, String paymentMethod) {
+        PaymentIntentData dto = Mockito.mock(PaymentIntentData.class);
 
         when(dto.getAmount()).thenReturn(amount);
         when(dto.getCurrency()).thenReturn("usd");

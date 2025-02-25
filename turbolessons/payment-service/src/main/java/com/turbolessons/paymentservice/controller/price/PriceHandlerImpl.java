@@ -1,7 +1,7 @@
 package com.turbolessons.paymentservice.controller.price;
 
 import com.turbolessons.paymentservice.controller.BaseHandler;
-import com.turbolessons.paymentservice.dto.PriceDTO;
+import com.turbolessons.paymentservice.dto.PriceData;
 import com.turbolessons.paymentservice.service.price.PricingService;
 import com.stripe.model.Price;
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +51,7 @@ public class PriceHandlerImpl extends BaseHandler implements PriceHandler {
 
         return handleCreate(r,
                             requestBody -> requestBody.flatMap(this.pricingService::createPrice),
-                            PriceDTO.class,
+                            PriceData.class,
                             Price.class);
     }
 
@@ -61,6 +61,6 @@ public class PriceHandlerImpl extends BaseHandler implements PriceHandler {
         return handleUpdate(r,
                             (idParam, requestBody) -> requestBody.flatMap(dto -> this.pricingService.updatePrice(idParam,dto)),
                             id,
-                            PriceDTO.class);
+                            PriceData.class);
     }
 }

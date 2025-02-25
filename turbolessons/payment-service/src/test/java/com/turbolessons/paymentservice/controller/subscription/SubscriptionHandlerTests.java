@@ -2,7 +2,7 @@ package com.turbolessons.paymentservice.controller.subscription;
 
 import com.stripe.model.StripeCollection;
 import com.stripe.model.Subscription;
-import com.turbolessons.paymentservice.dto.SubscriptionDto;
+import com.turbolessons.paymentservice.dto.SubscriptionData;
 import com.turbolessons.paymentservice.service.subscription.SubscriptionService;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +21,6 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -98,13 +97,13 @@ public class SubscriptionHandlerTests {
     @Test
     void shouldHandleCreateSubscription() {
         Subscription subscription = createMockSubscription();
-        SubscriptionDto data = createSubscriptionDto();
+        SubscriptionData data = createSubscriptionDto();
         when(subscriptionService.createSubscription(any())).thenReturn(Mono.just(data));
         webTestClient.mutateWith(mockJwt())
                 .post()
                 .uri("/api/payments/subscription")
                 .body(Mono.just(data),
-                      SubscriptionDto.class)
+                      SubscriptionData.class)
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -124,23 +123,23 @@ public class SubscriptionHandlerTests {
     @Test
     void shouldHandleUpdateSubscription() {
         Subscription subscription = createMockSubscription();
-        SubscriptionDto data = createSubscriptionDto();
+        SubscriptionData data = createSubscriptionDto();
         List<String> items = List.of("price_123",
                                      "price_234");
-        SubscriptionDto updateData = new SubscriptionDto("sub_123",
-                                                         "cust_123",
-                                                         items,
-                                                         true,
-                                                         12345678L,
-                                                         "pm_456");
+        SubscriptionData updateData = new SubscriptionData("sub_123",
+                                                           "cust_123",
+                                                           items,
+                                                           true,
+                                                           12345678L,
+                                                           "pm_456");
         when(subscriptionService.updateSubscription(anyString(),
-                                                    any(SubscriptionDto.class))).thenReturn(Mono.empty());
+                                                    any(SubscriptionData.class))).thenReturn(Mono.empty());
 
         webTestClient.mutateWith(mockJwt())
                 .put()
                 .uri("/api/payments/subscription/sub_123")
                 .body(Mono.just(updateData),
-                      SubscriptionDto.class)
+                      SubscriptionData.class)
                 .exchange()
                 .expectStatus()
                 .isNoContent();
@@ -185,14 +184,14 @@ public class SubscriptionHandlerTests {
         return subscription;
     }
 
-    private SubscriptionDto createSubscriptionDto() {
+    private SubscriptionData createSubscriptionDto() {
         List<String> items = List.of("price_123",
                                      "price_234");
-        return new SubscriptionDto("sub_123",
-                                   "cus_123",
-                                   items,
-                                   false,
-                                   12345678L,
-                                   "pm_123");
+        return new SubscriptionData("sub_123",
+                                    "cus_123",
+                                    items,
+                                    false,
+                                    12345678L,
+                                    "pm_123");
     }
 }

@@ -44,15 +44,6 @@ public abstract class BaseHandler {
                 .onErrorResume(this::handleError);
     }
 
-    protected <T, R> Mono<ServerResponse> handleCreatePaymentMethod(String id, Mono<T> requestBody, CreateParamRequestProcessor<String, T, R> processor, Class<R> responseBodyClass) {
-        return processor.process(id, requestBody)
-                .flatMap(responseBody -> ServerResponse.ok()
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .bodyValue(responseBody))
-                .switchIfEmpty(ServerResponse.notFound().build())
-                .onErrorResume(this::handleError);
-    }
-
     protected <T, R> Mono<ServerResponse> handleCreateWithParam(String id, Mono<T> requestBody, CreateParamRequestProcessor<String, T, R> processor, Class<R> responseBodyClass) {
         return processor.process(id, requestBody)
                 .flatMap(responseBody -> ServerResponse.ok()

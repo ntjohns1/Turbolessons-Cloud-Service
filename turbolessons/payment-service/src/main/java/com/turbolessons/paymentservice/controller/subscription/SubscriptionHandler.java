@@ -5,7 +5,6 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 public interface SubscriptionHandler {
-    //    @Override
     Mono<ServerResponse> listAll(ServerRequest r);
 
     Mono<ServerResponse> retrieve(ServerRequest r);
