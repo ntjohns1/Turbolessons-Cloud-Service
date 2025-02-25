@@ -1,6 +1,6 @@
 package com.turbolessons.paymentservice.service.price;
 
-import com.turbolessons.paymentservice.dto.PriceDTO;
+import com.turbolessons.paymentservice.dto.PriceData;
 import com.stripe.model.Price;
 import com.stripe.model.StripeCollection;
 import com.stripe.param.PriceCreateParams;
@@ -17,7 +17,7 @@ public interface PricingService {
 
     Mono<Price> createPrice(PriceCreateParams params);
 
-    Mono<Price> createPrice(PriceDTO priceDTO);
+    Mono<Price> createPrice(PriceData priceData);
 
-    Mono<Void> updatePrice(String id, PriceDTO priceDTO);
+    Mono<Void> updatePrice(String id, PriceData priceData);
 }

@@ -1,7 +1,6 @@
 package com.turbolessons.paymentservice.service.subscription;
 
-import com.turbolessons.paymentservice.dto.CustomerDto;
-import com.turbolessons.paymentservice.dto.SubscriptionDto;
+import com.turbolessons.paymentservice.dto.SubscriptionData;
 import com.stripe.model.StripeCollection;
 import com.stripe.model.StripeSearchResult;
 import com.stripe.model.Subscription;
@@ -18,10 +17,10 @@ public interface SubscriptionService {
     Mono<StripeSearchResult<Subscription>> getSubscriptionsByCustomer(String customerId);
 
     //    Create a Subscription
-    Mono<SubscriptionDto> createSubscription(SubscriptionDto subscriptionDto);
+    Mono<SubscriptionData> createSubscription(SubscriptionData subscriptionData);
 
     //    Update a Subscription
-    Mono<Void> updateSubscription(String id, SubscriptionDto subscriptionDto);
+    Mono<Void> updateSubscription(String id, SubscriptionData subscriptionData);
 
     //    Cancel a Subscription
     Mono<Void> cancelSubscription(String id);

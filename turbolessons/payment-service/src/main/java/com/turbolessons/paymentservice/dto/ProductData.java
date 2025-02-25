@@ -9,10 +9,9 @@ import lombok.*;
 @Setter
 @EqualsAndHashCode
 @ToString
-public class SetupIntentDto {
+public class ProductData {
 
     String id;
-    String customer;
-    String paymentMethod;
+    String name;
     String description;
 }

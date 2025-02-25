@@ -1,8 +1,7 @@
 package com.turbolessons.paymentservice.controller.customer;
 
-import com.stripe.model.Customer;
 import com.turbolessons.paymentservice.controller.BaseHandler;
-import com.turbolessons.paymentservice.dto.CustomerDto;
+import com.turbolessons.paymentservice.dto.CustomerData;
 import com.turbolessons.paymentservice.service.customer.CustomerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
@@ -34,21 +33,21 @@ public class CustomerHandlerImpl extends BaseHandler implements CustomerHandler 
     public Mono<ServerResponse> retrieve(ServerRequest r) {
         return handleRetrieve(r,
                               request -> this.customerService.retrieveCustomer(id(request)),
-                              CustomerDto.class);
+                              CustomerData.class);
     }
 
     public Mono<ServerResponse> search(ServerRequest r) {
         return handleRetrieve(r,
                               request -> this.customerService.searchCustomerBySystemId(id(request)),
-                              CustomerDto.class);
+                              CustomerData.class);
     }
 
     @Override
     public Mono<ServerResponse> create(ServerRequest r) {
         return handleCreate(r,
                             requestBody -> requestBody.flatMap(this.customerService::createCustomer),
-                            CustomerDto.class,
-                            CustomerDto.class);
+                            CustomerData.class,
+                            CustomerData.class);
     }
 
     @Override
@@ -58,7 +57,7 @@ public class CustomerHandlerImpl extends BaseHandler implements CustomerHandler 
                             (idParam, requestBody) -> requestBody.flatMap(dto -> this.customerService.updateCustomer(idParam,
                                                                                                                      dto)),
                             id,
-                            CustomerDto.class);
+                            CustomerData.class);
     }
 
 

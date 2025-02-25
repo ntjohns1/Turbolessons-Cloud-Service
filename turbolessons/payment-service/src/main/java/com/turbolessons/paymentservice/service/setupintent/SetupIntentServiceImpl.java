@@ -1,6 +1,6 @@
 package com.turbolessons.paymentservice.service.setupintent;
 
-import com.turbolessons.paymentservice.dto.SetupIntentDto;
+import com.turbolessons.paymentservice.dto.SetupIntentData;
 import com.turbolessons.paymentservice.service.StripeClientHelper;
 import com.stripe.StripeClient;
 import com.stripe.model.SetupIntent;
@@ -40,14 +40,14 @@ public class SetupIntentServiceImpl implements SetupIntentService {
 
     //    Create a SetupIntent
     @Override
-    public Mono<SetupIntent> createSetupIntent(SetupIntentDto setupIntentDto) {
+    public Mono<SetupIntent> createSetupIntent(SetupIntentData setupIntentData) {
         SetupIntentCreateParams params = SetupIntentCreateParams.builder()
                 .setAutomaticPaymentMethods(SetupIntentCreateParams.AutomaticPaymentMethods.builder()
                                                     .setEnabled(true)
                                                     .build())
-                .setCustomer(setupIntentDto.getCustomer())
-                .setPaymentMethod(setupIntentDto.getPaymentMethod())
-                .setDescription(setupIntentDto.getDescription())
+                .setCustomer(setupIntentData.getCustomer())
+                .setPaymentMethod(setupIntentData.getPaymentMethod())
+                .setDescription(setupIntentData.getDescription())
                 .build();
 
         return stripeClientHelper.executeStripeCall(() -> stripeClient.setupIntents()
@@ -64,11 +64,11 @@ public class SetupIntentServiceImpl implements SetupIntentService {
 
     //    Update a SetupIntent
     @Override
-    public Mono<Void> updateSetupIntent(String id, SetupIntentDto setupIntentDto) {
+    public Mono<Void> updateSetupIntent(String id, SetupIntentData setupIntentData) {
         SetupIntentUpdateParams params = SetupIntentUpdateParams.builder()
-                .setCustomer(setupIntentDto.getCustomer())
-                .setPaymentMethod(setupIntentDto.getPaymentMethod())
-                .setDescription(setupIntentDto.getDescription())
+                .setCustomer(setupIntentData.getCustomer())
+                .setPaymentMethod(setupIntentData.getPaymentMethod())
+                .setDescription(setupIntentData.getDescription())
                 .build();
 
         return stripeClientHelper.executeStripeVoidCall(() -> stripeClient.setupIntents()

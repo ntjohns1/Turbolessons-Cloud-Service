@@ -1,7 +1,7 @@
 package com.turbolessons.paymentservice.controller.setupintent;
 
 import com.turbolessons.paymentservice.controller.BaseHandler;
-import com.turbolessons.paymentservice.dto.SetupIntentDto;
+import com.turbolessons.paymentservice.dto.SetupIntentData;
 import com.turbolessons.paymentservice.service.setupintent.SetupIntentService;
 import com.stripe.model.SetupIntent;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +44,7 @@ public class SetupIntentHandlerImpl extends BaseHandler implements SetupIntentHa
     public Mono<ServerResponse> create(ServerRequest r) {
         return handleCreate(r,
                             requestBody -> requestBody.flatMap(this.setupIntentService::createSetupIntent),
-                            SetupIntentDto.class,
+                            SetupIntentData.class,
                             SetupIntent.class);
     }
 
@@ -66,7 +66,7 @@ public class SetupIntentHandlerImpl extends BaseHandler implements SetupIntentHa
                             ((idParam, requestBody) -> requestBody.flatMap(dto -> this.setupIntentService.updateSetupIntent(idParam,
                                                                                                                             dto))),
                             id,
-                            SetupIntentDto.class);
+                            SetupIntentData.class);
     }
 
     //    Cancel a SetupIntent

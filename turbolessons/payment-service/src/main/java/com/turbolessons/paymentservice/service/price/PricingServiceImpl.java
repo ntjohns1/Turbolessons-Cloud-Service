@@ -1,6 +1,6 @@
 package com.turbolessons.paymentservice.service.price;
 
-import com.turbolessons.paymentservice.dto.PriceDTO;
+import com.turbolessons.paymentservice.dto.PriceData;
 import com.turbolessons.paymentservice.service.StripeClientHelper;
 import com.stripe.StripeClient;
 import com.stripe.model.Price;
@@ -70,25 +70,25 @@ public class PricingServiceImpl implements PricingService {
     }
 
     @Override
-    public Mono<Price> createPrice(PriceDTO priceDTO) {
-        Boolean recurring = priceDTO.getIsRecurring();
+    public Mono<Price> createPrice(PriceData priceData) {
+        Boolean recurring = priceData.getIsRecurring();
         PriceCreateParams params;
         if (recurring) {
             params = PriceCreateParams.builder()
-                    .setUnitAmount(priceDTO.getUnitAmount())
-                    .setCurrency(priceDTO.getCurrency())
+                    .setUnitAmount(priceData.getUnitAmount())
+                    .setCurrency(priceData.getCurrency())
                     .setRecurring(PriceCreateParams.Recurring.builder()
                                           .setInterval(PriceCreateParams.Recurring.Interval.MONTH)
                                           .setIntervalCount(1L)
                                           .setUsageType(PriceCreateParams.Recurring.UsageType.METERED)
                                           .build())
-                    .setProduct(priceDTO.getProduct())
+                    .setProduct(priceData.getProduct())
                     .build();
         } else {
             params = PriceCreateParams.builder()
-                    .setUnitAmount(priceDTO.getUnitAmount())
-                    .setCurrency(priceDTO.getCurrency())
-                    .setProduct(priceDTO.getProduct())
+                    .setUnitAmount(priceData.getUnitAmount())
+                    .setCurrency(priceData.getCurrency())
+                    .setProduct(priceData.getProduct())
                     .build();
         }
 
@@ -97,10 +97,10 @@ public class PricingServiceImpl implements PricingService {
     }
 
     @Override
-    public Mono<Void> updatePrice(String id, PriceDTO priceDTO) {
+    public Mono<Void> updatePrice(String id, PriceData priceData) {
         PriceUpdateParams params = PriceUpdateParams.builder()
-                .setLookupKey(priceDTO.getLookupKey())
-                .setActive(priceDTO.getIsActive())
+                .setLookupKey(priceData.getLookupKey())
+                .setActive(priceData.getIsActive())
                 .build();
 
         return stripeClientHelper.executeStripeVoidCall(() -> stripeClient.prices()

@@ -3,7 +3,7 @@ package com.turbolessons.paymentservice.controller.customer;
 import com.stripe.model.Customer;
 import com.stripe.model.StripeCollection;
 import com.turbolessons.paymentservice.dto.Address;
-import com.turbolessons.paymentservice.dto.CustomerDto;
+import com.turbolessons.paymentservice.dto.CustomerData;
 import com.turbolessons.paymentservice.service.customer.CustomerService;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.BeforeEach;
@@ -73,7 +73,7 @@ public class CustomerHandlerTests {
 
     @Test
     void shouldHandleRetrieveCustomer() {
-        CustomerDto customer = createCustomerDto();
+        CustomerData customer = createCustomerDto();
         when(customerService.retrieveCustomer(anyString())).thenReturn(Mono.just(customer));
         webTestClient.get()
                 .uri("/api/payments/customer/cus_123")
@@ -91,7 +91,7 @@ public class CustomerHandlerTests {
 
     @Test
     void shouldHandleSearchBySystemId() {
-        CustomerDto customer = createCustomerDto();
+        CustomerData customer = createCustomerDto();
         Map<String, String> metadata = new HashMap<>();
         metadata.put("okta_id",
                      "00u75cn4yauHU7bl55d7");
@@ -114,14 +114,14 @@ public class CustomerHandlerTests {
 
     @Test
     void shouldHandleCreateCustomer() {
-        CustomerDto data = createCustomerDto();
+        CustomerData data = createCustomerDto();
         when(customerService.createCustomer(any())).thenReturn(Mono.just(data));
 
         webTestClient.mutateWith(mockJwt())
                 .post()
                 .uri("/api/payments/customer")
                 .body(Mono.just(data),
-                      CustomerDto.class)
+                      CustomerData.class)
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -138,7 +138,7 @@ public class CustomerHandlerTests {
     void shouldHandleUpdateCustomer() {
         Customer customer = createMockCustomer("email@example.com",
                                                "Claudia Coulthard");
-        CustomerDto data = createCustomerDto();
+        CustomerData data = createCustomerDto();
         Address address = new Address();
         address.setCity("Columbus");
         address.setState("OH");
@@ -148,13 +148,13 @@ public class CustomerHandlerTests {
         address.setPostalCode("45678");
 
         when(customerService.updateCustomer(anyString(),
-                                            any(CustomerDto.class))).thenReturn(Mono.empty());
+                                            any(CustomerData.class))).thenReturn(Mono.empty());
 
         webTestClient.mutateWith(mockJwt())
                 .put()
                 .uri("/api/payments/customer/cus_123")
                 .body(Mono.just(data),
-                      CustomerDto.class)
+                      CustomerData.class)
                 .exchange()
                 .expectStatus()
                 .isNoContent();
@@ -198,7 +198,7 @@ public class CustomerHandlerTests {
     }
 
 
-    private CustomerDto createCustomerDto() {
+    private CustomerData createCustomerDto() {
         Map<String, String> metadata = new HashMap<>();
         metadata.put("okta_id",
                      "00u75cn4yauHU7bl55d7");
@@ -213,16 +213,16 @@ public class CustomerHandlerTests {
 
         List<String> subscriptions = List.of("sub_123");
 
-        return new CustomerDto("cus_123",
-                               address,
-                               "email@example.com",
-                               "Claudia Coulthard",
-                               "1234567890",
-                               "pm_789",
-                               "Test DTO",
-                               metadata,
-                               subscriptions
-                               // Add subscriptions
+        return new CustomerData("cus_123",
+                                address,
+                                "email@example.com",
+                                "Claudia Coulthard",
+                                "1234567890",
+                                "pm_789",
+                                "Test DTO",
+                                metadata,
+                                subscriptions
+                                // Add subscriptions
         );
     }
 };

@@ -1,7 +1,7 @@
 package com.turbolessons.paymentservice.controller.setupintent;
 
 
-import com.turbolessons.paymentservice.dto.SetupIntentDto;
+import com.turbolessons.paymentservice.dto.SetupIntentData;
 import com.turbolessons.paymentservice.service.setupintent.SetupIntentService;
 import com.stripe.model.SetupIntent;
 import com.stripe.model.StripeCollection;
@@ -101,13 +101,13 @@ public class SetupIntentHandlerTests {
         SetupIntent setupIntent = createMockSetupIntent("si_123",
                                                         "cus_123",
                                                         "pm_456");
-        SetupIntentDto dto = createMockSetupIntentDto("Test Description");
-        when(setupIntentService.createSetupIntent(any(SetupIntentDto.class)))
+        SetupIntentData dto = createMockSetupIntentDto("Test Description");
+        when(setupIntentService.createSetupIntent(any(SetupIntentData.class)))
                      .thenReturn(Mono.just(setupIntent));
         webTestClient.mutateWith(mockJwt())
                 .post()
                 .uri("/api/payments/setupintent")
-                .body(Mono.just(dto), SetupIntentDto.class)
+                .body(Mono.just(dto), SetupIntentData.class)
                 .exchange()
                 .expectStatus()
                 .isOk()
@@ -144,10 +144,10 @@ public class SetupIntentHandlerTests {
         SetupIntent setupIntent = createMockSetupIntent("si_123",
                                                         "cus_123",
                                                         "pm_456");
-        SetupIntentDto dto = createMockSetupIntentDto("Updated Test Description");
+        SetupIntentData dto = createMockSetupIntentDto("Updated Test Description");
 
         when(setupIntentService.updateSetupIntent(anyString(),
-                                                  any(SetupIntentDto.class))).thenReturn(Mono.empty());
+                                                  any(SetupIntentData.class))).thenReturn(Mono.empty());
         webTestClient.mutateWith(mockJwt())
                 .put()
                 .uri("/api/payments/setupintent/si_123")
@@ -193,10 +193,10 @@ public class SetupIntentHandlerTests {
         return setupIntent;
     }
 
-    private SetupIntentDto createMockSetupIntentDto(String description) {
-        return new SetupIntentDto("si_123",
-                                  "cus_123",
-                                  "pm_456",
-                                  description);
+    private SetupIntentData createMockSetupIntentDto(String description) {
+        return new SetupIntentData("si_123",
+                                   "cus_123",
+                                   "pm_456",
+                                   description);
     }
 }
