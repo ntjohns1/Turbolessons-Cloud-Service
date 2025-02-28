@@ -65,8 +65,8 @@ public class MeterServiceImpl implements MeterService {
     @Override
     public Mono<MeterData> createMeter(MeterData meterData) {
         MeterCreateParams params = MeterCreateParams.builder()
-                .setDisplayName(meterData.displayName())
-                .setEventName(meterData.eventName())
+                .setDisplayName(meterData.display_name())
+                .setEventName(meterData.event_name())
                 .setDefaultAggregation(MeterCreateParams.DefaultAggregation.builder()
                                                .setFormula(MeterCreateParams.DefaultAggregation.Formula.COUNT)
                                                .build())
@@ -87,7 +87,7 @@ public class MeterServiceImpl implements MeterService {
     @Override
     public Mono<Void> updateMeter(String id, MeterData meterData) {
         MeterUpdateParams params = MeterUpdateParams.builder()
-                .setDisplayName(meterData.displayName())
+                .setDisplayName(meterData.display_name())
                 .build();
 
         return stripeClientHelper.executeStripeVoidCall(() -> stripeClient.billing()
