@@ -26,6 +26,7 @@ public class LessonEvent implements Serializable {
     private String comments;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private BillingStatus billingStatus;
 
     public LessonEvent() {
