@@ -25,6 +25,9 @@ public class LessonEvent implements Serializable {
     private LocalDate date;
     private String comments;
 
+    @Enumerated(EnumType.STRING)
+    private BillingStatus billingStatus;
+
     public LessonEvent() {
     }
 
@@ -38,6 +41,7 @@ public class LessonEvent implements Serializable {
         this.teacherEmail = teacherEmail;
         this.date = startTime.toLocalDate();
         this.comments = comments;
+        this.billingStatus = BillingStatus.UNLOGGED;
     }
 
     public Integer getId() {
@@ -121,6 +125,15 @@ public class LessonEvent implements Serializable {
         this.comments = comments;
     }
 
+    public BillingStatus getBillingStatus() {
+        return billingStatus;
+    }
+
+    public LessonEvent setBillingStatus(BillingStatus billingStatus) {
+        this.billingStatus = billingStatus;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -146,8 +159,9 @@ public class LessonEvent implements Serializable {
                             that.teacherEmail)) return false;
         if (!Objects.equals(date,
                             that.date)) return false;
-        return Objects.equals(comments,
-                              that.comments);
+        if (!Objects.equals(comments,
+                            that.comments)) return false;
+        return billingStatus == that.billingStatus;
     }
 
     @Override
@@ -162,11 +176,12 @@ public class LessonEvent implements Serializable {
         result = 31 * result + (teacherEmail != null ? teacherEmail.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (comments != null ? comments.hashCode() : 0);
+        result = 31 * result + (billingStatus != null ? billingStatus.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "LessonEvent{" + "id=" + id + ", startTime=" + startTime + ", endTime=" + endTime + ", title='" + title + '\'' + ", student='" + student + '\'' + ", studentEmail='" + studentEmail + '\'' + ", teacher='" + teacher + '\'' + ", teacherEmail='" + teacherEmail + '\'' + ", date=" + date + ", comments='" + comments + '\'' + '}';
+        return "LessonEvent{" + "id=" + id + ", startTime=" + startTime + ", endTime=" + endTime + ", title='" + title + '\'' + ", student='" + student + '\'' + ", studentEmail='" + studentEmail + '\'' + ", teacher='" + teacher + '\'' + ", teacherEmail='" + teacherEmail + '\'' + ", date=" + date + ", comments='" + comments + '\'' + ", billingStatus=" + billingStatus + '}';
     }
 }
