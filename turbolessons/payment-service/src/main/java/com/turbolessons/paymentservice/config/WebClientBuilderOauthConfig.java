@@ -1,4 +1,4 @@
-package com.turbolessons.emailservice.config;
+package com.turbolessons.paymentservice.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +13,7 @@ import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
-public class WebClientBuilderOAuthConfig {
+public class WebClientBuilderOauthConfig {
 
     @Bean
     ReactiveClientRegistrationRepository clientRegistrations(@Value("${spring.security.oauth2.client.provider.okta.token-uri}") String token_uri, @Value("${spring.security.oauth2.client.registration.okta.client-id}") String client_id, @Value("${spring.security.oauth2.client.registration.okta.client-secret}") String client_secret, @Value("${spring.security.oauth2.client.registration.okta.scope}") String scope, @Value("${spring.security.oauth2.client.registration.okta.authorization-grant-type}") String authorizationGrantType) {
@@ -38,4 +38,3 @@ public class WebClientBuilderOAuthConfig {
                 .filter(oauth);
     }
 }
-
