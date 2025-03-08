@@ -18,10 +18,12 @@ public class SecurityConfig {
                 // CSRF configuration
                 .csrf(csrf -> csrf.csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse()))
                 // Authorization configuration
-                .authorizeExchange(auth -> auth.pathMatchers("/unbilled/**")
-                        .hasAuthority("SCOPE_lesson.read")
-                        .anyExchange()
+                .authorizeExchange(auth -> auth.anyExchange()
                         .authenticated())
+//                .authorizeExchange(auth -> auth.pathMatchers("/unbilled/**")
+//                        .hasAuthority("SCOPE_lesson.read")
+//                        .anyExchange()
+//                        .authenticated())
                 // OAuth2 login configuration
                 .oauth2Login(withDefaults())
                 // OAuth2 resource server configuration
