@@ -29,6 +29,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="admin-service" options="-parameters" />
       <module name="api-gateway" options="-parameters" />
+      <module name="api-tests" options="-parameters" />
       <module name="config-service" options="-parameters" />
       <module name="email-service" options="-parameters" />
       <module name="event-service" options="-parameters" />
