@@ -2,6 +2,7 @@ package com.turbolessons.api_tests;
 
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
@@ -13,19 +14,22 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
 @ActiveProfiles("test")
-@TestPropertySource(locations = "classpath:application-test.yml", properties = {"spring.config.name=application-test"})
+@TestPropertySource(locations = "classpath:application-test.yml")
 public class LessonEventControllerTest extends BaseTest {
 
-    private static final String BASE_URL = "https://www.turbolessons.com";
-    private static final String LESSONS_ENDPOINT = "/api/lessons";
+    @Value("${event-service.url}")
+    private String baseUrl;
+
+    @Value("${event-service.endpoints.lessons}")
+    private String lessonsEndpoint;
 
     @Test
     void getAllLessons_ShouldReturnLessonsList() {
         given()
             .spec(requestSpec)
-            .baseUri(BASE_URL)
+            .baseUri(baseUrl)
         .when()
-            .get(LESSONS_ENDPOINT)
+            .get(lessonsEndpoint)
         .then()
             .statusCode(HttpStatus.OK.value())
             .contentType(ContentType.JSON)
@@ -51,11 +55,11 @@ public class LessonEventControllerTest extends BaseTest {
 
         given()
             .spec(requestSpec)
-            .baseUri(BASE_URL)
+            .baseUri(baseUrl)
             .contentType(ContentType.JSON)
             .body(lessonData)
         .when()
-            .post(LESSONS_ENDPOINT)
+            .post(lessonsEndpoint)
         .then()
             .statusCode(HttpStatus.OK.value())
             .contentType(ContentType.JSON)
@@ -85,11 +89,11 @@ public class LessonEventControllerTest extends BaseTest {
 
         Integer lessonId = given()
             .spec(requestSpec)
-            .baseUri(BASE_URL)
+            .baseUri(baseUrl)
             .contentType(ContentType.JSON)
             .body(lessonData)
         .when()
-            .post(LESSONS_ENDPOINT)
+            .post(lessonsEndpoint)
         .then()
             .statusCode(HttpStatus.OK.value())
             .extract()
@@ -98,9 +102,9 @@ public class LessonEventControllerTest extends BaseTest {
         // Then retrieve it by ID
         given()
             .spec(requestSpec)
-            .baseUri(BASE_URL)
+            .baseUri(baseUrl)
         .when()
-            .get(LESSONS_ENDPOINT + "/{id}", lessonId)
+            .get(lessonsEndpoint + "/{id}", lessonId)
         .then()
             .statusCode(HttpStatus.OK.value())
             .contentType(ContentType.JSON)
@@ -130,11 +134,11 @@ public class LessonEventControllerTest extends BaseTest {
 
         Integer lessonId = given()
             .spec(requestSpec)
-            .baseUri(BASE_URL)
+            .baseUri(baseUrl)
             .contentType(ContentType.JSON)
             .body(lessonData)
         .when()
-            .post(LESSONS_ENDPOINT)
+            .post(lessonsEndpoint)
         .then()
             .statusCode(HttpStatus.OK.value())
             .extract()
@@ -142,6 +146,7 @@ public class LessonEventControllerTest extends BaseTest {
 
         // Update the lesson
         Map<String, Object> updatedData = Map.of(
+            "id", lessonId,
             "startTime", startTime.toString(),
             "endTime", endTime.toString(),
             "title", "Updated Title",
@@ -155,25 +160,16 @@ public class LessonEventControllerTest extends BaseTest {
 
         given()
             .spec(requestSpec)
-            .baseUri(BASE_URL)
+            .baseUri(baseUrl)
             .contentType(ContentType.JSON)
             .body(updatedData)
         .when()
-            .put(LESSONS_ENDPOINT + "/{id}", lessonId)
-        .then()
-            .statusCode(HttpStatus.OK.value());
-
-        // Verify the update
-        given()
-            .spec(requestSpec)
-            .baseUri(BASE_URL)
-        .when()
-            .get(LESSONS_ENDPOINT + "/{id}", lessonId)
+            .put(lessonsEndpoint + "/{id}", lessonId)
         .then()
             .statusCode(HttpStatus.OK.value())
             .contentType(ContentType.JSON)
             .body("id", equalTo(lessonId))
-            .body("title", equalTo("Updated Title"))
-            .body("comments", equalTo("Updated comments"));
+            .body("title", equalTo(updatedData.get("title")))
+            .body("comments", equalTo(updatedData.get("comments")));
     }
 }

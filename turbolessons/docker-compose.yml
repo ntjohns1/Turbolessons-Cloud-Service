@@ -1,4 +1,3 @@
-version: "3.9"
 networks:
   turbolessons_cloud_service_net:
   email-service_net:
@@ -10,13 +9,20 @@ services:
     container_name: config-service
     env_file:
       - ./root.env
-    volumes:
+    volumes: 
       - ./keystores/config.p12:/config/config.p12
       - config_keystore:/config
     ports:
       - "9999:9999"
     networks:
       - turbolessons_cloud_service_net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://noslen:sBy7J_3pAHABdrw@localhost:9999/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
   service-registry:
     image: noslenj/service-registry:latest
     container_name: service-registry
@@ -26,6 +32,16 @@ services:
       - "8761:8761"
     networks:
       - turbolessons_cloud_service_net
+    depends_on:
+      config-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
   admin-service:
     image: noslenj/admin-service:latest
     container_name: admin-service
@@ -35,8 +51,12 @@ services:
       - "5002:5002"
     networks:
       - turbolessons_cloud_service_net
+    depends_on:
+      service-registry:
+        condition: service_healthy
+
   email-service:
-    image:  noslenj/email-service:latest
+    image: noslenj/email-service:latest
     container_name: email-service
     env_file:
       - ./root.env
@@ -49,7 +69,11 @@ services:
       - turbolessons_cloud_service_net
       - email-service_net
     depends_on:
-      - emaildb
+      emaildb:
+        condition: service_started
+      service-registry:
+        condition: service_healthy
+
   emaildb:
     image: mongo:latest
     container_name: emaildb
@@ -60,6 +84,7 @@ services:
     networks:
       - turbolessons_cloud_service_net
       - email-service_net
+
   event-service:
     image: noslenj/event-service:latest
     container_name: event-service
@@ -72,6 +97,10 @@ services:
     networks:
       - turbolessons_cloud_service_net
       - event-service_net
+    depends_on:
+      service-registry:
+        condition: service_healthy
+
   lessondb:
     image: noslenj/lessondb:latest
     container_name: lessondb
@@ -85,6 +114,7 @@ services:
     networks:
       - turbolessons_cloud_service_net
       - event-service_net
+
   message-service:
     image: noslenj/message-service:latest
     container_name: message-service
@@ -96,7 +126,11 @@ services:
       - turbolessons_cloud_service_net
       - message-service_net
     depends_on:
-      - messagedb
+      messagedb:
+        condition: service_started
+      service-registry:
+        condition: service_healthy
+
   messagedb:
     image: mongo:latest
     container_name: messagedb
@@ -110,6 +144,7 @@ services:
     networks:
       - turbolessons_cloud_service_net
       - message-service_net
+
   video-service:
     image: noslenj/video-service:latest
     container_name: video-service
@@ -121,6 +156,10 @@ services:
       - "5004:5004"
     networks:
       - turbolessons_cloud_service_net
+    depends_on:
+      service-registry:
+        condition: service_healthy
+
   api-gateway:
     image: noslenj/api-gateway:latest
     container_name: api-gateway
@@ -130,6 +169,10 @@ services:
       - "8080:8080"
     networks:
       - turbolessons_cloud_service_net
+    depends_on:
+      service-registry:
+        condition: service_healthy
+
   payment-service:
     image: noslenj/payment-service:latest
     container_name: payment-service
@@ -139,6 +182,10 @@ services:
       - "5010:5010"
     networks:
       - turbolessons_cloud_service_net
+    depends_on:
+      service-registry:
+        condition: service_healthy
+
   turbolessons-frontend:
     image: noslenj/turbolessons-frontend:latest
     container_name: turbolessons-frontend
@@ -155,19 +202,11 @@ services:
       - ./ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
     networks:
       - turbolessons_cloud_service_net
+    depends_on:
+      service-registry:
+        condition: service_healthy
 volumes:
   emaildb_data:
   lessondb_data:
   messagedb_data:
   config_keystore:
-
-
-  # certbot:
-  #   image: certbot/certbot
-  #   container_name: certbot
-  #   volumes:
-  #     - ~/letsencrypt/etc:/etc/letsencrypt
-  #     - ~/letsencrypt/lib:/var/lib/letsencrypt
-  #     - ~/letsencrypt/log:/var/log/letsencrypt
-  #     - ~/letsencrypt/www:/var/www/certbot
-  #   entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $!; done;'"

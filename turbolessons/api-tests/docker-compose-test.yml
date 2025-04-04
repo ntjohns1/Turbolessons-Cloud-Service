@@ -1,0 +1,114 @@
+networks:
+  turbolessons_cloud_service_net:
+  email-service_net:
+  event-service_net:
+  message-service_net:
+services:
+  admin-service:
+    image: noslenj/admin-service:test
+    container_name: admin-service-test
+    env_file:
+      - /Users/noslen/DevProjects/turbolessons_scripts/root-test.env
+    environment:
+      SPRING_PROFILES_ACTIVE: test
+    ports:
+      - "5002:5002"
+    networks:
+      - turbolessons_cloud_service_net
+
+  email-service:
+    image: noslenj/email-service:test
+    container_name: email-service-test
+    env_file:
+      - /Users/noslen/DevProjects/turbolessons_scripts/root-test.env
+    environment:
+      SPRING_PROFILES_ACTIVE: test
+    ports:
+      - "5003:5003"
+    networks:
+      - turbolessons_cloud_service_net
+      - email-service_net
+
+  message-service:
+    image: noslenj/message-service:test
+    container_name: message-service-test
+    env_file:
+      - /Users/noslen/DevProjects/turbolessons_scripts/root-test.env
+    environment:
+      SPRING_PROFILES_ACTIVE: test
+    ports:
+      - "5005:5005"
+    networks:
+      - turbolessons_cloud_service_net
+      - message-service_net
+
+  event-service:
+    image: noslenj/event-service:test
+    container_name: event-service-test
+    env_file:
+      - /Users/noslen/DevProjects/turbolessons_scripts/root-test.env
+    environment:
+      # Use integration profile for Docker environment
+      SPRING_PROFILES_ACTIVE: integration
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      OKTA_ISSUER: ${OKTA_ISSUER}
+      OKTA_CLIENT_ID: ${OKTA_CLIENT_ID}
+      OKTA_CLIENT_SECRET: ${OKTA_CLIENT_SECRET}
+    ports:
+      - "5001:5001"
+    networks:
+      - turbolessons_cloud_service_net
+      - event-service_net
+    depends_on:
+      lessondb:
+        condition: service_healthy
+
+  payment-service:
+    image: noslenj/payment-service:test
+    container_name: payment-service-test
+    env_file:
+      - /Users/noslen/DevProjects/turbolessons_scripts/root-test.env
+    environment:
+      SPRING_PROFILES_ACTIVE: test
+    ports:
+      - "5004:5004"
+    networks:
+      - turbolessons_cloud_service_net
+
+  api-gateway:
+    image: noslenj/api-gateway:test
+    container_name: api-gateway-test
+    env_file:
+      - /Users/noslen/DevProjects/turbolessons_scripts/root-test.env
+    environment:
+      SPRING_PROFILES_ACTIVE: test
+    ports:
+      - "8080:8080"
+    networks:
+      - turbolessons_cloud_service_net
+
+  lessondb:
+    image: noslenj/lessondb:latest
+    container_name: lessondb
+    env_file:
+      - /Users/noslen/DevProjects/turbolessons_scripts/root-test.env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: lessondb
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "5051:3306"
+    volumes:
+      - ~/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - lessondb_data:/var/lib/mysql
+    networks:
+      - turbolessons_cloud_service_net
+      - event-service_net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
