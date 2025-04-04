@@ -3,15 +3,15 @@
 echo "Performing a clean Maven build"
 ./mvnw clean package -DskipTests=true
 
-echo "Building the config server"
-cd config-service
-docker build -t noslenj/config-service:com-turbolessons-config-service .
-cd ..
+# echo "Building the config server"
+# cd config-service
+# docker build -t noslenj/config-service:com-turbolessons-config-service .
+# cd ..
 
-echo "Building the service registry"
-cd service-registry
-docker build -t noslenj/service-registry:com-turbolessons-service-registry .
-cd ..
+# echo "Building the service registry"
+# cd service-registry
+# docker build -t noslenj/service-registry:com-turbolessons-service-registry .
+# cd ..
 
 echo "Building admin-service"
 cd admin-service
