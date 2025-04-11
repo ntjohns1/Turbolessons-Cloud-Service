@@ -3,6 +3,11 @@
 echo "Performing a clean Maven build"
 ./mvnw clean package -DskipTests=true
 
+ echo "Building the service registry"
+ cd service-registry
+ docker build -t noslenj/service-registry:test .
+ cd ..
+
 echo "Building admin-service"
 cd admin-service
 docker build -t noslenj/admin-service:test .
@@ -29,10 +34,10 @@ cd message-service
 docker build -t noslenj/message-service:test .
 cd ..
 
-echo "Building payment-service"
-cd payment-service
-docker build -t noslenj/payment-service:test .
-cd ..
+#echo "Building payment-service"
+#cd payment-service
+#docker build -t noslenj/payment-service:test .
+#cd ..
 
 echo "Building video-service"
 cd video-service

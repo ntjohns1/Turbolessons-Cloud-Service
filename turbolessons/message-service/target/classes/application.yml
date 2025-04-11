@@ -15,6 +15,6 @@ spring:
       username: ${CONFIG_USERNAME}
       password: ${CONFIG_PASSWORD}
   config:
-    import: configserver:http://config-service:9999/
+    import: optional:configserver:http://config-service:9999/
 
 
