@@ -17,7 +17,7 @@ services:
     networks:
       - turbolessons_cloud_service_net
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://noslen:sBy7J_3pAHABdrw@localhost:9999/actuator/health"]
+      test: ["CMD", "curl", "-f", "${CONFIG_ACTUATOR_URI}"]
       interval: 10s
       timeout: 5s
       retries: 5
