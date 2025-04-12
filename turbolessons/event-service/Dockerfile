@@ -12,4 +12,11 @@ RUN mvn -f /home/app/pom.xml clean package -DskipTests
 FROM openjdk:17
 COPY --from=build /home/app/target/event-service-0.0.1-SNAPSHOT.jar /usr/local/lib/event-service.jar
 EXPOSE 5001
-ENTRYPOINT ["java","-jar","/usr/local/lib/event-service.jar"]
+
+# Set default profile to default if not specified
+ENV SPRING_PROFILES_ACTIVE=default
+
+ENTRYPOINT ["java", \
+            "-Djdk.internal.platform.useContainer=false", \
+            "-jar", "/usr/local/lib/event-service.jar", \
+            "--spring.profiles.active=${SPRING_PROFILES_ACTIVE}"]

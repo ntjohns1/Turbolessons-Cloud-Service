@@ -23,6 +23,7 @@
         <module>message-service</module>
         <module>video-service</module>
         <module>payment-service</module>
+        <module>api-tests</module>
     </modules>
 
 </project>

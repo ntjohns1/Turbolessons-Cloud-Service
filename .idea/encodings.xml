@@ -5,6 +5,8 @@
     <file url="file://$PROJECT_DIR$/turbolessons/admin-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/turbolessons/api-gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/turbolessons/api-gateway/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/turbolessons/api-tests/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/turbolessons/api-tests/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/turbolessons/config-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/turbolessons/config-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/turbolessons/email-service/src/main/java" charset="UTF-8" />
@@ -20,6 +22,8 @@
     <file url="file://$PROJECT_DIR$/turbolessons/service-registry/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/turbolessons/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/turbolessons/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/turbolessons/ui-tests/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/turbolessons/ui-tests/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/turbolessons/video-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/turbolessons/video-service/src/main/resources" charset="UTF-8" />
   </component>
