@@ -5,12 +5,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Entity
-@Table(name = "lesson_event")
 public class LessonEvent implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private LocalDateTime startTime;
@@ -24,8 +20,6 @@ public class LessonEvent implements Serializable {
     private LocalDate date;
     private String comments;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private BillingStatus billingStatus;
 
     public LessonEvent() {
