@@ -75,6 +75,7 @@ public class LessonEventController {
         fromService.setTeacher(lesson.getTeacher());
         fromService.setTeacherEmail(lesson.getTeacherEmail());
         fromService.setComments(lesson.getComments());
+        fromService.setBillingStatus(lesson.getBillingStatus());
         service.saveLessonEvent(fromService);
     }
     //Delete Lesson Event
