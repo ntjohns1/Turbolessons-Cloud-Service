@@ -13,6 +13,9 @@ spring:
   mongodb:
     embedded:
       version: 4.4.16
+  data:
+    mongodb:
+      port: 27018
 eureka:
   client:
     enabled: false
