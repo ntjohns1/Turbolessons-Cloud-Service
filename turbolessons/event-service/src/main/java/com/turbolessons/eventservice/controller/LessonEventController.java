@@ -20,7 +20,7 @@ public class LessonEventController {
     }
 
     //Get All Lesson Events
-    @PreAuthorize("hasAuthority('SCOPE_email_client')")
+    @PreAuthorize("hasAnyAuthority('SCOPE_email_client', 'SCOPE_stripe_client')")
     @GetMapping("/api/lessons")
     public List<LessonEvent> getAllLessons() {
 
@@ -45,7 +45,7 @@ public class LessonEventController {
         return service.findLessonEventsByStudent(student);
     }
     //Get Lesson Events By Date
-    @PreAuthorize("hasAuthority('SCOPE_email_client')")
+    @PreAuthorize("hasAnyAuthority('SCOPE_email_client', 'SCOPE_stripe_client')")
     @GetMapping("/api/lessons/date/{date}")
     public List<LessonEvent> getLessonsByDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return service.findLessonEventsByDate(date);
@@ -64,6 +64,7 @@ public class LessonEventController {
         return lesson;
     }
     //Update Lesson Event
+    @PreAuthorize("hasAuthority('SCOPE_stripe_client')")
     @PutMapping("/api/lessons/{id}")
     public void updateLesson(@PathVariable Integer id, @RequestBody LessonEvent lesson) {
         LessonEvent fromService = service.findLessonEvent(id);
