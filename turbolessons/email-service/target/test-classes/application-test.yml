@@ -15,7 +15,7 @@ spring:
       uri: mongodb://localhost:12345/test
   mongodb:
     embedded:
-      version: 4.4.0
+      version: 4.4.16
   mail:
     host: smtp.gmail.com
     username: nelsontjohns@gmail.com
