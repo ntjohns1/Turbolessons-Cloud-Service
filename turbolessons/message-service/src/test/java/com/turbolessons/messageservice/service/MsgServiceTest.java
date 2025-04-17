@@ -24,30 +24,19 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 
 @Log4j2
-@DataMongoTest
-@Import(MsgService.class)
-@ActiveProfiles("test")
-@TestPropertySource(
-        locations = "classpath:application-test.yml",
-        properties = { "spring.config.name=application-test" }
-)
 public class MsgServiceTest {
 
     private MsgService service;
     private MsgRepo repository;
 
-    private final ApplicationEventPublisher publisher;
-
-    public MsgServiceTest(@Autowired MsgService service, @Autowired MsgRepo repository,@Autowired ApplicationEventPublisher publisher) {
-        this.service = service;
-        this.repository = repository;
-        this.publisher = publisher;
-    }
+    private ApplicationEventPublisher publisher;
 
     @BeforeEach
-    public void setUp() throws Exception {
+    public void setUp() {
+        repository = mock(MsgRepo.class);
+        publisher = mock(ApplicationEventPublisher.class);
+        service = new MsgService(publisher, repository);
         setUpMsgRepositoryMock();
-        service = new MsgService(publisher,repository);
     }
 
     @Test
@@ -151,7 +140,6 @@ public class MsgServiceTest {
     }
 
     private void setUpMsgRepositoryMock() {
-        repository = mock(MsgRepo.class);
         final String time = new SimpleDateFormat("dd-MM-yy HH:mm").format(new Date());
 
         String testSender = "bholiday";
@@ -174,6 +162,8 @@ public class MsgServiceTest {
         Mockito.when(this.repository.findBySenderAndRecipient(testSender,testRecipient)).thenReturn(msgBySenderReceiverFlux);
         Mockito.when(this.repository.save(any())).thenReturn(Mono.just(msg5));
         Mockito.when(this.repository.deleteById(anyString())).thenReturn(Mono.empty());
+
+        Mockito.doNothing().when(publisher).publishEvent(any());
     }
 
 }
