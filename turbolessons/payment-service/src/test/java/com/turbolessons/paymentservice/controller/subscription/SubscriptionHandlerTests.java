@@ -96,7 +96,6 @@ public class SubscriptionHandlerTests {
 
     @Test
     void shouldHandleCreateSubscription() {
-        Subscription subscription = createMockSubscription();
         SubscriptionData data = createSubscriptionDto();
         when(subscriptionService.createSubscription(any())).thenReturn(Mono.just(data));
         webTestClient.mutateWith(mockJwt())
@@ -122,8 +121,6 @@ public class SubscriptionHandlerTests {
 
     @Test
     void shouldHandleUpdateSubscription() {
-        Subscription subscription = createMockSubscription();
-        SubscriptionData data = createSubscriptionDto();
         List<String> items = List.of("price_123",
                                      "price_234");
         SubscriptionData updateData = new SubscriptionData("sub_123",

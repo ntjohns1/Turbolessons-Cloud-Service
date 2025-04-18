@@ -1,4 +1,5 @@
 HELP.md
+turbolessons/payment-service/target
 target/
 .idea/workspace.xml
 !.mvn/wrapper/maven-wrapper.jar

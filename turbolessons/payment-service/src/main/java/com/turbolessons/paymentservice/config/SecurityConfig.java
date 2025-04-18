@@ -15,20 +15,12 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         return http
-                // CSRF configuration
                 .csrf(csrf -> csrf.csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse()))
-                // Authorization configuration
-                .authorizeExchange(auth -> auth.anyExchange()
-                        .authenticated())
-//                .authorizeExchange(auth -> auth.pathMatchers("/unbilled/**")
-//                        .hasAuthority("SCOPE_lesson.read")
-//                        .anyExchange()
-//                        .authenticated())
-                // OAuth2 login configuration
-                .oauth2Login(withDefaults())
-                // OAuth2 resource server configuration
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(withDefaults()))
+                .authorizeExchange(auth -> auth
+                        .pathMatchers("/api/payments/invoice/**").hasAuthority("SCOPE_stripe_client")
+                        .anyExchange().authenticated())
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .jwt(withDefaults()))
                 .build();
     }
 }
-

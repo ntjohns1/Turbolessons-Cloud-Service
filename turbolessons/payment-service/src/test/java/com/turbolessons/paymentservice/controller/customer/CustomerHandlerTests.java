@@ -136,16 +136,7 @@ public class CustomerHandlerTests {
 
     @Test
     void shouldHandleUpdateCustomer() {
-        Customer customer = createMockCustomer("email@example.com",
-                                               "Claudia Coulthard");
         CustomerData data = createCustomerDto();
-        Address address = new Address();
-        address.setCity("Columbus");
-        address.setState("OH");
-        address.setCountry("US");
-        address.setLine1("456 Blake St.");
-        address.setLine2("");
-        address.setPostalCode("45678");
 
         when(customerService.updateCustomer(anyString(),
                                             any(CustomerData.class))).thenReturn(Mono.empty());
@@ -158,7 +149,6 @@ public class CustomerHandlerTests {
                 .exchange()
                 .expectStatus()
                 .isNoContent();
-
     }
 
     @Test
@@ -226,4 +216,3 @@ public class CustomerHandlerTests {
         );
     }
 };
-

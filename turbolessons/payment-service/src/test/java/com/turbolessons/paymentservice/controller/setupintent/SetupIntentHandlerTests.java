@@ -141,11 +141,6 @@ public class SetupIntentHandlerTests {
     @Test
     void shouldUpdateSetupIntent() {
 
-        SetupIntent setupIntent = createMockSetupIntent("si_123",
-                                                        "cus_123",
-                                                        "pm_456");
-        SetupIntentData dto = createMockSetupIntentDto("Updated Test Description");
-
         when(setupIntentService.updateSetupIntent(anyString(),
                                                   any(SetupIntentData.class))).thenReturn(Mono.empty());
         webTestClient.mutateWith(mockJwt())
