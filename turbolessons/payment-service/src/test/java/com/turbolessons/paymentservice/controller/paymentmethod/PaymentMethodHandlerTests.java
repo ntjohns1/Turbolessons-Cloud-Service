@@ -23,7 +23,6 @@ import reactor.core.publisher.Mono;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.mockJwt;
@@ -90,8 +89,6 @@ public class PaymentMethodHandlerTests {
     @Test
     void shouldAttachPaymentMethod() {
 
-        PaymentMethod paymentMethod = createMockBankPaymentMethod("cus_123");
-
         when(paymentMethodService.attachPaymentMethod(anyString(),anyString())).thenReturn(Mono.empty());
 
         webTestClient.mutateWith(mockJwt())
@@ -104,7 +101,6 @@ public class PaymentMethodHandlerTests {
 
     @Test
     void shouldDetachPaymentMethod() {
-        PaymentMethod paymentMethod = createMockBankPaymentMethod("cus_123");
 
         when(paymentMethodService.detachPaymentMethod(anyString())).thenReturn(Mono.empty());
 

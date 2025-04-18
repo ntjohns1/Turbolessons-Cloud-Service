@@ -1,7 +1,5 @@
 package com.turbolessons.paymentservice.service.invoice;
 
-import com.stripe.model.InvoiceLineItem;
-import com.stripe.model.StripeCollection;
 import com.turbolessons.paymentservice.dto.InvoiceData;
 import com.turbolessons.paymentservice.dto.LineItemData;
 import reactor.core.publisher.Mono;

@@ -1,7 +1,5 @@
 package com.turbolessons.paymentservice.service.meter;
 
-import com.stripe.model.StripeCollection;
-import com.stripe.model.billing.Meter;
 import com.turbolessons.paymentservice.dto.MeterData;
 import com.turbolessons.paymentservice.dto.MeterEventData;
 import reactor.core.publisher.Mono;

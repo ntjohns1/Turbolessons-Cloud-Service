@@ -122,10 +122,6 @@ public class PriceHandlerTests {
     @Test
     void shouldUpdatePrice() {
 
-        Price price = createMockPrice("price_123",
-                                      5000L,
-                                      "updated_key",
-                                      "prod_123");
         PriceData dto = createMockPriceDto("updated_key",
                                            false);
         when(pricingService.updatePrice(anyString(),
