@@ -27,6 +27,9 @@ jobs:
         run: |
           mvn test -DOKTA_API_SERVICES_ID=${{ secrets.OKTA_API_SERVICES_ID }} \
           -DOKTA_API_SERVICES_SECRET=${{ secrets.OKTA_API_SERVICES_SECRET }} \
+          -DOKTA_ISSUER=${{ secrets.OKTA_ISSUER }} \
+          -DOKTA_CLIENT_ID=${{ secrets.OKTA_CLIENT_ID }} \
+          -DOKTA_CLIENT_SECRET=${{ secrets.OKTA_CLIENT_SECRET }} \
           -DSTRIPE_PUBLIC_KEY=${{ secrets.STRIPE_PUBLIC_KEY }} \
           -DSTRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }}
 
