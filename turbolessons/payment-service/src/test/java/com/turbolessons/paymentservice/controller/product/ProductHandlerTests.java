@@ -122,9 +122,6 @@ public class ProductHandlerTests {
 
     @Test
     void shouldHandleUpdateProduct() {
-        Product product = createMockProduct("prod_123",
-                                            "Test Product",
-                                            "Test Description");
         ProductData dto = createMockProductDto("prod_456",
                                                "Updated Test Product",
                                                "Updated Test Description");

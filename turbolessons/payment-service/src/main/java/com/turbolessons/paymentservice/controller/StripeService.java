@@ -3,7 +3,6 @@ package com.turbolessons.paymentservice.controller;
 import com.stripe.exception.StripeException;
 import com.stripe.model.StripeObjectInterface;
 import com.stripe.net.*;
-import com.stripe.service.CustomerService;
 
 import java.io.InputStream;
 import java.lang.reflect.Type;

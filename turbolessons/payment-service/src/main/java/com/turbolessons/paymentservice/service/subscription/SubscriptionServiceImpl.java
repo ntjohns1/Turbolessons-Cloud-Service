@@ -10,8 +10,6 @@ import com.stripe.param.SubscriptionSearchParams;
 import com.stripe.param.SubscriptionUpdateParams;
 import com.turbolessons.paymentservice.dto.SubscriptionData;
 import com.turbolessons.paymentservice.service.StripeClientHelper;
-import com.turbolessons.paymentservice.service.customer.CustomerService;
-import com.turbolessons.paymentservice.service.price.PricingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -26,14 +24,10 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     private final StripeClient stripeClient;
 
     private final StripeClientHelper stripeClientHelper;
-    private final CustomerService customerService;
-    private final PricingService pricingService;
 
-    public SubscriptionServiceImpl(StripeClient stripeClient, StripeClientHelper stripeClientHelper, CustomerService customerService, PricingService pricingService) {
+    public SubscriptionServiceImpl(StripeClient stripeClient, StripeClientHelper stripeClientHelper) {
         this.stripeClient = stripeClient;
         this.stripeClientHelper = stripeClientHelper;
-        this.customerService = customerService;
-        this.pricingService = pricingService;
     }
 
     private SubscriptionData mapSubscriptionToDto(Subscription subscription) {

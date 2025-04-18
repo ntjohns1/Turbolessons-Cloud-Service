@@ -15,7 +15,6 @@ public class PricingServiceImpl implements PricingService {
 
     private final StripeClient stripeClient;
     private final StripeClientHelper stripeClientHelper;
-    private Mono<Price> standardRateMono;
 
     public PricingServiceImpl(StripeClient stripeClient, StripeClientHelper stripeClientHelper) {
         this.stripeClient = stripeClient;

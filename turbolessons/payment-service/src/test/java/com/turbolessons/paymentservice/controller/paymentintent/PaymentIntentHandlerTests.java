@@ -175,13 +175,6 @@ public class PaymentIntentHandlerTests {
 
     @Test
     void shouldHandleUpdatePaymentIntent() {
-        PaymentIntent paymentIntent = createMockPaymentIntent("pi_123",
-                                                              6000L,
-                                                              "cus_456",
-                                                              "Updated Test PaymentIntent",
-                                                              "in_123",
-                                                              "pm_456",
-                                                              "processing");
         PaymentIntentData updateData = createMockPaymentIntentDto(6000L,
                                                                   "cus_456",
                                                                   "Updated Test PaymentIntent",
