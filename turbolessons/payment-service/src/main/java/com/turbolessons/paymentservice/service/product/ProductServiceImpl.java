@@ -56,7 +56,7 @@ public class ProductServiceImpl implements ProductService {
                 .build();
 
         return stripeClientHelper.executeStripeVoidCall(() -> stripeClient.products()
-                .update(id));
+                .update(id, params));
     }
 
     @Override

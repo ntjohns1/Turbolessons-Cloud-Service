@@ -1,5 +1,6 @@
-package com.turbolessons.paymentservice.dto;
+package com.turbolessons.eventservice.dto;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

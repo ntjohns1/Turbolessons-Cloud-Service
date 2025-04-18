@@ -10,12 +10,12 @@ spring:
       enabled: false
     config:
       enabled: false
-  data:
-    mongodb:
-      uri: mongodb://localhost:12345/test
   mongodb:
     embedded:
-      version: 4.4.0
+      version: 4.4.16
+  data:
+    mongodb:
+      port: 27018
 eureka:
   client:
     enabled: false
