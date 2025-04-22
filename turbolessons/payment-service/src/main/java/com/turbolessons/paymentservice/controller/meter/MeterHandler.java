@@ -6,7 +6,6 @@ import reactor.core.publisher.Mono;
 
 public interface MeterHandler {
 
-
     Mono<ServerResponse> listAll(ServerRequest r);
     Mono<ServerResponse> retrieve(ServerRequest r);
     Mono<ServerResponse> create(ServerRequest r);
@@ -14,7 +13,9 @@ public interface MeterHandler {
     Mono<ServerResponse> deactivate(ServerRequest r);
     Mono<ServerResponse> reactivate(ServerRequest r);
     Mono<ServerResponse> createEvent(ServerRequest r);
-
-
-
+    
+    // Debug endpoints
+    Mono<ServerResponse> getEvents(ServerRequest r);
+    Mono<ServerResponse> processLessons(ServerRequest r);
+    Mono<ServerResponse> ping(ServerRequest r);
 }
