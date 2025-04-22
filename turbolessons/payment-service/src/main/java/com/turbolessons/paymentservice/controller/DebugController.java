@@ -6,6 +6,7 @@ import com.turbolessons.paymentservice.util.EventServiceClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/debug")
+@Profile("!test") // Don't load this controller in test profile
 public class DebugController {
 
     private static final Logger log = LoggerFactory.getLogger(DebugController.class);
