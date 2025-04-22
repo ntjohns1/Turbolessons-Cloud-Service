@@ -18,7 +18,7 @@ import reactor.core.publisher.Flux;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/api/debug")
+@RequestMapping("/api/payments/debug")
 @Profile("!test") // Don't load this controller in test profile
 public class DebugController {
 
