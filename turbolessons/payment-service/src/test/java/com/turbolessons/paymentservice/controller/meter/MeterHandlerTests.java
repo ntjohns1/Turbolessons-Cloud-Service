@@ -1,8 +1,12 @@
 package com.turbolessons.paymentservice.controller.meter;
 
+import com.turbolessons.paymentservice.dto.BillingStatus;
+import com.turbolessons.paymentservice.dto.LessonEvent;
 import com.turbolessons.paymentservice.dto.MeterData;
 import com.turbolessons.paymentservice.dto.MeterEventData;
+import com.turbolessons.paymentservice.service.meter.LessonMeterEventService;
 import com.turbolessons.paymentservice.service.meter.MeterService;
+import com.turbolessons.paymentservice.util.EventServiceClient;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,8 +20,11 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -35,6 +42,12 @@ public class MeterHandlerTests {
 
     @MockBean
     private MeterService meterService;
+    
+    @MockBean
+    private EventServiceClient eventServiceClient;
+    
+    @MockBean
+    private LessonMeterEventService lessonMeterEventService;
 
     @Autowired
     private WebTestClient webTestClient;
@@ -73,15 +86,14 @@ public class MeterHandlerTests {
                 .exchange()
                 .expectStatus()
                 .isOk()
-                .expectBody()
-                .jsonPath("$.id")
-                .isEqualTo("mtr_123");
+                .expectBody(MeterData.class)
+                .isEqualTo(meter);
     }
 
     @Test
     public void shouldHandleCreateMeter() {
         MeterData meter = createMeterDto("mtr_123");
-        when(meterService.createMeter(any())).thenReturn(Mono.just(meter));
+        when(meterService.createMeter(any(MeterData.class))).thenReturn(Mono.just(meter));
 
         webTestClient.mutateWith(mockJwt())
                 .post()
@@ -91,16 +103,15 @@ public class MeterHandlerTests {
                 .exchange()
                 .expectStatus()
                 .isOk()
-                .expectBody()
-                .jsonPath("$.id")
-                .isEqualTo("mtr_123");
+                .expectBody(MeterData.class)
+                .isEqualTo(meter);
     }
 
     @Test
     public void shouldHandleUpdateMeter() {
         MeterData meter = createMeterDto("mtr_123");
         when(meterService.updateMeter(anyString(),
-                                      any())).thenReturn(Mono.empty());
+                                      any(MeterData.class))).thenReturn(Mono.empty());
 
         webTestClient.mutateWith(mockJwt())
                 .post()
@@ -138,8 +149,8 @@ public class MeterHandlerTests {
 
     @Test
     public void shouldHandleCreateMeterEvent() {
-        MeterEventData meterEvent = createMeterEventDto("mtr_123");
-        when(meterService.createMeterEvent(any())).thenReturn(Mono.just(meterEvent));
+        MeterEventData meterEvent = createMeterEventDto();
+        when(meterService.createMeterEvent(any(MeterEventData.class))).thenReturn(Mono.just(meterEvent));
 
         webTestClient.mutateWith(mockJwt())
                 .post()
@@ -148,21 +159,77 @@ public class MeterHandlerTests {
                       MeterEventData.class)
                 .exchange()
                 .expectStatus()
-                .isOk();
+                .isOk()
+                .expectBody(MeterEventData.class)
+                .isEqualTo(meterEvent);
 
     }
 
+    // Tests for debug endpoints
+    @Test
+    public void shouldHandlePing() {
+        webTestClient.get()
+                .uri("/api/payments/debug/ping")
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBody()
+                .jsonPath("$.status").isEqualTo("ok")
+                .jsonPath("$.message").isEqualTo("Payment service debug endpoint is working")
+                .jsonPath("$.timestamp").isNotEmpty();
+    }
+    
+    @Test
+    public void shouldHandleGetEvents() {
+        // Mock the EventServiceClient response
+        when(eventServiceClient.getEvents(any(LocalDate.class)))
+                .thenReturn(Flux.just(createLessonEvent(1), createLessonEvent(2)));
+        
+        webTestClient.get()
+                .uri("/api/payments/debug/events")
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBody()
+                .jsonPath("$[0].id").isEqualTo(1)
+                .jsonPath("$[1].id").isEqualTo(2);
+    }
+    
+    @Test
+    public void shouldHandleProcessLessons() {
+        // No need to mock anything as we're just testing the endpoint
+        webTestClient.get()
+                .uri("/api/payments/debug/process-lessons")
+                .exchange()
+                .expectStatus()
+                .isOk()
+                .expectBody()
+                .jsonPath("$.status").isEqualTo("success")
+                .jsonPath("$.message").isEqualTo("Process completed lessons triggered successfully");
+    }
+    
     // Helper methods to create mock MeterData and MeterEventData
     private MeterData createMeterDto(String id) {
         return new MeterData(id,
-                             "Lesson Meter",
-                             "lesson_123");
+                             "Test Meter",
+                             "lesson.completed");
     }
 
-    private MeterEventData createMeterEventDto(String meterId) {
-        return new MeterEventData(meterId,
-                                  "lesson_123",
+    private MeterEventData createMeterEventDto() {
+        return new MeterEventData("evt_123",
+                                  "lesson.completed",
                                   "cus_123",
                                   "50");
+    }
+    
+    // Helper method to create LessonEvent objects for testing
+    private LessonEvent createLessonEvent(int id) {
+        LessonEvent event = new LessonEvent();
+        event.setId(id);
+        event.setStudentEmail("student" + id + "@example.com");
+        event.setStartTime(LocalDateTime.now().minusDays(1));
+        event.setEndTime(LocalDateTime.now().minusHours(1));
+        event.setBillingStatus(BillingStatus.UNLOGGED);
+        return event;
     }
 }

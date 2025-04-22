@@ -10,6 +10,8 @@ spring:
       enabled: false
     config:
       enabled: false
+      fail-fast: false # Don't fail if config server is not available
+      import: optional:configserver:http://config-service:9999/ # Make config server optional
   security:
     oauth2:
       resourceserver:
@@ -35,5 +37,5 @@ okta:
     issuer: ${OKTA_ISSUER}
     client-id: ${OKTA_CLIENT_ID}
     client-secret: ${OKTA_CLIENT_SECRET}
-STRIPE_PUBLIC_KEY: ${STRIPE_TEST_PUBLISHABLE_KEY}
-STRIPE_SECRET_KEY: ${STRIPE_TEST_SECRET_KEY}
+STRIPE_PUBLIC_KEY: ${STRIPE_PUBLIC_KEY}
+STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY}

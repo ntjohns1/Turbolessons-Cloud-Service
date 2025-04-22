@@ -25,6 +25,10 @@ public class MeterEndpointConfig {
                 .andRoute(POST("/api/payments/meter/{id}"), handler::update)
                 .andRoute(POST("/api/payments/meter/{id}/deactivate"), handler::deactivate)
                 .andRoute(POST("/api/payments/meter/{id}/reactivate"), handler::reactivate)
-                .andRoute(POST("/api/payments/meter_event"), handler::createEvent);
+                .andRoute(POST("/api/payments/meter_event"), handler::createEvent)
+                // Debug endpoints
+                .andRoute(GET("/api/payments/debug/events"), handler::getEvents)
+                .andRoute(GET("/api/payments/debug/process-lessons"), handler::processLessons)
+                .andRoute(GET("/api/payments/debug/ping"), handler::ping);
     }
 }
