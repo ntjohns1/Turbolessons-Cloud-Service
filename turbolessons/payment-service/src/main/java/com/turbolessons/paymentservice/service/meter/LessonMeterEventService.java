@@ -24,17 +24,21 @@ public class LessonMeterEventService {
         this.meterService = meterService;
     }
 
-    @Scheduled(cron = "0 0 23 * * *") // Run at 11 PM every day
+    @Scheduled(cron = "0 */5 * * * *") // Run every 5 minutes for debugging (was: 0 0 23 * * *)
     public void processCompletedLessons() {
-        log.info("Starting daily lesson meter event processing");
+        log.info("Starting lesson meter event processing");
         LocalDate today = LocalDate.now();
         
         eventServiceClient.getEvents(today)
+            .doOnSubscribe(s -> log.info("Subscribing to event stream for date: {}", today))
+            .doOnError(error -> log.error("Error in event stream subscription: {}", error.getMessage(), error))
             .filter(this::isUnloggedCompletedLesson)
+            .doOnNext(lesson -> log.info("Found unlogged completed lesson: {}", lesson.getId()))
             .flatMap(this::createMeterEventForLesson)
             .subscribe(
                 success -> log.info("Successfully processed lesson meter event"),
-                error -> log.error("Error processing lesson meter event", error)
+                error -> log.error("Error processing lesson meter event", error),
+                () -> log.info("Completed processing all lesson meter events")
             );
     }
 
