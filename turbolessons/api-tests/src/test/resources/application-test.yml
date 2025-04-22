@@ -34,6 +34,14 @@ event-service:
   endpoints:
     lessons: /api/lessons
 
+# Test-specific configuration for payment-service
+payment-service:
+  url: http://localhost:5010  # Use the direct port instead of going through gateway
+  endpoints:
+    meter: /api/payments/meter
+    meter_event: /api/payments/meter_event
+    debug: /api/payments/debug
+
 # Database configuration for event-service (if needed)
 spring.datasource:
   url: jdbc:postgresql://localhost:5432/lessondb
