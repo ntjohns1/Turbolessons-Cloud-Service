@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
+import jakarta.annotation.PostConstruct;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/payments/debug")
@@ -31,6 +35,21 @@ public class DebugController {
     public DebugController(EventServiceClient eventServiceClient, LessonMeterEventService lessonMeterEventService) {
         this.eventServiceClient = eventServiceClient;
         this.lessonMeterEventService = lessonMeterEventService;
+    }
+    
+    @PostConstruct
+    public void init() {
+        log.info("DebugController initialized with endpoints: /api/payments/debug/events, /api/payments/debug/process-lessons and /api/payments/debug/ping");
+    }
+    
+    @GetMapping("/ping")
+    public Mono<Map<String, Object>> ping() {
+        log.info("Debug endpoint: Ping received");
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "ok");
+        response.put("message", "Payment service debug endpoint is working");
+        response.put("timestamp", System.currentTimeMillis());
+        return Mono.just(response);
     }
     
     @GetMapping("/events")
