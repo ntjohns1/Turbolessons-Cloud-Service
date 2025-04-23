@@ -24,7 +24,7 @@ public class LessonMeterEventService {
         this.meterService = meterService;
     }
 
-    @Scheduled(cron = "0 */5 * * * *") // Run every 5 minutes for debugging (was: 0 0 23 * * *)
+    @Scheduled(cron ="0 0 23 * * *")
     public void processCompletedLessons() {
         log.info("Starting lesson meter event processing");
         LocalDate today = LocalDate.now();
@@ -54,8 +54,8 @@ public class LessonMeterEventService {
         MeterEventData meterEventData = new MeterEventData(
             identifier,
             "lesson.completed",
-            lesson.getStudentEmail(), // Assuming student email is their Stripe customer ID
-            "1" // Each lesson counts as 1 unit
+            lesson.getStudentEmail(),
+            "1"
         );
 
         return meterService.createMeterEvent(meterEventData)
