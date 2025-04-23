@@ -34,10 +34,10 @@ cd message-service
 docker build -t noslenj/message-service:test .
 cd ..
 
-#echo "Building payment-service"
-#cd payment-service
-#docker build -t noslenj/payment-service:test .
-#cd ..
+echo "Building payment-service"
+cd payment-service
+docker build -t noslenj/payment-service:test .
+cd ..
 
 echo "Building video-service"
 cd video-service

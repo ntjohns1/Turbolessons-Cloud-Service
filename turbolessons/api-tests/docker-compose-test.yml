@@ -83,7 +83,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: integration
     ports:
-      - "5004:5004"
+      - "5010:5010"
     networks:
       - turbolessons_cloud_service_net
 
@@ -97,7 +97,7 @@ services:
     volumes:
       - /Users/noslen/DevProjects/google-cloud:/gcs
     ports:
-      - "5010:5010"
+      - "5004:5004"
     networks:
       - turbolessons_cloud_service_net
 
