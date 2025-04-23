@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
 
@@ -171,5 +172,188 @@ public class LessonEventControllerTest extends BaseTest {
             .body("id", equalTo(lessonId))
             .body("title", equalTo(updatedData.get("title")))
             .body("comments", equalTo(updatedData.get("comments")));
+    }
+    
+    @Test
+    void getLessonsByBillingStatus_ShouldReturnFilteredLessons() {
+        // First create a lesson with LOGGED status
+        LocalDateTime startTime = LocalDateTime.now().plusDays(1);
+        LocalDateTime endTime = startTime.plusHours(1);
+
+        Map<String, Object> lessonData = Map.of(
+            "startTime", startTime.toString(),
+            "endTime", endTime.toString(),
+            "title", "Billable Lesson",
+            "student", "Test Student",
+            "studentEmail", "test.student@example.com",
+            "teacher", "Test Teacher",
+            "teacherEmail", "test.teacher@example.com",
+            "comments", "This lesson should be billed",
+            "billingStatus", "LOGGED"
+        );
+
+        given()
+            .spec(requestSpec)
+            .baseUri(baseUrl)
+            .contentType(ContentType.JSON)
+            .body(lessonData)
+        .when()
+            .post(lessonsEndpoint)
+        .then()
+            .statusCode(HttpStatus.OK.value());
+
+        // Query lessons by billing status
+        given()
+            .spec(requestSpec)
+            .baseUri(baseUrl)
+        .when()
+            .get(lessonsEndpoint + "/billing/LOGGED")
+        .then()
+            .statusCode(HttpStatus.OK.value())
+            .contentType(ContentType.JSON)
+            .body("$", hasSize(greaterThanOrEqualTo(1)))
+            .body("find { it.billingStatus == 'LOGGED' }", notNullValue());
+    }
+    
+    @Test
+    void getLessonsByTeacherAndBillingStatus_ShouldReturnFilteredLessons() {
+        // First create a lesson with specific teacher and LOGGED status
+        LocalDateTime startTime = LocalDateTime.now().plusDays(1);
+        LocalDateTime endTime = startTime.plusHours(1);
+        String teacher = "TeacherForBilling";
+
+        Map<String, Object> lessonData = Map.of(
+            "startTime", startTime.toString(),
+            "endTime", endTime.toString(),
+            "title", "Teacher Billing Test",
+            "student", "Test Student",
+            "studentEmail", "test.student@example.com",
+            "teacher", teacher,
+            "teacherEmail", "teacher.billing@example.com",
+            "comments", "This lesson should be billed for specific teacher",
+            "billingStatus", "LOGGED"
+        );
+
+        given()
+            .spec(requestSpec)
+            .baseUri(baseUrl)
+            .contentType(ContentType.JSON)
+            .body(lessonData)
+        .when()
+            .post(lessonsEndpoint)
+        .then()
+            .statusCode(HttpStatus.OK.value());
+
+        // Query lessons by teacher and billing status
+        given()
+            .spec(requestSpec)
+            .baseUri(baseUrl)
+        .when()
+            .get(lessonsEndpoint + "/teacher/{teacher}/billing/{status}", teacher, "LOGGED")
+        .then()
+            .statusCode(HttpStatus.OK.value())
+            .contentType(ContentType.JSON)
+            .body("$", hasSize(greaterThanOrEqualTo(1)))
+            .body("find { it.teacher == '" + teacher + "' && it.billingStatus == 'LOGGED' }", notNullValue());
+    }
+    
+    @Test
+    void getLessonsByDateRangeAndBillingStatus_ShouldReturnFilteredLessons() {
+        // First create a lesson with specific date and LOGGED status
+        LocalDateTime startTime = LocalDateTime.now().plusDays(1);
+        LocalDateTime endTime = startTime.plusHours(1);
+        LocalDate lessonDate = startTime.toLocalDate();
+        
+        Map<String, Object> lessonData = Map.of(
+            "startTime", startTime.toString(),
+            "endTime", endTime.toString(),
+            "title", "Date Range Billing Test",
+            "student", "Test Student",
+            "studentEmail", "test.student@example.com",
+            "teacher", "Test Teacher",
+            "teacherEmail", "teacher@example.com",
+            "comments", "This lesson should be found in date range query",
+            "billingStatus", "LOGGED"
+        );
+
+        given()
+            .spec(requestSpec)
+            .baseUri(baseUrl)
+            .contentType(ContentType.JSON)
+            .body(lessonData)
+        .when()
+            .post(lessonsEndpoint)
+        .then()
+            .statusCode(HttpStatus.OK.value());
+
+        // Query lessons by date range and billing status
+        LocalDate startDate = lessonDate.minusDays(1);
+        LocalDate endDate = lessonDate.plusDays(1);
+        
+        given()
+            .spec(requestSpec)
+            .baseUri(baseUrl)
+            .queryParam("startDate", startDate.toString())
+            .queryParam("endDate", endDate.toString())
+        .when()
+            .get(lessonsEndpoint + "/billing/{status}/daterange", "LOGGED")
+        .then()
+            .statusCode(HttpStatus.OK.value())
+            .contentType(ContentType.JSON)
+            .body("$", hasSize(greaterThanOrEqualTo(1)))
+            .body("find { it.billingStatus == 'LOGGED' }", notNullValue());
+    }
+    
+    @Test
+    void updateLessonBillingStatus_ShouldUpdateOnlyBillingStatus() {
+        // First create a lesson with UNLOGGED status
+        LocalDateTime startTime = LocalDateTime.now().plusDays(1);
+        LocalDateTime endTime = startTime.plusHours(1);
+
+        Map<String, Object> lessonData = Map.of(
+            "startTime", startTime.toString(),
+            "endTime", endTime.toString(),
+            "title", "Billing Status Update Test",
+            "student", "Test Student",
+            "studentEmail", "test.student@example.com",
+            "teacher", "Test Teacher",
+            "teacherEmail", "teacher@example.com",
+            "comments", "This lesson's billing status will be updated",
+            "billingStatus", "UNLOGGED"
+        );
+
+        Integer lessonId = given()
+            .spec(requestSpec)
+            .baseUri(baseUrl)
+            .contentType(ContentType.JSON)
+            .body(lessonData)
+        .when()
+            .post(lessonsEndpoint)
+        .then()
+            .statusCode(HttpStatus.OK.value())
+            .extract()
+            .path("id");
+
+        // Update just the billing status
+        given()
+            .spec(requestSpec)
+            .baseUri(baseUrl)
+        .when()
+            .patch(lessonsEndpoint + "/{id}/billing/{status}", lessonId, "LOGGED")
+        .then()
+            .statusCode(HttpStatus.OK.value());
+            
+        // Verify the billing status was updated
+        given()
+            .spec(requestSpec)
+            .baseUri(baseUrl)
+        .when()
+            .get(lessonsEndpoint + "/{id}", lessonId)
+        .then()
+            .statusCode(HttpStatus.OK.value())
+            .contentType(ContentType.JSON)
+            .body("id", equalTo(lessonId))
+            .body("title", equalTo(lessonData.get("title")))
+            .body("billingStatus", equalTo("LOGGED"));
     }
 }
