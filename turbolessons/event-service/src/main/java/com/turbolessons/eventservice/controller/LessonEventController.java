@@ -1,6 +1,6 @@
 package com.turbolessons.eventservice.controller;
 
-
+import com.turbolessons.eventservice.dto.BillingStatus;
 import com.turbolessons.eventservice.dto.LessonEvent;
 import com.turbolessons.eventservice.service.LessonEventService;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -56,6 +56,42 @@ public class LessonEventController {
     public List<LessonEvent> getLessonsByTeacherAndDate(@PathVariable String teacher, @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         return service.findLessonEventsByTeacherAndDate(teacher, date);
     }
+    
+    //Get Lesson Events By Billing Status
+    @PreAuthorize("hasAuthority('SCOPE_stripe_client')")
+    @GetMapping("/api/lessons/billing/{status}")
+    public List<LessonEvent> getLessonsByBillingStatus(@PathVariable BillingStatus status) {
+        return service.findLessonEventsByBillingStatus(status);
+    }
+    
+    //Get Lesson Events By Teacher and Billing Status
+    @PreAuthorize("hasAuthority('SCOPE_stripe_client')")
+    @GetMapping("/api/lessons/teacher/{teacher}/billing/{status}")
+    public List<LessonEvent> getLessonsByTeacherAndBillingStatus(
+            @PathVariable String teacher, 
+            @PathVariable BillingStatus status) {
+        return service.findLessonEventsByTeacherAndBillingStatus(teacher, status);
+    }
+    
+    //Get Lesson Events By Date Range and Billing Status
+    @PreAuthorize("hasAuthority('SCOPE_stripe_client')")
+    @GetMapping("/api/lessons/billing/{status}/daterange")
+    public List<LessonEvent> getLessonsByDateRangeAndBillingStatus(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+            @PathVariable BillingStatus status) {
+        return service.findLessonEventsByDateRangeAndBillingStatus(startDate, endDate, status);
+    }
+    
+    //Update Lesson Event Billing Status
+    @PreAuthorize("hasAuthority('SCOPE_stripe_client')")
+    @PatchMapping("/api/lessons/{id}/billing/{status}")
+    public void updateLessonBillingStatus(
+            @PathVariable Integer id, 
+            @PathVariable BillingStatus status) {
+        service.updateLessonEventBillingStatus(id, status);
+    }
+    
     //Create Lesson Event
     @PostMapping("/api/lessons")
     public LessonEvent createLesson(@RequestBody LessonEvent lesson) {
@@ -86,4 +122,3 @@ public class LessonEventController {
         service.deleteLessonEvent(id);
     }
 }
-

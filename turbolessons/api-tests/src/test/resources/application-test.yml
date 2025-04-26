@@ -42,13 +42,6 @@ payment-service:
     meter_event: /api/payments/meter_event
     debug: /api/payments/debug
 
-# Database configuration for event-service (if needed)
-spring.datasource:
-  url: jdbc:postgresql://localhost:5432/lessondb
-  username: ${POSTGRES_USER}
-  password: ${POSTGRES_PASSWORD}
-  driver-class-name: org.postgresql.Driver
-
 spring.jpa:
   hibernate:
     ddl-auto: create-drop  # Use create-drop for tests to start with a clean slate
