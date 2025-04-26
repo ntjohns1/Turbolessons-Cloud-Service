@@ -23,9 +23,8 @@ public class SubscriptionItemHandlerImpl extends BaseHandler implements Subscrip
 
     @Override
     public Mono<ServerResponse> listAll(ServerRequest r) {
-        // Extract subscription ID from query parameters
-        String subscriptionId = r.queryParam("subscriptionId")
-                .orElseThrow(() -> new IllegalArgumentException("Subscription ID is required"));
+        // Extract subscription ID from path variables
+        String subscriptionId = r.pathVariable("subscriptionId");
         
         return handleList(r,
                 request -> subscriptionItemService.listSubscriptionItems(subscriptionId),

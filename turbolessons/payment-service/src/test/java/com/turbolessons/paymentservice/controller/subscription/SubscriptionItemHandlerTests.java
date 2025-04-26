@@ -62,9 +62,8 @@ public class SubscriptionItemHandlerTests {
         // When/Then
         webTestClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/api/payments/subscription_item")
-                        .queryParam("subscriptionId", subscriptionId)
-                        .build())
+                        .path("/api/payments/subscription_item/subscription/{subscriptionId}")
+                        .build(subscriptionId))
                 .exchange()
                 .expectStatus()
                 .isOk()
