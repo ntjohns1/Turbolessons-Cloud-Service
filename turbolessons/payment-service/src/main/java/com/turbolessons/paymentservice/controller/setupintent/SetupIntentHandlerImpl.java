@@ -24,7 +24,6 @@ public class SetupIntentHandlerImpl extends BaseHandler implements SetupIntentHa
 
     @Override
     public Mono<ServerResponse> listAll(ServerRequest r) {
-
         return handleList(r,
                           request -> this.setupIntentService.listSetupIntents(),
                           new ParameterizedTypeReference<>() {
@@ -52,10 +51,11 @@ public class SetupIntentHandlerImpl extends BaseHandler implements SetupIntentHa
     @Override
     public Mono<ServerResponse> confirm(ServerRequest r) {
         return setupIntentService.confirmSetupIntent(id(r))
-                .then(ServerResponse.noContent()
-                              .build())
-                .onErrorResume(e -> ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .build());
+                .then(ServerResponse.noContent().build())
+                .onErrorResume(e -> {
+                    log.error("Error confirming setup intent", e);
+                    return ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+                });
     }
 
     //    Update a SetupIntent
@@ -63,8 +63,7 @@ public class SetupIntentHandlerImpl extends BaseHandler implements SetupIntentHa
     public Mono<ServerResponse> update(ServerRequest r) {
         String id = id(r);
         return handleUpdate(r,
-                            ((idParam, requestBody) -> requestBody.flatMap(dto -> this.setupIntentService.updateSetupIntent(idParam,
-                                                                                                                            dto))),
+                            ((idParam, requestBody) -> requestBody.flatMap(dto -> this.setupIntentService.updateSetupIntent(idParam, dto))),
                             id,
                             SetupIntentData.class);
     }
@@ -72,7 +71,6 @@ public class SetupIntentHandlerImpl extends BaseHandler implements SetupIntentHa
     //    Cancel a SetupIntent
     @Override
     public Mono<ServerResponse> cancel(ServerRequest r) {
-
         return handleDelete(r,
                             request -> this.setupIntentService.cancelSetupIntent(id(r)));
     }

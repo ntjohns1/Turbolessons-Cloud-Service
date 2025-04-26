@@ -1,9 +1,9 @@
 package com.turbolessons.paymentservice.controller.subscription;
 
-import com.stripe.model.SubscriptionItem;
 import com.turbolessons.paymentservice.controller.BaseHandler;
 import com.turbolessons.paymentservice.dto.SubscriptionItemData;
 import com.turbolessons.paymentservice.service.subscription.SubscriptionItemService;
+import com.stripe.model.SubscriptionItem;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
@@ -23,43 +23,40 @@ public class SubscriptionItemHandlerImpl extends BaseHandler implements Subscrip
 
     @Override
     public Mono<ServerResponse> listAll(ServerRequest r) {
-        // Extract subscription ID from path variables
         String subscriptionId = r.pathVariable("subscriptionId");
-        
         return handleList(r,
-                request -> subscriptionItemService.listSubscriptionItems(subscriptionId),
-                new ParameterizedTypeReference<>() {
-                });
+                          request -> subscriptionItemService.listSubscriptionItems(subscriptionId),
+                          new ParameterizedTypeReference<>() {
+                          });
     }
 
     @Override
     public Mono<ServerResponse> retrieve(ServerRequest r) {
         return handleRetrieve(r,
-                request -> subscriptionItemService.retrieveSubscriptionItem(id(request)),
-                SubscriptionItem.class);
+                              request -> subscriptionItemService.retrieveSubscriptionItem(id(request)),
+                              SubscriptionItem.class);
     }
 
     @Override
     public Mono<ServerResponse> create(ServerRequest r) {
         return handleCreate(r,
-                requestBody -> requestBody.flatMap(this.subscriptionItemService::createSubscriptionItem),
-                SubscriptionItemData.class,
-                SubscriptionItemData.class);
+                            requestBody -> requestBody.flatMap(subscriptionItemService::createSubscriptionItem),
+                            SubscriptionItemData.class,
+                            SubscriptionItemData.class);
     }
 
     @Override
     public Mono<ServerResponse> update(ServerRequest r) {
         String id = id(r);
         return handleUpdate(r,
-                (idParam, requestBody) -> requestBody.flatMap(dto -> 
-                        subscriptionItemService.updateSubscriptionItem(idParam, dto)),
-                id,
-                SubscriptionItemData.class);
+                            ((idParam, requestBody) -> requestBody.flatMap(dto -> subscriptionItemService.updateSubscriptionItem(idParam, dto))),
+                            id,
+                            SubscriptionItemData.class);
     }
 
     @Override
     public Mono<ServerResponse> delete(ServerRequest r) {
         return handleDelete(r,
-                request -> subscriptionItemService.deleteSubscriptionItem(id(request)));
+                            request -> subscriptionItemService.deleteSubscriptionItem(id(r)));
     }
 }

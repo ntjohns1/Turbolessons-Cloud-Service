@@ -21,36 +21,25 @@ public class PriceHandlerImpl extends BaseHandler implements PriceHandler {
         this.pricingService = pricingService;
     }
 
-//    @Override
-//    public Mono<ServerResponse> getStandardRate(ServerRequest r) {
-//
-//        return handleRetrieve(r,
-//                              request -> this.pricingService.getStandardRate(),
-//                              Price.class);
-//    }
-
     @Override
     public Mono<ServerResponse> listAll(ServerRequest r) {
-
         return handleList(r,
-                          request -> this.pricingService.listAllPrices(),
+                          request -> pricingService.listAllPrices(),
                           new ParameterizedTypeReference<>() {
                           });
     }
 
     @Override
     public Mono<ServerResponse> retrieve(ServerRequest r) {
-
         return handleRetrieve(r,
-                              request -> this.pricingService.retrievePrice(id(request)),
+                              request -> pricingService.retrievePrice(id(request)),
                               Price.class);
     }
 
     @Override
     public Mono<ServerResponse> create(ServerRequest r) {
-
         return handleCreate(r,
-                            requestBody -> requestBody.flatMap(this.pricingService::createPrice),
+                            requestBody -> requestBody.flatMap(pricingService::createPrice),
                             PriceData.class,
                             Price.class);
     }
@@ -59,7 +48,7 @@ public class PriceHandlerImpl extends BaseHandler implements PriceHandler {
     public Mono<ServerResponse> update(ServerRequest r) {
         String id = id(r);
         return handleUpdate(r,
-                            (idParam, requestBody) -> requestBody.flatMap(dto -> this.pricingService.updatePrice(idParam,dto)),
+                            ((idParam, requestBody) -> requestBody.flatMap(dto -> pricingService.updatePrice(idParam, dto))),
                             id,
                             PriceData.class);
     }
