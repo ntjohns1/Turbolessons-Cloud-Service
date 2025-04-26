@@ -1,6 +1,7 @@
 package com.turbolessons.eventservice.service;
 
 import com.turbolessons.eventservice.dao.LessonEventRepo;
+import com.turbolessons.eventservice.dto.BillingStatus;
 import com.turbolessons.eventservice.dto.LessonEvent;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +47,21 @@ public class LessonEventService {
     public List<LessonEvent> findLessonEventsByTeacherAndDate(String teacher, LocalDate date) {
         return repository.findLessonEventByTeacherAndDate(teacher,date);
     }
+    
+    //Get Lesson Events By Billing Status
+    public List<LessonEvent> findLessonEventsByBillingStatus(BillingStatus billingStatus) {
+        return repository.findLessonEventByBillingStatus(billingStatus);
+    }
+    
+    //Get Lesson Events By Teacher and Billing Status
+    public List<LessonEvent> findLessonEventsByTeacherAndBillingStatus(String teacher, BillingStatus billingStatus) {
+        return repository.findLessonEventByTeacherAndBillingStatus(teacher, billingStatus);
+    }
+    
+    //Get Lesson Events By Date Range and Billing Status
+    public List<LessonEvent> findLessonEventsByDateRangeAndBillingStatus(LocalDate startDate, LocalDate endDate, BillingStatus billingStatus) {
+        return repository.findLessonEventByDateRangeAndBillingStatus(startDate, endDate, billingStatus.name());
+    }
 
     //Create Lesson Event
     public LessonEvent saveLessonEvent(LessonEvent lesson) {
@@ -67,7 +83,15 @@ public class LessonEventService {
             repository.save(existingLessonEvent);
         });
     }
-
+    
+    //Update Lesson Event Billing Status
+    public void updateLessonEventBillingStatus(Integer id, BillingStatus billingStatus) {
+        Optional<LessonEvent> fromRepo = repository.findById(id);
+        fromRepo.ifPresent(existingLessonEvent -> {
+            existingLessonEvent.setBillingStatus(billingStatus);
+            repository.save(existingLessonEvent);
+        });
+    }
 
     //Delete Lesson Event
     public void deleteLessonEvent(Integer id) {
