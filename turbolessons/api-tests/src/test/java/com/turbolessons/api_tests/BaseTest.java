@@ -21,6 +21,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -60,13 +61,13 @@ public abstract class BaseTest {
             logger.info("Successfully obtained access token: {}", access_token != null ? "token received" : "null token");
             
             // Create a request specification with the access token
-            RequestSpecification requestSpec = new RequestSpecBuilder()
+            this.requestSpec = new RequestSpecBuilder()
                     .addHeader("Authorization", "Bearer " + access_token)
                     .setContentType(ContentType.JSON)
                     .build();
     
             // Set this as the default specification for all REST Assured requests
-            RestAssured.requestSpecification = requestSpec;
+            RestAssured.requestSpecification = this.requestSpec;
         } catch (Exception e) {
             logger.error("Error during authentication", e);
             throw e;
@@ -128,11 +129,16 @@ public abstract class BaseTest {
         }
     }
     
-    private static class OktaTokenResponse {
+    public static class OktaTokenResponse {
+        @JsonProperty("access_token")
         private String access_token;
         
         public String getAccessToken() {
             return access_token;
+        }
+        
+        public void setAccessToken(String access_token) {
+            this.access_token = access_token;
         }
     }
 }
