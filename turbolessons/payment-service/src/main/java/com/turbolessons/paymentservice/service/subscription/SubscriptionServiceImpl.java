@@ -6,6 +6,7 @@ import com.stripe.model.StripeSearchResult;
 import com.stripe.model.Subscription;
 import com.stripe.model.SubscriptionItem;
 import com.stripe.param.SubscriptionCreateParams;
+import com.stripe.param.SubscriptionRetrieveParams;
 import com.stripe.param.SubscriptionSearchParams;
 import com.stripe.param.SubscriptionUpdateParams;
 import com.turbolessons.paymentservice.dto.SubscriptionData;
@@ -57,8 +58,13 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     //    Retrieve a Subscription by id
     @Override
     public Mono<Subscription> retrieveSubscription(String id) {
+        SubscriptionRetrieveParams params = SubscriptionRetrieveParams.builder()
+                .addExpand("items.data.price")
+                .addExpand("items.data.price.product")
+                .build();
+                
         return stripeClientHelper.executeStripeCall(() -> stripeClient.subscriptions()
-                .retrieve(id));
+                .retrieve(id, params));
     }
 
     //    Search Subscriptions by Customer
@@ -66,9 +72,10 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     public Mono<StripeSearchResult<Subscription>> getSubscriptionsByCustomer(String customerId) {
         return stripeClientHelper.executeStripeCall(() -> stripeClient.subscriptions()
                 .search(SubscriptionSearchParams.builder()
-                                .setQuery(String.format("customer:%s",
-                                                        customerId))
-                                .build()));
+                        .setQuery(String.format("customer:%s", customerId))
+                        .addExpand("data.items.data.price")
+                        .addExpand("data.items.data.price.product")
+                        .build()));
     }
 
     //    Create a Subscription

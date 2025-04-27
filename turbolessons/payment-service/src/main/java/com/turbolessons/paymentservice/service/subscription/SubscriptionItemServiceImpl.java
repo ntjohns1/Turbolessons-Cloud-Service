@@ -5,6 +5,7 @@ import com.stripe.model.StripeCollection;
 import com.stripe.model.SubscriptionItem;
 import com.stripe.param.SubscriptionItemCreateParams;
 import com.stripe.param.SubscriptionItemListParams;
+import com.stripe.param.SubscriptionItemRetrieveParams;
 import com.stripe.param.SubscriptionItemUpdateParams;
 import com.turbolessons.paymentservice.dto.SubscriptionItemData;
 import com.turbolessons.paymentservice.service.StripeClientHelper;
@@ -57,7 +58,12 @@ public class SubscriptionItemServiceImpl implements SubscriptionItemService {
     // Retrieve a subscription item by id
     @Override
     public Mono<SubscriptionItem> retrieveSubscriptionItem(String id) {
-        return stripeClientHelper.executeStripeCall(() -> stripeClient.subscriptionItems().retrieve(id));
+        SubscriptionItemRetrieveParams params = SubscriptionItemRetrieveParams.builder()
+                .addExpand("price")
+                .addExpand("price.product")
+                .build();
+        
+        return stripeClientHelper.executeStripeCall(() -> stripeClient.subscriptionItems().retrieve(id, params));
     }
 
     // Update a subscription item
@@ -99,6 +105,8 @@ public class SubscriptionItemServiceImpl implements SubscriptionItemService {
     public Mono<StripeCollection<SubscriptionItem>> listSubscriptionItems(String subscriptionId) {
         SubscriptionItemListParams params = SubscriptionItemListParams.builder()
                 .setSubscription(subscriptionId)
+                .addExpand("data.price")
+                .addExpand("data.price.product")
                 .build();
                 
         return stripeClientHelper.executeStripeCall(() -> stripeClient.subscriptionItems().list(params));
