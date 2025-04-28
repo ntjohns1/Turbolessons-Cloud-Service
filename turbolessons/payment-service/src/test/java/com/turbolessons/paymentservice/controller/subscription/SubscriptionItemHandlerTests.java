@@ -96,16 +96,18 @@ public class SubscriptionItemHandlerTests {
     @Test
     void shouldHandleCreateSubscriptionItem() {
         // Given
-        SubscriptionItemData requestData = SubscriptionItemData.forCreate("sub_123", "price_123", 2);
+        String subscriptionId = "sub_123";
+        SubscriptionItemData requestData = new SubscriptionItemData(
+                null, null, "price_123", 2, null, null, null, null, null);
         SubscriptionItemData responseData = new SubscriptionItemData(
-                "si_123", "sub_123", "price_123", 2, null, null, null, null, null);
+                "si_123", subscriptionId, "price_123", 2, null, null, null, null, null);
         
         when(subscriptionItemService.createSubscriptionItem(any())).thenReturn(Mono.just(responseData));
         
         // When/Then
         webTestClient.mutateWith(mockJwt())
                 .post()
-                .uri("/api/payments/subscription_item")
+                .uri("/api/payments/subscription_item/subscription/{subscriptionId}", subscriptionId)
                 .body(Mono.just(requestData), SubscriptionItemData.class)
                 .exchange()
                 .expectStatus()
@@ -114,7 +116,7 @@ public class SubscriptionItemHandlerTests {
                 .jsonPath("$.id")
                 .isEqualTo("si_123")
                 .jsonPath("$.subscription")
-                .isEqualTo("sub_123")
+                .isEqualTo(subscriptionId)
                 .jsonPath("$.price")
                 .isEqualTo("price_123")
                 .jsonPath("$.quantity")

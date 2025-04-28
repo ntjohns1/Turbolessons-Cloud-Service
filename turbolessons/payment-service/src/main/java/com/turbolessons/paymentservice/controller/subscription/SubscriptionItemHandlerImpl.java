@@ -39,8 +39,23 @@ public class SubscriptionItemHandlerImpl extends BaseHandler implements Subscrip
 
     @Override
     public Mono<ServerResponse> create(ServerRequest r) {
+        String subscriptionId = r.pathVariable("subscriptionId");
         return handleCreate(r,
-                            requestBody -> requestBody.flatMap(subscriptionItemService::createSubscriptionItem),
+                            requestBody -> requestBody.flatMap(dto -> {
+                                // Ensure the subscription ID from the path is used
+                                SubscriptionItemData itemWithSubscription = new SubscriptionItemData(
+                                    dto.id(),
+                                    subscriptionId, // Use the path parameter
+                                    dto.price(),
+                                    dto.quantity(),
+                                    dto.priceData(),
+                                    dto.proration_date(),
+                                    dto.tax_rates(),
+                                    dto.deleted(),
+                                    dto.metadata()
+                                );
+                                return subscriptionItemService.createSubscriptionItem(itemWithSubscription);
+                            }),
                             SubscriptionItemData.class,
                             SubscriptionItemData.class);
     }
