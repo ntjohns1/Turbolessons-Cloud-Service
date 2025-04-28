@@ -10,6 +10,9 @@ spring:
       enabled: false
       fail-fast: false # Don't fail if config server is not available
       import: optional:configserver:http://config-service:9999/ # Make config server optional
+  jackson:
+    mapper:
+      propagate-transient-marker: true
   security:
     oauth2:
       resourceserver:
