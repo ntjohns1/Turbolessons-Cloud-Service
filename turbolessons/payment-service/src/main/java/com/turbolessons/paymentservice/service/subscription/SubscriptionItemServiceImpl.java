@@ -33,7 +33,7 @@ public class SubscriptionItemServiceImpl implements SubscriptionItemService {
                 subscriptionItem.getId(),
                 subscriptionItem.getSubscription(),
                 subscriptionItem.getPrice().getId(),
-                subscriptionItem.getQuantity().intValue(),
+                subscriptionItem.getQuantity() != null ? subscriptionItem.getQuantity().intValue() : null,
                 null,
                 null,
                 null,
