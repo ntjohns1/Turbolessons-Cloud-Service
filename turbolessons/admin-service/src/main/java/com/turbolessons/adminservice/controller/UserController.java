@@ -22,13 +22,11 @@ public class UserController {
 
     @GetMapping("/api/users")
     public List<User> getAllUsers() {
-        System.out.println(apiToken);
         return userService.listAllUsers();
     }
 
     @GetMapping("/api/users/teacher/{username}")
     public List<User> getUsersByTeacher(@PathVariable String username) {
-        System.out.println(apiToken);
         return userService.listAllUsersByTeacher(username);
     }
 

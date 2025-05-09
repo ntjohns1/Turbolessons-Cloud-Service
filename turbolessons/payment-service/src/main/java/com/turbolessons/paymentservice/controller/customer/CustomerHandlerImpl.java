@@ -60,6 +60,16 @@ public class CustomerHandlerImpl extends BaseHandler implements CustomerHandler 
                             CustomerData.class);
     }
 
+    @Override
+    public Mono<ServerResponse> updateDefaultPaymentMethod(ServerRequest r) {
+        String id = id(r);
+        return handleUpdate(r,
+                            (idParam, requestBody) -> requestBody.flatMap(dto -> this.customerService.updateCustomerDefaultPaymentMethod(idParam,
+                                                                                                                     dto)),
+                            id,
+                            String.class);
+    }
+
 
     @Override
     public Mono<ServerResponse> delete(ServerRequest r) {

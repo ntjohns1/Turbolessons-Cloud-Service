@@ -25,6 +25,7 @@ public class CustomerEndpointConfig {
                 .andRoute(GET("/api/payments/customer/lookup/{id}"), handler::search)
                 .andRoute(POST("/api/payments/customer"), handler::create)
                 .andRoute(PUT("/api/payments/customer/{id}"), handler::update)
+                .andRoute(PUT("/api/payments/customer/{id}/default-payment-method"), handler::updateDefaultPaymentMethod)
                 .andRoute(DELETE("/api/payments/customer/{id}"), handler::delete);
     }
 }
