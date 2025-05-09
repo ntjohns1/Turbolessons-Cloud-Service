@@ -66,8 +66,6 @@ public abstract class BaseHandler {
 
     protected <U, T> Mono<ServerResponse> handleUpdate(ServerRequest request, UpdateRequestProcessor<U, T, Void> processor, U idParam, Class<T> requestBodyClass) {
         Mono<T> requestBody = request.bodyToMono(requestBodyClass);
-        System.out.println("Received update request for ID: " + idParam);
-        System.out.println("Received update request for ID: " + request);
         return processor.process(idParam,
                                  requestBody)
                 .then(ServerResponse.noContent()
