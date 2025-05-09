@@ -70,7 +70,6 @@ public class CustomerHandlerImpl extends BaseHandler implements CustomerHandler 
                             String.class);
     }
 
-
     @Override
     public Mono<ServerResponse> delete(ServerRequest r) {
         return handleDelete(r,
