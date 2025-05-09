@@ -15,5 +15,7 @@ public interface CustomerHandler {
 
     Mono<ServerResponse> update(ServerRequest r);
 
+    Mono<ServerResponse> updateDefaultPaymentMethod(ServerRequest r);
+
     Mono<ServerResponse> delete(ServerRequest r);
 }

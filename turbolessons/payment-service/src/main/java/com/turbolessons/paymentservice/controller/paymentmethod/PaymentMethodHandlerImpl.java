@@ -1,6 +1,5 @@
 package com.turbolessons.paymentservice.controller.paymentmethod;
 
-
 import com.turbolessons.paymentservice.controller.BaseHandler;
 import com.turbolessons.paymentservice.service.paymentmethod.PaymentMethodService;
 import com.stripe.model.PaymentMethod;
@@ -24,42 +23,38 @@ public class PaymentMethodHandlerImpl extends BaseHandler implements PaymentMeth
 
     @Override
     public Mono<ServerResponse> retrieve(ServerRequest r) {
-
         return handleRetrieve(r,
-                              request -> paymentMethodService.retrievePaymentMethod(id(request)),
-                              PaymentMethod.class);
+                request -> paymentMethodService.retrievePaymentMethod(id(request)),
+                PaymentMethod.class);
     }
 
     @Override
     public Mono<ServerResponse> retrieveByCustomer(ServerRequest r) {
-
         return handleList(r,
-                          request -> paymentMethodService.retrieveCustomerPaymentMethods(id(request)),
-                          new ParameterizedTypeReference<>() {
-                          });
+                request -> paymentMethodService.retrieveCustomerPaymentMethods(id(request)),
+                new ParameterizedTypeReference<>() {
+                });
     }
 
     @Override
     public Mono<ServerResponse> attach(ServerRequest r) {
-
         String customerId = r.pathVariable("customerId");
 
-        return paymentMethodService.attachPaymentMethod(id(r),
-                                                        customerId)
-                .then(ServerResponse.noContent()
-                              .build())
-                .onErrorResume(e -> ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .build());
+        return paymentMethodService.attachPaymentMethod(id(r), customerId)
+                .then(ServerResponse.noContent().build())
+                .onErrorResume(e -> {
+                    log.error("Error attaching payment method", e);
+                    return ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+                });
     }
-
 
     @Override
     public Mono<ServerResponse> detach(ServerRequest r) {
-
         return paymentMethodService.detachPaymentMethod(id(r))
-                .then(ServerResponse.noContent()
-                              .build())
-                .onErrorResume(e -> ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .build());
+                .then(ServerResponse.noContent().build())
+                .onErrorResume(e -> {
+                    log.error("Error detaching payment method", e);
+                    return ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+                });
     }
 }

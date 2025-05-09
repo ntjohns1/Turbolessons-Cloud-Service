@@ -22,4 +22,7 @@ public interface CustomerService {
 
     //    Delete a Customer
     Mono<Void> deleteCustomer(String id);
+
+    //    Update a Customer's Default Payment Method
+    Mono<Void> updateCustomerDefaultPaymentMethod(String id, String defaultPaymentMethodId);
 }

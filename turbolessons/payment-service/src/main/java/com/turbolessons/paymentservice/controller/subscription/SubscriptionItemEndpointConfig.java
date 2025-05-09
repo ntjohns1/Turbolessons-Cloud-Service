@@ -17,9 +17,9 @@ public class SubscriptionItemEndpointConfig {
     @Bean
     public RouterFunction<ServerResponse> subscriptionItemRoutes(SubscriptionItemHandler handler) {
         return route()
-                .GET(BASE_PATH, accept(APPLICATION_JSON), handler::listAll)
+                .GET(BASE_PATH + "/subscription/{subscriptionId}", accept(APPLICATION_JSON), handler::listAll)
                 .GET(BASE_PATH + "/{id}", accept(APPLICATION_JSON), handler::retrieve)
-                .POST(BASE_PATH, accept(APPLICATION_JSON), handler::create)
+                .POST(BASE_PATH + "/subscription/{subscriptionId}", accept(APPLICATION_JSON), handler::create)
                 .PUT(BASE_PATH + "/{id}", accept(APPLICATION_JSON), handler::update)
                 .DELETE(BASE_PATH + "/{id}", accept(APPLICATION_JSON), handler::delete)
                 .build();

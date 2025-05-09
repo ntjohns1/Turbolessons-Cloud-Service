@@ -21,9 +21,10 @@ public class ProductHandlerImpl extends BaseHandler implements ProductHandler {
         this.productService = productService;
     }
 
+    @Override
     public Mono<ServerResponse> listAll(ServerRequest r) {
         return handleList(r,
-                          request -> this.productService.listAllProducts(),
+                          request -> productService.listAllProducts(),
                           new ParameterizedTypeReference<>() {
                           });
     }
@@ -31,14 +32,14 @@ public class ProductHandlerImpl extends BaseHandler implements ProductHandler {
     @Override
     public Mono<ServerResponse> retrieve(ServerRequest r) {
         return handleRetrieve(r,
-                              request -> this.productService.retrieveProduct(id(request)),
+                              request -> productService.retrieveProduct(id(request)),
                               Product.class);
     }
 
     @Override
     public Mono<ServerResponse> create(ServerRequest r) {
         return handleCreate(r,
-                            requestBody -> requestBody.flatMap(productService::createProduct),
+                            requestBody -> requestBody.flatMap(this.productService::createProduct),
                             ProductData.class,
                             Product.class);
     }
@@ -47,8 +48,8 @@ public class ProductHandlerImpl extends BaseHandler implements ProductHandler {
     public Mono<ServerResponse> update(ServerRequest r) {
         String id = id(r);
         return handleUpdate(r,
-                            (idParam, requestBody) -> requestBody.flatMap(dto -> this.productService.updateProduct(idParam,
-                                                                                                                   dto)),
+                            ((idParam, requestBody) -> requestBody.flatMap(dto -> this.productService.updateProduct(idParam,
+                                                                                                                    dto))),
                             id,
                             ProductData.class);
     }
@@ -56,6 +57,6 @@ public class ProductHandlerImpl extends BaseHandler implements ProductHandler {
     @Override
     public Mono<ServerResponse> delete(ServerRequest r) {
         return handleDelete(r,
-                            request -> this.productService.deleteProduct(id(request)));
+                request -> productService.deleteProduct(id(request)));
     }
 }

@@ -160,11 +160,35 @@ public class CustomerServiceImpl implements CustomerService {
                 .setEmail(customerData.getEmail())
                 .setName(customerData.getName())
                 .setPhone(customerData.getPhone())
-//                .setInvoiceSettings(CustomerUpdateParams.InvoiceSettings.builder()
-//                                            .setDefaultPaymentMethod(customerData.getDefaultPaymentMethod())
-//                                            .build())
+                .setInvoiceSettings(CustomerUpdateParams.InvoiceSettings.builder()
+                                            .setDefaultPaymentMethod(customerData.getDefaultPaymentMethod())
+                                            .build())
                 .build();
 
+        return stripeClientHelper.executeStripeVoidCall(() -> this.stripeClient.customers()
+                .update(id,
+                        customerParams));
+    }
+
+    //    Update a Customer's Default Payment Method
+    @Override
+    public Mono<Void> updateCustomerDefaultPaymentMethod(String id, String defaultPaymentMethodId) {
+        // Clean the payment method ID to remove any extra quotes or whitespace
+        String cleanPaymentMethodId = defaultPaymentMethodId;
+        if (cleanPaymentMethodId != null) {
+            // Remove any surrounding quotes if present
+            if (cleanPaymentMethodId.startsWith("\"") && cleanPaymentMethodId.endsWith("\"")) {
+                cleanPaymentMethodId = cleanPaymentMethodId.substring(1, cleanPaymentMethodId.length() - 1);
+            }
+            cleanPaymentMethodId = cleanPaymentMethodId.trim();
+        }
+        
+        CustomerUpdateParams customerParams = CustomerUpdateParams.builder()
+                .setInvoiceSettings(CustomerUpdateParams.InvoiceSettings.builder()
+                                            .setDefaultPaymentMethod(cleanPaymentMethodId)
+                                            .build())
+                .build();
+                
         return stripeClientHelper.executeStripeVoidCall(() -> this.stripeClient.customers()
                 .update(id,
                         customerParams));

@@ -6,12 +6,13 @@ spring:
       enabled: false
       redis:
         enabled: false
-    discovery:
-      enabled: false
     config:
       enabled: false
       fail-fast: false # Don't fail if config server is not available
       import: optional:configserver:http://config-service:9999/ # Make config server optional
+  jackson:
+    mapper:
+      propagate-transient-marker: true
   security:
     oauth2:
       resourceserver:
@@ -31,7 +32,8 @@ spring:
             scope: stripe_client
 eureka:
   client:
-    enabled: false
+    serviceUrl:
+      defaultZone: http://service-registry:8761/eureka/    
 okta:
   oauth2:
     issuer: ${OKTA_ISSUER}

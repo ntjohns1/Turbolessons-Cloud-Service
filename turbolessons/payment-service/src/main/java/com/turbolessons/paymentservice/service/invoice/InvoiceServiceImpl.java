@@ -43,7 +43,7 @@ public class InvoiceServiceImpl implements InvoiceService {
                                 invoice.getCreated(),
                                 dueDate != null ? dueDate : 0L,
                                 effectiveAt != null ? effectiveAt : 0L,
-                                invoice.getEndingBalance(),
+                                invoice.getEndingBalance() != null ? invoice.getEndingBalance() : 0L,
                                 nextPaymentAttempt != null ? nextPaymentAttempt : 0L,
                                 invoice.getPaid());
         } catch (Exception e) {
