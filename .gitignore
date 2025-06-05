@@ -2,3 +2,4 @@
 *.idea
 .vscode/
 Turbolessons-Cloud-Service.code-workspace
+turbolessons/api-tests/root.env
