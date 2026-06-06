@@ -113,9 +113,10 @@ public class VideoHandlerTest {
 
     @Test
     public void shouldSaveVideo() throws IOException {
-        Path videoPath = Paths.get("/home/runner/Movies/Good_Boy.mp4");
-        byte[] videoBytes = Files.readAllBytes(videoPath);
-        String filename = videoPath.getFileName().toString();
+        // Synthetic in-memory content — the storage client is mocked, so the bytes are
+        // irrelevant; avoids depending on a hardcoded host path.
+        byte[] videoBytes = "test-video-content".getBytes();
+        String filename = "Good_Boy.mp4";
 
         // Mock the videoStorageClient
         when(videoService.saveVideo(any())).thenReturn(Mono.empty());
