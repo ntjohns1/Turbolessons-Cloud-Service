@@ -9,7 +9,7 @@ RUN mvn -f /home/app/pom.xml clean package -DskipTests
 #
 # Package stage
 #
-FROM openjdk:17
+FROM eclipse-temurin:17-jre
 COPY --from=build /home/app/target/event-service-0.0.1-SNAPSHOT.jar /usr/local/lib/event-service.jar
 EXPOSE 5001
 

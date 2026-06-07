@@ -9,7 +9,7 @@ RUN mvn -f /home/app/pom.xml clean package -DskipTests
 #
 # Package stage
 #
-FROM openjdk:17
+FROM eclipse-temurin:17-jre
 COPY --from=build /home/app/target/admin-service-0.0.1-SNAPSHOT.jar /usr/local/lib/admin-service.jar
 EXPOSE 5002
 ENTRYPOINT ["java","-jar","/usr/local/lib/admin-service.jar"]
