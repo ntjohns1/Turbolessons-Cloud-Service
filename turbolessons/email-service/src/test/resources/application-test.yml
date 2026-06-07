@@ -19,7 +19,7 @@ spring:
   mail:
     host: smtp.gmail.com
     username: nelsontjohns@gmail.com
-    password: ${EMAIL_SECRET}
+    password: ${EMAIL_SECRET:test-mail-secret}
     port: 587
     properties:
       mail:
@@ -36,12 +36,12 @@ spring:
       client:
         provider:
           okta:
-            token-uri: https://dev-78958050.okta.com/oauth2/default/v1/token
+            token-uri: https://localhost/realms/test/protocol/openid-connect/token
         registration:
           okta:
             authorization-grant-type: client_credentials
-            client-id: ${OKTA_CLIENT_ID}
-            client-secret: ${OKTA_CLIENT_SECRET}
+            client-id: ${OKTA_CLIENT_ID:test-client}
+            client-secret: ${OKTA_CLIENT_SECRET:test-secret}
             scope: email_client
 attachment:
   invoice: path_to_file

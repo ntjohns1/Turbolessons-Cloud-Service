@@ -1,5 +1,6 @@
 package com.turbolessons.apigateway.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -15,6 +16,14 @@ import java.util.List;
 //@EnableReactiveMethodSecurity
 @Configuration
 public class SecurityConfig {
+
+    /**
+     * CORS origins allowed by the gateway, supplied per-environment by the config
+     * server (cors.allowed-origins in api-gateway.yml / api-gateway-qac.yml).
+     */
+    @Value("${cors.allowed-origins:https://www.turbolessons.com,http://localhost:3000}")
+    private List<String> allowedOrigins;
+
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http
@@ -33,7 +42,7 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(List.of("http://localhost:3000", "https://www.turbolessons.com"));
+        corsConfig.setAllowedOrigins(allowedOrigins);
         corsConfig.setMaxAge(3600L);
         corsConfig.addAllowedMethod("*");
         corsConfig.addAllowedHeader("*");

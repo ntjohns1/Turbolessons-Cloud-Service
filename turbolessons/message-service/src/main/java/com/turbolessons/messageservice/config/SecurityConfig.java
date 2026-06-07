@@ -22,8 +22,6 @@ public class SecurityConfig {
                 .pathMatchers("/ws/**").permitAll() // <5>
                 .anyExchange().authenticated()
                 .and()
-                .oauth2Login()
-                .and()
                 .oauth2ResourceServer()
                 .jwt().and().and().build();
         // @formatter:on
