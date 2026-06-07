@@ -3,8 +3,7 @@ package com.turbolessons.adminservice.controller;
 import com.turbolessons.adminservice.dto.UserDTO;
 import com.turbolessons.adminservice.dto.UserProfileDTO;
 import com.turbolessons.adminservice.service.UserService;
-import org.openapitools.client.model.User;
-import org.springframework.beans.factory.annotation.Value;
+import com.turbolessons.adminservice.model.User;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -17,18 +16,13 @@ public class UserController {
         this.userService = userService;
     }
 
-    @Value("${okta.client.token}")
-    private String apiToken;
-
     @GetMapping("/api/users")
     public List<User> getAllUsers() {
-        System.out.println(apiToken);
         return userService.listAllUsers();
     }
 
     @GetMapping("/api/users/teacher/{username}")
     public List<User> getUsersByTeacher(@PathVariable String username) {
-        System.out.println(apiToken);
         return userService.listAllUsersByTeacher(username);
     }
 
