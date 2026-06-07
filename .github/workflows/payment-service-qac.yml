@@ -33,6 +33,8 @@ jobs:
           context: turbolessons/payment-service
           push: true
           tags: noslenj/payment-service:qac
+          secrets: |
+            gh_token=${{ secrets.GH_PACKAGES_TOKEN }}
 
   deploy:
     needs: build
