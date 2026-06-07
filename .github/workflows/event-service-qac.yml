@@ -35,19 +35,13 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: self-hosted
+    runs-on: [self-hosted, qac]
     concurrency:
       group: qac-deploy
       cancel-in-progress: false
     steps:
-      - name: Deploy event-service to QAC host
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.QAC_HOST }}
-          username: ${{ secrets.QAC_USER }}
-          key: ${{ secrets.QAC_SSH_KEY }}
-          port: ${{ secrets.QAC_SSH_PORT }}
-          script: |
-            cd ~/turbolessons-qac
-            docker compose pull event-service
-            docker compose up -d event-service
+      - name: Deploy event-service on the QAC host
+        run: |
+          cd ~/turbolessons-qac
+          docker-compose pull event-service
+          docker-compose up -d event-service

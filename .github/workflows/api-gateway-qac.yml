@@ -35,19 +35,13 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: self-hosted
+    runs-on: [self-hosted, qac]
     concurrency:
       group: qac-deploy
       cancel-in-progress: false
     steps:
-      - name: Deploy api-gateway to QAC host
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.QAC_HOST }}
-          username: ${{ secrets.QAC_USER }}
-          key: ${{ secrets.QAC_SSH_KEY }}
-          port: ${{ secrets.QAC_SSH_PORT }}
-          script: |
-            cd ~/turbolessons-qac
-            docker compose pull api-gateway
-            docker compose up -d api-gateway
+      - name: Deploy api-gateway on the QAC host
+        run: |
+          cd ~/turbolessons-qac
+          docker-compose pull api-gateway
+          docker-compose up -d api-gateway
