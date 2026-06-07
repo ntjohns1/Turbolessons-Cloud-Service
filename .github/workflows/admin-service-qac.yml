@@ -4,6 +4,7 @@ name: admin-service-qac
 # Build runs on a GitHub-hosted runner; deploy runs on the self-hosted
 # runner (server_3) which has routing into the lab and SSHes to the QAC host.
 on:
+  workflow_dispatch:
   push:
     branches:
       - 'dev'
