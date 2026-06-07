@@ -14,6 +14,12 @@ Okta → Keycloak migration. It is **idempotent** (safe to re-run).
 - **Gateway login client** `api-gateway` (confidential, authorization_code): created with
   redirect URIs + web origins for prod/qac/local; prints its secret. (Replaces the old
   random-id client — you can delete that one.)
+- **React SPA client** `turbolessons-spa` (public, PKCE): for the frontend, with redirect
+  URIs (`<origin>/login/callback`) + web origins for prod/qac/local, and a **`groups` claim
+  mapper** so the app's role routing (`accessToken.claims.groups`) works. No secret (public).
+  → set the frontend `CLIENT_ID=turbolessons-spa`, `ISSUER=<realm issuer>`.
+  > You still need to create the actual Keycloak **groups** (e.g. Teacher/Student) and assign
+  > users — the mapper just emits whatever groups a user belongs to.
 
 ## Run it
 Requires `kcadm.sh` (ships with Keycloak) and `python3`.
