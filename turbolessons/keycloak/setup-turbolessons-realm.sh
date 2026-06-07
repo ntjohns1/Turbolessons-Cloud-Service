@@ -14,6 +14,8 @@
 #                     api-tests-m2m        -> test_client
 #   * gateway login client `api-gateway` (confidential, authorization_code flow):
 #                created with proper redirect URIs / web origins; prints its secret.
+#   * React SPA client `turbolessons-spa` (public, PKCE) for the frontend, with a
+#                `groups` claim mapper (so the app's role routing on accessToken.claims.groups works).
 #
 # Safe to re-run: existing scopes/clients are detected and updated, not duplicated.
 # Secrets are PRINTED at the end — paste them into turbolessons-config/*.yml and then
@@ -48,11 +50,18 @@ KC_ADMIN_PASSWORD="${KC_ADMIN_PASSWORD:?Set KC_ADMIN_PASSWORD (Keycloak admin pa
 KCADM="${KCADM:-kcadm.sh}"
 GATEWAY_CLIENT_ID="${GATEWAY_CLIENT_ID:-api-gateway}"
 CONFIGURE_GATEWAY="${CONFIGURE_GATEWAY:-true}"
+SPA_CLIENT_ID="${SPA_CLIENT_ID:-turbolessons-spa}"
+CONFIGURE_SPA="${CONFIGURE_SPA:-true}"
 EXPORT_REALM="${EXPORT_REALM:-false}"
 
 # Public URLs used for the gateway login client's redirect/web-origin allow-lists.
 GATEWAY_REDIRECT_URIS='["https://www.turbolessons.com/login/oauth2/code/keycloak","https://qac.turbolessons.com/login/oauth2/code/keycloak","http://localhost:8080/login/oauth2/code/keycloak"]'
 GATEWAY_WEB_ORIGINS='["https://www.turbolessons.com","https://qac.turbolessons.com","http://localhost:3000"]'
+
+# Redirect/web-origin allow-lists for the public React SPA client (PKCE).
+SPA_REDIRECT_URIS='["https://www.turbolessons.com/login/callback","https://qac.turbolessons.com/login/callback","http://localhost:3000/login/callback"]'
+SPA_WEB_ORIGINS='["https://www.turbolessons.com","https://qac.turbolessons.com","http://localhost:3000"]'
+SPA_POST_LOGOUT='["https://www.turbolessons.com","https://qac.turbolessons.com","http://localhost:3000"]'
 
 SUMMARY="$(mktemp)"
 trap 'rm -f "$SUMMARY"' EXIT
@@ -156,6 +165,53 @@ ensure_gateway_client() {
   printf '%s\t%s\t%s\n' "$cid" "(gateway login, confidential)" "$secret" >>"$SUMMARY"
 }
 
+ensure_groups_mapper() {
+  # Add a "groups" claim (Keycloak group memberships) to a client's tokens, so the React
+  # app's role routing (accessToken.claims.groups) works. Idempotent by mapper name.
+  local uuid="$1"
+  local has
+  has=$(kc get "clients/$uuid/protocol-mappers/models" -r "$KC_REALM" --fields name 2>/dev/null \
+        | python3 -c 'import sys,json; a=json.load(sys.stdin) or []; print("yes" if any(m.get("name")=="groups" for m in a) else "")')
+  if [ -z "$has" ]; then
+    kc create "clients/$uuid/protocol-mappers/models" -r "$KC_REALM" \
+      -s name=groups -s protocol=openid-connect -s protocolMapper=oidc-group-membership-mapper \
+      -s 'config."claim.name"=groups' -s 'config."full.path"=false' \
+      -s 'config."access.token.claim"=true' -s 'config."id.token.claim"=true' \
+      -s 'config."userinfo.token.claim"=true' >/dev/null
+    echo "    -> groups mapper added"
+  else
+    echo "    -> groups mapper present"
+  fi
+}
+
+ensure_spa_client() {
+  # Public PKCE client for the React SPA (authorization_code + PKCE, no secret).
+  local cid="$1" uuid
+  uuid="$(client_uuid "$cid")"
+  if [ -z "$uuid" ]; then
+    kc create clients -r "$KC_REALM" \
+      -s "clientId=$cid" -s enabled=true -s protocol=openid-connect \
+      -s publicClient=true -s standardFlowEnabled=true \
+      -s serviceAccountsEnabled=false -s directAccessGrantsEnabled=false \
+      -s implicitFlowEnabled=false \
+      -s "redirectUris=$SPA_REDIRECT_URIS" -s "webOrigins=$SPA_WEB_ORIGINS" \
+      -s 'attributes."pkce.code.challenge.method"=S256' \
+      -s "attributes.\"post.logout.redirect.uris\"=$(python3 -c 'import json,os;print("##".join(json.loads(os.environ["L"])))' L="$SPA_POST_LOGOUT")" \
+      -s "description=Turbolessons React SPA (public, PKCE)" >/dev/null
+    uuid="$(client_uuid "$cid")"
+    echo "  + SPA client '$cid' created ($uuid)"
+  else
+    kc update "clients/$uuid" -r "$KC_REALM" \
+      -s publicClient=true -s standardFlowEnabled=true \
+      -s serviceAccountsEnabled=false -s directAccessGrantsEnabled=false \
+      -s "redirectUris=$SPA_REDIRECT_URIS" -s "webOrigins=$SPA_WEB_ORIGINS" \
+      -s 'attributes."pkce.code.challenge.method"=S256' >/dev/null
+    echo "  = SPA client '$cid' exists ($uuid) — config ensured"
+  fi
+  ensure_groups_mapper "$uuid"
+  printf '%s\t%s\t%s\n' "$cid" "(react SPA, public/PKCE)" "no secret — public client" >>"$SUMMARY"
+}
+
 # --- run -------------------------------------------------------------------
 echo "==> Authenticating to $KC_SERVER (realm '$KC_ADMIN_REALM', user '$KC_ADMIN_USER')"
 kc config credentials --server "$KC_SERVER" --realm "$KC_ADMIN_REALM" \
@@ -183,6 +239,11 @@ if [ "$CONFIGURE_GATEWAY" = "true" ]; then
   ensure_gateway_client "$GATEWAY_CLIENT_ID"
 fi
 
+if [ "$CONFIGURE_SPA" = "true" ]; then
+  echo "==> Ensuring React SPA client (public/PKCE) + groups mapper"
+  ensure_spa_client "$SPA_CLIENT_ID"
+fi
+
 if [ "$EXPORT_REALM" = "true" ]; then
   echo "==> Exporting realm to realm-export.json"
   kc create "realms/$KC_REALM/partial-export?exportClients=true&exportGroupsAndRoles=true" \
@@ -206,6 +267,7 @@ Config mapping:
   email-service.yml   : registration.okta.client-id = email-service-m2m   ; client-secret = <secret>
   api-tests.yml       : registration.okta.client-id = api-tests-m2m       ; client-secret = <secret>
   api-gateway.yml     : registration.keycloak.client-id = api-gateway        ; client-secret = <secret>
+  frontend (.env)     : CLIENT_ID = turbolessons-spa (public, no secret) ; ISSUER = realm issuer
 
 IMPORTANT: encrypt each client-secret before committing:
   curl -s -u "$CONFIG_USERNAME:$CONFIG_PASSWORD" -H 'Content-Type: text/plain' \
