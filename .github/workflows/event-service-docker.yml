@@ -43,6 +43,8 @@ jobs:
           context: turbolessons/event-service
           push: true
           tags: noslenj/event-service:latest
+          secrets: |
+            gh_token=${{ secrets.GH_PACKAGES_TOKEN }}
       
       - name: Trigger Jenkins Job
         uses: appleboy/jenkins-action@master

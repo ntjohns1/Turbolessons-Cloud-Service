@@ -59,6 +59,8 @@ jobs:
           context: turbolessons/video-service
           push: true
           tags: noslenj/video-service:latest
+          secrets: |
+            gh_token=${{ secrets.GH_PACKAGES_TOKEN }}
       
       - name: Trigger Jenkins Job
         uses: appleboy/jenkins-action@master

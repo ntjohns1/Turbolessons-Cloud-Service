@@ -31,6 +31,8 @@ jobs:
           context: turbolessons/api-gateway
           push: true
           tags: noslenj/api-gateway:latest
+          secrets: |
+            gh_token=${{ secrets.GH_PACKAGES_TOKEN }}
 
       - name: Trigger Jenkins Job
         uses: appleboy/jenkins-action@master
