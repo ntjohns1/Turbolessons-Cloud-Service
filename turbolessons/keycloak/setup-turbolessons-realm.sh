@@ -236,10 +236,19 @@ ensure_admin_service_kc() {
     echo "  = admin client '$cid' exists ($uuid) — config ensured"
   fi
   # Grant the service account the realm-management roles needed for user/group administration.
-  kc add-roles -r "$KC_REALM" --uusername "service-account-$cid" --cclientid realm-management \
-    --rolename manage-users --rolename view-users --rolename query-users \
-    --rolename manage-groups --rolename query-groups >/dev/null 2>&1 \
-    && echo "    -> realm-management roles granted" || echo "    -> realm-management roles (already present or check manually)"
+  # Add roles ONE AT A TIME and surface failures (a single bad role must not silently drop the rest).
+  local role out rc
+  for role in manage-users view-users query-users query-groups; do
+    out="$(kc add-roles -r "$KC_REALM" --uusername "service-account-$cid" \
+            --cclientid realm-management --rolename "$role" 2>&1)"; rc=$?
+    if [ $rc -eq 0 ]; then
+      echo "    -> realm-management:$role granted"
+    elif echo "$out" | grep -qiE "already|exists|409"; then
+      echo "    -> realm-management:$role already present"
+    else
+      echo "    !! FAILED to grant realm-management:$role -> $out" >&2
+    fi
+  done
   secret="$(client_secret "$uuid")"
   printf '%s\t%s\t%s\n' "$cid" "(admin REST, realm-management)" "$secret" >>"$SUMMARY"
 }
