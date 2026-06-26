@@ -1,4 +1,9 @@
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: https://localhost/realms/test/protocol/openid-connect/certs
   application:
     name: video-service
   cloud:
@@ -13,15 +18,12 @@ spring:
 eureka:
   client:
     enabled: false
-okta:
-  oauth2:
-    issuer: ${OKTA_ISSUER}
-    client-secret: ${OKTA_CLIENT_SECRET}
-    client-id: ${OKTA_CLIENT_ID}
 google:
   bucket:
-    name: ${bucketName}
+    name: ${bucketName:test-bucket}
   credentials:
-    path: ${credentialsPath}
+    # Test-only throwaway service-account JSON (structurally valid, not a real key).
+    # Parsed at startup by StorageConfig; never used for network calls in contextLoads.
+    path: ${credentialsPath:src/test/resources/test-gcs-credentials.json}
   project:
-    id: ${projectId}
+    id: ${projectId:test-project}
