@@ -117,6 +117,29 @@ public class CustomerServiceImpl implements CustomerService {
                 });
     }
 
+    //    Find a Customer by email (used to attribute lesson meter events)
+    @Override
+    public Mono<CustomerData> searchCustomerByEmail(String email) {
+        String query = String.format("email:'%s'", email);
+        CustomerSearchParams params = CustomerSearchParams.builder()
+                .addExpand("data.subscriptions")
+                .setQuery(query)
+                .build();
+
+        return stripeClientHelper.executeStripeCall(() -> this.stripeClient.customers()
+                        .search(params))
+                .flatMap(customerSearchResult -> {
+                    if (customerSearchResult.getData() != null && !customerSearchResult.getData()
+                            .isEmpty()) {
+                        Customer customer = customerSearchResult.getData()
+                                .get(0);
+                        return Mono.just(mapCustomerToDto(customer));
+                    } else {
+                        return Mono.empty();
+                    }
+                });
+    }
+
     //    Create a Customer
     @Override
     public Mono<CustomerData> createCustomer(CustomerData customerData) {
