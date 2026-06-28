@@ -1,8 +1,10 @@
 package com.turbolessons.paymentservice.service.meter;
 
 import com.turbolessons.paymentservice.dto.BillingStatus;
+import com.turbolessons.paymentservice.dto.CustomerData;
 import com.turbolessons.paymentservice.dto.LessonEvent;
 import com.turbolessons.paymentservice.dto.MeterEventData;
+import com.turbolessons.paymentservice.service.customer.CustomerService;
 import com.turbolessons.paymentservice.util.EventServiceClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,6 +32,9 @@ class LessonMeterEventServiceTest {
     @Mock
     private MeterService meterService;
 
+    @Mock
+    private CustomerService customerService;
+
     @Captor
     private ArgumentCaptor<MeterEventData> meterEventDataCaptor;
 
@@ -40,7 +45,7 @@ class LessonMeterEventServiceTest {
 
     @BeforeEach
     void setUp() {
-        lessonMeterEventService = new LessonMeterEventService(eventServiceClient, meterService);
+        lessonMeterEventService = new LessonMeterEventService(eventServiceClient, meterService, customerService);
     }
 
     @Test
@@ -50,12 +55,17 @@ class LessonMeterEventServiceTest {
         LessonEvent completedLesson = createTestLesson(yesterday, BillingStatus.UNLOGGED);
         LessonEvent loggedLesson = createTestLesson(yesterday, BillingStatus.LOGGED);
         
+        CustomerData customer = mock(CustomerData.class);
+        when(customer.getId()).thenReturn("cus_test123");
+        when(customerService.searchCustomerByEmail(completedLesson.getStudentEmail()))
+                .thenReturn(Mono.just(customer));
+
         when(eventServiceClient.getEvents(any(LocalDate.class)))
                 .thenReturn(Flux.just(completedLesson, loggedLesson));
-        
+
         when(meterService.createMeterEvent(any()))
-                .thenReturn(Mono.just(new MeterEventData("test-id", "lesson.completed", "student@test.com", "1")));
-        
+                .thenReturn(Mono.just(new MeterEventData("test-id", "lessons", "cus_test123", "2")));
+
         when(eventServiceClient.updateEvent(any(), any()))
                 .thenReturn(Mono.just(completedLesson));
 
@@ -67,9 +77,10 @@ class LessonMeterEventServiceTest {
         verify(eventServiceClient, times(1)).updateEvent(eq(completedLesson.getId()), lessonEventCaptor.capture());
 
         MeterEventData capturedMeterEvent = meterEventDataCaptor.getValue();
-        assertThat(capturedMeterEvent.eventName()).isEqualTo("lesson.completed");
-        assertThat(capturedMeterEvent.stripeCustomerId()).isEqualTo(completedLesson.getStudentEmail());
-        assertThat(capturedMeterEvent.value()).isEqualTo("1");
+        assertThat(capturedMeterEvent.eventName()).isEqualTo("lessons");
+        assertThat(capturedMeterEvent.stripeCustomerId()).isEqualTo("cus_test123");
+        // 60-minute test lesson -> 2 units against the 30-min metered price.
+        assertThat(capturedMeterEvent.value()).isEqualTo("2");
 
         LessonEvent capturedLessonEvent = lessonEventCaptor.getValue();
         assertThat(capturedLessonEvent.getBillingStatus()).isEqualTo(BillingStatus.LOGGED);
@@ -115,9 +126,14 @@ class LessonMeterEventServiceTest {
         LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
         LessonEvent completedLesson = createTestLesson(yesterday, BillingStatus.UNLOGGED);
         
+        CustomerData customer = mock(CustomerData.class);
+        when(customer.getId()).thenReturn("cus_test123");
+        when(customerService.searchCustomerByEmail(any()))
+                .thenReturn(Mono.just(customer));
+
         when(eventServiceClient.getEvents(any(LocalDate.class)))
                 .thenReturn(Flux.just(completedLesson));
-        
+
         when(meterService.createMeterEvent(any()))
                 .thenReturn(Mono.error(new RuntimeException("Failed to create meter event")));
 
