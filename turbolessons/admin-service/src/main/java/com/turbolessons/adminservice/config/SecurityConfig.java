@@ -11,6 +11,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                // Stateless bearer-token resource server: no session/cookies, so
+                // CSRF protection doesn't apply and would otherwise 403 POST/PUT/DELETE.
+                .csrf().disable()
                 .authorizeRequests()
                 .anyRequest().authenticated()
                 .and()

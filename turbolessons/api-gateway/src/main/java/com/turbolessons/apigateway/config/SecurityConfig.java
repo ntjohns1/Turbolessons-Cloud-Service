@@ -28,13 +28,14 @@ public class SecurityConfig {
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(
             ServerHttpSecurity http, ReactiveJwtAuthenticationConverter jwtConverter) {
+        // Pure resource server: the SPA logs in with Keycloak and sends a bearer
+        // token. No interactive oauth2Login — unauthenticated calls get a clean
+        // 401 instead of a redirect to /oauth2/authorization/keycloak.
         http
                 .authorizeExchange()
                 .pathMatchers("/ws/**").permitAll()
                 .anyExchange()
                 .authenticated()
-                .and()
-                .oauth2Login()
                 .and()
                 .oauth2ResourceServer()
                 .jwt()
