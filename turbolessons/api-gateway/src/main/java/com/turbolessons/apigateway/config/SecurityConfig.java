@@ -30,8 +30,11 @@ public class SecurityConfig {
             ServerHttpSecurity http, ReactiveJwtAuthenticationConverter jwtConverter) {
         // Pure resource server: the SPA logs in with Keycloak and sends a bearer
         // token. No interactive oauth2Login — unauthenticated calls get a clean
-        // 401 instead of a redirect to /oauth2/authorization/keycloak.
+        // 401 instead of a redirect to /oauth2/authorization/keycloak. CSRF is
+        // disabled because it's a stateless bearer API (WebFlux enables CSRF by
+        // default, which 403s every POST/PUT/DELETE the SPA sends with no token).
         http
+                .csrf().disable()
                 .authorizeExchange()
                 .pathMatchers("/ws/**").permitAll()
                 .anyExchange()
