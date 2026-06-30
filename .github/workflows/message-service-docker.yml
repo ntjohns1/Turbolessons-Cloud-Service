@@ -25,9 +25,7 @@ jobs:
       - name: Run Maven Tests
         working-directory: turbolessons/message-service
         run: |
-          mvn test -DOKTA_CLIENT_ID=${{ secrets.OKTA_CLIENT_ID }} \
-          -DOKTA_CLIENT_SECRET=${{ secrets.OKTA_CLIENT_SECRET }} \
-          -DOKTA_ISSUER=${{ secrets.OKTA_ISSUER }}
+          mvn test
 
       - name: Docker Setup Buildx
         uses: docker/setup-buildx-action@v2

@@ -16,15 +16,11 @@ jobs:
       with:
         distribution: 'adopt'
         java-version: '17'
-    
+
     - name: Checkout code
       uses: actions/checkout@v3.6.0
-      
+
     - name: Run Maven Tests
       working-directory: turbolessons/admin-service
       run: |
-        mvn test -DOKTA_CLIENT_ID=${{ secrets.OKTA_CLIENT_ID }} \
-        -DOKTA_CLIENT_SECRET=${{ secrets.OKTA_CLIENT_SECRET }} \
-        -DOKTA_ISSUER=${{ secrets.OKTA_ISSUER }} \
-        -DOKTA_ORG_URL=${{ secrets.OKTA_ORG_URL }} \
-        -DADMIN_SERVICE_API_TOKEN=${{ secrets.ADMIN_SERVICE_API_TOKEN }}
+        mvn test -DADMIN_SERVICE_API_TOKEN=${{ secrets.ADMIN_SERVICE_API_TOKEN }}
