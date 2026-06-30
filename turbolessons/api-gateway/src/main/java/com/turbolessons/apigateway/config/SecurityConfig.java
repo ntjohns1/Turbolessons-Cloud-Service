@@ -34,8 +34,13 @@ public class SecurityConfig {
         // disabled because it's a stateless bearer API (WebFlux enables CSRF by
         // default, which 403s every POST/PUT/DELETE the SPA sends with no token).
         http
+                // Wire the corsConfigurationSource bean into the chain and let
+                // CORS preflight (OPTIONS) through, so cross-origin browser calls
+                // aren't 403'd at the preflight.
+                .cors().and()
                 .csrf().disable()
                 .authorizeExchange()
+                .pathMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
                 .pathMatchers("/ws/**").permitAll()
                 .anyExchange()
                 .authenticated()
