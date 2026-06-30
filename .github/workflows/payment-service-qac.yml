@@ -1,13 +1,13 @@
 name: payment-service-qac
 
-# QAC environment pipeline (Git Flow: develop -> QAC, master -> prod).
+# QAC environment pipeline (Git Flow: release/* -> QAC, master -> prod).
 # Build runs on a GitHub-hosted runner; deploy runs on the self-hosted
 # runner (server_3) which has routing into the lab and SSHes to the QAC host.
 on:
   workflow_dispatch:
   push:
     branches:
-      - 'dev'
+      - 'release/**'
     paths:
       - 'turbolessons/payment-service/**'
 
@@ -32,6 +32,7 @@ jobs:
         with:
           context: turbolessons/payment-service
           push: true
+          provenance: false
           tags: noslenj/payment-service:qac
           secrets: |
             gh_token=${{ secrets.GH_PACKAGES_TOKEN }}
@@ -47,4 +48,4 @@ jobs:
         run: |
           cd ~/turbolessons-qac
           docker-compose pull payment-service
-          docker-compose up -d payment-service
+          docker-compose up -d --force-recreate payment-service
