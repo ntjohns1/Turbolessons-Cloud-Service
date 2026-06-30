@@ -16,6 +16,8 @@
 #                created with proper redirect URIs / web origins; prints its secret.
 #   * React SPA client `turbolessons-spa` (public, PKCE) for the frontend, with a
 #                `groups` claim mapper (so the app's role routing on accessToken.claims.groups works).
+#   * admin client `admin-service-kc` (confidential, service account) with realm-management
+#                roles, for admin-service to call the Keycloak Admin REST API; prints its secret.
 #
 # Safe to re-run: existing scopes/clients are detected and updated, not duplicated.
 # Secrets are PRINTED at the end — paste them into turbolessons-config/*.yml and then
@@ -52,6 +54,8 @@ GATEWAY_CLIENT_ID="${GATEWAY_CLIENT_ID:-api-gateway}"
 CONFIGURE_GATEWAY="${CONFIGURE_GATEWAY:-true}"
 SPA_CLIENT_ID="${SPA_CLIENT_ID:-turbolessons-spa}"
 CONFIGURE_SPA="${CONFIGURE_SPA:-true}"
+ADMIN_KC_CLIENT_ID="${ADMIN_KC_CLIENT_ID:-admin-service-kc}"
+CONFIGURE_ADMIN_KC="${CONFIGURE_ADMIN_KC:-true}"
 EXPORT_REALM="${EXPORT_REALM:-false}"
 
 # Public URLs used for the gateway login client's redirect/web-origin allow-lists.
@@ -212,6 +216,43 @@ ensure_spa_client() {
   printf '%s\t%s\t%s\n' "$cid" "(react SPA, public/PKCE)" "no secret — public client" >>"$SUMMARY"
 }
 
+ensure_admin_service_kc() {
+  # Confidential service-account client used by admin-service to call the Keycloak Admin REST API.
+  local cid="$1" uuid secret
+  uuid="$(client_uuid "$cid")"
+  if [ -z "$uuid" ]; then
+    kc create clients -r "$KC_REALM" \
+      -s "clientId=$cid" -s enabled=true -s protocol=openid-connect \
+      -s publicClient=false -s serviceAccountsEnabled=true \
+      -s standardFlowEnabled=false -s directAccessGrantsEnabled=false \
+      -s implicitFlowEnabled=false -s 'redirectUris=[]' -s 'webOrigins=[]' \
+      -s "description=admin-service -> Keycloak Admin REST API (realm-management)" >/dev/null
+    uuid="$(client_uuid "$cid")"
+    echo "  + admin client '$cid' created ($uuid)"
+  else
+    kc update "clients/$uuid" -r "$KC_REALM" \
+      -s publicClient=false -s serviceAccountsEnabled=true \
+      -s standardFlowEnabled=false -s directAccessGrantsEnabled=false >/dev/null
+    echo "  = admin client '$cid' exists ($uuid) — config ensured"
+  fi
+  # Grant the service account the realm-management roles needed for user/group administration.
+  # Add roles ONE AT A TIME and surface failures (a single bad role must not silently drop the rest).
+  local role out rc
+  for role in manage-users view-users query-users query-groups; do
+    out="$(kc add-roles -r "$KC_REALM" --uusername "service-account-$cid" \
+            --cclientid realm-management --rolename "$role" 2>&1)"; rc=$?
+    if [ $rc -eq 0 ]; then
+      echo "    -> realm-management:$role granted"
+    elif echo "$out" | grep -qiE "already|exists|409"; then
+      echo "    -> realm-management:$role already present"
+    else
+      echo "    !! FAILED to grant realm-management:$role -> $out" >&2
+    fi
+  done
+  secret="$(client_secret "$uuid")"
+  printf '%s\t%s\t%s\n' "$cid" "(admin REST, realm-management)" "$secret" >>"$SUMMARY"
+}
+
 # --- run -------------------------------------------------------------------
 echo "==> Authenticating to $KC_SERVER (realm '$KC_ADMIN_REALM', user '$KC_ADMIN_USER')"
 kc config credentials --server "$KC_SERVER" --realm "$KC_ADMIN_REALM" \
@@ -244,6 +285,11 @@ if [ "$CONFIGURE_SPA" = "true" ]; then
   ensure_spa_client "$SPA_CLIENT_ID"
 fi
 
+if [ "$CONFIGURE_ADMIN_KC" = "true" ]; then
+  echo "==> Ensuring admin-service Keycloak admin client (service account)"
+  ensure_admin_service_kc "$ADMIN_KC_CLIENT_ID"
+fi
+
 if [ "$EXPORT_REALM" = "true" ]; then
   echo "==> Exporting realm to realm-export.json"
   kc create "realms/$KC_REALM/partial-export?exportClients=true&exportGroupsAndRoles=true" \
@@ -268,6 +314,7 @@ Config mapping:
   api-tests.yml       : registration.okta.client-id = api-tests-m2m       ; client-secret = <secret>
   api-gateway.yml     : registration.keycloak.client-id = api-gateway        ; client-secret = <secret>
   frontend (.env)     : CLIENT_ID = turbolessons-spa (public, no secret) ; ISSUER = realm issuer
+  admin-service.yml   : keycloak.admin.client-id = admin-service-kc ; client-secret = <secret>
 
 IMPORTANT: encrypt each client-secret before committing:
   curl -s -u "$CONFIG_USERNAME:$CONFIG_PASSWORD" -H 'Content-Type: text/plain' \

@@ -196,15 +196,10 @@ services:
     container_name: turbolessons-frontend
     env_file:
       - ./root.env
+    # TLS terminated by Caddy at the edge; serve plain HTTP. nginx.conf is
+    # baked into the image, so no volume mounts are needed.
     ports:
       - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./pem_files/fullchain.pem:/etc/letsencrypt/live/qac.turbolessons.com/fullchain.pem
-      - ./pem_files/privkey.pem:/etc/letsencrypt/live/qac.turbolessons.com/privkey.pem
-      - ./options-ssl-nginx.conf:/etc/letsencrypt/options-ssl-nginx.conf
-      - ./ssl-dhparams.pem:/etc/letsencrypt/ssl-dhparams.pem
     networks:
       - turbolessons_cloud_service_net
     depends_on:

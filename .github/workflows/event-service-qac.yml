@@ -1,12 +1,13 @@
 name: event-service-qac
 
-# QAC environment pipeline (Git Flow: develop -> QAC, master -> prod).
+# QAC environment pipeline (Git Flow: release/* -> QAC, master -> prod).
 # Build runs on a GitHub-hosted runner; deploy runs on the self-hosted
 # runner (server_3) which has routing into the lab and SSHes to the QAC host.
 on:
+  workflow_dispatch:
   push:
     branches:
-      - 'dev'
+      - 'release/**'
     paths:
       - 'turbolessons/event-service/**'
 
@@ -31,23 +32,20 @@ jobs:
         with:
           context: turbolessons/event-service
           push: true
+          provenance: false
           tags: noslenj/event-service:qac
+          secrets: |
+            gh_token=${{ secrets.GH_PACKAGES_TOKEN }}
 
   deploy:
     needs: build
-    runs-on: self-hosted
+    runs-on: [self-hosted, qac]
     concurrency:
       group: qac-deploy
       cancel-in-progress: false
     steps:
-      - name: Deploy event-service to QAC host
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.QAC_HOST }}
-          username: ${{ secrets.QAC_USER }}
-          key: ${{ secrets.QAC_SSH_KEY }}
-          port: ${{ secrets.QAC_SSH_PORT }}
-          script: |
-            cd ~/turbolessons-qac
-            docker compose pull event-service
-            docker compose up -d event-service
+      - name: Deploy event-service on the QAC host
+        run: |
+          cd ~/turbolessons-qac
+          docker-compose pull event-service
+          docker-compose up -d --force-recreate event-service

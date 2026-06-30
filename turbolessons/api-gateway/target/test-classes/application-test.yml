@@ -1,0 +1,40 @@
+# Standalone test config for api-gateway.
+# In real environments the routes + security come from the config server
+# (api-gateway.yml). This profile supplies just enough to boot the context
+# offline: a Keycloak OIDC login client and a resource-server decoder, both
+# using EXPLICIT endpoints (not issuer-uri) so no discovery/network happens
+# at startup.
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    config:
+      enabled: false
+    discovery:
+      enabled: false
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: test-client
+            client-secret: test-secret
+            authorization-grant-type: authorization_code
+            scope: openid, profile, email
+            redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
+        provider:
+          keycloak:
+            authorization-uri: https://localhost/realms/test/protocol/openid-connect/auth
+            token-uri: https://localhost/realms/test/protocol/openid-connect/token
+            jwk-set-uri: https://localhost/realms/test/protocol/openid-connect/certs
+            user-info-uri: https://localhost/realms/test/protocol/openid-connect/userinfo
+            user-name-attribute: preferred_username
+      resourceserver:
+        jwt:
+          jwk-set-uri: https://localhost/realms/test/protocol/openid-connect/certs
+cors:
+  allowed-origins:
+    - http://localhost:3000
+eureka:
+  client:
+    enabled: false

@@ -31,7 +31,7 @@ jobs:
           context: turbolessons/lessondb
           push: true
           tags: noslenj/lessondb:latest
-    
+
       - name: Trigger Jenkins Job
         uses: appleboy/jenkins-action@master
         with:

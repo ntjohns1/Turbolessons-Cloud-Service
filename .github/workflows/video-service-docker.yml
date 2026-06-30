@@ -27,22 +27,17 @@ jobs:
           sudo mkdir -p /gcs/
           sudo chown -R runner:runner /gcs/
           echo "${{ secrets.GCS_CONFIG }}" | base64 --decode > /gcs/lesson-schedule-assistant-cfe4cf3aebad.json
-          
+
       - name: Create test file and set permissions
         run: |
           mkdir -p ~/Movies
           touch ~/Movies/Good_Boy.mp4
           chmod 777 ~/Movies/Good_Boy.mp4
-      
+
       - name: Run Maven Tests
         working-directory: turbolessons/video-service
         run: |
-          mvn test -DOKTA_CLIENT_ID=${{ secrets.OKTA_CLIENT_ID }} \
-          -DOKTA_CLIENT_SECRET=${{ secrets.OKTA_CLIENT_SECRET }} \
-          -DOKTA_ISSUER=${{ secrets.OKTA_ISSUER }} \
-          -DprojectId=${{ secrets.PROJECT_ID }} \
-          -DcredentialsPath=${{ secrets.CREDENTIALS_PATH }} \
-          -DbucketName=${{ secrets.BUCKET_NAME }}
+          mvn test -DprojectId=${{ secrets.PROJECT_ID }}  -DcredentialsPath=${{ secrets.CREDENTIALS_PATH }}  -DbucketName=${{ secrets.BUCKET_NAME }}
 
       - name: Docker Setup Buildx
         uses: docker/setup-buildx-action@v2
@@ -59,7 +54,9 @@ jobs:
           context: turbolessons/video-service
           push: true
           tags: noslenj/video-service:latest
-      
+          secrets: |
+            gh_token=${{ secrets.GH_PACKAGES_TOKEN }}
+
       - name: Trigger Jenkins Job
         uses: appleboy/jenkins-action@master
         with:

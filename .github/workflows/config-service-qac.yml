@@ -1,12 +1,13 @@
 name: config-service-qac
 
-# QAC environment pipeline (Git Flow: develop -> QAC, master -> prod).
+# QAC environment pipeline (Git Flow: release/* -> QAC, master -> prod).
 # Build runs on a GitHub-hosted runner; deploy runs on the self-hosted
 # runner (server_3) which has routing into the lab and SSHes to the QAC host.
 on:
+  workflow_dispatch:
   push:
     branches:
-      - 'dev'
+      - 'release/**'
     paths:
       - 'turbolessons/config-service/**'
 
@@ -31,23 +32,18 @@ jobs:
         with:
           context: turbolessons/config-service
           push: true
+          provenance: false
           tags: noslenj/config-service:qac
 
   deploy:
     needs: build
-    runs-on: self-hosted
+    runs-on: [self-hosted, qac]
     concurrency:
       group: qac-deploy
       cancel-in-progress: false
     steps:
-      - name: Deploy config-service to QAC host
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.QAC_HOST }}
-          username: ${{ secrets.QAC_USER }}
-          key: ${{ secrets.QAC_SSH_KEY }}
-          port: ${{ secrets.QAC_SSH_PORT }}
-          script: |
-            cd ~/turbolessons-qac
-            docker compose pull config-service
-            docker compose up -d config-service
+      - name: Deploy config-service on the QAC host
+        run: |
+          cd ~/turbolessons-qac
+          docker-compose pull config-service
+          docker-compose up -d --force-recreate config-service

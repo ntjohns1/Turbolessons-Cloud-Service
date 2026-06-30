@@ -14,6 +14,9 @@ public interface CustomerService {
 
     Mono<CustomerData> searchCustomerBySystemId(String id);
 
+    //    Find a Customer by email (used to attribute lesson meter events)
+    Mono<CustomerData> searchCustomerByEmail(String email);
+
     //    Create a Customer
     Mono<CustomerData> createCustomer(CustomerData customerData);
 

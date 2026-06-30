@@ -1,10 +1,16 @@
 #
 # Build stage
 #
+# syntax=docker/dockerfile:1
 FROM maven:3.8-openjdk-17 AS build
 COPY src /home/app/src
 COPY pom.xml /home/app
-RUN mvn -f /home/app/pom.xml clean package -DskipTests
+COPY settings.xml /home/app/settings.xml
+# GH_PACKAGES_TOKEN (read:packages PAT) injected as a BuildKit secret to resolve
+# com.turbolessons:keycloak-security-starter from GitHub Packages.
+RUN --mount=type=secret,id=gh_token \
+    GH_PACKAGES_TOKEN="$(cat /run/secrets/gh_token 2>/dev/null)" \
+    mvn -f /home/app/pom.xml -s /home/app/settings.xml clean package -DskipTests
 
 #
 # Package stage
