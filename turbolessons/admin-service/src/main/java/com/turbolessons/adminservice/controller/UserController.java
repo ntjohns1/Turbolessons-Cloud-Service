@@ -4,6 +4,8 @@ import com.turbolessons.adminservice.dto.UserDTO;
 import com.turbolessons.adminservice.dto.UserProfileDTO;
 import com.turbolessons.adminservice.service.UserService;
 import com.turbolessons.adminservice.model.User;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -37,8 +39,10 @@ public class UserController {
     }
 
     @PostMapping("/api/users")
-    public User createUser(@RequestBody UserDTO dto) {
-        return userService.createUser(dto.getEmail(), dto.getFirstName(), dto.getLastName());
+    public User createUser(@RequestBody UserDTO dto, @AuthenticationPrincipal Jwt jwt) {
+        // The creating teacher's username → enroll the new student in their cohort.
+        String teacher = (jwt != null) ? jwt.getClaimAsString("preferred_username") : null;
+        return userService.createUser(dto.getEmail(), dto.getFirstName(), dto.getLastName(), teacher);
     }
 
     @PutMapping("/api/users/{id}")

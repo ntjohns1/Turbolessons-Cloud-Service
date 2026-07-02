@@ -192,6 +192,21 @@ public class KeycloakUserClient {
         restTemplate.exchange(uri, HttpMethod.PUT, new HttpEntity<>(authHeaders()), Void.class);
     }
 
+    /** POST /groups — creates a top-level group, returns its id. */
+    public String createGroup(String name) {
+        URI uri = URI.create(adminBase() + "/groups");
+        GroupRepresentation group = new GroupRepresentation();
+        group.setName(name);
+        ResponseEntity<Void> resp = restTemplate.exchange(
+                uri, HttpMethod.POST, new HttpEntity<>(group, authHeaders()), Void.class);
+        URI location = resp.getHeaders().getLocation();
+        if (location == null) {
+            throw new IllegalStateException("Keycloak create-group returned no Location header");
+        }
+        String path = location.getPath();
+        return path.substring(path.lastIndexOf('/') + 1);
+    }
+
     private static <T> List<T> toList(T[] arr) {
         return arr == null ? new ArrayList<>() : new ArrayList<>(Arrays.asList(arr));
     }
