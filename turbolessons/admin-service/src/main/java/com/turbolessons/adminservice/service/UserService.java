@@ -67,7 +67,7 @@ public class UserService {
     }
 
     @CacheEvict(value = "userCache", allEntries = true)
-    public User createUser(String email, String firstName, String lastName) {
+    public User createUser(String email, String firstName, String lastName, String teacherUsername) {
         UserRepresentation rep = new UserRepresentation();
         rep.setUsername(email);
         rep.setEmail(email);
@@ -86,6 +86,17 @@ public class UserService {
 
         keycloak.findGroupByName(props.getDefaultStudentGroup())
                 .ifPresent(group -> keycloak.addUserToGroup(userId, group.getId()));
+
+        // Enroll in the creating teacher's cohort (active_student_<teacher>), so
+        // getUsersByTeacher finds them. Create the cohort group if it's the
+        // teacher's first student.
+        if (teacherUsername != null && !teacherUsername.isBlank()) {
+            String cohort = props.getCohortGroupPrefix() + teacherUsername;
+            String groupId = keycloak.findGroupByName(cohort)
+                    .map(GroupRepresentation::getId)
+                    .orElseGet(() -> keycloak.createGroup(cohort));
+            keycloak.addUserToGroup(userId, groupId);
+        }
 
         return keycloak.getUser(userId).map(this::toUser).orElseGet(() -> {
             rep.setId(userId);
